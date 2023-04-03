@@ -15,10 +15,10 @@ extension NSUserActivity {
     public static var getRestaurantsActivity: NSUserActivity {
         let userActivity = NSUserActivity(activityType: NSUserActivity.getRestaurantsActivityType)
         
-        userActivity.title = "Get Restaurants"
+        userActivity.title = "NearbyRestaurants"
         userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.getRestaurantsActivityType)
         userActivity.isEligibleForPrediction = true
-        userActivity.suggestedInvocationPhrase = "Get Restaurants"
+        userActivity.suggestedInvocationPhrase = "Nearby Restaurants"
         
         return userActivity
     }

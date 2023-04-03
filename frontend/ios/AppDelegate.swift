@@ -25,24 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-
+    
           os_log("TK421: Continue type = %{public}s", userActivity.activityType)
-          
+
           guard userActivity.activityType == NSUserActivity.getRestaurantsActivityType else {
                   os_log("TK421: Can't continue unknown NSUserActivity type = %{public}s", userActivity.activityType)
                   return false
           }
-          
-//          guard let window = window,
-//              let rootViewController = window.rootViewController as? UINavigationController else {
-//                  os_log("TK421: Failed to access root view controller.")
-//                  return false
-//          }
-    
-            print("I still cannot access to your restaurants!")
-          
-//          restorationHandler(rootViewController.viewControllers)
-          
+
+
+          print("I still cannot access to your restaurants!")
+
+
           return true
       }
 }
