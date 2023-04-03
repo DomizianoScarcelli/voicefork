@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1430"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -35,6 +35,17 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "frontendTests.xctest"
                BlueprintName = "frontendTests"
+               ReferencedContainer = "container:frontend.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "964382F229DAC1BA000007E7"
+               BuildableName = "SiriIntentFrameworkTests.xctest"
+               BlueprintName = "SiriIntentFrameworkTests"
                ReferencedContainer = "container:frontend.xcodeproj">
             </BuildableReference>
          </TestableReference>

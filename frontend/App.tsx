@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -14,7 +14,8 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+    View,
+  NativeModules
 } from 'react-native';
 
 import {
@@ -56,6 +57,10 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
+    // const {SiriRN } = NativeModules
+    // useEffect(() => {
+    //     SiriRN.increment( value => console.log(value))
+    // }, [])
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
