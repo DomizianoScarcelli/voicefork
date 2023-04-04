@@ -1,13 +1,13 @@
 //
 //  IntentHandler.swift
-//  GetRestaurants
+//  BookRestaurant
 //
-//  Created by Domiziano Scarcelli on 03/04/23.
+//  Created by Domiziano Scarcelli on 04/04/23.
 //
 
 import Intents
-import os.log
 import SiriIntentFramework
+import os.log
 
 // As an example, this class is set up to handle Message intents.
 // You will want to replace this or add other intents as appropriate.
@@ -20,19 +20,19 @@ import SiriIntentFramework
 
 class IntentHandler: INExtension, INSendMessageIntentHandling, INSearchForMessagesIntentHandling, INSetMessageAttributeIntentHandling {
     
-    override func handler(for intent: INIntent) -> Any {
-      print("IntentHandler Called!")
-        // This is the default implementation.  If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
+  override func handler(for intent: INIntent) -> Any {
+    print("IntentHandler Called!")
+      // This is the default implementation.  If you want different objects to handle different intents,
+      // you can override this and return the handler you want for that particular intent.
 
-      guard intent is NearbyRestaurantsIntent else {
-        os_log("TK421: %{public}s%", String(describing: intent))
-        fatalError("Unhandled intentype \(intent)")
-        
-      }
-      os_log("TK421: IntentHandler returning GetRestaurantsIntentHandler")
-      return NearbyRestaurantsIntentHandler()
+    guard intent is BookRestaurantIntent else {
+      os_log("TK421: %{public}s%", String(describing: intent))
+      fatalError("Unhandled intentype \(intent)")
+      
     }
+    os_log("TK421: IntentHandler returning GetRestaurantsIntentHandler")
+    return BookRestaurantIntentHandler()
+  }
     
     // MARK: - INSendMessageIntentHandling
     

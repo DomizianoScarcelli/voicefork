@@ -39,6 +39,7 @@
 	<string></string>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>BookRestaurantIntent</string>
 		<string>NearbyRestaurantsIntent</string>
 		<string>NearbyRestaurantsIntentHandler</string>
 	</array>

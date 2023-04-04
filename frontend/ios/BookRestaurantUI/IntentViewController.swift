@@ -1,8 +1,8 @@
 //
 //  IntentViewController.swift
-//  GetRestaurantsUI
+//  BookRestaurantUI
 //
-//  Created by Domiziano Scarcelli on 03/04/23.
+//  Created by Domiziano Scarcelli on 04/04/23.
 //
 
 import IntentsUI

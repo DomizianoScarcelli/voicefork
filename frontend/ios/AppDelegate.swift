@@ -28,14 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
           os_log("TK421: Continue type = %{public}s", userActivity.activityType)
 
-          guard userActivity.activityType == NSUserActivity.getRestaurantsActivityType else {
+          guard userActivity.activityType == NSUserActivity.bookRestaurantActivityType else {
                   os_log("TK421: Can't continue unknown NSUserActivity type = %{public}s", userActivity.activityType)
                   return false
           }
-
-
-          print("I still cannot access to your restaurants!")
-
 
           return true
       }

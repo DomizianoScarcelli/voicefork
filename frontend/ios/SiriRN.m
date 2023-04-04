@@ -8,6 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
 
-//@interface RCT_EXTERN_MODULE(SiriRN, NSObject)
-//RCT_EXTERN_METHOD(increment: (RCTResponseSenderBlock)callback)
-//@end
+@interface RCT_EXTERN_MODULE(SiriRN, NSObject)
+  RCT_EXTERN_METHOD(handleNearbyRestaurantsIntent: (RCTResponseSenderBlock)callback)
+@end

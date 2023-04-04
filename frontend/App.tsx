@@ -57,10 +57,10 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
-    // const {SiriRN } = NativeModules
-    // useEffect(() => {
-    //     SiriRN.increment( value => console.log(value))
-    // }, [])
+    const {SiriRN} = NativeModules
+    useEffect(() => {
+        SiriRN.handleNearbyRestaurantsIntent( (message: string) => console.log(message))
+    }, [])
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {

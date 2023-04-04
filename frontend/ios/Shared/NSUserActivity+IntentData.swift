@@ -10,16 +10,17 @@ import Intents
 
 extension NSUserActivity {
     
-    public static let getRestaurantsActivityType = "com.domizianoscarcelli.intentkit.getrestaurants"
-    
-    public static var getRestaurantsActivity: NSUserActivity {
-        let userActivity = NSUserActivity(activityType: NSUserActivity.getRestaurantsActivityType)
-        
-        userActivity.title = "NearbyRestaurants"
-        userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.getRestaurantsActivityType)
-        userActivity.isEligibleForPrediction = true
-        userActivity.suggestedInvocationPhrase = "Nearby Restaurants"
-        
-        return userActivity
-    }
+  public static let bookRestaurantActivityType = "com.domizianoscarcelli.intentkit.bookrestaurants"
+
+  
+  public static var bookRestaurantActivity: NSUserActivity {
+      let userActivity = NSUserActivity(activityType: NSUserActivity.bookRestaurantActivityType)
+      
+      userActivity.title = "BookRestaurant"
+      userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.bookRestaurantActivityType)
+      userActivity.isEligibleForPrediction = true
+      userActivity.suggestedInvocationPhrase = "Book Restaurant"
+      
+      return userActivity
+  }
 }
