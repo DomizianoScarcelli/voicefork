@@ -6,7 +6,7 @@
 //
 
 import Intents
-import SiriIntentFramework
+import IntentKit
 import os.log
 
 // As an example, this class is set up to handle Message intents.

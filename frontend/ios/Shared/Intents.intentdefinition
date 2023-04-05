@@ -18,78 +18,6 @@
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
-			<string>information</string>
-			<key>INIntentConfigurable</key>
-			<true/>
-			<key>INIntentDescription</key>
-			<string>Show the list of restaurants near my location</string>
-			<key>INIntentDescriptionID</key>
-			<string>oVbcMJ</string>
-			<key>INIntentManagedParameterCombinations</key>
-			<dict>
-				<key></key>
-				<dict>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationUpdatesLinked</key>
-					<true/>
-				</dict>
-			</dict>
-			<key>INIntentName</key>
-			<string>NearbyRestaurants</string>
-			<key>INIntentParameterCombinations</key>
-			<dict>
-				<key></key>
-				<dict>
-					<key>INIntentParameterCombinationIsPrimary</key>
-					<true/>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-				</dict>
-			</dict>
-			<key>INIntentResponse</key>
-			<dict>
-				<key>INIntentResponseCodes</key>
-				<array>
-					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Here there would be a list of nearby restaurants!!</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>fLPFZg</string>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Here there would be a list of nearby restaurants!!</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>xxbJ1f</string>
-						<key>INIntentResponseCodeName</key>
-						<string>success</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Oh no, I cannot find any nearby restaurants!</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>c9NjKu</string>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Oh no, I cannot find any nearby restaurants!</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>cPJplP</string>
-						<key>INIntentResponseCodeName</key>
-						<string>failure</string>
-					</dict>
-				</array>
-			</dict>
-			<key>INIntentTitle</key>
-			<string>NearbyRestaurants</string>
-			<key>INIntentTitleID</key>
-			<string>XH0vZQ</string>
-			<key>INIntentType</key>
-			<string>Custom</string>
-			<key>INIntentVerb</key>
-			<string>View</string>
-		</dict>
-		<dict>
-			<key>INIntentCategory</key>
 			<string>generic</string>
 			<key>INIntentConfigurable</key>
 			<true/>
@@ -217,11 +145,11 @@
 				<array>
 					<dict>
 						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Restaurant ${restaurant.name}booked!</string>
+						<string>Booked ${restaurant.name}!</string>
 						<key>INIntentResponseCodeConciseFormatStringID</key>
 						<string>knzOZY</string>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>Restaurant ${restaurant.name}booked!</string>
+						<string>Booked ${restaurant.name}!</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>Pv0Tht</string>
 						<key>INIntentResponseCodeName</key>
@@ -243,7 +171,7 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>6</integer>
+				<integer>7</integer>
 				<key>INIntentResponseOutput</key>
 				<string>restaurant</string>
 				<key>INIntentResponseParameters</key>
@@ -316,10 +244,24 @@
 					<string>String</string>
 				</dict>
 				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Name</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>iKUd1g</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>name</string>
+					<key>INTypePropertyTag</key>
+					<integer>100</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>3</integer>
+					<integer>4</integer>
 					<key>INTypePropertyName</key>
 					<string>pronunciationHint</string>
 					<key>INTypePropertyTag</key>
@@ -331,7 +273,7 @@
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>4</integer>
+					<integer>5</integer>
 					<key>INTypePropertyName</key>
 					<string>alternativeSpeakableMatches</string>
 					<key>INTypePropertySupportsMultipleValues</key>
@@ -340,20 +282,6 @@
 					<integer>4</integer>
 					<key>INTypePropertyType</key>
 					<string>SpeakableString</string>
-				</dict>
-				<dict>
-					<key>INTypePropertyDisplayName</key>
-					<string>Name</string>
-					<key>INTypePropertyDisplayNameID</key>
-					<string>iKUd1g</string>
-					<key>INTypePropertyDisplayPriority</key>
-					<integer>5</integer>
-					<key>INTypePropertyName</key>
-					<string>name</string>
-					<key>INTypePropertyTag</key>
-					<integer>100</integer>
-					<key>INTypePropertyType</key>
-					<string>String</string>
 				</dict>
 			</array>
 		</dict>

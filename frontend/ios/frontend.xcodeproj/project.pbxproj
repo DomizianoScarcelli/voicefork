@@ -12,26 +12,26 @@
 		8B985748BB24FB1D04802B33 /* libPods-frontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BC8060C21A0FDE68405EBD /* libPods-frontend.a */; };
 		964382EE29DAC1BA000007E7 /* SiriIntentFramework.docc in Sources */ = {isa = PBXBuildFile; fileRef = 964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */; };
 		964382FC29DAC1BA000007E7 /* SiriIntentFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		964382FF29DAC1BA000007E7 /* SiriIntentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */; };
+		964382FF29DAC1BA000007E7 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
 		9643830A29DAC272000007E7 /* NSUserActivity+IntentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */; };
 		9643830E29DAC501000007E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9643830D29DAC501000007E7 /* AppDelegate.swift */; };
 		9662E71629DB63460047DD40 /* SiriRN.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BB679629DA22A0005D2329 /* SiriRN.m */; };
 		9662E71729DB63460047DD40 /* SiriRN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB679229DA1E43005D2329 /* SiriRN.swift */; };
 		9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; };
 		9695677729DB1BD900CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
-		96A3A19229DAC80F00ADFFF2 /* SiriIntentFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96A3A19229DAC80F00ADFFF2 /* IntentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96A4B63C29DDEB5C0070CD2F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272DC29DCA174001EA1E4 /* IntentHandler.swift */; };
 		96D272DA29DCA174001EA1E4 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB679F29DA26E0005D2329 /* Intents.framework */; };
-		96D272DD29DCA174001EA1E4 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272DC29DCA174001EA1E4 /* IntentHandler.swift */; };
 		96D272E429DCA175001EA1E4 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB67AA29DA26E1005D2329 /* IntentsUI.framework */; };
 		96D272E729DCA175001EA1E4 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272E629DCA175001EA1E4 /* IntentViewController.swift */; };
 		96D272EA29DCA175001EA1E4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96D272E829DCA175001EA1E4 /* MainInterface.storyboard */; };
-		96D272EE29DCA175001EA1E4 /* BookRestaurantUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272E329DCA175001EA1E4 /* BookRestaurantUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		96D272F129DCA175001EA1E4 /* BookRestaurant.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272D929DCA174001EA1E4 /* BookRestaurant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		96D272EE29DCA175001EA1E4 /* VoiceForkIntentsUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		96D272F129DCA175001EA1E4 /* VoiceForkIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		96D272F829DCA196001EA1E4 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		96D272F929DCA198001EA1E4 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */; };
-		96D272FC29DCA427001EA1E4 /* SiriIntentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */; };
-		96D272FD29DCA42B001EA1E4 /* SiriIntentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */; };
+		96D272FC29DCA427001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
+		96D272FD29DCA42B001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +79,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				96A3A19229DAC80F00ADFFF2 /* SiriIntentFramework.framework in Embed Frameworks */,
+				96A3A19229DAC80F00ADFFF2 /* IntentKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,8 +90,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				96D272F129DCA175001EA1E4 /* BookRestaurant.appex in Embed Foundation Extensions */,
-				96D272EE29DCA175001EA1E4 /* BookRestaurantUI.appex in Embed Foundation Extensions */,
+				96D272F129DCA175001EA1E4 /* VoiceForkIntents.appex in Embed Foundation Extensions */,
+				96D272EE29DCA175001EA1E4 /* VoiceForkIntentsUI.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,7 +106,7 @@
 		45392A6BEA3C876F13A306FC /* Pods-frontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-frontend.debug.xcconfig"; path = "Target Support Files/Pods-frontend/Pods-frontend.debug.xcconfig"; sourceTree = "<group>"; };
 		79BC8060C21A0FDE68405EBD /* libPods-frontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-frontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = frontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SiriIntentFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		964382EA29DAC1BA000007E7 /* IntentKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IntentKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SiriIntentFramework.h; sourceTree = "<group>"; };
 		964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SiriIntentFramework.docc; sourceTree = "<group>"; };
 		9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+IntentData.swift"; sourceTree = "<group>"; };
@@ -117,10 +117,10 @@
 		96BB679629DA22A0005D2329 /* SiriRN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SiriRN.m; sourceTree = "<group>"; };
 		96BB679F29DA26E0005D2329 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		96BB67AA29DA26E1005D2329 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		96D272D929DCA174001EA1E4 /* BookRestaurant.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BookRestaurant.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272DC29DCA174001EA1E4 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		96D272DE29DCA174001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96D272E329DCA175001EA1E4 /* BookRestaurantUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BookRestaurantUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272E629DCA175001EA1E4 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		96D272E929DCA175001EA1E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		96D272EB29DCA175001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				964382FF29DAC1BA000007E7 /* SiriIntentFramework.framework in Frameworks */,
+				964382FF29DAC1BA000007E7 /* IntentKit.framework in Frameworks */,
 				8B985748BB24FB1D04802B33 /* libPods-frontend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D272FC29DCA427001EA1E4 /* SiriIntentFramework.framework in Frameworks */,
+				96D272FC29DCA427001EA1E4 /* IntentKit.framework in Frameworks */,
 				96D272DA29DCA174001EA1E4 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D272FD29DCA42B001EA1E4 /* SiriIntentFramework.framework in Frameworks */,
+				96D272FD29DCA42B001EA1E4 /* IntentKit.framework in Frameworks */,
 				96D272E429DCA175001EA1E4 /* IntentsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,8 +205,8 @@
 				13B07FAE1A68108700A75B9A /* frontend */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				964382EB29DAC1BA000007E7 /* SiriIntentFramework */,
-				96D272DB29DCA174001EA1E4 /* BookRestaurant */,
-				96D272E529DCA175001EA1E4 /* BookRestaurantUI */,
+				96D272DB29DCA174001EA1E4 /* VoiceForkIntents */,
+				96D272E529DCA175001EA1E4 /* VoiceForkIntentsUI */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -220,9 +220,9 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* frontend.app */,
-				964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */,
-				96D272D929DCA174001EA1E4 /* BookRestaurant.appex */,
-				96D272E329DCA175001EA1E4 /* BookRestaurantUI.appex */,
+				964382EA29DAC1BA000007E7 /* IntentKit.framework */,
+				96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */,
+				96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -246,23 +246,23 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		96D272DB29DCA174001EA1E4 /* BookRestaurant */ = {
+		96D272DB29DCA174001EA1E4 /* VoiceForkIntents */ = {
 			isa = PBXGroup;
 			children = (
 				96D272DC29DCA174001EA1E4 /* IntentHandler.swift */,
 				96D272DE29DCA174001EA1E4 /* Info.plist */,
 			);
-			path = BookRestaurant;
+			path = VoiceForkIntents;
 			sourceTree = "<group>";
 		};
-		96D272E529DCA175001EA1E4 /* BookRestaurantUI */ = {
+		96D272E529DCA175001EA1E4 /* VoiceForkIntentsUI */ = {
 			isa = PBXGroup;
 			children = (
 				96D272E629DCA175001EA1E4 /* IntentViewController.swift */,
 				96D272E829DCA175001EA1E4 /* MainInterface.storyboard */,
 				96D272EB29DCA175001EA1E4 /* Info.plist */,
 			);
-			path = BookRestaurantUI;
+			path = VoiceForkIntentsUI;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -315,9 +315,9 @@
 			productReference = 13B07F961A680F5B00A75B9A /* frontend.app */;
 			productType = "com.apple.product-type.application";
 		};
-		964382E929DAC1BA000007E7 /* SiriIntentFramework */ = {
+		964382E929DAC1BA000007E7 /* IntentKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9643830629DAC1BA000007E7 /* Build configuration list for PBXNativeTarget "SiriIntentFramework" */;
+			buildConfigurationList = 9643830629DAC1BA000007E7 /* Build configuration list for PBXNativeTarget "IntentKit" */;
 			buildPhases = (
 				964382E529DAC1BA000007E7 /* Headers */,
 				964382E629DAC1BA000007E7 /* Sources */,
@@ -328,14 +328,14 @@
 			);
 			dependencies = (
 			);
-			name = SiriIntentFramework;
+			name = IntentKit;
 			productName = SiriIntentFramework;
-			productReference = 964382EA29DAC1BA000007E7 /* SiriIntentFramework.framework */;
+			productReference = 964382EA29DAC1BA000007E7 /* IntentKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		96D272D829DCA174001EA1E4 /* BookRestaurant */ = {
+		96D272D829DCA174001EA1E4 /* VoiceForkIntents */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 96D272F729DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "BookRestaurant" */;
+			buildConfigurationList = 96D272F729DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "VoiceForkIntents" */;
 			buildPhases = (
 				96D272D529DCA174001EA1E4 /* Sources */,
 				96D272D629DCA174001EA1E4 /* Frameworks */,
@@ -346,14 +346,14 @@
 			dependencies = (
 				96D272FF29DCA437001EA1E4 /* PBXTargetDependency */,
 			);
-			name = BookRestaurant;
+			name = VoiceForkIntents;
 			productName = BookRestaurant;
-			productReference = 96D272D929DCA174001EA1E4 /* BookRestaurant.appex */;
+			productReference = 96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		96D272E229DCA175001EA1E4 /* BookRestaurantUI */ = {
+		96D272E229DCA175001EA1E4 /* VoiceForkIntentsUI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 96D272F629DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "BookRestaurantUI" */;
+			buildConfigurationList = 96D272F629DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "VoiceForkIntentsUI" */;
 			buildPhases = (
 				96D272DF29DCA175001EA1E4 /* Sources */,
 				96D272E029DCA175001EA1E4 /* Frameworks */,
@@ -364,9 +364,9 @@
 			dependencies = (
 				96D2730129DCA43A001EA1E4 /* PBXTargetDependency */,
 			);
-			name = BookRestaurantUI;
+			name = VoiceForkIntentsUI;
 			productName = BookRestaurantUI;
-			productReference = 96D272E329DCA175001EA1E4 /* BookRestaurantUI.appex */;
+			productReference = 96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -407,9 +407,9 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* frontend */,
-				964382E929DAC1BA000007E7 /* SiriIntentFramework */,
-				96D272D829DCA174001EA1E4 /* BookRestaurant */,
-				96D272E229DCA175001EA1E4 /* BookRestaurantUI */,
+				964382E929DAC1BA000007E7 /* IntentKit */,
+				96D272D829DCA174001EA1E4 /* VoiceForkIntents */,
+				96D272E229DCA175001EA1E4 /* VoiceForkIntentsUI */,
 			);
 		};
 /* End PBXProject section */
@@ -569,8 +569,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A4B63C29DDEB5C0070CD2F /* IntentHandler.swift in Sources */,
 				96D272F829DCA196001EA1E4 /* Intents.intentdefinition in Sources */,
-				96D272DD29DCA174001EA1E4 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,27 +588,27 @@
 /* Begin PBXTargetDependency section */
 		964382FE29DAC1BA000007E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 964382E929DAC1BA000007E7 /* SiriIntentFramework */;
+			target = 964382E929DAC1BA000007E7 /* IntentKit */;
 			targetProxy = 964382FD29DAC1BA000007E7 /* PBXContainerItemProxy */;
 		};
 		96D272ED29DCA175001EA1E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 96D272E229DCA175001EA1E4 /* BookRestaurantUI */;
+			target = 96D272E229DCA175001EA1E4 /* VoiceForkIntentsUI */;
 			targetProxy = 96D272EC29DCA175001EA1E4 /* PBXContainerItemProxy */;
 		};
 		96D272F029DCA175001EA1E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 96D272D829DCA174001EA1E4 /* BookRestaurant */;
+			target = 96D272D829DCA174001EA1E4 /* VoiceForkIntents */;
 			targetProxy = 96D272EF29DCA175001EA1E4 /* PBXContainerItemProxy */;
 		};
 		96D272FF29DCA437001EA1E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 964382E929DAC1BA000007E7 /* SiriIntentFramework */;
+			target = 964382E929DAC1BA000007E7 /* IntentKit */;
 			targetProxy = 96D272FE29DCA437001EA1E4 /* PBXContainerItemProxy */;
 		};
 		96D2730129DCA43A001EA1E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 964382E929DAC1BA000007E7 /* SiriIntentFramework */;
+			target = 964382E929DAC1BA000007E7 /* IntentKit */;
 			targetProxy = 96D2730029DCA43A001EA1E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -934,8 +934,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BookRestaurant/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BookRestaurant;
+				INFOPLIST_FILE = VoiceForkIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceForkIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -946,7 +946,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.BookRestaurant;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.VoiceForkIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -973,8 +973,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BookRestaurant/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BookRestaurant;
+				INFOPLIST_FILE = VoiceForkIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceForkIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -984,7 +984,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.BookRestaurant;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.VoiceForkIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1009,8 +1009,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BookRestaurantUI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BookRestaurantUI;
+				INFOPLIST_FILE = VoiceForkIntentsUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceForkIntentsUI;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1021,7 +1021,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.BookRestaurantUI;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.VoiceForkIntentsUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1048,8 +1048,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BookRestaurantUI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BookRestaurantUI;
+				INFOPLIST_FILE = VoiceForkIntentsUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceForkIntentsUI;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1059,7 +1059,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.BookRestaurantUI;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.frontend.VoiceForkIntentsUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1090,7 +1090,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9643830629DAC1BA000007E7 /* Build configuration list for PBXNativeTarget "SiriIntentFramework" */ = {
+		9643830629DAC1BA000007E7 /* Build configuration list for PBXNativeTarget "IntentKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9643830229DAC1BA000007E7 /* Debug */,
@@ -1099,7 +1099,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		96D272F629DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "BookRestaurantUI" */ = {
+		96D272F629DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "VoiceForkIntentsUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96D272F429DCA175001EA1E4 /* Debug */,
@@ -1108,7 +1108,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		96D272F729DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "BookRestaurant" */ = {
+		96D272F729DCA175001EA1E4 /* Build configuration list for PBXNativeTarget "VoiceForkIntents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96D272F229DCA175001EA1E4 /* Debug */,

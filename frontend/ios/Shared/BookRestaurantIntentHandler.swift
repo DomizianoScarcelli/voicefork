@@ -15,7 +15,7 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
     
     // Build the list of available restaurants
     var restaurantList: [Restaurant] = [Restaurant]()
-    var names = ["Da Beppe", "Da Mario"]
+    let names = ["Da Beppe", "Da Mario"]
     for name in names {
       let restaurant = Restaurant(identifier: name, display: name)
       restaurant.name = name

@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import SiriIntentFramework
+import IntentKit
 import Intents
 import os.log
 
