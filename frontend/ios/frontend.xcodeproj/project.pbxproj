@@ -23,7 +23,7 @@
 		96A4B63C29DDEB5C0070CD2F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272DC29DCA174001EA1E4 /* IntentHandler.swift */; };
 		96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */; };
 		96A4B64029DDF01A0070CD2F /* ReservationConfirmedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */; };
-		96CA846829DE1752002D3481 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96CA846729DE1752002D3481 /* MainInterface.storyboard */; };
+		96CA846A29DE18F5002D3481 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96CA846929DE18F5002D3481 /* MainInterface.storyboard */; };
 		96D272DA29DCA174001EA1E4 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB679F29DA26E0005D2329 /* Intents.framework */; };
 		96D272E429DCA175001EA1E4 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB67AA29DA26E1005D2329 /* IntentsUI.framework */; };
 		96D272E729DCA175001EA1E4 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272E629DCA175001EA1E4 /* IntentViewController.swift */; };
@@ -121,7 +121,7 @@
 		96BB679629DA22A0005D2329 /* SiriRN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SiriRN.m; sourceTree = "<group>"; };
 		96BB679F29DA26E0005D2329 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		96BB67AA29DA26E1005D2329 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		96CA846729DE1752002D3481 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = ../../../../MainInterface.storyboard; sourceTree = "<group>"; };
+		96CA846929DE18F5002D3481 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272DC29DCA174001EA1E4 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		96D272DE29DCA174001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -264,7 +264,7 @@
 			children = (
 				96D272E629DCA175001EA1E4 /* IntentViewController.swift */,
 				96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */,
-				96CA846729DE1752002D3481 /* MainInterface.storyboard */,
+				96CA846929DE18F5002D3481 /* MainInterface.storyboard */,
 				96D272EB29DCA175001EA1E4 /* Info.plist */,
 				96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */,
 			);
@@ -449,7 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */,
-				96CA846829DE1752002D3481 /* MainInterface.storyboard in Resources */,
+				96CA846A29DE18F5002D3481 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
