@@ -32,13 +32,12 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
   
     
     public func confirm(intent: BookRestaurantIntent, completion: @escaping (BookRestaurantIntentResponse) -> Void) {
-        os_log("TK421: %{public}s", "\(#function)")
+        NSLog("TK421: %{public}s", "\(#function)")
         completion(BookRestaurantIntentResponse(code: .ready, userActivity: nil))
     }
     
     public func handle(intent: BookRestaurantIntent, completion: @escaping (BookRestaurantIntentResponse) -> Void) {
-      os_log("TK421: %{public}s", "\(#function)")
-    
+      NSLog("TK421: %{public}s", "\(#function)")
       
       // Call the completion handler with the response to the original intent
       completion(BookRestaurantIntentResponse(code: .success, userActivity: nil))

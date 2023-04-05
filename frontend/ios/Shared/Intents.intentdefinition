@@ -144,10 +144,6 @@
 				<key>INIntentResponseCodes</key>
 				<array>
 					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Booked ${restaurant.name}!</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>knzOZY</string>
 						<key>INIntentResponseCodeFormatString</key>
 						<string>Booked ${restaurant.name}!</string>
 						<key>INIntentResponseCodeFormatStringID</key>

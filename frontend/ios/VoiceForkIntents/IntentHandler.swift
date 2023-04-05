@@ -21,7 +21,6 @@ import os.log
 class IntentHandler: INExtension, INSendMessageIntentHandling, INSearchForMessagesIntentHandling, INSetMessageAttributeIntentHandling {
     
   override func handler(for intent: INIntent) -> Any {
-    print("IntentHandler Called!")
       // This is the default implementation.  If you want different objects to handle different intents,
       // you can override this and return the handler you want for that particular intent.
 

@@ -21,10 +21,12 @@
 		9695677729DB1BD900CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		96A3A19229DAC80F00ADFFF2 /* IntentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		96A4B63C29DDEB5C0070CD2F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272DC29DCA174001EA1E4 /* IntentHandler.swift */; };
+		96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */; };
+		96A4B64029DDF01A0070CD2F /* ReservationConfirmedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */; };
+		96CA846829DE1752002D3481 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96CA846729DE1752002D3481 /* MainInterface.storyboard */; };
 		96D272DA29DCA174001EA1E4 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB679F29DA26E0005D2329 /* Intents.framework */; };
 		96D272E429DCA175001EA1E4 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB67AA29DA26E1005D2329 /* IntentsUI.framework */; };
 		96D272E729DCA175001EA1E4 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272E629DCA175001EA1E4 /* IntentViewController.swift */; };
-		96D272EA29DCA175001EA1E4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96D272E829DCA175001EA1E4 /* MainInterface.storyboard */; };
 		96D272EE29DCA175001EA1E4 /* VoiceForkIntentsUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		96D272F129DCA175001EA1E4 /* VoiceForkIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		96D272F829DCA196001EA1E4 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
@@ -112,17 +114,19 @@
 		9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+IntentData.swift"; sourceTree = "<group>"; };
 		9643830D29DAC501000007E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9695677529DB1B7400CF7330 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReservationConfirmedView.xib; sourceTree = "<group>"; };
+		96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationConfirmedViewController.swift; sourceTree = "<group>"; };
 		96BB679129DA1E43005D2329 /* frontend-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "frontend-Bridging-Header.h"; sourceTree = "<group>"; };
 		96BB679229DA1E43005D2329 /* SiriRN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriRN.swift; sourceTree = "<group>"; };
 		96BB679629DA22A0005D2329 /* SiriRN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SiriRN.m; sourceTree = "<group>"; };
 		96BB679F29DA26E0005D2329 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		96BB67AA29DA26E1005D2329 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		96CA846729DE1752002D3481 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = ../../../../MainInterface.storyboard; sourceTree = "<group>"; };
 		96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272DC29DCA174001EA1E4 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		96D272DE29DCA174001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D272E329DCA175001EA1E4 /* VoiceForkIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272E629DCA175001EA1E4 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
-		96D272E929DCA175001EA1E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		96D272EB29DCA175001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRestaurantIntentHandler.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -259,8 +263,10 @@
 			isa = PBXGroup;
 			children = (
 				96D272E629DCA175001EA1E4 /* IntentViewController.swift */,
-				96D272E829DCA175001EA1E4 /* MainInterface.storyboard */,
+				96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */,
+				96CA846729DE1752002D3481 /* MainInterface.storyboard */,
 				96D272EB29DCA175001EA1E4 /* Info.plist */,
+				96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */,
 			);
 			path = VoiceForkIntentsUI;
 			sourceTree = "<group>";
@@ -442,7 +448,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D272EA29DCA175001EA1E4 /* MainInterface.storyboard in Resources */,
+				96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */,
+				96CA846829DE1752002D3481 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +585,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A4B64029DDF01A0070CD2F /* ReservationConfirmedViewController.swift in Sources */,
 				96D272F929DCA198001EA1E4 /* Intents.intentdefinition in Sources */,
 				96D272E729DCA175001EA1E4 /* IntentViewController.swift in Sources */,
 			);
@@ -612,17 +620,6 @@
 			targetProxy = 96D2730029DCA43A001EA1E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		96D272E829DCA175001EA1E4 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				96D272E929DCA175001EA1E4 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
