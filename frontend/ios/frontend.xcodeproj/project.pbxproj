@@ -17,6 +17,10 @@
 		9643830E29DAC501000007E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9643830D29DAC501000007E7 /* AppDelegate.swift */; };
 		9662E71629DB63460047DD40 /* SiriRN.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BB679629DA22A0005D2329 /* SiriRN.m */; };
 		9662E71729DB63460047DD40 /* SiriRN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB679229DA1E43005D2329 /* SiriRN.swift */; };
+		967F096029DEA73500542DD2 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967F095B29DEA6BE00542DD2 /* Shared.xcassets */; };
+		967F096129DEA73500542DD2 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967F095B29DEA6BE00542DD2 /* Shared.xcassets */; };
+		967F096229DEA73600542DD2 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 967F095B29DEA6BE00542DD2 /* Shared.xcassets */; };
+		967F096429DEA9C300542DD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F096329DEA9C300542DD2 /* UIImage+Extension.swift */; };
 		9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; };
 		9695677729DB1BD900CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		96A3A19229DAC80F00ADFFF2 /* IntentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -113,6 +117,8 @@
 		964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SiriIntentFramework.docc; sourceTree = "<group>"; };
 		9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+IntentData.swift"; sourceTree = "<group>"; };
 		9643830D29DAC501000007E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		967F095B29DEA6BE00542DD2 /* Shared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shared.xcassets; sourceTree = "<group>"; };
+		967F096329DEA9C300542DD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		9695677529DB1B7400CF7330 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReservationConfirmedView.xib; sourceTree = "<group>"; };
 		96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationConfirmedViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +252,8 @@
 				9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */,
 				9695677529DB1B7400CF7330 /* Intents.intentdefinition */,
 				96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */,
+				967F095B29DEA6BE00542DD2 /* Shared.xcassets */,
+				967F096329DEA9C300542DD2 /* UIImage+Extension.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -427,6 +435,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				967F096229DEA73600542DD2 /* Shared.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +450,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				967F096029DEA73500542DD2 /* Shared.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +460,7 @@
 			files = (
 				96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */,
 				96CA846A29DE18F5002D3481 /* MainInterface.storyboard in Resources */,
+				967F096129DEA73500542DD2 /* Shared.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,6 +578,7 @@
 			files = (
 				96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */,
 				9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */,
+				967F096429DEA9C300542DD2 /* UIImage+Extension.swift in Sources */,
 				9643830A29DAC272000007E7 /* NSUserActivity+IntentData.swift in Sources */,
 				964382EE29DAC1BA000007E7 /* SiriIntentFramework.docc in Sources */,
 			);

@@ -31,10 +31,15 @@ class ReservationConfirmedViewController: UIViewController {
     super.viewDidLoad()
 //    confirmedView = view as? ReservationConfirmedView
     confirmedView.restaurantNameLabel.text = intent.restaurant?.name
+    confirmedView.reservationDateTimeLabel.text = "Tomorrow at 10am"
+    confirmedView.restaurantImage.applyRoundedCorners()
+    confirmedView.restaurantImage.image = UIImage(named: "da_beppe")
   }
 
 }
 
 class ReservationConfirmedView: UIView {
+    @IBOutlet weak var reservationDateTimeLabel: UILabel!
     @IBOutlet weak var restaurantNameLabel: UILabel!
-  }
+    @IBOutlet weak var restaurantImage: UIImageView!
+}
