@@ -97,10 +97,18 @@ android {
     namespace "com.frontend"
     defaultConfig {
         applicationId "com.frontend"
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 25
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs = ['src/main/java', '/Users/dov/Desktop/voicefork/frontend/android/app/build/generated/rncli/src/main/java']
+            }
+        }
     }
 
     splits {
@@ -156,7 +164,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 
     // Kotlin convertion
-    implementation 'androidx.core:core-ktx:$'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
