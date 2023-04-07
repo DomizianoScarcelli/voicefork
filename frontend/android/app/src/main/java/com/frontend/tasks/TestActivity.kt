@@ -13,10 +13,6 @@ class TestActivity {
         Log.d(TAG, "======= logIntent ========= %s")
         Log.d(TAG, "Logging intent data start")
 
-        bundle.keySet().forEach { key ->
-            Log.d(TAG, "[$key=${bundle.get(key)}]");
-        }
-
         Log.d(TAG, "Logging intent data complete")
     }
 }
