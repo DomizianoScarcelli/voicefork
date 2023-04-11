@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="testview_synonyms">
-        <item>test</item>
-        <item>test page</item>
-        <item>test view</item>
+    <array name="homepage_synonyms">
+        <item>homepage</item>
+        <item>home page</item>
+        <item>home view</item>
+    </array>
+
+    <array name="settings_synonyms">
+        <item>settings</item>
+        <item>setting</item>
+        <item>settings page</item>
+        <item>settings view</item>
+    </array>
+
+    <array name="reservations_synonyms">
+        <item>reservations</item>
+        <item>reservation page</item>
+        <item>reservation view</item>
     </array>
 </resources>
