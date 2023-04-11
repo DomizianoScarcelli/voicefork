@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">VoiceFork</string>
+
+    <string name="test_ls">testview</string>
+    <string name="test_ss">testview</string>
 </resources>
