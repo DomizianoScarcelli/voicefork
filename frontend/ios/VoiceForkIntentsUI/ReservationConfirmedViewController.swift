@@ -9,6 +9,31 @@ import UIKit
 import Intents
 import IntentKit
 
+private class DateTimeUtils {
+  public static func dateToNaturalLanguage(from date: Date) -> String {
+    let calendar = Calendar.current
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    
+    let now = Date()
+
+    if calendar.isDateInTomorrow(date) {
+        formatter.dateFormat = "'Tomorrow at' h:mm a"
+    } else if calendar.isDateInToday(date) {
+        formatter.dateFormat = "'Today at' h:mm a"
+    } else if date > now {
+        formatter.dateFormat = "EEEE 'at' h:mm a"
+    } else {
+        formatter.dateFormat = "MMM d 'at' h:mm a"
+    }
+
+    let dateString = formatter.string(from: date)
+    return dateString
+  }
+      
+}
+
 class ReservationConfirmedViewController: UIViewController {
   
   private let intent: BookRestaurantIntent
@@ -34,6 +59,9 @@ class ReservationConfirmedViewController: UIViewController {
     confirmedView.reservationDateTimeLabel.text = "Tomorrow at 10am"
     confirmedView.restaurantImage.applyRoundedCorners()
     confirmedView.restaurantImage.image = UIImage(named: "da_beppe")
+    let calendar = Calendar.current
+    let dateTime = calendar.date(byAdding: intent.time!, to: calendar.date(from: intent.date!)!)
+    confirmedView.reservationDateTimeLabel.text = DateTimeUtils.dateToNaturalLanguage(from: dateTime!)
   }
 
 }

@@ -10,6 +10,38 @@ import Intents
 import os.log
 
 public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling {
+  public func resolveDate(for intent: BookRestaurantIntent, with completion: @escaping (INDateComponentsResolutionResult) -> Void) {
+    
+    //TODO: Allows to pick time only in the future
+    guard let dateComponents = intent.date else {
+      completion(INDateComponentsResolutionResult.needsValue())
+      return
+    }
+    
+//    guard let date = dateComponents.date else {
+//      completion(INDateComponentsResolutionResult.unsupported())
+//      return
+//    }
+//
+//    if date.timeIntervalSinceNow > 0 {
+      let resolvedComponents = DateComponents(year: dateComponents.year, month: dateComponents.month, day: dateComponents.day)
+      completion(INDateComponentsResolutionResult.success(with: resolvedComponents))
+//        } else {
+//          completion(INDateComponentsResolutionResult.success(with: dateComponents))
+//            completion(INDateComponentsResolutionResult.unsupported())
+//        }
+  }
+  
+  
+  public func resolveTime(for intent: BookRestaurantIntent, with completion: @escaping (INDateComponentsResolutionResult) -> Void) {
+    guard let time = intent.time else {
+      completion(INDateComponentsResolutionResult.needsValue())
+      return
+    }
+    completion(INDateComponentsResolutionResult.success(with: time))
+  }
+  
+  
   @available(iOSApplicationExtension 13.0, *)
   public func resolveRestaurant(for intent: BookRestaurantIntent, with completion: @escaping (RestaurantResolutionResult) -> Void) {
     
