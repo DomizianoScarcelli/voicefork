@@ -62,108 +62,6 @@
 				<dict>
 					<key>INIntentParameterConfigurable</key>
 					<true/>
-					<key>INIntentParameterDisplayName</key>
-					<string>Date</string>
-					<key>INIntentParameterDisplayNameID</key>
-					<string>RuqXCG</string>
-					<key>INIntentParameterDisplayPriority</key>
-					<integer>1</integer>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataDateStyle</key>
-						<string>Full</string>
-						<key>INIntentParameterMetadataFormat</key>
-						<string>Style</string>
-						<key>INIntentParameterMetadataTemplateID</key>
-						<string>JIbmEb</string>
-						<key>INIntentParameterMetadataTimeStyle</key>
-						<string>Full</string>
-						<key>INIntentParameterMetadataType</key>
-						<string>Date</string>
-					</dict>
-					<key>INIntentParameterName</key>
-					<string>date</string>
-					<key>INIntentParameterPromptDialogs</key>
-					<array>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Configuration</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>For when?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>vvujGG</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Primary</string>
-						</dict>
-					</array>
-					<key>INIntentParameterSupportsResolution</key>
-					<true/>
-					<key>INIntentParameterTag</key>
-					<integer>4</integer>
-					<key>INIntentParameterType</key>
-					<string>DateComponents</string>
-				</dict>
-				<dict>
-					<key>INIntentParameterConfigurable</key>
-					<true/>
-					<key>INIntentParameterDisplayName</key>
-					<string>Time</string>
-					<key>INIntentParameterDisplayNameID</key>
-					<string>dsDMUr</string>
-					<key>INIntentParameterDisplayPriority</key>
-					<integer>2</integer>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataDateStyle</key>
-						<string>Full</string>
-						<key>INIntentParameterMetadataFormat</key>
-						<string>Template</string>
-						<key>INIntentParameterMetadataTemplate</key>
-						<string>hh:mm</string>
-						<key>INIntentParameterMetadataTemplateID</key>
-						<string>IM2zgF</string>
-						<key>INIntentParameterMetadataTimeStyle</key>
-						<string>Full</string>
-						<key>INIntentParameterMetadataType</key>
-						<string>Time</string>
-					</dict>
-					<key>INIntentParameterName</key>
-					<string>time</string>
-					<key>INIntentParameterPromptDialogs</key>
-					<array>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Configuration</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>At what time?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>ZqlGw5</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Primary</string>
-						</dict>
-					</array>
-					<key>INIntentParameterSupportsResolution</key>
-					<true/>
-					<key>INIntentParameterTag</key>
-					<integer>6</integer>
-					<key>INIntentParameterType</key>
-					<string>DateComponents</string>
-				</dict>
-				<dict>
-					<key>INIntentParameterConfigurable</key>
-					<true/>
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
@@ -171,7 +69,7 @@
 					<key>INIntentParameterDisplayNameID</key>
 					<string>NYiRa4</string>
 					<key>INIntentParameterDisplayPriority</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>INIntentParameterName</key>
 					<string>restaurant</string>
 					<key>INIntentParameterObjectType</key>
@@ -239,6 +137,108 @@
 					<integer>2</integer>
 					<key>INIntentParameterType</key>
 					<string>Object</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Date</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>RuqXCG</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDateStyle</key>
+						<string>Full</string>
+						<key>INIntentParameterMetadataFormat</key>
+						<string>Style</string>
+						<key>INIntentParameterMetadataTemplateID</key>
+						<string>JIbmEb</string>
+						<key>INIntentParameterMetadataTimeStyle</key>
+						<string>Full</string>
+						<key>INIntentParameterMetadataType</key>
+						<string>Date</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>date</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>For when?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>vvujGG</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>4</integer>
+					<key>INIntentParameterType</key>
+					<string>DateComponents</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Time</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>dsDMUr</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>3</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDateStyle</key>
+						<string>Full</string>
+						<key>INIntentParameterMetadataFormat</key>
+						<string>Template</string>
+						<key>INIntentParameterMetadataTemplate</key>
+						<string>hh:mm</string>
+						<key>INIntentParameterMetadataTemplateID</key>
+						<string>IM2zgF</string>
+						<key>INIntentParameterMetadataTimeStyle</key>
+						<string>Full</string>
+						<key>INIntentParameterMetadataType</key>
+						<string>Time</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>time</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>At what time?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>ZqlGw5</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>6</integer>
+					<key>INIntentParameterType</key>
+					<string>DateComponents</string>
 				</dict>
 			</array>
 			<key>INIntentResponse</key>
