@@ -40,21 +40,35 @@
         </capability-binding>
     </shortcut>
 
-    <shortcut android:shortcutId="reservations"
-        android:shortcutShortLabel="@string/reservations_ss">
-        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
-            <parameter-binding
-                android:key="feature"
-                android:value="@array/reservations_synonyms" />
-        </capability-binding>
-    </shortcut>
-
     <shortcut android:shortcutId="settings"
         android:shortcutShortLabel="@string/settings_ss">
         <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
             <parameter-binding
                 android:key="feature"
                 android:value="@array/settings_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <capability android:name="actions.intent.GET_THING">
+        <app-widget
+            android:identifier="GET_RESERVATIONS"
+            android:targetClass="com.frontend.widgets.ReservationWidgetProvider"
+            android:targetPackage="com.frontend">
+            <extra android:name="hasTts" android:value="true"/>
+        </app-widget>
+        <intent
+            android:identifier="GET_RESERVATIONS_FALLBACK"
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.frontend.widgets.ReservationWidgetProvider">
+        </intent>
+    </capability>
+
+    <shortcut android:shortcutId="show_reservations"
+        android:shortcutShortLabel="@string/reservations_ss">
+        <capability-binding android:key="actions.intent.GET_THING">
+            <parameter-binding
+                android:key="name"
+                android:value="@array/reservations_synonyms" />
         </capability-binding>
     </shortcut>
 </shortcuts>

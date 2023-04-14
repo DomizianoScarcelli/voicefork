@@ -7,4 +7,11 @@
     <string name="reservations_ss">reservations</string>
     <string name="settings_ls">settings</string>
     <string name="settings_ss">settings</string>
+
+    <string name="widget_no_data">No reservations found</string>
+    <string name="widget_title">Last Reservations:</string>
+    <string name="widget_description">%s</string>
+    <string name="widget_reservations">Reservations List: %1$s</string>
+    <string name="widget_activity_speech">Your last reservations are: %1%s</string>
+    <string name="widget_activity_text">Your last reservations are: %1%s</string>
 </resources>
