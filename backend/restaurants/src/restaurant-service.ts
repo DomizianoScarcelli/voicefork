@@ -25,3 +25,5 @@ class RestaurantService {
 		return result
 	}
 }
+
+export default RestaurantService

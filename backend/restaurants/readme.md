@@ -19,7 +19,7 @@ Everything should be working, if you have some problems, try running the contain
 docker compose up --remove-orphans --force-recreate
 ```
 
-If you change the prisma.schema, you can update it by executing the command:
+If you change the schema.prisma, you can update it by executing the command:
 
 ```
 npx prisma migrate dev --name init
