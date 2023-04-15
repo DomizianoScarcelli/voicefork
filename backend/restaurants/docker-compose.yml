@@ -25,16 +25,20 @@ services:
             - restaurantNet
 
     app:
-        build: .
+        build:
+            context: ./
         container_name: restaurants
         ports:
             - "3000:3000"
         environment:
             - DATABASE_URL=mysql://root:root@mysql:3306/restaurantsDB
         volumes:
-            - .:/app
+            - ./src:/app/src:z
         networks:
             - restaurantNet
+        depends_on:
+            - db
+        command: npx prisma migrate deploy
 
 networks:
     restaurantNet:

@@ -16,7 +16,7 @@ docker compose up
 Everything should be working, if you have some problems, try running the containers with:
 
 ```
-docker compose up --remove-orphans --force-recreate
+docker compose up --build
 ```
 
 If you change the schema.prisma, you can update it by executing the command:
