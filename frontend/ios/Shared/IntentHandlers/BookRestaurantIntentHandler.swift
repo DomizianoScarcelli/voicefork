@@ -7,7 +7,6 @@
 
 import UIKit
 import Intents
-import os.log
 
 public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling {
   public func resolveNumberOfPeople(for intent: BookRestaurantIntent, with completion: @escaping (BookRestaurantNumberOfPeopleResolutionResult) -> Void) {
@@ -51,29 +50,6 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
     }
     completion(INDateComponentsResolutionResult.success(with: time))
   }
-  
-//  @available(iOSApplicationExtension 13.0, *)
-//  public func resolveRestaurant(for intent: BookRestaurantIntent, with completion: @escaping (RestaurantResolutionResult) -> Void) {
-//
-//    // Build the list of available restaurants
-//    var restaurantList: [Restaurant] = [Restaurant]()
-//
-//    getAddressList {_address in
-//      let names = [_address.zipCode, _address.city]
-//      for name in names {
-//        let restaurant = Restaurant(identifier: name, display: name)
-//        restaurant.name = name
-//        restaurantList.append(restaurant)
-//      }
-//
-//      guard let restaurant = intent.restaurant else {
-//        completion(RestaurantResolutionResult.disambiguation(with: restaurantList))
-//        return
-//      }
-//      completion(RestaurantResolutionResult.success(with: restaurant))
-//    }
-//
-//  }
   
     public func confirm(intent: BookRestaurantIntent, completion: @escaping (BookRestaurantIntentResponse) -> Void) {
       completion(BookRestaurantIntentResponse(code: .ready, userActivity: nil))

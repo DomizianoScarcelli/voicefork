@@ -10,6 +10,7 @@
 			<array>
 				<string>BookRestaurantIntent</string>
 				<string>INSendMessageIntent</string>
+				<string>MyReservationsIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>

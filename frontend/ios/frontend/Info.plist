@@ -40,6 +40,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>BookRestaurantIntent</string>
+		<string>MyReservationsIntent</string>
 		<string>NearbyRestaurantsIntentHandler</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

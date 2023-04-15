@@ -75,6 +75,9 @@
 		96D272FC29DCA427001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
 		96D272FD29DCA42B001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
 		96E604E729EAF8FE007954AB /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E604E629EAF8FE007954AB /* RestaurantModel.swift */; };
+		96E604EB29EB05B1007954AB /* MyReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E604EA29EB05B1007954AB /* MyReservationsViewController.swift */; };
+		96E604EE29EB074B007954AB /* MyReservationsIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E604EC29EB066F007954AB /* MyReservationsIntentHandler.swift */; };
+		96E604F329EB0825007954AB /* MyReservationsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96E604F229EB0825007954AB /* MyReservationsView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +196,9 @@
 		96D272EB29DCA175001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRestaurantIntentHandler.swift; sourceTree = "<group>"; };
 		96E604E629EAF8FE007954AB /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
+		96E604EA29EB05B1007954AB /* MyReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewController.swift; sourceTree = "<group>"; };
+		96E604EC29EB066F007954AB /* MyReservationsIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsIntentHandler.swift; sourceTree = "<group>"; };
+		96E604F229EB0825007954AB /* MyReservationsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyReservationsView.xib; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -308,15 +314,12 @@
 		9643830829DAC247000007E7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				96E604F629EB0899007954AB /* Extensions */,
+				96E604F029EB07EE007954AB /* Utils */,
+				96E604EF29EB07D1007954AB /* IntentHandlers */,
 				96CEA33C29E82FA200FE8611 /* Decodables */,
-				9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */,
 				9695677529DB1B7400CF7330 /* Intents.intentdefinition */,
-				96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */,
 				967F095B29DEA6BE00542DD2 /* Shared.xcassets */,
-				967F096329DEA9C300542DD2 /* UIImage+Extension.swift */,
-				96CEA33629E8138100FE8611 /* DateTimeUtils.swift */,
-				96CEA33A29E8149900FE8611 /* RequestsUtils.swift */,
-				96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -365,13 +368,59 @@
 		96D272E529DCA175001EA1E4 /* VoiceForkIntentsUI */ = {
 			isa = PBXGroup;
 			children = (
+				96E604F429EB083A007954AB /* Controllers */,
+				96E604F129EB0803007954AB /* Views */,
 				96D272E629DCA175001EA1E4 /* IntentViewController.swift */,
-				96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */,
 				96CA846929DE18F5002D3481 /* MainInterface.storyboard */,
 				96D272EB29DCA175001EA1E4 /* Info.plist */,
-				96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */,
 			);
 			path = VoiceForkIntentsUI;
+			sourceTree = "<group>";
+		};
+		96E604EF29EB07D1007954AB /* IntentHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */,
+				96E604EC29EB066F007954AB /* MyReservationsIntentHandler.swift */,
+			);
+			path = IntentHandlers;
+			sourceTree = "<group>";
+		};
+		96E604F029EB07EE007954AB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				96CEA33629E8138100FE8611 /* DateTimeUtils.swift */,
+				96CEA33A29E8149900FE8611 /* RequestsUtils.swift */,
+				96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		96E604F129EB0803007954AB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				96A4B63D29DDEFB60070CD2F /* ReservationConfirmedView.xib */,
+				96E604F229EB0825007954AB /* MyReservationsView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		96E604F429EB083A007954AB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				96A4B63F29DDF01A0070CD2F /* ReservationConfirmedViewController.swift */,
+				96E604EA29EB05B1007954AB /* MyReservationsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		96E604F629EB0899007954AB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */,
+				967F096329DEA9C300542DD2 /* UIImage+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -586,6 +635,7 @@
 				969C750029EEB39F0045F42B /* SimpleLineIcons.ttf in Resources */,
 				969C750129EEB39F0045F42B /* Zocial.ttf in Resources */,
 				96A4B63E29DDEFB60070CD2F /* ReservationConfirmedView.xib in Resources */,
+				96E604F329EB0825007954AB /* MyReservationsView.xib in Resources */,
 				96CA846A29DE18F5002D3481 /* MainInterface.storyboard in Resources */,
 				967F096129DEA73500542DD2 /* Shared.xcassets in Resources */,
 			);
@@ -704,6 +754,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96E604E729EAF8FE007954AB /* RestaurantModel.swift in Sources */,
+				96E604EE29EB074B007954AB /* MyReservationsIntentHandler.swift in Sources */,
 				96CEA33729E8138100FE8611 /* DateTimeUtils.swift in Sources */,
 				96CEA33B29E8149900FE8611 /* RequestsUtils.swift in Sources */,
 				96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */,
@@ -730,6 +781,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96A4B64029DDF01A0070CD2F /* ReservationConfirmedViewController.swift in Sources */,
+				96E604EB29EB05B1007954AB /* MyReservationsViewController.swift in Sources */,
 				96D272F929DCA198001EA1E4 /* Intents.intentdefinition in Sources */,
 				96D272E729DCA175001EA1E4 /* IntentViewController.swift in Sources */,
 			);
