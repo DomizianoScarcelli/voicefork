@@ -18,4 +18,15 @@
         <item>reservation page</item>
         <item>reservation view</item>
     </array>
+
+    <array name="add_reservation_synonyms">
+        <item>add a reservation</item>
+        <item>make a reservation</item>
+        <item>reserve a table</item>
+    </array>
+
+    <string-array name="AddReservationQuery">
+        <item>make a reservation to $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
+        <item>reserve a table at $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
+    </string-array>
 </resources>

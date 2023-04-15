@@ -21,7 +21,8 @@
     <!-- </capability> -->
 <!--</shortcuts>-->
 
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <capability android:name="actions.intent.OPEN_APP_FEATURE">
         <intent>
             <url-template android:value="voicefork://{feature}" />
@@ -71,4 +72,42 @@
                 android:value="@array/reservations_synonyms" />
         </capability-binding>
     </shortcut>
+
+    <capability
+        android:name="custom.actions.intent.ADD_RESERVATION"
+        app:queryPatterns="@array/AddReservationQuery">
+        <app-widget
+            android:identifier="ADD_RESERVATION"
+            android:targetClass="com.frontend.widgets.AddReservationWidgetProvider"
+            android:targetPackage="com.frontend">
+            <parameter
+                android:name="restaurantName"
+                android:key="restaurantName"
+                android:mimeType="https://schema.org/Text"/>
+            <parameter
+                android:name="reservationDate"
+                android:key="reservationDate"
+                android:mimeType="https://schema.org/Time"/>
+            <parameter
+                android:name="numberOfPeople"
+                android:key="numberOfPeople"
+                android:mimeType="https://schema.org/Number"/>
+            <extra android:name="hasTts" android:value="true"/>
+        </app-widget>
+        <intent
+            android:identifier="ADD_RESERVATION_FALLBACK"
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.frontend.widgets.AddReservationWidgetProvider">
+        </intent>
+    </capability>
+
+    <shortcut android:shortcutId="add_reservation"
+        android:shortcutShortLabel="@string/add_reservation_ss">
+        <capability-binding android:key="actions.intent.ADD_RESERVATION">
+            <parameter-binding
+                android:key="name"
+                android:value="@array/add_reservation_synonyms" />
+        </capability-binding>
+    </shortcut>
+
 </shortcuts>
