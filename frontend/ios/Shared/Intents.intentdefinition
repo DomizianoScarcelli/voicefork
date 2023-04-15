@@ -311,7 +311,7 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>8</integer>
+				<integer>9</integer>
 				<key>INIntentResponseOutput</key>
 				<string>restaurant</string>
 				<key>INIntentResponseParameters</key>

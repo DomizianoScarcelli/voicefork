@@ -30,7 +30,7 @@
 		96CA846A29DE18F5002D3481 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96CA846929DE18F5002D3481 /* MainInterface.storyboard */; };
 		96CEA33729E8138100FE8611 /* DateTimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEA33629E8138100FE8611 /* DateTimeUtils.swift */; };
 		96CEA33B29E8149900FE8611 /* RequestsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEA33A29E8149900FE8611 /* RequestsUtils.swift */; };
-		96CEA33E29E82FB200FE8611 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEA33D29E82FB200FE8611 /* Address.swift */; };
+		96CEA33E29E82FB200FE8611 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEA33D29E82FB200FE8611 /* AddressModel.swift */; };
 		96CEA34429E8314900FE8611 /* HTTPRequestsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */; };
 		96D272DA29DCA174001EA1E4 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB679F29DA26E0005D2329 /* Intents.framework */; };
 		96D272E429DCA175001EA1E4 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BB67AA29DA26E1005D2329 /* IntentsUI.framework */; };
@@ -42,6 +42,7 @@
 		96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */; };
 		96D272FC29DCA427001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
 		96D272FD29DCA42B001EA1E4 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
+		96E604E729EAF8FE007954AB /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E604E629EAF8FE007954AB /* RestaurantModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,7 +135,7 @@
 		96CA846929DE18F5002D3481 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		96CEA33629E8138100FE8611 /* DateTimeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeUtils.swift; sourceTree = "<group>"; };
 		96CEA33A29E8149900FE8611 /* RequestsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsUtils.swift; sourceTree = "<group>"; };
-		96CEA33D29E82FB200FE8611 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		96CEA33D29E82FB200FE8611 /* AddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
 		96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestsUtils.swift; sourceTree = "<group>"; };
 		96D272D929DCA174001EA1E4 /* VoiceForkIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceForkIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D272DC29DCA174001EA1E4 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		96D272E629DCA175001EA1E4 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		96D272EB29DCA175001EA1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D272FA29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRestaurantIntentHandler.swift; sourceTree = "<group>"; };
+		96E604E629EAF8FE007954AB /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -273,7 +275,8 @@
 		96CEA33C29E82FA200FE8611 /* Decodables */ = {
 			isa = PBXGroup;
 			children = (
-				96CEA33D29E82FB200FE8611 /* Address.swift */,
+				96CEA33D29E82FB200FE8611 /* AddressModel.swift */,
+				96E604E629EAF8FE007954AB /* RestaurantModel.swift */,
 			);
 			path = Decodables;
 			sourceTree = "<group>";
@@ -596,13 +599,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E604E729EAF8FE007954AB /* RestaurantModel.swift in Sources */,
 				96CEA33729E8138100FE8611 /* DateTimeUtils.swift in Sources */,
 				96CEA33B29E8149900FE8611 /* RequestsUtils.swift in Sources */,
 				96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */,
 				9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */,
 				967F096429DEA9C300542DD2 /* UIImage+Extension.swift in Sources */,
 				9643830A29DAC272000007E7 /* NSUserActivity+IntentData.swift in Sources */,
-				96CEA33E29E82FB200FE8611 /* Address.swift in Sources */,
+				96CEA33E29E82FB200FE8611 /* AddressModel.swift in Sources */,
 				96CEA34429E8314900FE8611 /* HTTPRequestsUtils.swift in Sources */,
 				964382EE29DAC1BA000007E7 /* SiriIntentFramework.docc in Sources */,
 			);

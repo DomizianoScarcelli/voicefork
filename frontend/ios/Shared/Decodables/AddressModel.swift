@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address: Decodable {
+public struct AddressModel: Decodable {
     var id: Int
     var uid: String
     var city: String
