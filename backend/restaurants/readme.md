@@ -24,3 +24,9 @@ If you change the prisma.schema, you can update it by executing the command:
 ```
 npx prisma migrate dev --name init
 ```
+
+-   The app is running on localhost:3000
+-   The adminer (database manager) is running on localhost:8080. You can use it to have a GUI to manage the database such as phpMyAdmin.
+-   The mysql database is running on the 3306 port.
+
+To use postman, you can import the collection that is in the `/postman-collection` folder
