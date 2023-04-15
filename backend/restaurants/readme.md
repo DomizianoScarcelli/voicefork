@@ -7,11 +7,19 @@ DATABASE_URL="mysql://root:root@localhost:3306/restaurantsDB"
 PORT = 3000
 ```
 
-Then install the npm dependencies with `npm install`
+Then you can run the database along with the app by doing
 
-Until we can't publish the DB to AWS, run it in a docker container doing `docker compose up`
+```
+docker compose up
+```
 
-Then create the database along with the schema with the command:
+Everything should be working, if you have some problems, try running the containers with:
+
+```
+docker compose up --remove-orphans --force-recreate
+```
+
+If you change the prisma.schema, you can update it by executing the command:
 
 ```
 npx prisma migrate dev --name init
