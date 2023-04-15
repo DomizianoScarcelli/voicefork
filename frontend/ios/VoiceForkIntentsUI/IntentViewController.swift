@@ -17,11 +17,12 @@ import IntentKit
 
 class IntentViewController: UIViewController, INUIHostedViewControlling {
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view.
-//
-//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NSLog("VoiceForkDebug: View loaded")
+        // Do any additional setup after loading the view.
+
+    }
         
     // MARK: - INUIHostedViewControlling
     
@@ -29,26 +30,42 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
     func configureView(for parameters: Set<INParameter>, of interaction: INInteraction, interactiveBehavior: INUIInteractiveBehavior, context: INUIHostedViewContext, completion: @escaping (Bool, Set<INParameter>, CGSize) -> Void) {
       
         guard let intent = interaction.intent as? BookRestaurantIntent else {
+            NSLog("VoiceForkDebug: Failed at first step!")
             completion(false, Set(), .zero)
             return
         }
-        if interaction.intentHandlingStatus == .success {
+      NSLog("VoiceForkDebug: I'm in configure view!")
+      NSLog("VoiceForkDebug: the intentHandlingStatus is \(interaction.intentHandlingStatus)")
+      NSLog("VoiceForkDebug: the whole interaction is \(interaction)")
+      if interaction.intentHandlingStatus == .success {
+        NSLog("VoiceForkDebug: I'm inside the success")
           if let response = interaction.intentResponse as? BookRestaurantIntentResponse {
-            let viewController = ReservationConfirmedViewController(for: intent, with: response)
-              attachChild(viewController)
+            NSLog("VoiceForkDebug: I'm handling the response")
+          let viewController = ReservationConfirmedViewController(for: intent, with: response)
+            attachChild(viewController)
+            NSLog("VoiceForkDebug: Succeded!")
               completion(true, parameters, desiredSize)
           }
         }
-        completion(false, parameters, .zero)
+        completion(false, parameters, .zero) //TODO: originally uncommented
       }
     
       private func attachChild(_ viewController: UIViewController) {
-          addChild(viewController)
-    
+        NSLog("VoiceForkDebug: I'm about to attach the child")
+        addChild(viewController)
+        NSLog("VoiceForkDebug: I attached the child")
         
+        NSLog("VoiceForkDebug: the viewcontroller is \(viewController)")
+        NSLog("VoiceForkDebug: the viewcontroller.view is \(String(describing: viewController.view))")
+        if viewController.view == nil {
+          NSLog("VoiceForkDebug: the viewcontroller.view is nil (1)")
+        }
         if let subview = viewController.view {
+          NSLog("VoiceForkDebug: I'm handling the subview")
             view.addSubview(subview)
             subview.translatesAutoresizingMaskIntoConstraints = false
+          NSLog("VoiceForkDebug: I finished handling the subview")
+          
 
 //            // Set the child controller's view to be the exact same size as the parent controller's view.
 //            subview.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true

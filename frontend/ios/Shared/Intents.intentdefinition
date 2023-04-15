@@ -26,35 +26,33 @@
 			<key>INIntentDescriptionID</key>
 			<string>LEMKQm</string>
 			<key>INIntentLastParameterTag</key>
-			<integer>6</integer>
+			<integer>12</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key>restaurant,date,time</key>
+				<key>restaurant,date,time,numberOfPeople</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Restaurant with date and time</string>
+					<string>Supported Combination 1</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>Uds3gd</string>
-					<key>INIntentParameterCombinationUpdatesLinked</key>
-					<true/>
 				</dict>
 			</dict>
 			<key>INIntentName</key>
 			<string>BookRestaurant</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>restaurant,date,time</key>
+				<key>date,restaurant,time</key>
 				<dict>
-					<key>INIntentParameterCombinationIsLinked</key>
+					<key>INIntentParameterCombinationIsPrimary</key>
 					<true/>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Restaurant with date and time</string>
+					<string>Combination 1</string>
 					<key>INIntentParameterCombinationTitleID</key>
-					<string>yCnlMV</string>
+					<string>kZHAuH</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -62,20 +60,23 @@
 				<dict>
 					<key>INIntentParameterConfigurable</key>
 					<true/>
-					<key>INIntentParameterCustomDisambiguation</key>
-					<true/>
 					<key>INIntentParameterDisplayName</key>
 					<string>Restaurant</string>
 					<key>INIntentParameterDisplayNameID</key>
 					<string>NYiRa4</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>None</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>GLz9KL</string>
+						<key>INIntentParameterMetadataDisableAutocorrect</key>
+						<true/>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>restaurant</string>
-					<key>INIntentParameterObjectType</key>
-					<string>Restaurant</string>
-					<key>INIntentParameterObjectTypeNamespace</key>
-					<string>NCiwJX</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -94,49 +95,13 @@
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
 						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Which restaurant do you want to reserve?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>x5QdXh</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationSelection</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There also are,</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>mIuhSA</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>SubsequentIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${restaurant}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>k5Fq7u</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
-						</dict>
 					</array>
 					<key>INIntentParameterSupportsResolution</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>2</integer>
+					<integer>7</integer>
 					<key>INIntentParameterType</key>
-					<string>Object</string>
+					<string>String</string>
 				</dict>
 				<dict>
 					<key>INIntentParameterConfigurable</key>
@@ -240,6 +205,83 @@
 					<key>INIntentParameterType</key>
 					<string>DateComponents</string>
 				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Number Of People</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>SIhOe6</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>4</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataMaximumValue</key>
+						<integer>50</integer>
+						<key>INIntentParameterMetadataType</key>
+						<string>Field</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>numberOfPeople</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>For how many people?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>tbXwYd</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>12</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+					<key>INIntentParameterUnsupportedReasons</key>
+					<array>
+						<dict>
+							<key>INIntentParameterUnsupportedReasonCode</key>
+							<string>negativeNumbersNotSupported</string>
+							<key>INIntentParameterUnsupportedReasonDefault</key>
+							<true/>
+							<key>INIntentParameterUnsupportedReasonFormatString</key>
+							<string>${displayName} can’t be negative.</string>
+							<key>INIntentParameterUnsupportedReasonFormatStringID</key>
+							<string>Jgz1fa</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterUnsupportedReasonCode</key>
+							<string>greaterThanMaximumValue</string>
+							<key>INIntentParameterUnsupportedReasonDefault</key>
+							<true/>
+							<key>INIntentParameterUnsupportedReasonFormatString</key>
+							<string>${displayName} can’t be higher than ${maximumValue}.</string>
+							<key>INIntentParameterUnsupportedReasonFormatStringID</key>
+							<string>osInW4</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterUnsupportedReasonCode</key>
+							<string>lessThanMinimumValue</string>
+							<key>INIntentParameterUnsupportedReasonDefault</key>
+							<true/>
+							<key>INIntentParameterUnsupportedReasonFormatString</key>
+							<string>${displayName} can’t be lower than ${minimumValue}.</string>
+							<key>INIntentParameterUnsupportedReasonFormatStringID</key>
+							<string>e5zEcG</string>
+						</dict>
+					</array>
+				</dict>
 			</array>
 			<key>INIntentResponse</key>
 			<dict>
@@ -247,7 +289,7 @@
 				<array>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>Booked ${restaurant.name}!</string>
+						<string>Booked ${restaurant}</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>Pv0Tht</string>
 						<key>INIntentResponseCodeName</key>
@@ -269,7 +311,7 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>7</integer>
+				<integer>8</integer>
 				<key>INIntentResponseOutput</key>
 				<string>restaurant</string>
 				<key>INIntentResponseParameters</key>
@@ -283,14 +325,10 @@
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>restaurant</string>
-						<key>INIntentResponseParameterObjectType</key>
-						<string>Restaurant</string>
-						<key>INIntentResponseParameterObjectTypeNamespace</key>
-						<string>NCiwJX</string>
 						<key>INIntentResponseParameterTag</key>
-						<integer>6</integer>
+						<integer>8</integer>
 						<key>INIntentResponseParameterType</key>
-						<string>Object</string>
+						<string>String</string>
 					</dict>
 				</array>
 			</dict>
