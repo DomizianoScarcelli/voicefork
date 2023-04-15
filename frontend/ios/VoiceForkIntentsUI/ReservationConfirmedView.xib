@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReservationConfirmedViewController" customModule="VoiceForkIntentsUI" customModuleProvider="target">
+            <connections>
+                <outlet property="confirmedView" destination="iN0-l3-epB" id="5Dn-Tc-FbR"/>
+                <outlet property="view" destination="iN0-l3-epB" id="U4M-4I-ZBG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" ambiguous="YES" id="iN0-l3-epB" customClass="ReservationConfirmedView" customModule="VoiceForkIntentsUI" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="424" height="197"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Soc-ZZ-JVC">
+                    <rect key="frame" x="10" y="10" width="404" height="177"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KEX-Zf-pXQ">
+                            <rect key="frame" x="0.0" y="0.0" width="205" height="177"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="NKr-lz-pqk"/>
+                                <constraint firstAttribute="height" constant="80" id="jd2-1w-Kjh"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ae4-QN-32T">
+                            <rect key="frame" x="215" y="0.0" width="189" height="177"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Reservation Confirmed!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YII-OF-R2y" userLabel="ReservationConfirmedTextLabel">
+                                    <rect key="frame" x="0.0" y="0.0" width="189" height="126"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Restaurant Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ieq-dc-WSa" userLabel="RestaurantNameLabel">
+                                    <rect key="frame" x="0.0" y="126" width="189" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Date and Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJM-mN-DsZ" userLabel="ReservationDateTimeLabel">
+                                    <rect key="frame" x="0.0" y="143" width="189" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Num People" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKY-bo-r7C" userLabel="NumberOfPeopleLabel">
+                                    <rect key="frame" x="0.0" y="160" width="189" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Ae4-QN-32T" firstAttribute="centerY" secondItem="Soc-ZZ-JVC" secondAttribute="centerY" id="R0u-EW-PaH"/>
+                        <constraint firstItem="Ae4-QN-32T" firstAttribute="leading" secondItem="KEX-Zf-pXQ" secondAttribute="trailing" constant="30" id="dbA-8v-A0j"/>
+                        <constraint firstAttribute="trailing" secondItem="Ae4-QN-32T" secondAttribute="trailing" constant="10" id="nTf-f4-TFE"/>
+                        <constraint firstAttribute="bottom" secondItem="KEX-Zf-pXQ" secondAttribute="bottom" constant="10" id="oQi-mp-Abd"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Soc-ZZ-JVC" secondAttribute="trailing" constant="10" id="GRG-fO-adB"/>
+                <constraint firstAttribute="bottom" secondItem="Soc-ZZ-JVC" secondAttribute="bottom" constant="10" id="JHD-Yi-fW7"/>
+                <constraint firstItem="Soc-ZZ-JVC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="gHF-yw-3MC"/>
+                <constraint firstItem="Soc-ZZ-JVC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="uYe-jt-HMg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="numberOfPeopleLable" destination="XKY-bo-r7C" id="RQs-08-9cq"/>
+                <outlet property="reservationDateTimeLabel" destination="zJM-mN-DsZ" id="pqC-Mt-9rO"/>
+                <outlet property="restaurantImage" destination="KEX-Zf-pXQ" id="Qh3-FN-bn5"/>
+                <outlet property="restaurantNameLabel" destination="Ieq-dc-WSa" id="3Ye-1S-kPC"/>
+            </connections>
+            <point key="canvasLocation" x="-155.72519083969465" y="292.6056338028169"/>
+        </view>
+    </objects>
+</document>
