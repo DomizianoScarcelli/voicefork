@@ -38,7 +38,7 @@ services:
             - restaurantNet
         depends_on:
             - db
-        command: npx prisma migrate deploy
+        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
 
 networks:
     restaurantNet:
