@@ -1,0 +1,7 @@
+<!-- array.xml -->
+<resources>
+    <array name="test_page_synonyms">
+        <item>test page</item>
+        <item>test</item>
+    </array>
+</resources>

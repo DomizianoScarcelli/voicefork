@@ -1,0 +1,113 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<!--<shortcuts>-->
+    <!-- Add shortcuts that launch your app to a specific screen or task. -->
+    <!-- Learn more at https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts -->
+    <!-- <shortcut android:shortcutId="SHORTCUT_ID" -->
+    <!--     android:enabled="true" -->
+    <!--     android:shortcutShortLabel="SHORTCUT_SHORT_LABEL" -->
+    <!--     android:shortcutLongLabel="SHORTCUT_LONG_LABEL" -->
+    <!--     android:shortcutDisabledMessage="SHORTCUT_DISABLED_MESSAGE"> -->
+    <!--     <intent -->
+    <!--         android:action="android.intent.action.VIEW" -->
+    <!--         android:targetClass="REPLACE_IT_WITH_FULL_QUALIFIED_CLASS" -->
+    <!--         android:targetPackage="REPLACE_IT_WITH_TARGET_PACKAGE" /> -->
+    <!-- </shortcut> -->
+
+    <!-- Integrate with Google Assistant App Actions for launching your app with various voice commands. -->
+    <!-- Learn more at: https://developers.google.com/assistant/app/overview -->
+    <!-- <capability android:name="actions.intent.OPEN_APP_FEATURE"> -->
+    <!--     Provide query fulfillment instructions for this capability, or bind it to a shortcut. -->
+    <!--     Learn more at: https://developers.google.com/assistant/app/action-schema -->
+    <!-- </capability> -->
+<!--</shortcuts>-->
+
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <capability android:name="actions.intent.OPEN_APP_FEATURE">
+        <intent>
+            <url-template android:value="voicefork://{feature}" />
+            <parameter
+                android:key="feature"
+                android:name="feature" />
+        </intent>
+    </capability>
+
+    <shortcut android:shortcutId="homepage"
+        android:shortcutShortLabel="@string/homepage_ss">
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/homepage_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <shortcut android:shortcutId="settings"
+        android:shortcutShortLabel="@string/settings_ss">
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/settings_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <capability android:name="actions.intent.GET_THING">
+        <app-widget
+            android:identifier="GET_RESERVATIONS"
+            android:targetClass="com.frontend.widgets.ReservationWidgetProvider"
+            android:targetPackage="com.frontend">
+            <extra android:name="hasTts" android:value="true"/>
+        </app-widget>
+        <intent
+            android:identifier="GET_RESERVATIONS_FALLBACK"
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.frontend.widgets.ReservationWidgetProvider">
+        </intent>
+    </capability>
+
+    <shortcut android:shortcutId="show_reservations"
+        android:shortcutShortLabel="@string/reservations_ss">
+        <capability-binding android:key="actions.intent.GET_THING">
+            <parameter-binding
+                android:key="name"
+                android:value="@array/reservations_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+    <capability
+        android:name="custom.actions.intent.ADD_RESERVATION"
+        app:queryPatterns="@array/AddReservationQuery">
+        <app-widget
+            android:identifier="ADD_RESERVATION"
+            android:targetClass="com.frontend.widgets.AddReservationWidgetProvider"
+            android:targetPackage="com.frontend">
+            <parameter
+                android:name="restaurantName"
+                android:key="restaurantName"
+                android:mimeType="https://schema.org/Text"/>
+            <parameter
+                android:name="reservationDate"
+                android:key="reservationDate"
+                android:mimeType="https://schema.org/Time"/>
+            <parameter
+                android:name="numberOfPeople"
+                android:key="numberOfPeople"
+                android:mimeType="https://schema.org/Number"/>
+            <extra android:name="hasTts" android:value="true"/>
+        </app-widget>
+        <intent
+            android:identifier="ADD_RESERVATION_FALLBACK"
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.frontend.widgets.AddReservationWidgetProvider">
+        </intent>
+    </capability>
+
+    <shortcut android:shortcutId="add_reservation"
+        android:shortcutShortLabel="@string/add_reservation_ss">
+        <capability-binding android:key="actions.intent.ADD_RESERVATION">
+            <parameter-binding
+                android:key="name"
+                android:value="@array/add_reservation_synonyms" />
+        </capability-binding>
+    </shortcut>
+
+</shortcuts>

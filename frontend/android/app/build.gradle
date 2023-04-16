@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
 
@@ -96,10 +97,18 @@ android {
     namespace "com.frontend"
     defaultConfig {
         applicationId "com.frontend"
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 25
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs = ['src/main/java', '/Users/dov/Desktop/voicefork/frontend/android/app/build/generated/rncli/src/main/java']
+            }
+        }
     }
 
     splits {
@@ -154,6 +163,11 @@ dependencies {
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 
+    // Kotlin convertion
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
+    implementation 'com.google.assistant.appactions:widgets:0.0.1'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
@@ -168,3 +182,4 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

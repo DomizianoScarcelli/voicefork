@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">VoiceFork</string>
+
+    <string name="homepage_ls">homepage</string>
+    <string name="homepage_ss">homepage</string>
+    <string name="reservations_ls">reservations</string>
+    <string name="reservations_ss">reservations</string>
+    <string name="settings_ls">settings</string>
+    <string name="settings_ss">settings</string>
+    <string name="add_reservation_ls">add reservation</string>
+    <string name="add_reservation_ss">add reservation</string>
+
+    <string name="widget_no_data">No reservations found</string>
+    <string name="widget_title"></string>
+    <string name="widget_description">%s</string>
+    <string name="widget_reservations"></string>
+    <string name="widget_activity_speech">Your last reservations are: %1%s</string>
+    <string name="widget_activity_text">Your last reservations are: %1%s</string>
+
+    <string name="add_reservation_no_params">in order to add a reservation you should specify the name of the restaurant, the date and the number of people.</string>
+    <string name="add_reservation_example">For example: Make a reservation to Pizzeria da Luigi tomorrow at 1 pm for 2 people.</string>
+    <string name="add_reservation_ok">The reservation to %1$s at %2$s for %3$d has been successfully done.</string>
 </resources>

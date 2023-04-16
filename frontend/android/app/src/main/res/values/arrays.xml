@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="homepage_synonyms">
+        <item>homepage</item>
+        <item>home page</item>
+        <item>home view</item>
+    </array>
+
+    <array name="settings_synonyms">
+        <item>settings</item>
+        <item>setting</item>
+        <item>settings page</item>
+        <item>settings view</item>
+    </array>
+
+    <array name="reservations_synonyms">
+        <item>reservations</item>
+        <item>reservation page</item>
+        <item>reservation view</item>
+    </array>
+
+    <array name="add_reservation_synonyms">
+        <item>add a reservation</item>
+        <item>make a reservation</item>
+        <item>reserve a table</item>
+    </array>
+
+    <string-array name="AddReservationQuery">
+        <item>make a reservation to $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
+        <item>reserve a table at $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
+    </string-array>
+</resources>
