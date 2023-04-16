@@ -9,7 +9,6 @@ const restaurantAPI = (app: Express) => {
 	app.post("/create-restaurant", async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { name, address } = req.body
-			console.log(name, address)
 			const data = await service.CreateRestaurant(name, address)
 			res.json(data)
 		} catch (err) {

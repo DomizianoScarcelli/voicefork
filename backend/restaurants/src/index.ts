@@ -8,7 +8,7 @@ dotenv.config()
 const app: Express = express()
 const port = process.env.PORT
 
-// app.use(express.json())
+app.use(express.json())
 // app.use(cors) #This causes some problems
 // app.use(express.static(__dirname + "/public"))
 
