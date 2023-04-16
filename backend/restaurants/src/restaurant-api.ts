@@ -1,4 +1,4 @@
-import RestaurantService from "./restaurant-repository"
+import RestaurantService from "./restaurant-service"
 import { Express, Request, Response, NextFunction } from "express"
 
 /**
@@ -6,6 +6,7 @@ import { Express, Request, Response, NextFunction } from "express"
  */
 const restaurantAPI = (app: Express) => {
 	const service = new RestaurantService()
+
 	app.post("/create-restaurant", async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { name, address } = req.body
@@ -32,7 +33,17 @@ const restaurantAPI = (app: Express) => {
 			const data = await service.GetAllRestaurants()
 			res.json(data)
 		} catch (err) {
-			console.log("here")
+			next(err)
+		}
+	})
+
+	app.get("/find-similar-restaurant/:query", async (req: Request, res: Response, next: NextFunction) => {
+		console.log("Getting all restaurants...")
+		try {
+			const { query } = req.params
+			const data = await service.GetRestaurantBySimilarName(query)
+			res.json(data)
+		} catch (err) {
 			next(err)
 		}
 	})
