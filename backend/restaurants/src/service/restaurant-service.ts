@@ -1,7 +1,7 @@
-import RestaurantRepository from "./restaurant-repository"
-import { LevenshteinDistance } from "./utils/similarityUtils"
-import { addressToLatLng } from "./utils/localizationUtils"
-import { FullRestaurant } from "./shared/types"
+import RestaurantRepository from "../repository/restaurant-repository"
+import { LevenshteinDistance } from "../utils/similarityUtils"
+import { addressToLatLng } from "../utils/localizationUtils"
+import { FullRestaurant } from "../shared/types"
 import { Restaurant } from "@prisma/client"
 
 /**
@@ -62,7 +62,7 @@ class RestaurantService {
 		return results
 	}
 
-	async GetRestaurantBySimilarName(query: string) {
+	async GetRestaurantBySimilarName(query: string): Promise<Map<number, number>> {
 		const allRestaurants = await this.repository.GetAllRestaurants()
 		const distanceMap = new Map()
 		allRestaurants?.forEach(({ id, name }: { id: number; name: string }) => {
@@ -89,7 +89,10 @@ class RestaurantService {
 		return result
 	}
 
-	async DeleteRestaurant(id: number) {
+	async DeleteRestaurant(id: number): Promise<Restaurant | null> {
+		const restaurant = await this.repository.GetRestaurantById(id)
+		if (restaurant == null) return null
+
 		const result = await this.repository.DeleteRestaurant(id)
 		return result
 	}

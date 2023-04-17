@@ -76,7 +76,7 @@ class RestaurantRepository {
 		return addresses
 	}
 
-	async DeleteRestaurant(id: number): Promise<Restaurant> {
+	async DeleteRestaurant(id: number): Promise<Restaurant | null> {
 		const restaurant = await prisma.restaurant.delete({
 			where: {
 				id: id,
