@@ -10,4 +10,10 @@ type FullRestaurant = {
 	latitude: number | null
 	longitude: number | null
 }
-export { LatLng, FullRestaurant }
+
+type DistanceResult = {
+	name: string
+	id: number
+	distance: number
+}
+export { LatLng, FullRestaurant, DistanceResult }

@@ -3,6 +3,7 @@ import { LevenshteinDistance } from "../utils/similarityUtils"
 import { addressToLatLng } from "../utils/localizationUtils"
 import { FullRestaurant } from "../shared/types"
 import { Restaurant } from "@prisma/client"
+import { DistanceResult } from "../shared/types"
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -62,13 +63,18 @@ class RestaurantService {
 		return results
 	}
 
-	async GetRestaurantBySimilarName(query: string): Promise<Map<number, number>> {
+	async GetRestaurantBySimilarName(query: string): Promise<DistanceResult[]> {
 		const allRestaurants = await this.repository.GetAllRestaurants()
-		const distanceMap = new Map()
+		const distanceArr: DistanceResult[] = []
 		allRestaurants?.forEach(({ id, name }: { id: number; name: string }) => {
-			distanceMap.set(id, LevenshteinDistance(query.toLowerCase(), name.toLowerCase()))
+			const element = {
+				name: name,
+				id: id,
+				distance: LevenshteinDistance(query.toLowerCase(), name.toLowerCase()),
+			}
+			distanceArr.push(element)
 		})
-		return Object.fromEntries(distanceMap)
+		return distanceArr
 	}
 
 	async GetAddressById(id: number) {
