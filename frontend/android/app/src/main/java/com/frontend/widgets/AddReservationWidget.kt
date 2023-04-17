@@ -18,7 +18,7 @@ class AddReservationWidget (
 ) {
     private val TAG = "AddReservationWidget"
     private val views = RemoteViews(context.packageName, layout)
-    private val repository = VoiceForkDatabase
+    //private val repository = VoiceForkDatabase
     private val hasBii: Boolean
     private var restaurantName = ""
     private var reservationDate = ""

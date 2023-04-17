@@ -2,10 +2,15 @@ package com.frontend.widgets
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import android.widget.ListView
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
+import com.frontend.MainApplication
 import com.frontend.R
 import com.frontend.data.VoiceForkDatabase
+import com.frontend.utils.Reservation
 import com.google.assistant.appactions.widgets.AppActionsWidgetExtension
 
 class ReservationWidget (
@@ -16,7 +21,8 @@ class ReservationWidget (
     ) {
         private val TAG = "ReservationWidget"
         private val views = RemoteViews(context.packageName, layout)
-        private val repository = VoiceForkDatabase
+        @RequiresApi(Build.VERSION_CODES.O)
+        private val db = VoiceForkDatabase()
         private val hasBii: Boolean
 
         init {
@@ -25,20 +31,21 @@ class ReservationWidget (
             hasBii = !bii.isNullOrBlank()
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun updateAppWidget() {
-            Log.d(TAG, hasBii.toString());
             observeAndUpdateReservations()
         }
 
-        /**
-         * Sets title, duration and distance data to widget
-         */
         private fun setDataToWidget(
-            reservationList: Array<String>
+            reservationList: HashSet<Reservation>
         ) {
+            val widgetText = ""
+            for (reservation in reservationList) {
+                widgetText + reservation.getName() + "\n"
+            }
             views.setTextViewText(
-                R.id.appwidgetReservations,
-                reservationList.joinToString(separator = ", ")
+                R.id.reservation_list,
+                widgetText
             )
         }
 
@@ -60,8 +67,8 @@ class ReservationWidget (
          * Formats and sets no activity data to Widget
          */
         private fun setNoReservationsDataWidget() {
-            val appwidgetTypeTitleText = context.getString((R.string.widget_no_data))
-            val emptyArray = arrayOf<String>()
+            //val appwidgetTypeTitleText = context.getString((R.string.widget_no_data))
+            val emptyArray = HashSet<Reservation>()
             setDataToWidget(emptyArray)
         }
 
@@ -75,15 +82,16 @@ class ReservationWidget (
         /**
          * Create and observe the last activity LiveData.
          */
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun observeAndUpdateReservations() {
-            val reservationsData = repository.getData()
+            val reservationsData = db.getReservations()
 
             if (reservationsData.isEmpty()) {
                 setNoReservationsDataWidget()
                 updateWidget()
             } else {
                 setDataToWidget(reservationsData)
-                setTts("Your last reservations are:" + reservationsData.joinToString(separator = ", "), "Your last reservations are:")
+                setTts("Your upcoming reservations are:" + reservationsData.joinToString(separator = ", "), "Your last reservations are:")
                 updateWidget()
             }
         }

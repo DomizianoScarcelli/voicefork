@@ -11,9 +11,8 @@
     <string name="add_reservation_ss">add reservation</string>
 
     <string name="widget_no_data">No reservations found</string>
-    <string name="widget_title"></string>
-    <string name="widget_description">%s</string>
-    <string name="widget_reservations"></string>
+    <string name="reservation_list_widget_title">Your upcoming reservations are:</string>
+    <string name="reservation_list_widget_description">%s</string>
     <string name="widget_activity_speech">Your last reservations are: %1%s</string>
     <string name="widget_activity_text">Your last reservations are: %1%s</string>
 

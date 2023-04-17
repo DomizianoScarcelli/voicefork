@@ -3,7 +3,11 @@ package com.frontend
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.annotation.RequiresApi
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactNativeHost
@@ -11,9 +15,12 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
+import com.frontend.data.VoiceForkDatabase
 
 class MainApplication : Application(), ReactApplication {
-    private val TAG = "MainApplication"
+    //private val TAG = "MainApplication"
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val db = VoiceForkDatabase()
 
     private val mReactNativeHost: ReactNativeHost = object : DefaultReactNativeHost(this) {
         override fun getUseDeveloperSupport(): Boolean {
@@ -48,20 +55,6 @@ class MainApplication : Application(), ReactApplication {
             load()
         }
         ReactNativeFlipper.initializeFlipper(this, reactNativeHost.reactInstanceManager)
-    }
-
-    private fun Intent.handleIntent() {
-        when (action) {
-            // When the BII is matched, Intent.Action_VIEW will be used
-            Intent.ACTION_VIEW -> handleIntent(data)
-        }
-    }
-
-    private fun handleIntent(data: Uri?) {
-        // path is normally used to indicate which view should be displayed
-        // i.e https://fit-actions.firebaseapp.com/start?exerciseType="Running" -> path = "start"
-
-        Log.v(TAG, data.toString());
     }
 
 }
