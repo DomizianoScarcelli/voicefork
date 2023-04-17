@@ -17,6 +17,16 @@ const restaurantAPI = (app: Express) => {
 		}
 	})
 
+	app.delete("/delete-restaurant/:id", async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id } = req.params
+			const data = await service.DeleteRestaurant(parseInt(id))
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	})
+
 	app.get("/find-restaurant/:id", async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params

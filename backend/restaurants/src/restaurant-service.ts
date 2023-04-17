@@ -88,6 +88,11 @@ class RestaurantService {
 		const result = await this.repository.GetAllAddresses()
 		return result
 	}
+
+	async DeleteRestaurant(id: number) {
+		const result = await this.repository.DeleteRestaurant(id)
+		return result
+	}
 }
 
 export default RestaurantService

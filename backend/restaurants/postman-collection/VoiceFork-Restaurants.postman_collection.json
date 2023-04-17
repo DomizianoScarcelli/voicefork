@@ -33,6 +33,14 @@
 			"response": []
 		},
 		{
+			"name": "Find Restaurant by Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Restaurants",
 			"request": {
 				"method": "GET",
@@ -50,7 +58,31 @@
 			"response": []
 		},
 		{
-			"name": "Find Restaurant by Id",
+			"name": "Find Restaurant by Similar Name",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Addresses",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Address to Latitude/Longitude",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurant",
 			"request": {
 				"method": "GET",
 				"header": []

@@ -75,6 +75,15 @@ class RestaurantRepository {
 		const addresses = await prisma.address.findMany()
 		return addresses
 	}
+
+	async DeleteRestaurant(id: number): Promise<Restaurant> {
+		const restaurant = await prisma.restaurant.delete({
+			where: {
+				id: id,
+			},
+		})
+		return restaurant
+	}
 }
 
 export default RestaurantRepository
