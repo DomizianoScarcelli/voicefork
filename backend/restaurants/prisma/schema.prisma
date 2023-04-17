@@ -14,16 +14,18 @@ datasource db {
 model Restaurant {
   id      Int    @id @default(autoincrement())
   name    String
-  address String // Address has format: Via dei tal dei tali, 95, Rome, Italy
+  address Address @relation(fields: [addressId], references: [id])
+  addressId Int
 
-  // addressId Int
-  @@unique([name, address])
+  @@unique([name, addressId])
 }
 
-// model Address {
-//   id           Int          @id @default(autoincrement())
-//   street       String
-//   streetNumber Int
-//   city         String
-//   Restaurant   Restaurant[]
-// }
+model Address {
+  id           Int          @id @default(autoincrement())
+  street       String
+  number Int
+  city         String?
+  Restaurant   Restaurant[]
+  latitude Float?
+  longitude Float?
+}

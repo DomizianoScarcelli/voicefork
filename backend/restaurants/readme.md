@@ -5,6 +5,7 @@ First you have to create a .env file in the root directory with the current cont
 ```
 DATABASE_URL="mysql://root:root@localhost:3306/restaurantsDB"
 PORT = 3000
+API_KEY = "8c9c59ff99f358710262c503c158f4a4"
 ```
 
 Then you can run the database along with the app by doing

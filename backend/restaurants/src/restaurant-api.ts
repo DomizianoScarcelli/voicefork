@@ -9,8 +9,8 @@ const restaurantAPI = (app: Express) => {
 
 	app.post("/create-restaurant", async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { name, address } = req.body
-			const data = await service.CreateRestaurant(name, address)
+			const { name, street, number, city } = req.body
+			const data = await service.CreateRestaurant(name, street, number, city)
 			res.json(data)
 		} catch (err) {
 			next(err)
@@ -20,7 +20,9 @@ const restaurantAPI = (app: Express) => {
 	app.get("/find-restaurant/:id", async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params
-			const data = await service.GetRestaurantById(parseInt(id))
+			const { localize } = req.query
+			const parsedLocalize = localize == "True" ? true : false
+			const data = await service.GetRestaurantById(parseInt(id), parsedLocalize)
 			res.json(data)
 		} catch (err) {
 			next(err)
@@ -28,9 +30,10 @@ const restaurantAPI = (app: Express) => {
 	})
 
 	app.get("/all-restaurants", async (req: Request, res: Response, next: NextFunction) => {
-		console.log("Getting all restaurants...")
 		try {
-			const data = await service.GetAllRestaurants()
+			const { localize } = req.query
+			const parsedLocalize = localize == "True" ? true : false
+			const data = await service.GetAllRestaurants(parsedLocalize)
 			res.json(data)
 		} catch (err) {
 			next(err)
@@ -38,10 +41,18 @@ const restaurantAPI = (app: Express) => {
 	})
 
 	app.get("/find-similar-restaurant/:query", async (req: Request, res: Response, next: NextFunction) => {
-		console.log("Getting all restaurants...")
 		try {
 			const { query } = req.params
 			const data = await service.GetRestaurantBySimilarName(query)
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	})
+
+	app.get("/all-addresses/", async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const data = await service.GetAllAddresses()
 			res.json(data)
 		} catch (err) {
 			next(err)
