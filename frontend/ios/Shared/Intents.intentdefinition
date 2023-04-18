@@ -396,90 +396,28 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>7</integer>
+				<integer>10</integer>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
 						<key>INIntentResponseParameterDisplayName</key>
-						<string>Restaurant Name</string>
+						<string>Reservation List</string>
 						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>MaVXl4</string>
+						<string>W0OVRM</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
-						<string>restaurantName</string>
+						<string>reservationList</string>
+						<key>INIntentResponseParameterObjectType</key>
+						<string>Reservation</string>
+						<key>INIntentResponseParameterObjectTypeNamespace</key>
+						<string>NCiwJX</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<true/>
 						<key>INIntentResponseParameterTag</key>
-						<integer>1</integer>
+						<integer>10</integer>
 						<key>INIntentResponseParameterType</key>
-						<string>String</string>
-					</dict>
-					<dict>
-						<key>INIntentResponseParameterDisplayName</key>
-						<string>Date</string>
-						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>MqCJ7t</string>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>2</integer>
-						<key>INIntentResponseParameterMetadata</key>
-						<dict>
-							<key>INIntentResponseParameterMetadataDateStyle</key>
-							<string>Full</string>
-							<key>INIntentResponseParameterMetadataFormat</key>
-							<string>Style</string>
-							<key>INIntentResponseParameterMetadataTemplateID</key>
-							<string>F61r0z</string>
-							<key>INIntentResponseParameterMetadataTimeStyle</key>
-							<string>Full</string>
-							<key>INIntentResponseParameterMetadataType</key>
-							<string>Date</string>
-						</dict>
-						<key>INIntentResponseParameterName</key>
-						<string>date</string>
-						<key>INIntentResponseParameterTag</key>
-						<integer>5</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>DateComponents</string>
-					</dict>
-					<dict>
-						<key>INIntentResponseParameterDisplayName</key>
-						<string>Time</string>
-						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>ph18aP</string>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>3</integer>
-						<key>INIntentResponseParameterMetadata</key>
-						<dict>
-							<key>INIntentResponseParameterMetadataDateStyle</key>
-							<string>Full</string>
-							<key>INIntentResponseParameterMetadataFormat</key>
-							<string>Style</string>
-							<key>INIntentResponseParameterMetadataTemplateID</key>
-							<string>t4U3Lr</string>
-							<key>INIntentResponseParameterMetadataTimeStyle</key>
-							<string>Full</string>
-							<key>INIntentResponseParameterMetadataType</key>
-							<string>Time</string>
-						</dict>
-						<key>INIntentResponseParameterName</key>
-						<string>time</string>
-						<key>INIntentResponseParameterTag</key>
-						<integer>6</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>DateComponents</string>
-					</dict>
-					<dict>
-						<key>INIntentResponseParameterDisplayName</key>
-						<string>Number Of People</string>
-						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>HjfcJk</string>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>4</integer>
-						<key>INIntentResponseParameterName</key>
-						<string>numberOfPeople</string>
-						<key>INIntentResponseParameterTag</key>
-						<integer>7</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>Integer</string>
+						<string>Object</string>
 					</dict>
 				</array>
 			</dict>
@@ -569,6 +507,124 @@
 					<integer>4</integer>
 					<key>INTypePropertyType</key>
 					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>Reservation</string>
+			<key>INTypeDisplayNameID</key>
+			<string>4vBqqx</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>104</integer>
+			<key>INTypeName</key>
+			<string>Reservation</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Restaurant</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>W9dlML</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>5</integer>
+					<key>INTypePropertyName</key>
+					<string>restaurant</string>
+					<key>INTypePropertyTag</key>
+					<integer>100</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Date Time</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>UIsZYJ</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>6</integer>
+					<key>INTypePropertyMetadata</key>
+					<dict>
+						<key>INTypePropertyMetadataDateStyle</key>
+						<string>Full</string>
+						<key>INTypePropertyMetadataFormat</key>
+						<string>Style</string>
+						<key>INTypePropertyMetadataTemplateID</key>
+						<string>7DoXmK</string>
+						<key>INTypePropertyMetadataTimeStyle</key>
+						<string>Full</string>
+						<key>INTypePropertyMetadataType</key>
+						<string>DateTime</string>
+					</dict>
+					<key>INTypePropertyName</key>
+					<string>dateTime</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>DateComponents</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Number Of People</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>9Q1zuE</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>7</integer>
+					<key>INTypePropertyName</key>
+					<string>numberOfPeople</string>
+					<key>INTypePropertyTag</key>
+					<integer>104</integer>
+					<key>INTypePropertyType</key>
+					<string>Integer</string>
 				</dict>
 			</array>
 		</dict>

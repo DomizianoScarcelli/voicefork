@@ -25,14 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-    
-          os_log("TK421: Continue type = %{public}s", userActivity.activityType)
-
-          guard userActivity.activityType == NSUserActivity.bookRestaurantActivityType else {
-                  os_log("TK421: Can't continue unknown NSUserActivity type = %{public}s", userActivity.activityType)
+          guard userActivity.activityType == NSUserActivity.bookRestaurantActivityType || userActivity.activityType == NSUserActivity.myReservationsActivityType else {
                   return false
           }
-
           return true
       }
 }
