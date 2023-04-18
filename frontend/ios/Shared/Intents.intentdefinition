@@ -350,12 +350,18 @@
 			<string>Get the list of the user's reservations</string>
 			<key>INIntentDescriptionID</key>
 			<string>07aOBf</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>2</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key></key>
+				<key>reservation</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>My reservations</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>SnOtzL</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
 					<true/>
 				</dict>
@@ -364,14 +370,84 @@
 			<string>MyReservations</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key></key>
+				<key>reservation</key>
 				<dict>
-					<key>INIntentParameterCombinationIsPrimary</key>
+					<key>INIntentParameterCombinationIsLinked</key>
 					<true/>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>My reservations</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>Rpgpqq</string>
 				</dict>
 			</dict>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Reservation</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>SVOMB7</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterName</key>
+					<string>reservation</string>
+					<key>INIntentParameterObjectType</key>
+					<string>Reservation</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>NCiwJX</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>You have these reservation, which one do you want to see?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>CsKzu0</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${reservation}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>tUiYH5</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${reservation}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>JeYN9h</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>Object</string>
+				</dict>
+			</array>
 			<key>INIntentResponse</key>
 			<dict>
 				<key>INIntentResponseCodes</key>
@@ -396,26 +472,24 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>10</integer>
+				<integer>11</integer>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
 						<key>INIntentResponseParameterDisplayName</key>
-						<string>Reservation List</string>
+						<string>Reservation</string>
 						<key>INIntentResponseParameterDisplayNameID</key>
 						<string>W0OVRM</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
-						<string>reservationList</string>
+						<string>reservation</string>
 						<key>INIntentResponseParameterObjectType</key>
 						<string>Reservation</string>
 						<key>INIntentResponseParameterObjectTypeNamespace</key>
 						<string>NCiwJX</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<true/>
 						<key>INIntentResponseParameterTag</key>
-						<integer>10</integer>
+						<integer>11</integer>
 						<key>INIntentResponseParameterType</key>
 						<string>Object</string>
 					</dict>

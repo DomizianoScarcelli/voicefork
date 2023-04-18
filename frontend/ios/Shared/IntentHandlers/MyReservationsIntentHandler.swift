@@ -9,13 +9,13 @@ import UIKit
 import Intents
 
 public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling {
-  public func confirm(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
-    completion(MyReservationsIntentResponse(code: .ready, userActivity: nil))
-  }
-  
-  public func handle(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
-    let response = MyReservationsIntentResponse(code:.success, userActivity: nil)
+  public func resolveReservation(for intent: MyReservationsIntent, with completion: @escaping (ReservationResolutionResult) -> Void) {
+    if let reservation = intent.reservation {
+      completion(ReservationResolutionResult.success(with: reservation))
+      return
+    }
     
+    //TODO: if there are more than 1 active reservation, ask the user to pick one from a list of reservations
     let APIResponse: [[String: Any]] = [
       [
         "restaurant": "Dar solito marione",
@@ -48,8 +48,24 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
       reservationObject.numberOfPeople = reservation["numberOfPeople"] as? NSNumber
       reservationList.append(reservationObject)
     }
-    
-    response.reservationList = reservationList
+    if reservationList.count == 0 {
+      //TODO: handle this case
+      return
+    }
+    if reservationList.count == 1 {
+      completion(ReservationResolutionResult.success(with: reservationList[0]))
+      return
+    }
+    completion(ReservationResolutionResult.disambiguation(with: reservationList))
+  }
+  
+  public func confirm(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
+    completion(MyReservationsIntentResponse(code: .ready, userActivity: nil))
+  }
+  
+  public func handle(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
+    let response = MyReservationsIntentResponse(code:.success, userActivity: nil)
+//    response.reservation = intent.reservation
     completion(response)
   }
   

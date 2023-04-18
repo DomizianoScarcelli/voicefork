@@ -45,21 +45,14 @@ class ReservationConfirmedViewController: UIViewController {
       let dateTime = calendar.date(byAdding: intent.time!, to: calendar.date(from: intent.date!)!)
       let image = UIImage(named: "da_beppe")
       renderReservation(name: intent.restaurant!, image: image!, dateTime: dateTime!, numberOfPeople: intent.numberOfPeople as! Int)
-    } else if intent is MyReservationsIntent {
+    } else if let intent = intent as? MyReservationsIntent {
       // Manage the MyReservationsIntent
-      guard let intentResponse = intentResponse as? MyReservationsIntentResponse else {return}
-      guard let reservationList = intentResponse.reservationList else {return}
+//      guard let intentResponse = intentResponse as? MyReservationsIntentResponse else {return}
+      guard let reservation = intent.reservation else {return}
       confirmedView.reservationMessageLabel.text = "Reservation details"
-      
-      if reservationList.count == 1 {
-        // If there is only one reservation, display it
-        let reservation = reservationList[0]
-        let image = UIImage(named: "da_beppe")
-        let dateTime = Calendar.current.date(from: reservation.dateTime!)
-        renderReservation(name: reservation.restaurant!, image: image!, dateTime: dateTime!, numberOfPeople: reservation.numberOfPeople as! Int)
-      } else {
-        //Otherwise display an interactive list
-      }
+      let image = UIImage(named: "da_beppe")
+      let dateTime = Calendar.current.date(from: reservation.dateTime!)
+      renderReservation(name: reservation.restaurant!, image: image!, dateTime: dateTime!, numberOfPeople: reservation.numberOfPeople as! Int)
     }
   }
   
