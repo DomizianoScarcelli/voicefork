@@ -87,6 +87,10 @@
             <parameter
                 android:name="reservationDate"
                 android:key="reservationDate"
+                android:mimeType="https://schema.org/Date"/>
+            <parameter
+                android:name="reservationTime"
+                android:key="reservationTime"
                 android:mimeType="https://schema.org/Time"/>
             <parameter
                 android:name="numberOfPeople"

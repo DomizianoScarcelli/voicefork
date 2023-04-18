@@ -26,7 +26,7 @@
     </array>
 
     <string-array name="AddReservationQuery">
-        <item>make a reservation to $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
-        <item>reserve a table at $restaurantName (at)? $reservationDate for $numberOfPeople people</item>
+        <item>make a reservation to $restaurantName (for)? $reservationDate (at)? $reservationTime for $numberOfPeople people</item>
+        <item>reserve a table at $restaurantName (for)? $reservationDate (at)? $reservationTime for $numberOfPeople people</item>
     </string-array>
 </resources>
