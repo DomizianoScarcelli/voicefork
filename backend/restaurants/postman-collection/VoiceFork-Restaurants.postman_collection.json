@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "b0b19276-e026-451b-8ea3-64969033033b",
+		"name": "VoiceFork-Restaurants",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19145227"
+	},
+	"item": [
+		{
+			"name": "Create Restaurant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Da Giulio\",\n\"address\": \"Via di casal selce, 400, Rome, Italy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/create-restaurant",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"create-restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurant by Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/all-restaurants",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"all-restaurants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurant by Similar Name",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Addresses",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Address to Latitude/Longitude",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurant",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
