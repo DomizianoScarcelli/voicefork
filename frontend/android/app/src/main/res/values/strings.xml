@@ -18,6 +18,7 @@
     <string name="widget_activity_text">Your last reservations are: %1%s</string>
 
     <string name="add_reservation_no_params">in order to add a reservation you should specify the name of the restaurant, the date and the number of people.</string>
+    <string name="add_reservation_wrong_numberOfPeople">the number of people must be a valid number, retry.</string>
     <string name="add_reservation_example">For example: Make a reservation to Pizzeria da Luigi tomorrow at 1 pm for 2 people.</string>
     <string name="add_reservation_ok">The reservation to %1$s at %2$s for %3$d has been successfully done.</string>
 </resources>

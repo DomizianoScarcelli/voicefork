@@ -38,6 +38,17 @@ class AddReservationWidget (
                 restaurantName = params.getString("restaurantName").toString()
                 reservationDate = params.getString("reservationDate").toString()
                 numberOfPeople = params.getString("numberOfPeople").toString()
+
+                //TODO: CHECK PARAMETERS
+                //RESTAURANT
+                // boh me immagino "vedi se esiste un ristorante con quel nome..."
+                //DATE AND TIME
+
+                //NUMBER OF PEOPLE
+                if (numberOfPeople.toInt() <= 0) {
+                    val ttsText = context.resources.getString(R.string.add_reservation_wrong_numberOfPeople)
+                    setTts(ttsText, ttsText)
+                }
             }
         } else {
             val ttsText = context.resources.getString(R.string.add_reservation_no_params)  + " " + context.resources.getString(R.string.add_reservation_example)
@@ -59,7 +70,7 @@ class AddReservationWidget (
     ) {
         views.setTextViewText(
             R.id.appwidgetReservations,
-            restaurantName + "" + reservationDate + " " + numberOfPeople
+            restaurantName + " " + reservationDate + " " + numberOfPeople
         )
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
