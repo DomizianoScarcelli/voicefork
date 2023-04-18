@@ -289,7 +289,7 @@
 				<array>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>Booked ${restaurant}</string>
+						<string>Booked ${restaurantName}</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>Pv0Tht</string>
 						<key>INIntentResponseCodeName</key>
@@ -313,18 +313,18 @@
 				<key>INIntentResponseLastParameterTag</key>
 				<integer>9</integer>
 				<key>INIntentResponseOutput</key>
-				<string>restaurant</string>
+				<string>restaurantName</string>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
 						<key>INIntentResponseParameterDisplayName</key>
-						<string>Restaurant</string>
+						<string>Restaurant Name</string>
 						<key>INIntentResponseParameterDisplayNameID</key>
 						<string>4CkIMC</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
-						<string>restaurant</string>
+						<string>restaurantName</string>
 						<key>INIntentResponseParameterTag</key>
 						<integer>8</integer>
 						<key>INIntentResponseParameterType</key>
@@ -393,6 +393,93 @@
 						<string>hedlUF</string>
 						<key>INIntentResponseCodeName</key>
 						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>7</integer>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Restaurant Name</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>MaVXl4</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>restaurantName</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>String</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Date</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>MqCJ7t</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>2</integer>
+						<key>INIntentResponseParameterMetadata</key>
+						<dict>
+							<key>INIntentResponseParameterMetadataDateStyle</key>
+							<string>Full</string>
+							<key>INIntentResponseParameterMetadataFormat</key>
+							<string>Style</string>
+							<key>INIntentResponseParameterMetadataTemplateID</key>
+							<string>F61r0z</string>
+							<key>INIntentResponseParameterMetadataTimeStyle</key>
+							<string>Full</string>
+							<key>INIntentResponseParameterMetadataType</key>
+							<string>Date</string>
+						</dict>
+						<key>INIntentResponseParameterName</key>
+						<string>date</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>5</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>DateComponents</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Time</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>ph18aP</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>3</integer>
+						<key>INIntentResponseParameterMetadata</key>
+						<dict>
+							<key>INIntentResponseParameterMetadataDateStyle</key>
+							<string>Full</string>
+							<key>INIntentResponseParameterMetadataFormat</key>
+							<string>Style</string>
+							<key>INIntentResponseParameterMetadataTemplateID</key>
+							<string>t4U3Lr</string>
+							<key>INIntentResponseParameterMetadataTimeStyle</key>
+							<string>Full</string>
+							<key>INIntentResponseParameterMetadataType</key>
+							<string>Time</string>
+						</dict>
+						<key>INIntentResponseParameterName</key>
+						<string>time</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>6</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>DateComponents</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Number Of People</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>HjfcJk</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>4</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>numberOfPeople</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>7</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Integer</string>
 					</dict>
 				</array>
 			</dict>

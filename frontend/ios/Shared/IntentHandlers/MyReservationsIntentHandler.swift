@@ -14,7 +14,12 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
   }
   
   public func handle(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
-    completion(MyReservationsIntentResponse(code: .success, userActivity: nil))
+    let response = MyReservationsIntentResponse(code:.success, userActivity: nil)
+    response.restaurantName = "Dar solito marione"
+    response.date = Calendar.current.dateComponents([.year, .month, .day], from:Date())
+    response.time = Calendar.current.dateComponents([.hour, .minute], from:Date())
+    response.numberOfPeople = 2
+    completion(response)
   }
   
   

@@ -16,39 +16,39 @@ import IntentKit
 // "Send a message using <myApp>"
 
 class IntentViewController: UIViewController, INUIHostedViewControlling {
-                
-    // Prepare your view controller for the interaction to handle.
-    func configureView(for parameters: Set<INParameter>, of interaction: INInteraction, interactiveBehavior: INUIInteractiveBehavior, context: INUIHostedViewContext, completion: @escaping (Bool, Set<INParameter>, CGSize) -> Void) {
-      
-        guard let intent = interaction.intent as? BookRestaurantIntent else {
-            completion(false, Set(), .zero)
-            return
-        }
-
-      if interaction.intentHandlingStatus == .success ||
-          interaction.intentHandlingStatus == .ready {
-          if let response = interaction.intentResponse as? BookRestaurantIntentResponse {
-            let viewController = ReservationConfirmedViewController(for: intent, with: response)
-            attachChild(viewController)
-              completion(true, parameters, desiredSize)
-          }
-        }
-        completion(false, parameters, .zero)
-      }
+  
+  // Prepare your view controller for the interaction to handle.
+  func configureView(for parameters: Set<INParameter>, of interaction: INInteraction, interactiveBehavior: INUIInteractiveBehavior, context: INUIHostedViewContext, completion: @escaping (Bool, Set<INParameter>, CGSize) -> Void) {
     
-      private func attachChild(_ viewController: UIViewController) {
-        addChild(viewController)
-        if viewController.view == nil {
-        }
-        if let subview = viewController.view {
-            view.addSubview(subview)
-            subview.translatesAutoresizingMaskIntoConstraints = false
-        }
-//        viewController.didMove(toParent: self)
+    let intent = interaction.intent
+    
+    if interaction.intentHandlingStatus == .success {
+      if let response = interaction.intentResponse as? BookRestaurantIntentResponse {
+        let viewController = ReservationConfirmedViewController(for: intent, with: response)
+        attachChild(viewController)
+        completion(true, parameters, desiredSize)
+      } else if let response = interaction.intentResponse as? MyReservationsIntentResponse {
+        let viewController = ReservationConfirmedViewController(for: intent, with: response)
+        attachChild(viewController)
+        
+        completion(true, parameters, desiredSize)
+      }
     }
-      private var desiredSize: CGSize {
-          let width = self.extensionContext?.hostedViewMaximumAllowedSize.width ?? 320
-          return CGSize(width: width, height: 150)
-      }
-    
+    completion(false, parameters, .zero)
+  }
+  
+  private func attachChild(_ viewController: UIViewController) {
+    addChild(viewController)
+    if let subview = viewController.view {
+      view.addSubview(subview)
+      subview.translatesAutoresizingMaskIntoConstraints = false
+    }
+    viewController.didMove(toParent: self)
+  }
+  
+  private var desiredSize: CGSize {
+    let width = self.extensionContext?.hostedViewMaximumAllowedSize.width ?? 320
+    return CGSize(width: width, height: 100)
+  }
 }
+
