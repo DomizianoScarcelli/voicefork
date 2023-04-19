@@ -7,10 +7,15 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_TCP_PORT: 3308
+            MYSQL_DATABASE: restaurantDB
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_TCP_PORT: 3306
         container_name: mysql_restaurants
         ports:
             - 3308:3306
+        expose:
+            - 3308
         volumes:
             - db-data:/var/lib/mysql
         networks:
@@ -22,6 +27,8 @@ services:
         container_name: adminer
         ports:
             - 8082:8080
+        expose:
+            - 8082
         networks:
             - restaurantNet
 
@@ -30,9 +37,9 @@ services:
             context: ./
         container_name: restaurants
         ports:
-            - "3002:3000"
+            - "3002:3002"
         environment:
-            - DATABASE_URL=mysql://root:root@mysql_restaurants:3308/restaurantsDB
+            - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
         volumes:
             - ./src:/app/src:z
         networks:
