@@ -7,6 +7,9 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: restaurantDB
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
             MYSQL_TCP_PORT: 3306
         container_name: mysql_restaurants
         ports:
