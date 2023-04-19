@@ -7,12 +7,12 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_TCP_PORT: 3307
+            MYSQL_TCP_PORT: 3306
         container_name: mysql_users
         ports:
             - 3307:3306
         expose:
-            - 3306
+            - 3307
         volumes:
             - db-data:/var/lib/mysql
         networks:
@@ -24,6 +24,8 @@ services:
         container_name: adminer_users
         ports:
             - 8081:8080
+        expose:
+            - 8081
         networks:
             - userNet
 
@@ -32,9 +34,9 @@ services:
             context: ./
         container_name: users
         ports:
-            - "3001:3000"
+            - "3001:3001"
         environment:
-            - DATABASE_URL=mysql://root:root@mysql_users:3307/usersDB
+            - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
         volumes:
             - ./src:/app/src:z
         networks:
