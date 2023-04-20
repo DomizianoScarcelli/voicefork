@@ -5,8 +5,8 @@ const service = new RestaurantService()
 const RestaurantController = {
 	createRestaurant: async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { name, street, number, city } = req.body
-			const data = await service.CreateRestaurant(name, street, number, city)
+			const { name, address, city } = req.body
+			const data = await service.CreateRestaurant(name, address, city)
 			res.json({
 				message: "Restaurant was created successfully!",
 				data: data,
@@ -40,8 +40,7 @@ const RestaurantController = {
 		try {
 			const { id } = req.params
 			const { localize } = req.query
-			const parsedLocalize = localize == "True" ? true : false
-			const data = await service.GetRestaurantById(parseInt(id), parsedLocalize)
+			const data = await service.GetRestaurantById(parseInt(id))
 			if (data == null) {
 				res.status(404).json({
 					error: `Resource not found`,
@@ -57,8 +56,7 @@ const RestaurantController = {
 	getAllRestaurants: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { localize } = req.query
-			const parsedLocalize = localize == "True" ? true : false
-			const data = await service.GetAllRestaurants(parsedLocalize)
+			const data = await service.GetAllRestaurants()
 			res.json(data)
 		} catch (err) {
 			next(err)

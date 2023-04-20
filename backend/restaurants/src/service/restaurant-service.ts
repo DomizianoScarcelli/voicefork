@@ -1,7 +1,6 @@
 import RestaurantRepository from "../repository/restaurant-repository"
 import { LevenshteinDistance } from "../utils/similarityUtils"
 import { addressToLatLng } from "../utils/localizationUtils"
-import { FullRestaurant } from "../shared/types"
 import { Restaurant } from "@prisma/client"
 import { DistanceResult } from "../shared/types"
 
@@ -15,52 +14,21 @@ class RestaurantService {
 		this.repository = new RestaurantRepository()
 	}
 
-	async CreateRestaurant(name: string, street: string, number: string, city: string) {
+	async CreateRestaurant(name: string, address: string, city: string) {
 		//TODO: Handle the case in which city is not in the input
-		let address = await this.repository.GetAddressByName(street, parseInt(number))
-		if (address == null) {
-			const { latitude, longitude } = await addressToLatLng(`${street}, ${number}, ${city}`)
-			address = await this.repository.CreateAddress(street, parseInt(number), city, latitude, longitude)
-		}
-		const newRestaurant = await this.repository.CreateRestaurant(name, address.id)
+		const { latitude, longitude } = await addressToLatLng(`${address}, ${city}`)
+		const newRestaurant = await this.repository.CreateRestaurant(name, address, city, latitude, longitude)
 		return newRestaurant
 	}
 
-	async GetRestaurantById(id: number, localize: boolean): Promise<FullRestaurant | Restaurant | null> {
+	async GetRestaurantById(id: number): Promise<Restaurant | null> {
 		const restaurant = await this.repository.GetRestaurantById(id)
-		if (restaurant == null) return null
-		if (!localize) return restaurant
-
-		const address = await this.GetAddressById(restaurant.addressId)
-		if (address == null) return null
-		const result: FullRestaurant = {
-			id: restaurant.id,
-			name: restaurant.name,
-			fullAddress: `${address.street}, ${address.number}, ${address.city}`,
-			latitude: address.latitude,
-			longitude: address.longitude,
-		}
-		return result
+		return restaurant
 	}
 
-	async GetAllRestaurants(localize: boolean): Promise<FullRestaurant[] | Restaurant[]> {
+	async GetAllRestaurants(): Promise<Restaurant[]> {
 		const restaurants = await this.repository.GetAllRestaurants()
-		if (!localize) return restaurants
-		let results = []
-
-		for (let restaurant of restaurants) {
-			const address = await this.GetAddressById(restaurant.addressId)
-			if (address == null) continue
-			const result: FullRestaurant = {
-				id: restaurant.id,
-				name: restaurant.name,
-				fullAddress: `${address.street}, ${address.number}, ${address.city}`,
-				latitude: address.latitude,
-				longitude: address.longitude,
-			}
-			results.push(result)
-		}
-		return results
+		return restaurants
 	}
 
 	async GetRestaurantBySimilarName(query: string): Promise<DistanceResult[]> {
@@ -75,24 +43,6 @@ class RestaurantService {
 			distanceArr.push(element)
 		})
 		return distanceArr
-	}
-
-	async GetAddressById(id: number) {
-		const result = await this.repository.GetAddressById(id)
-		return result
-	}
-
-	async GetAddressByName(fullAddress: string) {
-		const addressArr = fullAddress.split(",")
-		const street = addressArr[0]
-		const number = parseInt(addressArr[1])
-		const result = await this.repository.GetAddressByName(street, number)
-		return result
-	}
-
-	async GetAllAddresses() {
-		const result = await this.repository.GetAllAddresses()
-		return result
 	}
 
 	async DeleteRestaurant(id: number): Promise<Restaurant | null> {

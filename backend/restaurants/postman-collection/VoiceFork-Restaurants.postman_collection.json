@@ -36,7 +36,23 @@
 			"name": "Find Restaurant by Id",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -59,14 +75,6 @@
 		},
 		{
 			"name": "Find Restaurant by Similar Name",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "Get All Addresses",
 			"request": {
 				"method": "GET",
 				"header": []

@@ -1,6 +1,5 @@
 import { Express } from "express"
 import RestaurantController from "./controllers/restaurant-controller"
-import AddressController from "./controllers/address-controller"
 
 /**
  * The restaurant API endpoints for creating, retrieving, updating and deleting restaurants.
@@ -31,12 +30,6 @@ const restaurantAPI = (app: Express) => {
 	 * along with their distance from the provided restaurant.
 	 */
 	app.get("/find-similar-restaurant/:query", RestaurantController.findSimilarRestaurants)
-
-	/**
-	 * Get all addresses.
-	 *
-	 * */
-	app.get("/all-addresses", AddressController.getAllAddresses)
 }
 
 export default restaurantAPI

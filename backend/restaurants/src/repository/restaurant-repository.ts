@@ -1,15 +1,18 @@
-import { PrismaClient, Restaurant, Address } from "@prisma/client"
+import { PrismaClient, Restaurant } from "@prisma/client"
 const prisma: PrismaClient = new PrismaClient()
 
 /**
  * The repository exposes methods that interacts with the database to put, modify and retrieve data
  */
 class RestaurantRepository {
-	async CreateRestaurant(name: string, addressId: number): Promise<Restaurant> {
+	async CreateRestaurant(name: string, address: string, city: string, latitude: number, longitude: number): Promise<Restaurant> {
 		const restaurant = await prisma.restaurant.create({
 			data: {
 				name: name,
-				addressId: addressId,
+				address: address,
+				city: city,
+				latitude: latitude,
+				longitude: longitude,
 			},
 		})
 		return restaurant
@@ -29,51 +32,24 @@ class RestaurantRepository {
 		return restaurants
 	}
 
-	async CreateAddress(street: string, number: number, city: string, latitude: number, longitude: number): Promise<Address> {
-		const address = await prisma.address.create({
-			data: {
-				street: street,
-				number: number,
+	async GetRestaurantByAddressName(name: string, number: number): Promise<Restaurant | null> {
+		const address = await prisma.restaurant.findFirst({
+			where: {
+				address: {
+					equals: name,
+				},
+			},
+		})
+		return address
+	}
+
+	async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
+		const restaurants = await prisma.restaurant.findMany({
+			where: {
 				city: city,
-				latitude: latitude,
-				longitude: longitude,
 			},
 		})
-		return address
-	}
-
-	async GetAddressById(id: number): Promise<Address | null> {
-		const address = await prisma.address.findUnique({
-			where: {
-				id: id,
-			},
-		})
-		return address
-	}
-
-	async GetAddressByName(name: string, number: number): Promise<Address | null> {
-		const address = await prisma.address.findFirst({
-			where: {
-				AND: [
-					{
-						street: {
-							equals: name,
-						},
-					},
-					{
-						number: {
-							equals: number,
-						},
-					},
-				],
-			},
-		})
-		return address
-	}
-
-	async GetAllAddresses(): Promise<Address[]> {
-		const addresses = await prisma.address.findMany()
-		return addresses
+		return restaurants
 	}
 
 	async DeleteRestaurant(id: number): Promise<Restaurant | null> {
