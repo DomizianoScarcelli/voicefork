@@ -36,7 +36,47 @@
 			"name": "Find Restaurant by Id",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurants by IDs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -66,14 +106,6 @@
 			"response": []
 		},
 		{
-			"name": "Get All Addresses",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
 			"name": "Address to Latitude/Longitude",
 			"request": {
 				"method": "GET",
@@ -83,6 +115,14 @@
 		},
 		{
 			"name": "Delete Restaurant",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurants Nearby",
 			"request": {
 				"method": "GET",
 				"header": []

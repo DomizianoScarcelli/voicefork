@@ -1,6 +1,5 @@
 import { Express } from "express"
 import RestaurantController from "./controllers/restaurant-controller"
-import AddressController from "./controllers/address-controller"
 
 /**
  * The restaurant API endpoints for creating, retrieving, updating and deleting restaurants.
@@ -22,6 +21,11 @@ const restaurantAPI = (app: Express) => {
 	app.get("/find-restaurant/:id", RestaurantController.getRestaurantById)
 
 	/**
+	 * Returns the restaurant with the specified ID.
+	 */
+	app.get("/find-restaurants/:ids", RestaurantController.getRestaurantsByIds)
+
+	/**
 	 * Returns a list of all restaurants.
 	 */
 	app.get("/all-restaurants", RestaurantController.getAllRestaurants)
@@ -32,11 +36,10 @@ const restaurantAPI = (app: Express) => {
 	 */
 	app.get("/find-similar-restaurant/:query", RestaurantController.findSimilarRestaurants)
 
-	/**
-	 * Get all addresses.
-	 *
-	 * */
-	app.get("/all-addresses", AddressController.getAllAddresses)
+	/***
+	 * Given a set of coordinates and a maxDistance, returns the ordinate list of the restaurant that are nearby that location.
+	 */
+	app.get("/find-restaurants-nearby", RestaurantController.findRestaurantsNearby)
 }
 
 export default restaurantAPI
