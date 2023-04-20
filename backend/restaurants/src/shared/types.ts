@@ -1,11 +1,13 @@
+import { Restaurant } from "@prisma/client"
+
 type LatLng = {
 	latitude: number
 	longitude: number
 }
 
-type DistanceResult = {
-	name: string
-	id: number
+type RestaurantDistanceResult = {
+	restaurant: Restaurant
 	distance: number
 }
-export { LatLng, DistanceResult }
+
+export { LatLng, RestaurantDistanceResult }

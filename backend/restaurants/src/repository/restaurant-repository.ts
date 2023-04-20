@@ -27,6 +27,17 @@ class RestaurantRepository {
 		return restaurant
 	}
 
+	async GetRestaurantsByIds(ids: number[]): Promise<Restaurant[]> {
+		const restaurants = await prisma.restaurant.findMany({
+			where: {
+				id: {
+					in: ids,
+				},
+			},
+		})
+		return restaurants
+	}
+
 	async GetAllRestaurants(): Promise<Restaurant[]> {
 		const restaurants = await prisma.restaurant.findMany()
 		return restaurants
