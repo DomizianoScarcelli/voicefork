@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+    db_reservations:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: reservationsDB
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_TCP_PORT: 3306
+        container_name: mysql_reservations
+        ports:
+            - 3310:3306
+        expose:
+            - 3310
+        volumes:
+            - db-data:/var/lib/mysql
+        networks:
+            - gateway_sharedNet
+
+    adminer_reservations:
+        image: adminer
+        restart: always
+        container_name: adminer_reservations
+        ports:
+            - 8084:8080
+        expose:
+            - 8083
+        networks:
+            - gateway_sharedNet
+
+    app_reservations:
+        build:
+            context: ./
+        container_name: reservations
+        ports:
+            - '3004:3004'
+        environment:
+            - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
+        volumes:
+            - ./src:/app/src:z
+        networks:
+            - gateway_sharedNet
+        depends_on:
+            - db_reservations
+        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+
+networks:
+    gateway_sharedNet:
+        external: true
+
+volumes:
+    db-data:
