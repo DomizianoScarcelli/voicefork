@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-    db_reservations:
+    db:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
         restart: always
@@ -21,7 +21,7 @@ services:
         networks:
             - gateway_sharedNet
 
-    adminer_reservations:
+    adminer:
         image: adminer
         restart: always
         container_name: adminer_reservations
@@ -32,7 +32,7 @@ services:
         networks:
             - gateway_sharedNet
 
-    app_reservations:
+    app:
         build:
             context: ./
         container_name: reservations
@@ -45,7 +45,7 @@ services:
         networks:
             - gateway_sharedNet
         depends_on:
-            - db_reservations
+            - db
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
 
 networks:
