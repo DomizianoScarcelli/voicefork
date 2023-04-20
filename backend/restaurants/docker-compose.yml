@@ -40,7 +40,6 @@ services:
             - "3002:3002"
         environment:
             - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
-            - HTTP_PROXY=http://localhost:3032
         volumes:
             - ./src:/app/src:z
         networks:
