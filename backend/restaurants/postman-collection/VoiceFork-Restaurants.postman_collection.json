@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "b252f9a2-2c96-49da-acec-8dca50d3043c",
+		"name": "VoiceFork-Restaurants",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18224278"
+	},
+	"item": [
+		{
+			"name": "Create Restaurant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"Da Giulio\",\n\"address\": \"Via di casal selce, 400\",\n\"city\": \"Rome\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/create-restaurant",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"create-restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurant by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurants by IDs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/all-restaurants",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"all-restaurants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurant by Similar Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Address to Latitude/Longitude",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Restaurants Nearby",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "RESTAURANTS_BASE",
+			"value": "localhost:3002"
+		}
+	]
+}
