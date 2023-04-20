@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
     app_gateway:
@@ -6,5 +6,11 @@ services:
             context: ./
         container_name: gateway
         ports:
-            - "3000:3000"
-        entrypoint: ["sh", "-c", "npm run dev"]
+            - '3000:3000'
+        entrypoint: ['sh', '-c', 'npm run dev']
+        networks:
+            - sharedNet
+
+networks:
+    sharedNet:
+        driver: bridge

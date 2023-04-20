@@ -1,7 +1,7 @@
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import usersAPI from "./users-api";
+import express, {Express, Request, Response} from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import usersAPI from './users-api'
 
 dotenv.config()
 
@@ -14,10 +14,10 @@ app.use(express.json())
 
 usersAPI(app)
 
-app.get("/", (req: Request, res: Response) => {
-	res.send("Express + TypeScript Server (Updated)")
+app.get('/', (req: Request, res: Response) => {
+    res.send('Welcome to the Users Service!')
 })
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
+    console.log(`[server]: Server is running at http://localhost:${port}`)
 })

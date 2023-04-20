@@ -1,7 +1,7 @@
-import express, { Express, Request, Response } from "express"
-import dotenv from "dotenv"
-import cors from "cors"
-import restaurantAPI from "./api/restaurant-api"
+import express, {Express, Request, Response} from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import restaurantAPI from './api/restaurant-api'
 
 dotenv.config()
 
@@ -14,10 +14,10 @@ app.use(express.json())
 
 restaurantAPI(app)
 
-app.get("/", (req: Request, res: Response) => {
-	res.send("Express + TypeScript Server (Updateed)")
+app.get('/', (req: Request, res: Response) => {
+    res.send('Welcome to the Restaurant Service!')
 })
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
+    console.log(`[server]: Server is running at http://localhost:${port}`)
 })

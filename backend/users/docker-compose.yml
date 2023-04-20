@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
     db_users:
@@ -19,7 +19,7 @@ services:
         volumes:
             - db-data:/var/lib/mysql
         networks:
-            - userNet
+            - gateway_sharedNet
 
     adminer_users:
         image: adminer
@@ -30,26 +30,27 @@ services:
         expose:
             - 8082
         networks:
-            - userNet
+            - gateway_sharedNet
 
     app_users:
         build:
             context: ./
         container_name: users
         ports:
-            - "3001:3001"
+            - '3001:3001'
         environment:
             - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
         volumes:
             - ./src:/app/src:z
         networks:
-            - userNet
+            - gateway_sharedNet
         depends_on:
             - db_users
-        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
 
 networks:
-    userNet:
+    gateway_sharedNet:
+        external: true
 
 volumes:
     db-data:

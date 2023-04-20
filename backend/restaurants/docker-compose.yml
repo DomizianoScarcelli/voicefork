@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
     db_restaurants:
@@ -19,7 +19,7 @@ services:
         volumes:
             - db-data:/var/lib/mysql
         networks:
-            - restaurantNet
+            - gateway_sharedNet
 
     adminer_restaurants:
         image: adminer
@@ -30,26 +30,27 @@ services:
         expose:
             - 8082
         networks:
-            - restaurantNet
+            - gateway_sharedNet
 
     app_restaurants:
         build:
             context: ./
         container_name: restaurants
         ports:
-            - "3002:3002"
+            - '3002:3002'
         environment:
             - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
         volumes:
             - ./src:/app/src:z
         networks:
-            - restaurantNet
+            - gateway_sharedNet
         depends_on:
             - db_restaurants
-        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
 
 networks:
-    restaurantNet:
+    gateway_sharedNet:
+        external: true
 
 volumes:
     db-data:
