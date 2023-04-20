@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"name\": \"Da Giulio\",\n\"address\": \"Via di casal selce, 400, Rome, Italy\",\n\"city\": \"Rome\"\n}",
+					"raw": "{\n\"name\": \"Da Giulio\",\n\"address\": \"Via di casal selce, 400\",\n\"city\": \"Rome\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
