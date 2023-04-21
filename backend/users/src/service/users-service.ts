@@ -17,6 +17,12 @@ class UsersService {
 		return newUser
 	}
 
+	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
+		const user = await this.repository.Login(email, username, password)
+		if (user == null) return null
+		else return user
+	}
+
 	async GetUserById(id: number): Promise<UserInfo | null> {
 		const user_info = await this.repository.GetUserById(id)
 		return user_info

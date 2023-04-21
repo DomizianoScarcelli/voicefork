@@ -13,7 +13,7 @@ const usersAPI = (app: Express) => {
 	/**
 	 * Allows the user to login
 	 */
-	//app.post("/login", UsersController.login)
+	app.post("/login", UsersController.login)
 
 	/**
 	 * Returns the user info with the specified ID
@@ -30,7 +30,7 @@ const usersAPI = (app: Express) => {
 	 */
 	app.post("/update-avatar", UsersController.updateAvatar)
 
-	//TO DO: UPDATE USE INFO
+	//TO DO: UPDATE USER INFO
 
 
 }

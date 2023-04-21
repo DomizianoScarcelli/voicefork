@@ -38,6 +38,45 @@ class UsersRepository {
 		return user_info
 	}
 
+	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
+		const userExist = !!await prisma.user.findFirst({
+			where: {
+				OR: [
+					{ username: username },
+					{ email: email }
+				]
+			}
+		})
+
+		if (userExist) {
+			const user_info = await prisma.user.findFirst({
+				where: {
+					AND: [
+						{
+							OR: [
+								{ username: username },
+								{ email: email }
+							]
+						},
+						{ password: password}
+					]
+				},
+				select: {
+					id: true,
+					name: true,
+					surname: true,
+					username: true,
+					email: true,
+					avatar: true
+				},
+			})
+
+			return user_info
+		}
+
+		return null
+	}
+
 	//TO DO: THERE IS A BUG IN THE PARAMETER INPUT
 	async DeleteUser(id: number): Promise<User | null> {
 		const user = await prisma.user.delete({
