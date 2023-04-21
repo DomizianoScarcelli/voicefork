@@ -51,8 +51,8 @@ const UsersController = {
     deleteUser: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params
-			const userDeleted = await service.DeleteUser(parseInt(id))
-			if (userDeleted == false) {
+			const data = await service.DeleteUser(parseInt(id))
+			if (data == null) {
 				res.json({
 					error: "User not found",
 					message: `Can't delete User with id ${id}`,

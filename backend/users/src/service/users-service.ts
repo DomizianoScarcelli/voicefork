@@ -1,6 +1,7 @@
 import UsersRepository from "../repository/users-repository"
 import { User } from "@prisma/client"
 import { UserInfo } from "../shared/types"
+import { userInfo } from "os"
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -28,10 +29,12 @@ class UsersService {
 		return user_info
 	}
 
-	async DeleteUser(id: number): Promise<boolean> {
-		const userDeleted = await this.repository.DeleteUser(id)
-		if (userDeleted) return true
-		else return false
+	async DeleteUser(id: number): Promise<UserInfo | null> {
+		const user = await this.repository.GetUserById(id)
+		if (user == null) return null
+
+		const result = await this.repository.DeleteUser(id)
+		return result
 	}
 
 	async UpdateAvatar(id: number, avatar: string): Promise<UserInfo | null> {

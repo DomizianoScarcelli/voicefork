@@ -77,24 +77,14 @@ class UsersRepository {
 		return null
 	}
 
-	async DeleteUser(id: number): Promise<boolean> {
-		const userExist = !!await prisma.user.findFirst({
+	async DeleteUser(id: number): Promise<User | null> {		
+		const user = await prisma.user.delete({
 			where: {
-				id: id,
-			},
+				id: id
+			}
 		})
-		
-		if (userExist) {
-			const userDeleted = !!await prisma.user.delete({
-				where: {
-					id: id
-				}
-			})
-			
-			return userDeleted
-		}
 
-		return false
+		return user
 	}
 
 	async UpdateAvatar(id: number, avatar: string): Promise<UserInfo | null> {
