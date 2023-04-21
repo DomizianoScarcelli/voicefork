@@ -1,7 +1,5 @@
 import UsersRepository from "../repository/users-repository"
-import { User } from "@prisma/client"
 import { UserInfo } from "../shared/types"
-import { userInfo } from "os"
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly

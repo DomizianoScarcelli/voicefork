@@ -12,19 +12,19 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  name      String
+  id        Int     @id @default(autoincrement())
+  name      String  
   surname   String
   username  String
   email     String
-  password  String
-  role      Role  @default(Customer)
+  password  String  
+  role      Role    @default(customer)
   avatar    String
 
   @@unique([username, email])
 }
 
 enum Role {
-  Customer
-  Owner
+  customer
+  owner
 }

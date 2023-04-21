@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client"
+import { PrismaClient, Role, User } from "@prisma/client"
 import { UserInfo } from "../shared/types"
 
 const prisma: PrismaClient = new PrismaClient()
@@ -15,6 +15,7 @@ class UsersRepository {
 				username: username,
 				email: email,
 				password: password,
+				role: Role[role as keyof typeof Role],
 				avatar: ""
 			},
 		})
