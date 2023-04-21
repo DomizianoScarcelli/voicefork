@@ -51,18 +51,16 @@ const UsersController = {
     deleteUser: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params
-			const data = await service.DeleteUser(parseInt(id))
-			if (data == null) {
+			const userDeleted = await service.DeleteUser(parseInt(id))
+			if (userDeleted == false) {
 				res.json({
 					error: "User not found",
-					message: `User with id ${id} is not in the database`,
+					message: `Can't delete User with id ${id}`,
 				})
 			}
 			res.json({
 				message: `User with id ${id} was deleted successfully!`,
-				data: data,
 			})
-			res.json(data)
 		} catch (err) {
 			next(err)
 		}

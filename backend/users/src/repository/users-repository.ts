@@ -58,7 +58,7 @@ class UsersRepository {
 								{ email: email }
 							]
 						},
-						{ password: password}
+						{ password: password }
 					]
 				},
 				select: {
@@ -77,14 +77,24 @@ class UsersRepository {
 		return null
 	}
 
-	//TO DO: THERE IS A BUG IN THE PARAMETER INPUT
-	async DeleteUser(id: number): Promise<User | null> {
-		const user = await prisma.user.delete({
+	async DeleteUser(id: number): Promise<boolean> {
+		const userExist = !!await prisma.user.findFirst({
 			where: {
 				id: id,
 			},
 		})
-		return user
+		
+		if (userExist) {
+			const userDeleted = !!await prisma.user.delete({
+				where: {
+					id: id
+				}
+			})
+			
+			return userDeleted
+		}
+
+		return false
 	}
 
 	async UpdateAvatar(id: number, avatar: string): Promise<UserInfo | null> {

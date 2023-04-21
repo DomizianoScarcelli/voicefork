@@ -28,12 +28,10 @@ class UsersService {
 		return user_info
 	}
 
-	async DeleteUser(id: number): Promise<User | null> {
-		const user = await this.repository.DeleteUser(id)
-		if (user == null) return null
-
-		const result = await this.repository.DeleteUser(id)
-		return result
+	async DeleteUser(id: number): Promise<boolean> {
+		const userDeleted = await this.repository.DeleteUser(id)
+		if (userDeleted) return true
+		else return false
 	}
 
 	async UpdateAvatar(id: number, avatar: string): Promise<UserInfo | null> {
