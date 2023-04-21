@@ -28,7 +28,7 @@ const usersAPI = (app: Express) => {
 	/**
 	 * Update the user's avatar
 	 */
-	//app.post("/update-avatar", UsersController.updateAvatar)
+	app.post("/update-avatar", UsersController.updateAvatar)
 
 	//TO DO: UPDATE USE INFO
 

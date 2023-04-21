@@ -1,5 +1,7 @@
-import { PrismaClient, User } from "@prisma/client";
-const prisma: PrismaClient = new PrismaClient();
+import { PrismaClient, User } from "@prisma/client"
+import { UserInfo } from "../shared/types"
+
+const prisma: PrismaClient = new PrismaClient()
 
 /**
  * The repository exposes methods that interacts with the database to put, modify and retrieve data
@@ -19,8 +21,26 @@ class UsersRepository {
 		return user
 	}
 
-	async GetUserById(id: number): Promise<User | null> {
-		const user = await prisma.user.findUnique({
+	async GetUserById(id: number): Promise<UserInfo | null> {
+		const user_info = await prisma.user.findUnique({
+			where: {
+				id: id,
+			},
+			select: {
+				id: true,
+				name: true,
+				surname: true,
+				username: true,
+				email: true,
+				avatar: true
+			},
+		})
+		return user_info
+	}
+
+	//TO DO: THERE IS A BUG IN THE PARAMETER INPUT
+	async DeleteUser(id: number): Promise<User | null> {
+		const user = await prisma.user.delete({
 			where: {
 				id: id,
 			},
@@ -28,10 +48,13 @@ class UsersRepository {
 		return user
 	}
 
-	async DeleteUser(id: number): Promise<User | null> {
-		const user = await prisma.user.delete({
+	async UpdateAvatar(id: number, avatar: string): Promise<UserInfo | null> {
+		const user = await prisma.user.update({
 			where: {
 				id: id,
+			},
+			data: {
+				avatar: avatar,
 			},
 		})
 		return user

@@ -51,6 +51,24 @@ const UsersController = {
 			next(err)
 		}
 	},
+
+	updateAvatar: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id, avatar } = req.body
+			const data = await service.UpdateAvatar(id, avatar)
+			if (data == null) {
+				res.json({
+					error: "User not found",
+					message: `User with id ${id} is not in the database`,
+				})
+			}
+			res.json({
+				message: `The avatar of the user with id ${id} was updated successfully`
+			})
+		} catch (err) {
+			next(err)
+		}
+	},
 }
 
 export default UsersController
