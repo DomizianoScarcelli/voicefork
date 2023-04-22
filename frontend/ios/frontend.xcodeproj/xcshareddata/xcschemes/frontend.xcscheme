@@ -53,6 +53,7 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
+      intentQueryString = "Show my reservations"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -74,6 +75,7 @@
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
+      intentQueryString = "Show my reservations"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"

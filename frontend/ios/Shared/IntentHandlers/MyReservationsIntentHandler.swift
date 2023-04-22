@@ -46,10 +46,14 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
       reservationObject.restaurant = reservation["restaurant"] as? String
       reservationObject.dateTime = reservation["dateTime"] as? DateComponents
       reservationObject.numberOfPeople = reservation["numberOfPeople"] as? NSNumber
+      reservationObject.available = true
       reservationList.append(reservationObject)
+
     }
     if reservationList.count == 0 {
-      //TODO: handle this case
+      let nullReservationObject = Reservation.init(identifier: "null", display: "null") as Reservation
+      nullReservationObject.available = false
+      completion(ReservationResolutionResult.success(with: nullReservationObject))
       return
     }
     if reservationList.count == 1 {
@@ -64,8 +68,10 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
   }
   
   public func handle(intent: MyReservationsIntent, completion: @escaping (MyReservationsIntentResponse) -> Void) {
+    if intent.reservation?.available == false {
+      completion(MyReservationsIntentResponse(code: .reservationsNotFound, userActivity: nil))
+    }
     let response = MyReservationsIntentResponse(code:.success, userActivity: nil)
-//    response.reservation = intent.reservation
     completion(response)
   }
   
