@@ -7,6 +7,20 @@ const prisma: PrismaClient = new PrismaClient()
  * The repository exposes methods that interacts with the database to put, modify and retrieve data
  */
 class ReservationsRepository {
+	async CreateReservation(id_user: number, id_restaurant: number, date: string, time: string, n_people: number): Promise<Reservation> {
+		const user = await prisma.reservation.create({
+			data: {
+				id_user: id_user,
+				id_restaurant: id_restaurant,
+				date: date,
+				time: time,
+				n_people: n_people
+			},
+		})
+
+		return reservation
+	}
+
 	// async CreateUser(name: string, surname: string, username: string, email: string, password: string, role: string): Promise<User> {
 	// 	const user = await prisma.user.create({
 	// 		data: {

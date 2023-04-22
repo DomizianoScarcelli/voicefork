@@ -12,7 +12,12 @@ datasource db {
 }
 
 model Reservation {
-  id        Int    @id @default(autoincrement())
-  test  String
-  @@unique([test])
+  id              Int     @id @default(autoincrement())
+  id_user         Int
+  id_restaurant   Int  
+  date            String
+  time            String
+  n_people        Int 
+
+  @@unique([id])
 }

@@ -3,6 +3,19 @@ import ReservationsService from "../../service/reservations-service"
 
 const service = new ReservationsService()
 const ReservationsController = {
+	createReservation: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id_user, id_restaurant, date, time, n_people } = req.body
+			const data = await service.CreateReservation(id_user, id_restaurant, date, time, n_people)
+			res.json({
+				message: "Reservation was created successfully!",
+				data: data,
+			})
+		} catch (err) {
+			next(err)
+		}
+	},
+
 	// createUser: async (req: Request, res: Response, next: NextFunction) => {
 	// 	try {
 	// 		const { name, surname, username, email, password, role } = req.body
@@ -24,6 +37,7 @@ const ReservationsController = {
 	// 			res.status(404).json({
 	// 				error: `Resource not found`,
 	// 				message: `The specified username/email and password does not match with any user`,
+	// 			})
 	// 		}
 	// 		res.json(data)
 	// 	} catch (err) {

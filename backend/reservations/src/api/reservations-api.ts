@@ -5,6 +5,11 @@ import ReservationsController from "./controllers/reservations-controllers";
  *  The api exposes the REST API endpoints, but has no business logic inside apart basic error handling
  */
 const reservationsAPI = (app: Express) => {
+	/**
+	 * Creates a new reservation with the provided id_user, id_restaurant, date, time and n_people
+	 */
+	app.post("/create-user", ReservationsController.createReservation)
+
 	// /**
 	//  * Creates a new user with the provided username, email, password, name, surname and avatar
 	//  */

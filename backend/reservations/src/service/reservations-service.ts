@@ -11,7 +11,12 @@ class ReservationsService {
 		this.repository = new ReservationsRepository()
 	}
 
-    // async CreateUser(name: string, surname: string, username: string, email: string, password: string, role: string) {
+    async CreateReservation(id_user: number, id_restaurant: number, date: string, time: string, n_people: number) {
+		const newReservation = await this.repository.CreateReservation(id_user, id_restaurant, date, time, n_people)
+		return newReservation
+	}
+
+	// async CreateUser(name: string, surname: string, username: string, email: string, password: string, role: string) {
 	// 	const newUser = await this.repository.CreateUser(name, surname, username, email, password, role)
 	// 	return newUser
 	// }
