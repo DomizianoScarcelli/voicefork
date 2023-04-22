@@ -13,9 +13,9 @@ services:
             MYSQL_TCP_PORT: 3306
         container_name: mysql_reservations
         ports:
-            - 3310:3306
+            - 3309:3306
         expose:
-            - 3310
+            - 3309
         volumes:
             - db-data:/var/lib/mysql
         networks:
@@ -26,9 +26,9 @@ services:
         restart: always
         container_name: adminer_reservations
         ports:
-            - 8084:8080
+            - 8083:8080
         expose:
-            - 8083
+            - 8082
         networks:
             - gateway_sharedNet
 
@@ -37,7 +37,7 @@ services:
             context: ./
         container_name: reservations
         ports:
-            - '3004:3004'
+            - '3003:3003'
         environment:
             - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
         volumes:
