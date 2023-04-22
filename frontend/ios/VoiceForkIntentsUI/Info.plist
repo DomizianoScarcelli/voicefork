@@ -9,8 +9,10 @@
 			<key>IntentsSupported</key>
 			<array>
 				<string>BookRestaurantIntent</string>
+				<string>GetNearbyRestaurantsIntent</string>
 				<string>INSendMessageIntent</string>
 				<string>MyReservationsIntent</string>
+				<string>SearchForRestaurantsIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>

@@ -40,8 +40,10 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>BookRestaurantIntent</string>
+		<string>GetNearbyRestaurantsIntent</string>
 		<string>MyReservationsIntent</string>
 		<string>NearbyRestaurantsIntentHandler</string>
+		<string>SearchForRestaurantsIntent</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

@@ -42,13 +42,17 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
     var reservationList: [Reservation] = []
     
     for reservation in APIResponse{
-      let reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String) as Reservation
+      var reservationObject: Reservation
+      if #available(iOSApplicationExtension 14.0, *) {
+        reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String, subtitle: "daje bello", image: INImage(named: "da_beppe")) as Reservation
+      } else {
+        reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String) as Reservation
+      }
       reservationObject.restaurant = reservation["restaurant"] as? String
       reservationObject.dateTime = reservation["dateTime"] as? DateComponents
       reservationObject.numberOfPeople = reservation["numberOfPeople"] as? NSNumber
       reservationObject.available = true
       reservationList.append(reservationObject)
-
     }
     if reservationList.count == 0 {
       let nullReservationObject = Reservation.init(identifier: "null", display: "null") as Reservation
