@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import usersAPI from './users-api'
+import usersAPI from './api/users-api'
 
 dotenv.config()
 
