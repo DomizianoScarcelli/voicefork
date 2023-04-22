@@ -1,5 +1,5 @@
 export { default as Colors } from './colors'
 export { default as FontSize } from './fontSizes'
 export { default as Fonts } from './fonts'
-export { default as Dimensions } from './layout'
+export { default as Layout } from './layout'
 export { default as Spacing } from './spacing'

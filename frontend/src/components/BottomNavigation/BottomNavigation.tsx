@@ -4,13 +4,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Homepage, Reservations, Settings } from '../../views';
 import { } from './styles.js';
+import Welcome from '../../views/Welcome/Welcome';
 
 function BottomNavigation() {
     const Tab = createBottomTabNavigator();
 
     return (
         <Tab.Navigator
-            initialRouteName = {"Homepage"}
+            initialRouteName = {"Welcome"}
             screenOptions = {({route}) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName = "";
@@ -33,7 +34,7 @@ function BottomNavigation() {
                 tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
                 tabBarStyle: { padding: 10, height: 70, minHeight: 100}
             })}>
-
+            
             <Tab.Screen name="Homepage" component={ Homepage } />
             <Tab.Screen name="Reservations" component={ Reservations } />
             <Tab.Screen name="Settings" component={ Settings } />

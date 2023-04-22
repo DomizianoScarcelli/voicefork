@@ -5,10 +5,13 @@ import { Provider as ReduxProvider } from "react-redux";
 
 import { BottomNavigation } from './src/components';
 import { Homepage, Reservations } from './src/views';
+import Welcome from './src/views/Welcome/Welcome';
 
 function RootNavigation() {
     return (
-        <NavigationContainer
+        //TO DO: REDEFINE ALL NAVIGATION LOGIC!
+        <Welcome />
+        /**<NavigationContainer
         linking = {{
             prefixes: ['voicefork://'],
             config: {
@@ -20,7 +23,7 @@ function RootNavigation() {
             }
         }}>
             <BottomNavigation />
-        </NavigationContainer>
+        </NavigationContainer>*/
     );
 };
 
