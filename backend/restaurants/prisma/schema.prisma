@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id      Int    @id @default(autoincrement())
+  name    String
+  address String
+  city    String
+  latitude Float
+  longitude Float
+
+  @@unique([name, address])
+}
+
+// model Address {
+//   id           Int          @id @default(autoincrement())
+//   street       String
+//   number Int
+//   city         String?
+//   Restaurant   Restaurant[]
+//   latitude Float?
+//   longitude Float?
+// }
