@@ -41,30 +41,50 @@ class AddReservationWidget (
                 val ttsText = context.resources.getString(R.string.add_reservation_no_params)  + " " + context.resources.getString(R.string.add_reservation_example)
                 setTts(ttsText, ttsText)
             } else {
+                //TODO: CHECK PARAMETERS
                 restaurantName = params.getString("restaurantName").toString()
                 reservationDate = params.getString("reservationDate").toString()
                 reservationTime = params.getString("reservationTime").toString()
                 numberOfPeople = params.getString("numberOfPeople").toString()
 
-                //TODO: CHECK PARAMETERS
                 //RESTAURANT
                 // boh me immagino "vedi se esiste un ristorante con quel nome..."
 
-                //DATE AND TIME
-//                val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-//                val currentDate = LocalDateTime.now().format(formatter)
-//                val cmp = currentDate.compareTo(reservationDate)
-//                when {
-//                    cmp > 0 -> {
-//                        System.out.printf("%s is after %s", currentDate, reservationDate)
-//                    }
-//                    cmp < 0 -> {
-//                        System.out.printf("%s is before %s", currentDate, reservationDate)
-//                    }
-//                    else -> {
-//                        print("Both dates are equal")
-//                    }
-//                }
+                //RESERVATION DATE AND TIME
+                // TODO:check if date and time are formatted correctly
+
+                // set format in 12 hours
+                val formatTime = DateTimeFormatter.ofPattern("HH:mm a")
+                reservationTime = reservationTime.format(formatTime).toString()
+
+                // format date
+                val formatData = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val currentDate = LocalDateTime.now().format(formatData).toString()
+                val cmp = currentDate.compareTo(reservationDate.format(formatData))
+
+                when {
+                    cmp > 0 -> {
+                        // current date is after the reservation date -> ERROR
+                        val ttsText = context.resources.getString(R.string.add_reservation_wrong_reservationDate)
+                        setTts(ttsText, ttsText)
+                    }
+                    cmp < 0 -> {
+                        // current date is before the reservation date
+                        // check if the reservation date is for tomorrow
+                        val tomorrow = LocalDateTime.now().plusDays(1).format(formatData).toString()
+                        if (tomorrow.equals(reservationDate.format(formatData))) {
+                            reservationDate = "Tomorrow"
+                        } else {
+                            // TODO: format data in a fancy way
+                            
+                        }
+                    }
+                    else -> {
+                        // Both dates are equal -> Today
+                        reservationDate = "Today"
+                    }
+                }
+
 
                 //NUMBER OF PEOPLE
                 if (numberOfPeople.toInt() <= 0) {

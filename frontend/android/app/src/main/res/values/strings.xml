@@ -17,8 +17,10 @@
     <string name="widget_activity_speech">Your last reservations are: %1%s</string>
     <string name="widget_activity_text">Your last reservations are: %1%s</string>
 
-    <string name="add_reservation_no_params">in order to add a reservation you should specify the name of the restaurant, the date and the number of people.</string>
-    <string name="add_reservation_wrong_numberOfPeople">the number of people must be a valid number, retry.</string>
+    <string name="add_reservation_no_params">in order to add a reservation you should specify the name of the restaurant, the date, the time and the number of people.</string>
+    <string name="add_reservation_wrong_numberOfPeople">the number of people must be a valid number, please retry.</string>
+    <string name="add_reservation_wrong_reservationDate">it is not possible to make a reservation for a date earlier than the current date, please retry.</string>
+
     <string name="add_reservation_example">For example: Make a reservation to Pizzeria da Luigi tomorrow at 1 pm for 2 people.</string>
     <string name="add_reservation_ok">The reservation to %1$s for %2$s at %3$s for %4$d has been successfully done.</string>
 </resources>
