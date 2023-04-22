@@ -24,19 +24,16 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
       completion(INStringResolutionResult.needsValue())
       return
     }
-    
     checkSimilarRestaurant(by: restaurant) { restaurantList in
-      NSLog("VoiceForkDebug: Checking similarity of name: \(restaurant)")
-      NSLog("VoiceForkDebug: returing the list: \(restaurantList)")
-      NSLog("VoiceForkDebug: condition \(restaurant) == \(restaurantList[0].name): \(restaurant == restaurantList[0].name)")
-      if restaurant == restaurantList[0].name {
+      if restaurantList.map({$0.name}).contains(restaurant) {
         completion(INStringResolutionResult.success(with: restaurant))
+      } else {
+        completion(INStringResolutionResult.disambiguation(with: restaurantList.map { $0.name }))
       }
-      completion(INStringResolutionResult.disambiguation(with: restaurantList.map { $0.name }))
     }
     
-//    completion(INStringResolutionResult.success(with: restaurant))
   }
+
 
   public func resolveDate(for intent: BookRestaurantIntent, with completion: @escaping (INDateComponentsResolutionResult) -> Void) {
 
@@ -68,12 +65,12 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
     completion(BookRestaurantIntentResponse(code: .success, userActivity: nil))
   }
 
-  private func checkSimilarRestaurant(by name: String, threshold: Int = 100, _ callback: @escaping (_ restaurantList: [RestaurantModel]) -> ()) {
+  private func checkSimilarRestaurant(by name: String, threshold: Double = 1.0, _ callback: @escaping (_ restaurantList: [RestaurantModel]) -> ()) {
     
-    HTTPRequestUtils.findMatchingRestaurant(query: name) { _restaurant in
-      NSLog("VoiceForkDebug: HTTP REQUEST WITH: name \(name) and \(_restaurant)")
-      let response = _restaurant
-        .filter { Int($0.distance) <= threshold }
+    HTTPRequestUtils.findMatchingRestaurant(query: name) { restaurant in
+      NSLog("VoiceForkDebug: HTTP REQUEST WITH: name \(name) and \(restaurant)")
+      let response = restaurant
+        .filter { $0.distance <= threshold }
         .map { $0.restaurant }
       
       callback(response)

@@ -84,14 +84,13 @@ public class HTTPRequestUtils {
     task.resume()
   }
 
-  public static func getAddressList(_ callback: @escaping (_ _address: AddressModel) -> ()) {
+  public static func getAddressList(_ callback: @escaping (_ address: AddressModel) -> ()) {
     GET(url: "https://random-data-api.com/api/v2/addresses", callback)
   }
 
-  public static func findMatchingRestaurant(query: String, _ callback: @escaping (_ _restaurant: [RestaurantDistanceModel]) -> ()) {
-    GET(url: "http://localhost:3000/restaurants/find-similar-restaurant/?query=\(query)&limit=10", callback)
-
-    
+  public static func findMatchingRestaurant(query: String, _ callback: @escaping (_ restaurant: [RestaurantDistanceModel]) -> ()) {
+    let parsedQuery = query.replacingOccurrences(of: " ", with: "%20")
+    GET(url: "http://localhost:3000/restaurants/find-similar-restaurant/?query=\(parsedQuery)&limit=10", callback)
   }
 }
 
