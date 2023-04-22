@@ -51,11 +51,13 @@ class AddReservationWidget (
                 // boh me immagino "vedi se esiste un ristorante con quel nome..."
 
                 //RESERVATION DATE AND TIME
-                // TODO:check if date and time are formatted correctly
+                // TODO: check if date and time are formatted correctly
 
-                // set format in 12 hours
-                val formatTime = DateTimeFormatter.ofPattern("HH:mm a")
-                reservationTime = reservationTime.format(formatTime).toString()
+                // TODO: set format in 12 hours
+                // val formatTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+                // val newReservationTime = LocalDateTime.parse(reservationTime, formatTime)
+                // val reFormatTime = DateTimeFormatter.ofPattern("HH:mm a")
+                // reservationTime = newReservationTime.format(reFormatTime).toString()
 
                 // format date
                 val formatData = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -75,7 +77,7 @@ class AddReservationWidget (
                         if (tomorrow.equals(reservationDate.format(formatData))) {
                             reservationDate = "Tomorrow"
                         } else {
-                            // TODO: format data in a fancy way
+                            // TODO: format data in a fancy way (eg: 2020-04-22 -> April 22)
                             
                         }
                     }
