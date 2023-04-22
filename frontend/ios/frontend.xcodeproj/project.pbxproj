@@ -26,6 +26,9 @@
 		967F549029F3BE1B0004F3ED /* RestaurantsListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 967F548F29F3BE1B0004F3ED /* RestaurantsListView.xib */; };
 		967F549529F3CDBB0004F3ED /* Reservation+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F549429F3CDBB0004F3ED /* Reservation+Extension.swift */; };
 		967F549929F3D7A10004F3ED /* RestaurantDistanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F549829F3D7A10004F3ED /* RestaurantDistanceModel.swift */; };
+		967F549B29F400F40004F3ED /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F549A29F400F40004F3ED /* LocationManager.swift */; };
+		967F549D29F407A80004F3ED /* Coordinates+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F549C29F407A80004F3ED /* Coordinates+Extension.swift */; };
+		967F549F29F40B9E0004F3ED /* Restaurant+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F549E29F40B9E0004F3ED /* Restaurant+Extension.swift */; };
 		9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; };
 		9695677729DB1BD900CF7330 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9695677529DB1B7400CF7330 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		969C74E229EEB3950045F42B /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 969C74D229EEB3950045F42B /* FontAwesome5_Brands.ttf */; };
@@ -167,6 +170,9 @@
 		967F548F29F3BE1B0004F3ED /* RestaurantsListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantsListView.xib; sourceTree = "<group>"; };
 		967F549429F3CDBB0004F3ED /* Reservation+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reservation+Extension.swift"; sourceTree = "<group>"; };
 		967F549829F3D7A10004F3ED /* RestaurantDistanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDistanceModel.swift; sourceTree = "<group>"; };
+		967F549A29F400F40004F3ED /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		967F549C29F407A80004F3ED /* Coordinates+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinates+Extension.swift"; sourceTree = "<group>"; };
+		967F549E29F40B9E0004F3ED /* Restaurant+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Restaurant+Extension.swift"; sourceTree = "<group>"; };
 		9695677529DB1B7400CF7330 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		969C74D229EEB3950045F42B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		969C74D329EEB3950045F42B /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -401,6 +407,7 @@
 				96CEA33629E8138100FE8611 /* DateTimeUtils.swift */,
 				96CEA33A29E8149900FE8611 /* RequestsUtils.swift */,
 				96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */,
+				967F549A29F400F40004F3ED /* LocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -428,6 +435,8 @@
 				9643830929DAC272000007E7 /* NSUserActivity+IntentData.swift */,
 				967F096329DEA9C300542DD2 /* UIImage+Extension.swift */,
 				967F549429F3CDBB0004F3ED /* Reservation+Extension.swift */,
+				967F549C29F407A80004F3ED /* Coordinates+Extension.swift */,
+				967F549E29F40B9E0004F3ED /* Restaurant+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -763,6 +772,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				96E604E729EAF8FE007954AB /* RestaurantModel.swift in Sources */,
+				967F549D29F407A80004F3ED /* Coordinates+Extension.swift in Sources */,
+				967F549F29F40B9E0004F3ED /* Restaurant+Extension.swift in Sources */,
 				96E604EE29EB074B007954AB /* MyReservationsIntentHandler.swift in Sources */,
 				96CEA33729E8138100FE8611 /* DateTimeUtils.swift in Sources */,
 				967F548C29F3BD870004F3ED /* SearchForRestaurantsIntentHandler.swift in Sources */,
@@ -770,6 +781,7 @@
 				96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */,
 				9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */,
 				967F096429DEA9C300542DD2 /* UIImage+Extension.swift in Sources */,
+				967F549B29F400F40004F3ED /* LocationManager.swift in Sources */,
 				9643830A29DAC272000007E7 /* NSUserActivity+IntentData.swift in Sources */,
 				967F548E29F3BD920004F3ED /* GetNearbyRestaurantsIntentHandler.swift in Sources */,
 				96CEA33E29E82FB200FE8611 /* AddressModel.swift in Sources */,

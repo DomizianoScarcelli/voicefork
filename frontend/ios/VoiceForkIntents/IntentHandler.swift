@@ -18,21 +18,24 @@ import IntentKit
 // "Search for messages in <myApp>"
 
 class IntentHandler: INExtension {
-  
+
   override func handler(for intent: INIntent) -> Any {
-    
+
     if intent is BookRestaurantIntent {
       NSLog("VoiceForkDebug: Intent is of type BookRestaurantIntent")
       return BookRestaurantIntentHandler()
     } else if intent is MyReservationsIntent {
       NSLog("VoiceForkDebug: Intent is of type MyReservationsIntent")
       return MyReservationsIntentHandler()
+    } else if intent is GetNearbyRestaurantsIntent {
+      NSLog("VoiceForkDebug: Intent is of type GetNearbyRestaurants")
+      return GetNearbyRestaurantsIntentHandler()
     }
     fatalError("Unhandled intentype \(intent)")
   }
-  
+
 }
-    
+
 //    // MARK: - INSendMessageIntentHandling
 //
 //    // Implement resolution methods to provide additional information about your intent (optional).

@@ -20,16 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = UIWindow(frame: UIScreen.main.bounds)
     self.window?.rootViewController = rootViewController
     self.window?.makeKeyAndVisible()
-    
+
     return true
   }
-  
+
   func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-          guard userActivity.activityType == NSUserActivity.bookRestaurantActivityType || userActivity.activityType == NSUserActivity.myReservationsActivityType else {
-                  return false
-          }
-          return true
-      }
+    guard userActivity.activityType == NSUserActivity.bookRestaurantActivityType ||
+      userActivity.activityType == NSUserActivity.myReservationsActivityType ||
+      userActivity.activityType == NSUserActivity.getNearbyRestaurantsActivityType else {
+      return false
+    }
+    return true
+  }
 }
 
 

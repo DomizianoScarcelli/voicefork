@@ -12,9 +12,6 @@ import IntentsUI
 
 
 class ReservationConfirmedViewController: UIViewController {
-
-
-
   private var intent: INIntent
   private var intentResponse: INIntentResponse
 

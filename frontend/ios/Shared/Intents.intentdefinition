@@ -599,6 +599,8 @@
 			<string>Get a list of restaurants nearby user location</string>
 			<key>INIntentDescriptionID</key>
 			<string>iuE4nP</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>4</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
 				<key></key>
@@ -621,19 +623,93 @@
 					<true/>
 				</dict>
 			</dict>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterDisplayName</key>
+					<string>Coordinates</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>AGmf4J</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterName</key>
+					<string>coordinates</string>
+					<key>INIntentParameterObjectType</key>
+					<string>Coordinates</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>NCiwJX</string>
+					<key>INIntentParameterTag</key>
+					<integer>4</integer>
+					<key>INIntentParameterType</key>
+					<string>Object</string>
+				</dict>
+			</array>
 			<key>INIntentResponse</key>
 			<dict>
 				<key>INIntentResponseCodes</key>
 				<array>
 					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Here are the restaurants around, would you like to make a reservation?</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>qitQNO</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Here are the restaurants around, would you like to make a reservation?</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>gd5ffR</string>
 						<key>INIntentResponseCodeName</key>
 						<string>success</string>
 						<key>INIntentResponseCodeSuccess</key>
 						<true/>
 					</dict>
 					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Sorry, there was a problem</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>NP6fHo</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Sorry, there was a problem</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>FkWOhu</string>
 						<key>INIntentResponseCodeName</key>
 						<string>failure</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Sorry, there aren't any restaurants around you</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>oysOqu</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Sorry, there aren't any restaurants around you</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>ESFsX5</string>
+						<key>INIntentResponseCodeName</key>
+						<string>restaurantsNotFound</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>3</integer>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Restaurant List</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>51xDr5</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>restaurantList</string>
+						<key>INIntentResponseParameterObjectType</key>
+						<string>Restaurant</string>
+						<key>INIntentResponseParameterObjectTypeNamespace</key>
+						<string>NCiwJX</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<true/>
+						<key>INIntentResponseParameterTag</key>
+						<integer>3</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Object</string>
 					</dict>
 				</array>
 			</dict>
@@ -866,6 +942,111 @@
 					<integer>106</integer>
 					<key>INTypePropertyType</key>
 					<string>Boolean</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>Coordinates</string>
+			<key>INTypeDisplayNameID</key>
+			<string>mVpN6W</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>104</integer>
+			<key>INTypeName</key>
+			<string>Coordinates</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Property</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>7klOfT</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>5</integer>
+					<key>INTypePropertyName</key>
+					<string>property</string>
+					<key>INTypePropertyTag</key>
+					<integer>100</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Longitude</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>I24JU5</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>6</integer>
+					<key>INTypePropertyName</key>
+					<string>longitude</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>Decimal</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Latitude</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>8ZnGOy</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>7</integer>
+					<key>INTypePropertyName</key>
+					<string>latitude</string>
+					<key>INTypePropertyTag</key>
+					<integer>104</integer>
+					<key>INTypePropertyType</key>
+					<string>Decimal</string>
 				</dict>
 			</array>
 		</dict>

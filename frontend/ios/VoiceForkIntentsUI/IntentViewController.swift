@@ -30,7 +30,10 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
       } else if let response = interaction.intentResponse as? MyReservationsIntentResponse {
         let viewController = ReservationConfirmedViewController(for: intent, with: response)
         attachChild(viewController)
-        
+        completion(true, parameters, desiredSize)
+      } else if let response = interaction.intentResponse as? GetNearbyRestaurantsIntentResponse {
+        let viewController = ReservationConfirmedViewController(for: intent, with: response)
+        attachChild(viewController)
         completion(true, parameters, desiredSize)
       }
     }

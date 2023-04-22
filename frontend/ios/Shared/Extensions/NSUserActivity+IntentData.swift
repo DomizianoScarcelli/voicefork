@@ -12,6 +12,9 @@ extension NSUserActivity {
     
   public static let bookRestaurantActivityType = "com.domizianoscarcelli.intentkit.bookrestaurants"
   public static let myReservationsActivityType = "com.domizianoscarcelli.intentkit.myreservations"
+  public static let getNearbyRestaurantsActivityType = "com.domizianoscarcelli.intentkit.nearbyrestaurants"
+  public static let searchForRestaurantsActivityType = "com.domizianoscarcelli.intentkit.searchrestaurants"
+
 
   public static var bookRestaurantActivity: NSUserActivity {
       let userActivity = NSUserActivity(activityType: NSUserActivity.bookRestaurantActivityType)
@@ -28,6 +31,15 @@ extension NSUserActivity {
       userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.myReservationsActivityType)
       userActivity.isEligibleForPrediction = true
       userActivity.suggestedInvocationPhrase = "Show my reservations"
+      return userActivity
+  }
+  
+  public static var getNearbyRestaurantsActivity: NSUserActivity {
+      let userActivity = NSUserActivity(activityType: NSUserActivity.getNearbyRestaurantsActivityType)
+      userActivity.title = "NearbyRestaurants"
+      userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.getNearbyRestaurantsActivityType)
+      userActivity.isEligibleForPrediction = true
+      userActivity.suggestedInvocationPhrase = "Show restaurants nearby"
       return userActivity
   }
 }

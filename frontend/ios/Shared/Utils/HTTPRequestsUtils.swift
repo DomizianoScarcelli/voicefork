@@ -92,5 +92,10 @@ public class HTTPRequestUtils {
     let parsedQuery = query.replacingOccurrences(of: " ", with: "%20")
     GET(url: "http://localhost:3000/restaurants/find-similar-restaurant/?query=\(parsedQuery)&limit=10", callback)
   }
+  
+  public static func getNearbyRestaurants(latitude: Double, longitude: Double, maxDistance: Int, _ callback: @escaping (_ restaurants: [RestaurantDistanceModel]) -> ()) {
+    GET(url: "http://localhost:3000/restaurants/find-restaurants-nearby?latitude=\(latitude)&longitude=\(longitude)&maxDistance=\(maxDistance)", callback)
+  }
+
 }
 
