@@ -61,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"\", //Optional\n    \"username\": \"Marietto01\", //Optional\n    \"password\": \"mariettoermitico\" //Mandatory\n}",
+					"raw": "{\n    \"email\": \"marietto01@gmail.com\", //Optional\n    \"username\": \"Marietto01\", //Optional\n    \"password\": \"mariettoermitico\" //Mandatory\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,6 +101,49 @@
 					],
 					"path": [
 						"update-avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"oldPassword\": \"mariettoermitico\",\r\n    \"newPassword\": \"mariettoergrande\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{USERS_BASE}}/update-password",
+					"host": [
+						"{{USERS_BASE}}"
+					],
+					"path": [
+						"update-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{USERS_BASE}}/get-all-users",
+					"host": [
+						"{{USERS_BASE}}"
+					],
+					"path": [
+						"get-all-users"
 					]
 				}
 			},
