@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import reservationsAPI from './reservations-api'
+import reservationsAPI from './api/reservations-api'
 
 dotenv.config()
 
