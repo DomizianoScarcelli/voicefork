@@ -16,7 +16,12 @@ const usersAPI = (app: Express) => {
 	app.post("/login", UsersController.login)
 
 	/**
-	 * Returns the user info with the specified ID
+	 * Returns the users' info 
+	 */
+	app.get("/get-all-users", UsersController.getAllUsers)
+
+	/**
+	 * Returns the user's info with the specified ID
 	 */
 	app.get("/get-user/:id", UsersController.getUserById)
 
@@ -29,6 +34,11 @@ const usersAPI = (app: Express) => {
 	 * Update the user's avatar
 	 */
 	app.post("/update-avatar", UsersController.updateAvatar)
+
+	/**
+	 * Update the user's avatar
+	 */
+	app.post("/update-password", UsersController.updatePassword)
 
 	//TO DO: UPDATE USER INFO
 

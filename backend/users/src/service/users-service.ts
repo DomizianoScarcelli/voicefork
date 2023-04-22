@@ -17,9 +17,21 @@ class UsersService {
 	}
 
 	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
-		const user = await this.repository.Login(email, username, password)
-		if (user == null) return null
-		else return user
+		const userId = await this.repository.GetUserIdByEmailorUsername(email, username)
+		if (userId !== null) {
+			const checkPass = await this.repository.CheckPassword(userId, password)
+			if (checkPass) {
+				const result = await this.repository.GetUserById(userId)
+				return result
+			}
+		}
+
+		return null
+	}
+
+	async GetAllUsers(): Promise<UserInfo[]> {
+		const users = await this.repository.GetAllUsers()
+		return users
 	}
 
 	async GetUserById(id: number): Promise<UserInfo | null> {
@@ -39,6 +51,16 @@ class UsersService {
 		const user = await this.repository.UpdateAvatar(id, avatar)
 		if (user == null) return null
 		else return user
+	}
+
+	async UpdatePassword(id: number, oldPassword: string, newPassword: string): Promise<boolean> {
+		const checkPass = await this.repository.CheckPassword(id, oldPassword)
+		if (checkPass) {
+			const result = await this.repository.UpdatePassword(id, newPassword)
+			return result
+		}
+
+		return false
 	}
 }
 

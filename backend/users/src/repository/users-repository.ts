@@ -19,7 +19,23 @@ class UsersRepository {
 				avatar: ""
 			},
 		})
+
 		return user
+	}
+
+	async GetAllUsers(): Promise<UserInfo[]> {
+		const users = await prisma.user.findMany({
+			select: {
+				id: true,
+				name: true,
+				surname: true,
+				username: true,
+				email: true,
+				avatar: true
+			},
+		})
+
+		return users
 	}
 
 	async GetUserById(id: number): Promise<UserInfo | null> {
@@ -36,31 +52,57 @@ class UsersRepository {
 				avatar: true
 			},
 		})
+
 		return user_info
 	}
 
+	async CheckPassword(id: number, password: string): Promise<boolean> {
+		const checkPass = !!await prisma.user.findFirst({
+			where: {
+				AND: [
+					{ id: id },
+					{ password: password },
+				]
+			},
+		})
+
+		return checkPass
+	}
+
+	async GetUserIdByEmailorUsername(email: string, username: string): Promise<number | null> {
+		const userId = await prisma.user.findFirst({
+			where: {
+				OR: [
+					{ username: username },
+					{ email: email },
+				]
+			}, 
+			select: {
+				id: true
+			}
+		})
+
+		if (userId !== null) return userId.id
+		return null
+	}
+
 	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
-		const userExist = !!await prisma.user.findFirst({
+		const userId = await prisma.user.findFirst({
 			where: {
 				OR: [
 					{ username: username },
 					{ email: email }
 				]
+			}, 
+			select: {
+				id: true
 			}
 		})
 
-		if (userExist) {
+		if (userId !== null && await this.CheckPassword(userId.id, password)) {
 			const user_info = await prisma.user.findFirst({
 				where: {
-					AND: [
-						{
-							OR: [
-								{ username: username },
-								{ email: email }
-							]
-						},
-						{ password: password }
-					]
+					id: userId.id,
 				},
 				select: {
 					id: true,
@@ -97,7 +139,21 @@ class UsersRepository {
 				avatar: avatar,
 			},
 		})
+
 		return user
+	}
+
+	async UpdatePassword(id: number, newPassword: string): Promise<boolean> {
+		const result = !!await prisma.user.update({
+			where: {
+				id: id,
+			},
+			data: {
+				password: newPassword,
+			},
+		})
+		
+		return result
 	}
 }
 

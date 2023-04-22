@@ -32,6 +32,15 @@ const UsersController = {
 		}
 	},
 
+	getAllUsers: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const data = await service.GetAllUsers()
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	},
+
     getUserById: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params
@@ -78,6 +87,24 @@ const UsersController = {
 			}
 			res.json({
 				message: `The avatar of the user with id ${id} was updated successfully`
+			})
+		} catch (err) {
+			next(err)
+		}
+	},
+
+	updatePassword: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id, oldPassword, newPassword } = req.body
+			const result = await service.UpdatePassword(id, oldPassword, newPassword)
+			if (!result) {
+				res.json({
+					error: "User not found",
+					message: `User with id ${id} not found in the database or old password not matching`,
+				})
+			}
+			res.json({
+				message: `The password of the user with id ${id} was updated successfully`
 			})
 		} catch (err) {
 			next(err)
