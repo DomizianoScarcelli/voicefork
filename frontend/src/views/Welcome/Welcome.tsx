@@ -115,7 +115,8 @@ function Welcome({ navigation } : any) {
                             style={{
                                 paddingLeft: 10,
                                 color: Colors.green
-                            }}>
+                            }}
+                            onPress={() => navigation.navigate("Registration")}>
                             Register Now
                         </Text>
                     </Text>
