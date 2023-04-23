@@ -3,7 +3,6 @@ import { Image, KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View
 import { Colors, FontSize, Fonts, Spacing, Layout } from "../../constants"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from "../../components/InputField/InputField";
-import logo from "../../assets/logo"
 
 function Welcome({ navigation } : any) {
     return (

@@ -27,7 +27,6 @@ function InputField({label, icon, inputType, keyboardType, fieldButtonLabel, fie
                     placeholder={label}
                     keyboardType={keyboardType}
                     style={{flex: 1, paddingVertical: 0}}
-                    secureTextEntry={true}
                 />
             )}
             <TouchableOpacity onPress={fieldButtonFunction}>
