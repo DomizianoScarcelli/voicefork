@@ -1,3 +1,5 @@
 package com.frontend.data.models
 
-data class RestaurantModel()
+data class RestaurantModel(
+        val name: String,
+)

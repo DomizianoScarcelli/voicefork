@@ -6,16 +6,16 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 const val BASEURL = "http://localhost:3002"
 
-@RequiresApi(Build.VERSION_CODES.O)
-class APIInterface {
+class APINetwork {
     companion object{
         private var retrofit: Retrofit?=null
 
-        fun getAllRestaurants(): Retrofit {
+        fun getApiClient(): Retrofit {
             val gson = GsonBuilder()
                     .setLenient()
                     .create()

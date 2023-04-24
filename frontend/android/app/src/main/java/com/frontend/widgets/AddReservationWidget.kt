@@ -3,14 +3,10 @@ package com.frontend.widgets
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.frontend.R
-import com.frontend.data.VoiceForkDatabase
 import com.google.assistant.appactions.widgets.AppActionsWidgetExtension
-import java.sql.Time
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

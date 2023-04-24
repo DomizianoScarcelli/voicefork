@@ -1,33 +1,31 @@
 package com.frontend.data
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
-import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import androidx.lifecycle.MutableLiveData
+import com.frontend.data.models.RestaurantModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-@RequiresApi(Build.VERSION_CODES.O)
-class VoiceForkDatabase {
-    companion object{
-        private var retrofit: Retrofit?=null
-        fun getApiClient(): Retrofit {
-            val gson = GsonBuilder()
-                    .setLenient()
-                    .create()
-            val okHttpClient = OkHttpClient.Builder()
-                    .readTimeout(100, TimeUnit.SECONDS)
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .build()
-            if (retrofit == null) {
-                retrofit = Retrofit.Builder()
-                        .baseUrl(BASEURL)
-                        .client(okHttpClient)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build()
+val retrofit = APINetwork.getApiClient().create(ApiInterface::class.java)
+
+class VoiceForkRepository {
+    fun getAllRestaurants() {
+        val restaurants = retrofit.getAllRestaurants()
+
+        restaurants.enqueue(object : Callback<List<RestaurantModel>?> {
+            override fun onResponse(call: Call<List<RestaurantModel>?>, response: Response<List<RestaurantModel>?>) {
+                val responseBody = response.body()!!
+                Log.d("test", responseBody.toString())
+
             }
-            return retrofit!!
-        }
+
+            override fun onFailure(call: Call<List<RestaurantModel>?>, t: Throwable) {
+                Log.d("test", t.message.toString())
+            }
+        })
     }
+
 }

@@ -3,13 +3,10 @@ package com.frontend.widgets
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.os.Build
-import android.util.Log
-import android.widget.ListView
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import com.frontend.MainApplication
 import com.frontend.R
-import com.frontend.data.VoiceForkDatabase
+import com.frontend.data.VoiceForkRepository
 import com.frontend.utils.Reservation
 import com.google.assistant.appactions.widgets.AppActionsWidgetExtension
 
@@ -22,7 +19,7 @@ class ReservationWidget (
         private val TAG = "ReservationWidget"
         private val views = RemoteViews(context.packageName, layout)
         @RequiresApi(Build.VERSION_CODES.O)
-        private val db = VoiceForkDatabase()
+        private val db = VoiceForkRepository()
         private val hasBii: Boolean
 
         init {
@@ -37,12 +34,9 @@ class ReservationWidget (
         }
 
         private fun setDataToWidget(
-            reservationList: HashSet<Reservation>
+            reservationList: HashSet<String>
         ) {
             val widgetText = ""
-            for (reservation in reservationList) {
-                widgetText + reservation.getName() + "\n"
-            }
             views.setTextViewText(
                 R.id.reservation_list,
                 widgetText
@@ -68,7 +62,7 @@ class ReservationWidget (
          */
         private fun setNoReservationsDataWidget() {
             //val appwidgetTypeTitleText = context.getString((R.string.widget_no_data))
-            val emptyArray = HashSet<Reservation>()
+            val emptyArray = HashSet<String>()
             setDataToWidget(emptyArray)
         }
 
@@ -84,7 +78,8 @@ class ReservationWidget (
          */
         @RequiresApi(Build.VERSION_CODES.O)
         private fun observeAndUpdateReservations() {
-            val reservationsData = db.getReservations()
+            VoiceForkRepository().getAllRestaurants()
+            val reservationsData = HashSet<String>()
 
             if (reservationsData.isEmpty()) {
                 setNoReservationsDataWidget()

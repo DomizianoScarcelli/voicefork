@@ -1,12 +1,7 @@
 package com.frontend
 
 import android.app.Application
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
-import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.annotation.RequiresApi
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -15,12 +10,12 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
-import com.frontend.data.VoiceForkDatabase
+import com.frontend.data.VoiceForkRepository
 
 class MainApplication : Application(), ReactApplication {
     //private val TAG = "MainApplication"
     @RequiresApi(Build.VERSION_CODES.O)
-    private val db = VoiceForkDatabase()
+    private val db = VoiceForkRepository()
 
     private val mReactNativeHost: ReactNativeHost = object : DefaultReactNativeHost(this) {
         override fun getUseDeveloperSupport(): Boolean {
