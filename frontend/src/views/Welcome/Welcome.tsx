@@ -60,7 +60,13 @@ function Welcome({ navigation } : any) {
         axios.post('http://localhost:3000/users/login', formData)
         .then(function(response) {
             if (response.status === 200) {
-                console.log(response.data.id)
+                Alert.alert(  
+                    'Login ok',  
+                    response.data.id,  
+                    [  
+                        {text: 'OK'},  
+                    ]  
+                )
             }
         })
         .catch(function(error) {

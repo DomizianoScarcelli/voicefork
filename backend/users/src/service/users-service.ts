@@ -11,13 +11,13 @@ class UsersService {
 		this.repository = new UsersRepository()
 	}
 
-    async CreateUser(name: string, surname: string, username: string, email: string, password: string, role: string) {
-		const newUser = await this.repository.CreateUser(name, surname, username, email, password, role)
+    async CreateUser(name: string, surname: string, email: string, password: string, role: string) {
+		const newUser = await this.repository.CreateUser(name, surname, email, password, role)
 		return newUser
 	}
 
-	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
-		const userId = await this.repository.GetUserIdByEmailorUsername(email, username)
+	async Login(email: string, password: string): Promise<UserInfo | null> {
+		const userId = await this.repository.GetUserIdByEmail(email)
 		if (userId !== null) {
 			const checkPass = await this.repository.CheckPassword(userId, password)
 			if (checkPass) {

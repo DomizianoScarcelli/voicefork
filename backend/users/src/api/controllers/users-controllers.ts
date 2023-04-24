@@ -5,8 +5,8 @@ const service = new UsersService()
 const UsersController = {
 	createUser: async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { name, surname, username, email, password, role } = req.body
-			const data = await service.CreateUser(name, surname, username, email, password, role)
+			const { name, surname, email, password, role } = req.body
+			const data = await service.CreateUser(name, surname, email, password, role)
 			res.json({
 				message: "User was created successfully!",
 				data: data,
@@ -19,11 +19,11 @@ const UsersController = {
 	login: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { email, username, password } = req.body
-			const data = await service.Login(email, username, password)
+			const data = await service.Login(email, password)
 			if (data == null) {
 				res.status(404).json({
 					error: `Resource not found`,
-					message: `The specified username/email and password does not match with any user`,
+					message: `The specified email and password does not match with any user`,
 				})
 			}
 			res.json(data)

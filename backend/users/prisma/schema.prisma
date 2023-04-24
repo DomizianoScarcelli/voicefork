@@ -15,13 +15,12 @@ model User {
   id        Int     @id @default(autoincrement())
   name      String  
   surname   String
-  username  String
   email     String
   password  String  
   role      Role    @default(customer)
   avatar    String
 
-  @@unique([username, email])
+  @@unique([email])
 }
 
 enum Role {
