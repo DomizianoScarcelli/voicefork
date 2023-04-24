@@ -90,7 +90,6 @@ function Registration({navigation}:any) {
     const registerUser = () => {
         let formData = {
             "email": formValues["email"],
-            "username": "test2",
             "password": formValues["password"],
             "name": formValues["name"],
             "surname": formValues["surname"],
@@ -111,6 +110,7 @@ function Registration({navigation}:any) {
             }
         })
         .catch(function(error) {
+            console.log(error)
             Alert.alert(  
                 'Something is wrong',  
                 "We can't complete this task. Please, try again",  
