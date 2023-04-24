@@ -1,10 +1,88 @@
-import React from "react"
-import { Image, KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import React, { useState } from "react"
+import { Alert, Image, KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { Colors, FontSize, Fonts, Spacing, Layout } from "../../constants"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from "../../components/InputField/InputField";
+import axios from "axios";
 
 function Welcome({ navigation } : any) {
+    const [formValues, setFormValues] = useState({ email: '', password: '' })
+    const [errors, setErrors] = useState( { email: '', password: '' } )
+
+    const validateEmail = () => {
+        let isValid = true
+
+        if (!formValues.email) {
+            handleError("You must specify an email address", "email")
+            isValid = false
+        } else if (!formValues.email.match(/\S+@\S+\.\S+/)) {
+            handleError("You must specify a valid email address", "email")
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    const validatePassword = () => {
+        let isValid = true
+
+        if (!formValues.password) {
+            handleError("You must specify a password", "password")
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    const validateData = () => {
+        const isValidEmail = validateEmail()
+        const isValidPassword = validatePassword()
+        
+        if (isValidEmail && isValidPassword) {
+            login()
+        } else {
+            Alert.alert(  
+                'Something is wrong',  
+                'Please, check your data and try again',  
+                [  
+                    {text: 'OK'},  
+                ]  
+            );
+        }
+    }
+
+    const login = () => {
+        let formData = {
+            "email": formValues["email"],
+            "password": formValues["password"]
+        }
+
+        axios.post('http://localhost:3000/users/login', formData)
+        .then(function(response) {
+            if (response.status === 200) {
+                console.log(response.data.id)
+            }
+        })
+        .catch(function(error) {
+            console.log(error)
+            Alert.alert(  
+                'Something is wrong',  
+                "We can't complete this task. Please, try again",  
+                [  
+                    {text: 'OK'},  
+                ]  
+            )
+        })
+    }
+
+    const handleOnChange = (text: string, input: any) => {
+        setFormValues({...formValues, [input]: text})
+    }
+
+      const handleError = (error: string, input: any) => {
+        setErrors(prevState => ({...prevState, [input]: error}))
+    }
+
     return (
         <SafeAreaView
             style={{
@@ -55,16 +133,25 @@ function Welcome({ navigation } : any) {
                         paddingHorizontal: Spacing * 3,
                         paddingVertical: Spacing * 2,
                     }}>
+                    <Text>Email:</Text>
                     <InputField
-                        label = {'Username'}
-                        icon = {<Ionicons name={"person-outline"} size={20} color={Colors.green} />}
+                        label = {"Email"}
                         keyboardType="default"
+                        value={formValues.email}
+                        onChangeText={(text:string) => handleOnChange(text, "email")}
+                        onFocus={() => handleError("", "email")}
+                        error={errors.email}
                     />
+                    <Text>Password:</Text>
                     <InputField
-                        label = {'Password'}
+                        label = {"Password"}
                         icon = {<Ionicons name={"lock-closed-outline"} size={20} color={Colors.green} />}
                         keyboardType="default"
                         inputType="password"
+                        value={formValues.password}
+                        onChangeText={(text:string) => handleOnChange(text, "password")}
+                        onFocus={() => handleError("", "password")}
+                        error={errors.password}
                     />
                     </View>
                     <View
@@ -76,7 +163,7 @@ function Welcome({ navigation } : any) {
                             alignItems: "center"
                         }}>
                         <TouchableOpacity
-                            onPress={() => true}
+                            onPress={() => validateData()}
                             style={{
                                 backgroundColor: Colors.green,
                                 paddingVertical: Spacing,

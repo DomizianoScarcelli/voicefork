@@ -88,30 +88,37 @@ function Registration({navigation}:any) {
     }
 
     const registerUser = () => {
-        let formData = new FormData();
-        formData.append("email", formValues["email"])
-        formData.append("username", "test") //TO DO: REMOVE USERNAME FROM USERTABLE
-        formData.append("password", formValues["password"])
-        formData.append("name", formValues["name"])
-        formData.append("surname", formValues["surname"])
-        formData.append("role", "customer") //TO DO: REGISTRATION AS AN OWNER (FOR NOW, ALL USERS ARE CUSTOMERS)
+        let formData = {
+            "email": formValues["email"],
+            "username": "test2",
+            "password": formValues["password"],
+            "name": formValues["name"],
+            "surname": formValues["surname"],
+            "role": "customer"
+        }
 
-        axios.post('http://localhost:3000/create-user', formData)
+        axios.post('http://localhost:3000/users/create-user', formData)
         .then(function(response) {
-            console.log(response)
+            if (response.status === 200) {
+                Alert.alert(  
+                    'User created successfully',  
+                    "You can login now",  
+                    [  
+                        {text: 'OK',
+                        onPress: () => navigation.navigate("Welcome")}
+                    ]  
+                )
+            }
         })
         .catch(function(error) {
-            console.log(error)
-        }) 
-
-        //TO DO: AN ERROR HERE??
-        const oReq = new XMLHttpRequest();
-        oReq.addEventListener("error", (e) => {
-        console.log(e);
-        });
-        oReq.open("GET", "http://localhost:5005/");
-        oReq.send();
-
+            Alert.alert(  
+                'Something is wrong',  
+                "We can't complete this task. Please, try again",  
+                [  
+                    {text: 'OK'},  
+                ]  
+            )
+        })
     }
 
     const handleOnChange = (text: string, input: any) => {
