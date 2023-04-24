@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, Button, SafeAreaView } from 'react-native';
-import { } from './styles.js';
+import { Text, SafeAreaView } from 'react-native';
+import { TextStyle } from './styles.js';
 
 function Reservations({navigation}:any) {
     return (
-        <Text>
-
-        </Text>
+        <SafeAreaView>
+            <Text style={TextStyle.baseText}>Reservations</Text>
+        </SafeAreaView>
     )
 }
 

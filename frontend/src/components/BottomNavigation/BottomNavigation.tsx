@@ -31,7 +31,7 @@ function BottomNavigation() {
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'grey',
                 tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
-                tabBarStyle: { padding: 10, height: 70}
+                tabBarStyle: { padding: 10, height: 70, minHeight: 100}
             })}>
 
             <Tab.Screen name="Homepage" component={ Homepage } />
