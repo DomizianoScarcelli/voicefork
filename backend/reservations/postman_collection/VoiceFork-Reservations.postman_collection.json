@@ -24,7 +24,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id_user\": 1,\n    \"id_restaurant\": 1,\n    \"date\": \"2023-04-25\",\n    \"time\": \"18:20\",\n    \"n_people\": 5\n}",
+					"raw": "{\n    \"id_user\": 1,\n    \"id_restaurant\": 1,\n    \"dateTime\": \"2023-04-25T18:20:00.000Z\",\n    \"n_people\": 5\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -5,8 +5,8 @@ const service = new ReservationsService()
 const ReservationsController = {
 	createReservation: async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { id_user, id_restaurant, date, time, n_people } = req.body
-			const data = await service.CreateReservation(id_user, id_restaurant, date, time, n_people)
+			const { id_user, id_restaurant, dateTime, n_people } = req.body
+			const data = await service.CreateReservation(id_user, id_restaurant, dateTime, n_people)
 			res.json({
 				message: "Reservation was created successfully!",
 				data: data,

@@ -2,8 +2,7 @@ type ReservationInfo = {
     id: number,
     id_user: number,
     id_restaurant: number,
-    date: string,
-    time: string,
+    dateTime: Date,
     n_people: number
 }
 

@@ -11,8 +11,8 @@ class ReservationsService {
 		this.repository = new ReservationsRepository()
 	}
 
-    async CreateReservation(id_user: number, id_restaurant: number, date: string, time: string, n_people: number) {
-		const newReservation = await this.repository.CreateReservation(id_user, id_restaurant, date, time, n_people)
+    async CreateReservation(id_user: number, id_restaurant: number, dateTime: Date, n_people: number) {
+		const newReservation = await this.repository.CreateReservation(id_user, id_restaurant, dateTime, n_people)
 		return newReservation
 	}
 
