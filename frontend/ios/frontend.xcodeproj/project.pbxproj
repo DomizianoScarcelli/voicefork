@@ -10,6 +10,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8B985748BB24FB1D04802B33 /* libPods-frontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BC8060C21A0FDE68405EBD /* libPods-frontend.a */; };
+		963A859F29F8143B00EED969 /* poppins-semiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859C29F8143B00EED969 /* poppins-semiBold.ttf */; };
+		963A85A029F8143B00EED969 /* poppins-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859D29F8143B00EED969 /* poppins-regular.ttf */; };
+		963A85A129F8143B00EED969 /* poppins-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859E29F8143B00EED969 /* poppins-bold.ttf */; };
+		963A85A229F8144100EED969 /* poppins-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859E29F8143B00EED969 /* poppins-bold.ttf */; };
+		963A85A329F8144100EED969 /* poppins-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859D29F8143B00EED969 /* poppins-regular.ttf */; };
+		963A85A429F8144100EED969 /* poppins-semiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 963A859C29F8143B00EED969 /* poppins-semiBold.ttf */; };
 		964382EE29DAC1BA000007E7 /* SiriIntentFramework.docc in Sources */ = {isa = PBXBuildFile; fileRef = 964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */; };
 		964382FC29DAC1BA000007E7 /* SiriIntentFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		964382FF29DAC1BA000007E7 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
@@ -149,6 +155,9 @@
 		45392A6BEA3C876F13A306FC /* Pods-frontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-frontend.debug.xcconfig"; path = "Target Support Files/Pods-frontend/Pods-frontend.debug.xcconfig"; sourceTree = "<group>"; };
 		79BC8060C21A0FDE68405EBD /* libPods-frontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-frontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = frontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		963A859C29F8143B00EED969 /* poppins-semiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "poppins-semiBold.ttf"; sourceTree = "<group>"; };
+		963A859D29F8143B00EED969 /* poppins-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "poppins-regular.ttf"; sourceTree = "<group>"; };
+		963A859E29F8143B00EED969 /* poppins-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "poppins-bold.ttf"; sourceTree = "<group>"; };
 		964382EA29DAC1BA000007E7 /* IntentKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IntentKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SiriIntentFramework.h; sourceTree = "<group>"; };
 		964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SiriIntentFramework.docc; sourceTree = "<group>"; };
@@ -330,6 +339,9 @@
 				969C74DB29EEB3950045F42B /* Feather.ttf */,
 				969C74D929EEB3950045F42B /* FontAwesome.ttf */,
 				969C74D229EEB3950045F42B /* FontAwesome5_Brands.ttf */,
+				963A859E29F8143B00EED969 /* poppins-bold.ttf */,
+				963A859D29F8143B00EED969 /* poppins-regular.ttf */,
+				963A859C29F8143B00EED969 /* poppins-semiBold.ttf */,
 				969C74D829EEB3950045F42B /* FontAwesome5_Regular.ttf */,
 				969C74D329EEB3950045F42B /* FontAwesome5_Solid.ttf */,
 				969C74D529EEB3950045F42B /* Fontisto.ttf */,
@@ -533,6 +545,7 @@
 				969C74E929EEB3950045F42B /* FontAwesome.ttf in Resources */,
 				969C74F129EEB3950045F42B /* AntDesign.ttf in Resources */,
 				969C74E629EEB3950045F42B /* Foundation.ttf in Resources */,
+				963A859F29F8143B00EED969 /* poppins-semiBold.ttf in Resources */,
 				969C74F029EEB3950045F42B /* Zocial.ttf in Resources */,
 				969C74E829EEB3950045F42B /* FontAwesome5_Regular.ttf in Resources */,
 				969C74EE29EEB3950045F42B /* Entypo.ttf in Resources */,
@@ -540,6 +553,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				969C74EC29EEB3950045F42B /* MaterialIcons.ttf in Resources */,
 				969C74E229EEB3950045F42B /* FontAwesome5_Brands.ttf in Resources */,
+				963A85A129F8143B00EED969 /* poppins-bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				969C74EF29EEB3950045F42B /* EvilIcons.ttf in Resources */,
 				967F096229DEA73600542DD2 /* Shared.xcassets in Resources */,
@@ -547,6 +561,7 @@
 				969C74E429EEB3950045F42B /* SimpleLineIcons.ttf in Resources */,
 				969C74EA29EEB3950045F42B /* Octicons.ttf in Resources */,
 				969C74E529EEB3950045F42B /* Fontisto.ttf in Resources */,
+				963A85A029F8143B00EED969 /* poppins-regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +584,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963A85A229F8144100EED969 /* poppins-bold.ttf in Resources */,
+				963A85A329F8144100EED969 /* poppins-regular.ttf in Resources */,
+				963A85A429F8144100EED969 /* poppins-semiBold.ttf in Resources */,
 				969C74F229EEB39F0045F42B /* AntDesign.ttf in Resources */,
 				969C74F329EEB39F0045F42B /* Entypo.ttf in Resources */,
 				969C74F429EEB39F0045F42B /* EvilIcons.ttf in Resources */,

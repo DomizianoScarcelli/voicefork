@@ -62,6 +62,9 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+        <string>poppins-bold.ttf</string>
+        <string>poppins-regular.ttf</string>
+        <string>poppins-semibold.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
