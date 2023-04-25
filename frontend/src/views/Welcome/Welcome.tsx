@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { Alert, Image, KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { Colors, FontSize, Fonts, Spacing, Layout } from "../../constants"
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import InputField from "../../components/InputField/InputField";
-import axios from "axios";
-import EncryptedStorage from "react-native-encrypted-storage";
-import { ScrollView } from "react-native-gesture-handler";
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import InputField from "../../components/InputField/InputField"
+import axios from "axios"
+import EncryptedStorage from "react-native-encrypted-storage"
+import { ScrollView } from "react-native-gesture-handler"
+import { welcome_style } from "./styles.js"
 
 function Welcome({ navigation } : any) {
     const [formValues, setFormValues] = useState({ email: '', password: '' })
@@ -139,56 +140,26 @@ function Welcome({ navigation } : any) {
     }
 
     return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-                alignItems: "center",
-                backgroundColor: Colors.gray,
-                height: Layout.height
-            }}>
+        <SafeAreaView style={welcome_style.safe_area_view}>
             <ScrollView>
                 <View
-                    style={{
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        flexDirection: "column",
-                    }}>
+                    style={welcome_style.external_view}>
                     <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "flex-start"
-                    }}>
+                    style={welcome_style.upper_section}>
                         <View
-                            style={{
-                                paddingHorizontal: Spacing * 4,
-                                paddingTop: Spacing * 4,
-                            }}>
+                            style={welcome_style.upper_section_text}>
                             <Text
-                                style={{
-                                    fontSize: FontSize.xxLarge,
-                                    color: Colors.black,
-                                    fontFamily: Fonts["poppins-bold"],
-                                    textAlign: "center",
-                                }}>
+                                style={welcome_style.upper_section_text_title}>
                                 Discover and book the best restaurants
                             </Text>
 
                             <Text
-                                style={{
-                                    fontSize: FontSize.small,
-                                    color: Colors.black,
-                                    fontFamily: Fonts["poppins-regular"],
-                                    textAlign: "center",
-                                    marginTop: Spacing * 2,
-                                }}>
+                                style={welcome_style.upper_section_text_description}>
                                 Discover and book the best restaurants and leave reviews by also using your voice 
                             </Text>
                         </View>
                         <View
-                        style={{
-                            paddingHorizontal: Spacing * 3,
-                            paddingVertical: Spacing * 2,
-                        }}>
+                        style={welcome_style.middle_section}>
                         <Text>Email:</Text>
                         <InputField
                             label = {"Email"}
@@ -212,55 +183,24 @@ function Welcome({ navigation } : any) {
                         />
                         </View>
                         <View
-                            style={{
-                                paddingHorizontal: Spacing * 2,
-                                paddingTop: Spacing,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}>
+                            style={welcome_style.middle_section_button_spacing}>
                             <TouchableOpacity
                                 onPress={() => validateData()}
                                 disabled={loading}
-                                style={{
-                                    backgroundColor: Colors.green,
-                                    paddingVertical: Spacing,
-                                    paddingHorizontal: Spacing,
-                                    width: "48%",
-                                    borderRadius: Spacing,
-                                    shadowColor: Colors.black,
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: Spacing,
-                                    },
-                                    shadowOpacity: 0.3,
-                                    shadowRadius: Spacing,
-                                }}>
+                                style={welcome_style.middle_section_login_button}>
                                 <Text
-                                    style={{
-                                        fontFamily: Fonts["poppins-bold"],
-                                        color: Colors.white,
-                                        fontSize: FontSize.large,
-                                        textAlign: "center",
-                                    }}>
+                                    style={welcome_style.middle_section_login_button_text}>
                                     {loading ? "Logging in.." : "Login"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "flex-end",
-                            marginVertical: 20
-                        }}>
+                        style={welcome_style.lower_section}>
                         <Text>
                             Not a member yet? &nbsp;
                             <Text
-                                style={{
-                                    paddingLeft: 10,
-                                    color: Colors.green
-                                }}
+                                style={welcome_style.lower_section_text}
                                 onPress={() => navigation.navigate("Registration")}>
                                 Register Now
                             </Text>
