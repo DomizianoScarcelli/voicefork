@@ -9,24 +9,40 @@ import UIKit
 import Intents
 
 public class GetNearbyRestaurantsIntentHandler: NSObject, GetNearbyRestaurantsIntentHandling {
-  public func handle(intent: GetNearbyRestaurantsIntent, completion: @escaping (GetNearbyRestaurantsIntentResponse) -> Void) {
+  public func resolveRestaurantList(for intent: GetNearbyRestaurantsIntent, with completion: @escaping (RestaurantResolutionResult) -> Void) {
     let locationManager = LocationManager()
     locationManager.handleLocation()
     guard let coordinates = locationManager.getCurrentLocation() else {
       locationManager.handleLocation()
       return
     }
-    intent.coordinates = Coordinates(latitude: coordinates.latitude, longitude: coordinates.longitude)
-    var response = GetNearbyRestaurantsIntentResponse(code: .success, userActivity: nil)
-
-    HTTPRequestUtils.getNearbyRestaurants(
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
-      maxDistance: 100000000) { restaurants in
-        response.restaurantList = restaurants.map {Restaurant(restaurant: $0.restaurant)}
-        NSLog("VoiceForkDebug: computed restaurant list\(response.restaurantList)")
-        completion(response)
+    
+    guard let restaurantList = intent.restaurantList else {
+      HTTPRequestUtils.getNearbyRestaurants(
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        maxDistance: 100000000) { restaurants in
+          var restaurantList: [Restaurant] = []
+          
+          for restaurant in restaurants {
+            if #available(iOSApplicationExtension 14.0, *) {
+              restaurantList.append(Restaurant(restaurantDistance: restaurant))
+            } else {
+              restaurantList.append(Restaurant(restaurant: restaurant.restaurant))
+            }
+          }
+          completion(RestaurantResolutionResult.disambiguation(with: restaurantList))
+          return
+      }
+      return
     }
+    completion(RestaurantResolutionResult.success(with: restaurantList))
+    
+  }
+  
+  
+  public func handle(intent: GetNearbyRestaurantsIntent, completion: @escaping (GetNearbyRestaurantsIntentResponse) -> Void) {
+    completion(GetNearbyRestaurantsIntentResponse(code: .success, userActivity: nil))
   }
 
 

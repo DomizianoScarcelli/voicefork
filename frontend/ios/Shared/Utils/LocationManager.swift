@@ -30,6 +30,6 @@ public class LocationManager {
       return nil
     }
     return (latitude: locValue.latitude, longitude: locValue.longitude)
-
   }
+
 }

@@ -10,6 +10,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8B985748BB24FB1D04802B33 /* libPods-frontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BC8060C21A0FDE68405EBD /* libPods-frontend.a */; };
+		961A204629F837E9001B6C40 /* Distanceutils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A204529F837E9001B6C40 /* Distanceutils.swift */; };
 		964382EE29DAC1BA000007E7 /* SiriIntentFramework.docc in Sources */ = {isa = PBXBuildFile; fileRef = 964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */; };
 		964382FC29DAC1BA000007E7 /* SiriIntentFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		964382FF29DAC1BA000007E7 /* IntentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964382EA29DAC1BA000007E7 /* IntentKit.framework */; };
@@ -158,6 +159,7 @@
 		45392A6BEA3C876F13A306FC /* Pods-frontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-frontend.debug.xcconfig"; path = "Target Support Files/Pods-frontend/Pods-frontend.debug.xcconfig"; sourceTree = "<group>"; };
 		79BC8060C21A0FDE68405EBD /* libPods-frontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-frontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = frontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		961A204529F837E9001B6C40 /* Distanceutils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Distanceutils.swift; sourceTree = "<group>"; };
 		964382EA29DAC1BA000007E7 /* IntentKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IntentKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		964382EC29DAC1BA000007E7 /* SiriIntentFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SiriIntentFramework.h; sourceTree = "<group>"; };
 		964382ED29DAC1BA000007E7 /* SiriIntentFramework.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SiriIntentFramework.docc; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				96CEA33A29E8149900FE8611 /* RequestsUtils.swift */,
 				96CEA34329E8314900FE8611 /* HTTPRequestsUtils.swift */,
 				967F549A29F400F40004F3ED /* LocationManager.swift */,
+				961A204529F837E9001B6C40 /* Distanceutils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 				96CEA33B29E8149900FE8611 /* RequestsUtils.swift in Sources */,
 				96D272FB29DCA1C4001EA1E4 /* BookRestaurantIntentHandler.swift in Sources */,
 				9695677629DB1B7400CF7330 /* Intents.intentdefinition in Sources */,
+				961A204629F837E9001B6C40 /* Distanceutils.swift in Sources */,
 				967F096429DEA9C300542DD2 /* UIImage+Extension.swift in Sources */,
 				967F549B29F400F40004F3ED /* LocationManager.swift in Sources */,
 				9643830A29DAC272000007E7 /* NSUserActivity+IntentData.swift in Sources */,

@@ -600,10 +600,10 @@
 			<key>INIntentDescriptionID</key>
 			<string>iuE4nP</string>
 			<key>INIntentLastParameterTag</key>
-			<integer>4</integer>
+			<integer>10</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key></key>
+				<key>restaurantList</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
@@ -621,6 +621,15 @@
 					<true/>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
+				</dict>
+				<key>restaurantList</key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Nearby restaurants</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>zvmECD</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -640,6 +649,47 @@
 					<string>NCiwJX</string>
 					<key>INIntentParameterTag</key>
 					<integer>4</integer>
+					<key>INIntentParameterType</key>
+					<string>Object</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Restaurant List</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>FLEAOj</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterName</key>
+					<string>restaurantList</string>
+					<key>INIntentParameterObjectType</key>
+					<string>Restaurant</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>NCiwJX</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>These are the restaurants nearby, do you want more details about one of them?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>tACzfF</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>10</integer>
 					<key>INIntentParameterType</key>
 					<string>Object</string>
 				</dict>
@@ -689,29 +739,6 @@
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
 				<integer>3</integer>
-				<key>INIntentResponseParameters</key>
-				<array>
-					<dict>
-						<key>INIntentResponseParameterDisplayName</key>
-						<string>Restaurant List</string>
-						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>51xDr5</string>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>1</integer>
-						<key>INIntentResponseParameterName</key>
-						<string>restaurantList</string>
-						<key>INIntentResponseParameterObjectType</key>
-						<string>Restaurant</string>
-						<key>INIntentResponseParameterObjectTypeNamespace</key>
-						<string>NCiwJX</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<true/>
-						<key>INIntentResponseParameterTag</key>
-						<integer>3</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>Object</string>
-					</dict>
-				</array>
 			</dict>
 			<key>INIntentTitle</key>
 			<string>Get Nearby Restaurants</string>
