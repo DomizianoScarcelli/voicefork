@@ -16,31 +16,31 @@ public class GetNearbyRestaurantsIntentHandler: NSObject, GetNearbyRestaurantsIn
       locationManager.handleLocation()
       return
     }
-    
+
     guard let restaurantList = intent.restaurantList else {
       HTTPRequestUtils.getNearbyRestaurants(
         latitude: coordinates.latitude,
         longitude: coordinates.longitude,
         maxDistance: 100000000) { restaurants in
-          var restaurantList: [Restaurant] = []
-          
-          for restaurant in restaurants {
-            if #available(iOSApplicationExtension 14.0, *) {
-              restaurantList.append(Restaurant(restaurantDistance: restaurant))
-            } else {
-              restaurantList.append(Restaurant(restaurant: restaurant.restaurant))
-            }
+        var restaurantList: [Restaurant] = []
+
+        for restaurant in restaurants {
+          if #available(iOSApplicationExtension 14.0, *) {
+            restaurantList.append(Restaurant(restaurantDistance: restaurant))
+          } else {
+            restaurantList.append(Restaurant(restaurant: restaurant.restaurant))
           }
-          completion(RestaurantResolutionResult.disambiguation(with: restaurantList))
-          return
+        }
+        completion(RestaurantResolutionResult.disambiguation(with: restaurantList))
+        return
       }
       return
     }
     completion(RestaurantResolutionResult.success(with: restaurantList))
-    
+
   }
-  
-  
+
+
   public func handle(intent: GetNearbyRestaurantsIntent, completion: @escaping (GetNearbyRestaurantsIntentResponse) -> Void) {
     completion(GetNearbyRestaurantsIntentResponse(code: .success, userActivity: nil))
   }

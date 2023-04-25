@@ -88,9 +88,14 @@ public class HTTPRequestUtils {
     GET(url: "https://random-data-api.com/api/v2/addresses", callback)
   }
 
-  public static func findMatchingRestaurant(query: String, _ callback: @escaping (_ restaurant: [RestaurantDistanceModel]) -> ()) {
+  public static func findMatchingRestaurant(query: String, _ callback: @escaping (_ restaurant: [SearchResultModel]) -> ()) {
     let parsedQuery = query.replacingOccurrences(of: " ", with: "%20")
-    GET(url: "http://localhost:3000/restaurants/find-similar-restaurant/?query=\(parsedQuery)&limit=10", callback)
+    GET(url: "http://localhost:3000/restaurants/search-restaurants?query=\(parsedQuery)&limit=10", callback)
+  }
+  
+  public static func findMatchingRestaurantNearby(query: String, latitude: Double, longitude: Double, maxDistance: Int, _ callback: @escaping (_ restaurant: [SearchResultModel]) -> ()) {
+    let parsedQuery = query.replacingOccurrences(of: " ", with: "%20")
+    GET(url: "http://localhost:3000/restaurants/search-restaurants?query=\(parsedQuery)&latitude=\(latitude)&longitude=\(longitude)&maxDistance=\(maxDistance)&limit=10", callback)
   }
   
   public static func getNearbyRestaurants(latitude: Double, longitude: Double, maxDistance: Int, _ callback: @escaping (_ restaurants: [RestaurantDistanceModel]) -> ()) {

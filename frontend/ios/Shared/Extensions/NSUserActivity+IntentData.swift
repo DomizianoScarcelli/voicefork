@@ -39,7 +39,7 @@ extension NSUserActivity {
       userActivity.title = "NearbyRestaurants"
       userActivity.persistentIdentifier = NSUserActivityPersistentIdentifier(NSUserActivity.getNearbyRestaurantsActivityType)
       userActivity.isEligibleForPrediction = true
-      userActivity.suggestedInvocationPhrase = "Show restaurants nearby"
+      userActivity.suggestedInvocationPhrase = "Show me restaurants nearby"
       return userActivity
   }
 }

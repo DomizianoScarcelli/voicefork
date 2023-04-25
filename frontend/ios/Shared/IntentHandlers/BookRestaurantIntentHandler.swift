@@ -70,7 +70,7 @@ public class BookRestaurantIntentHandler: NSObject, BookRestaurantIntentHandling
     HTTPRequestUtils.findMatchingRestaurant(query: name) { restaurant in
       NSLog("VoiceForkDebug: HTTP REQUEST WITH: name \(name) and \(restaurant)")
       let response = restaurant
-        .filter { $0.distance <= threshold }
+        .filter { $0.nameDistance <= threshold }
         .map { $0.restaurant }
       
       callback(response)

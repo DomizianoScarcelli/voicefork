@@ -8,12 +8,12 @@
 import Foundation
 
 public class DistanceUtils {
-  public static  func parseDistance(distance: Double) -> String {
+  public static func parseDistance(distance: Double) -> String {
     if distance < 1000 {
       return "\(Int(round(distance)))m"
     }
     else {
-      return "\(round(distance/1000)/10)km"
+      return "\(round(distance / 1000) / 10)km"
     }
   }
 }
