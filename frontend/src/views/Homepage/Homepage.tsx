@@ -8,7 +8,7 @@ function Homepage({navigation}:any) {
     async function retrieveUserSession() {
         try {   
             const session = await EncryptedStorage.getItem("user_session");
-            if (session === undefined) {
+            if (session === null) {
                 navigation.navigate("Welcome")
             }
         } catch (error) {
