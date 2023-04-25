@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from 'express'
 import RestaurantService from '../../service/restaurant-service'
-import {LatLng} from '../../shared/types'
+import {LatLng, RestaurantSearchResult} from '../../shared/types'
 
 const service = new RestaurantService()
 const RestaurantController = {
@@ -93,7 +93,7 @@ const RestaurantController = {
         }
     },
 
-    findSimilarRestaurants: async (
+    searchRestaurants: async (
         req: Request<
             {},
             {},
@@ -101,14 +101,31 @@ const RestaurantController = {
             {
                 query: string
                 limit?: number
+                latitude?: number
+                longitude?: number
+                maxDistance?: number
             }
         >,
         res: Response,
         next: NextFunction,
     ) => {
+        let data: RestaurantSearchResult[]
         try {
-            const {query, limit} = req.query
-            const data = await service.GetRestaurantBySimilarName(query, limit)
+            const {query, limit, latitude, longitude} = req.query
+            let {maxDistance} = req.query
+            if (latitude != undefined && longitude != undefined) {
+                if (maxDistance == undefined) maxDistance = Infinity
+                const coordinates: LatLng = {
+                    latitude: latitude,
+                    longitude: longitude,
+                }
+                data = await service.SearchRestaurants(query, limit, {
+                    coordinates: coordinates,
+                    maxDistance: maxDistance,
+                })
+            } else {
+                data = await service.SearchRestaurants(query, limit)
+            }
             res.json(data)
         } catch (err) {
             next(err)

@@ -5,7 +5,11 @@ import {
     distanceBetweenCoordinates,
 } from '../utils/localizationUtils'
 import {Restaurant} from '@prisma/client'
-import {LatLng, RestaurantDistanceResult} from '../shared/types'
+import {
+    LatLng,
+    RestaurantDistanceResult,
+    RestaurantSearchResult,
+} from '../shared/types'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -63,7 +67,7 @@ class RestaurantService {
                 result.push({restaurant: restaurant, distance: distance})
             }
         })
-        result.sort((a, b) => (a.distance > b.distance ? 1 : -1))
+        result.sort((a, b) => ((a.distance ?? 0) > (b.distance ?? 0) ? 1 : -1))
         if (limit != null) {
             return result.slice(0, limit)
         }
@@ -75,28 +79,44 @@ class RestaurantService {
         return restaurants
     }
 
-    async GetRestaurantBySimilarName(
+    async SearchRestaurants(
         query: string,
         limit?: number,
-    ): Promise<RestaurantDistanceResult[]> {
-        const allRestaurants = await this.repository.GetAllRestaurants()
-        const distanceArr: RestaurantDistanceResult[] = []
-        allRestaurants?.forEach(restaurant => {
+        locationInfo?: {coordinates: LatLng; maxDistance: number},
+    ): Promise<RestaurantSearchResult[]> {
+        let filteredRestaurants: RestaurantDistanceResult[]
+        if (locationInfo != undefined) {
+            const {coordinates, maxDistance} = locationInfo
+            filteredRestaurants = await this.GetRestaurantsNearCoordinates(
+                coordinates,
+                maxDistance,
+                limit,
+            )
+        } else {
+            const allRestaurants = await this.repository.GetAllRestaurants()
+            filteredRestaurants = allRestaurants.map(element => ({
+                restaurant: element,
+                distance: undefined,
+            }))
+        }
+        const searchResults: RestaurantSearchResult[] = []
+        filteredRestaurants?.forEach(({restaurant, distance}) => {
             const {similarity} = levenshtein(
                 query.toLowerCase(),
                 restaurant.name.toLowerCase(),
             )
-            const element = {
+            const element: RestaurantSearchResult = {
                 restaurant: restaurant,
-                distance: 1 - similarity,
+                nameDistance: 1 - similarity,
+                locationDistance: distance,
             }
-            distanceArr.push(element)
+            searchResults.push(element)
         })
-        distanceArr.sort((a, b) => (a.distance > b.distance ? 1 : -1))
+        searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
         if (limit != undefined) {
-            return distanceArr.slice(0, limit)
+            return searchResults.slice(0, limit)
         }
-        return distanceArr
+        return searchResults
     }
 
     async DeleteRestaurant(id: number): Promise<Restaurant | null> {

@@ -31,13 +31,13 @@ const restaurantAPI = (app: Express) => {
     app.get('/all-restaurants', RestaurantController.getAllRestaurants)
 
     /**
-     * Given a restaurant name, returns the list of the top 10 restaurants with the most similar name,
-     * along with their distance from the provided restaurant.
+     * Allows to search for restaurants given a name, sorted by distance from the query name.
+     * - query: the name of the restaurant we want to search
+     * - limit: allows to limit the number of results
+     * - latitude and longitude: if set, along with maxDistance, it will return only results within a certain geographical area
+     * - maxDistance: the maximum distance from the coordinates where the resturant can be
      */
-    app.get(
-        '/find-similar-restaurant/',
-        RestaurantController.findSimilarRestaurants,
-    )
+    app.get('/search-restaurants/', RestaurantController.searchRestaurants)
 
     /***
      * Given a set of coordinates and a maxDistance, returns the ordinate list of the restaurant that are nearby that location.
