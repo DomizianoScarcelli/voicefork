@@ -125,7 +125,7 @@ function Registration({navigation}:any) {
         setFormValues({...formValues, [input]: text})
     }
 
-      const handleError = (error: string, input: any) => {
+    const handleError = (error: string, input: any) => {
         setErrors(prevState => ({...prevState, [input]: error}))
     }
 
