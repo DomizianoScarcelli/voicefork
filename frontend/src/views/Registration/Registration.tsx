@@ -69,6 +69,7 @@ function Registration({navigation}:any) {
     }
 
     const validateData = () => {
+        setLoading(true)
         const isValidEmail = validateEmail()
         const isValidPassword = validatePassword()
         const isValidName = validateName()
@@ -83,7 +84,8 @@ function Registration({navigation}:any) {
                 [  
                     {text: 'OK'},  
                 ]  
-            );
+            )
+            setLoading(false)
         }
     }
 
@@ -119,6 +121,7 @@ function Registration({navigation}:any) {
                 ]  
             )
         })
+        setLoading(false)
     }
 
     const handleOnChange = (text: string, input: any) => {
@@ -227,6 +230,7 @@ function Registration({navigation}:any) {
                             }}>
                             <TouchableOpacity
                                 onPress={() => validateData()}
+                                disabled={loading}
                                 style={{
                                     backgroundColor: Colors.green,
                                     paddingVertical: Spacing,
@@ -248,7 +252,7 @@ function Registration({navigation}:any) {
                                         fontSize: FontSize.large,
                                         textAlign: "center",
                                     }}>
-                                    Sign in
+                                    {loading ? "Signing in.." : "Sign in"}
                                 </Text>
                             </TouchableOpacity>
                         </View>

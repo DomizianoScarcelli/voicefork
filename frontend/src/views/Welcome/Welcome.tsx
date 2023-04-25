@@ -9,7 +9,8 @@ import { ScrollView } from "react-native-gesture-handler";
 
 function Welcome({ navigation } : any) {
     const [formValues, setFormValues] = useState({ email: '', password: '' })
-    const [errors, setErrors] = useState( { email: '', password: '' } )
+    const [errors, setErrors] = useState( { email: '', password: '' })
+    const [loading, setLoading] = useState(false)
 
     async function retrieveUserSession() {
         try {   
@@ -76,6 +77,7 @@ function Welcome({ navigation } : any) {
     }
 
     const validateData = () => {
+        setLoading(true)
         const isValidEmail = validateEmail()
         const isValidPassword = validatePassword()
         
@@ -88,7 +90,8 @@ function Welcome({ navigation } : any) {
                 [  
                     {text: 'OK'},  
                 ]  
-            );
+            )
+            setLoading(false)
         }
     }
 
@@ -124,6 +127,7 @@ function Welcome({ navigation } : any) {
                 ]  
             )
         })
+        setLoading(false)
     }
 
     const handleOnChange = (text: string, input: any) => {
@@ -216,6 +220,7 @@ function Welcome({ navigation } : any) {
                             }}>
                             <TouchableOpacity
                                 onPress={() => validateData()}
+                                disabled={loading}
                                 style={{
                                     backgroundColor: Colors.green,
                                     paddingVertical: Spacing,
@@ -237,7 +242,7 @@ function Welcome({ navigation } : any) {
                                         fontSize: FontSize.large,
                                         textAlign: "center",
                                     }}>
-                                    Login
+                                    {loading ? "Logging in.." : "Login"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
