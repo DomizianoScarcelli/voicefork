@@ -192,6 +192,7 @@ function Welcome({ navigation } : any) {
                         <Text>Email:</Text>
                         <InputField
                             label = {"Email"}
+                            icon = {<Ionicons name={"mail-outline"} size={20} color={errors.email ? Colors.lightRed : Colors.green} />}
                             keyboardType="default"
                             value={formValues.email}
                             onChangeText={(text:string) => handleOnChange(text, "email")}
@@ -201,7 +202,7 @@ function Welcome({ navigation } : any) {
                         <Text>Password:</Text>
                         <InputField
                             label = {"Password"}
-                            icon = {<Ionicons name={"lock-closed-outline"} size={20} color={Colors.green} />}
+                            icon = {<Ionicons name={"lock-closed-outline"} size={20} color={errors.password ? Colors.lightRed : Colors.green}/>}
                             keyboardType="default"
                             inputType="password"
                             value={formValues.password}

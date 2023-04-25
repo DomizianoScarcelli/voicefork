@@ -185,6 +185,7 @@ function Registration({navigation}:any) {
                         <Text>Email:</Text>
                         <InputField
                             label = {"Email"}
+                            icon = {<Ionicons name={"mail-outline"} size={20} color={errors.email ? Colors.lightRed : Colors.green} />}
                             keyboardType="default"
                             value={formValues.email}
                             onChangeText={(text:string) => handleOnChange(text, "email")}
@@ -194,6 +195,7 @@ function Registration({navigation}:any) {
                         <Text>Password:</Text>
                         <InputField
                             label = {'Password'}
+                            icon = {<Ionicons name={"lock-closed-outline"} size={20} color={errors.password ? Colors.lightRed : Colors.green} />}
                             keyboardType="default"
                             inputType="password"
                             value={formValues.password}
@@ -204,6 +206,7 @@ function Registration({navigation}:any) {
                         <Text>Name:</Text>
                         <InputField
                             label = {"Name"}
+                            icon = {<Ionicons name={"person-outline"} size={20} color={errors.name ? Colors.lightRed : Colors.green} />}
                             keyboardType="default"
                             value={formValues.name}
                             onChangeText={(text:string) => handleOnChange(text, "name")}
@@ -213,6 +216,7 @@ function Registration({navigation}:any) {
                         <Text>Surname:</Text>
                         <InputField
                             label = {'Surname'}
+                            icon = {<Ionicons name={"person-outline"} size={20} color={errors.surname ? Colors.lightRed : Colors.green} />}
                             keyboardType="default"
                             value={formValues.surname}
                             onChangeText={(text:string) => handleOnChange(text, "surname")}
