@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b252f9a2-2c96-49da-acec-8dca50d3043c",
+		"_postman_id": "b0b19276-e026-451b-8ea3-64969033033b",
 		"name": "VoiceFork-Restaurants",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18224278"
+		"_exporter_id": "19145227"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"name\": \"Da Giulio\",\n\"address\": \"Via di casal selce, 400\",\n\"city\": \"Rome\"\n}",
+					"raw": "{\n    \"name\": \"Pizzeria matta fracica\",\n    \"address\": \"Via di casal selce, 381\",\n    \"city\": \"Roma\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,18 +62,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/find-restaurant/:id",
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurants/:ids",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
 					"path": [
-						"find-restaurant",
-						":id"
+						"find-restaurants",
+						":ids"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "ids",
+							"value": "[2,3]"
 						}
 					]
 				}
@@ -98,13 +98,50 @@
 			"response": []
 		},
 		{
-			"name": "Find Restaurant by Similar Name",
+			"name": "Seach Restaurant",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{RESTAURANTS_BASE}}/search-restaurants/?query=Mario&latitude=41.909734&longitude=12.349999&maxDistance=2000&limit=10",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"search-restaurants",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Mario"
+						},
+						{
+							"key": "latitude",
+							"value": "41.909734"
+						},
+						{
+							"key": "longitude",
+							"value": "12.349999"
+						},
+						{
+							"key": "maxDistance",
+							"value": "2000"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Nearby Restaurant",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		},
@@ -114,7 +151,27 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://api.positionstack.com/v1/forward?access_key=8c9c59ff99f358710262c503c158f4a4&query=Via di Casal Selce, 296, Roma",
+					"protocol": "http",
+					"host": [
+						"api",
+						"positionstack",
+						"com"
+					],
+					"path": [
+						"v1",
+						"forward"
+					],
+					"query": [
+						{
+							"key": "access_key",
+							"value": "8c9c59ff99f358710262c503c158f4a4"
+						},
+						{
+							"key": "query",
+							"value": "Via di Casal Selce, 296, Roma"
+						}
+					]
 				}
 			},
 			"response": []
@@ -122,10 +179,23 @@
 		{
 			"name": "Delete Restaurant",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{RESTAURANTS_BASE}}/delete-restaurant/:id",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"delete-restaurant",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "4"
+						}
+					]
 				}
 			},
 			"response": []
@@ -136,16 +206,35 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurants-nearby?latitude=41.909734&longitude=12.349999&maxDistance=2000",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"find-restaurants-nearby"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "41.909734"
+						},
+						{
+							"key": "longitude",
+							"value": "12.349999"
+						},
+						{
+							"key": "maxDistance",
+							"value": "2000"
+						},
+						{
+							"key": "limit",
+							"value": "",
+							"disabled": true
+						}
+					]
 				}
 			},
 			"response": []
-		}
-	],
-	"variable": [
-		{
-			"key": "RESTAURANTS_BASE",
-			"value": "localhost:3002"
 		}
 	]
 }
