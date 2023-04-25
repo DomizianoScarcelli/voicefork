@@ -44,7 +44,7 @@ class ReservationConfirmedViewController: UIViewController {
       let calendar = Calendar.current
       let dateTime = calendar.date(byAdding: intent.time!, to: calendar.date(from: intent.date!)!)
       let image = UIImage(named: "da_beppe")
-      renderReservation(name: intent.restaurant!, image: image!, dateTime: dateTime!, numberOfPeople: intent.numberOfPeople as! Int)
+      renderReservation(name: intent.restaurant!.name!, image: image!, dateTime: dateTime!, numberOfPeople: intent.numberOfPeople as! Int)
     } else if let intent = intent as? MyReservationsIntent {
       // Manage the MyReservationsIntent
 //      guard let intentResponse = intentResponse as? MyReservationsIntentResponse else {return}

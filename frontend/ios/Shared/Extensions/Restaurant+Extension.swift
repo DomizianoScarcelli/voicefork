@@ -19,4 +19,14 @@ extension Restaurant {
     self.init(identifier: String(restaurantDistance.restaurant.id), display: restaurantDistance.restaurant.name, subtitle: "\(restaurantDistance.restaurant.address) (\(DistanceUtils.parseDistance(distance: restaurantDistance.distance)))", image: INImage(named: "da_beppe"))
     self.name = restaurantDistance.restaurant.name
   }
+  
+  @available(iOSApplicationExtension 14.0, *)
+  convenience init (searchResult: SearchResultModel) {
+    var address = "\(searchResult.restaurant.address)"
+    if let locationDistance = searchResult.locationDistance {
+      address += " (\(DistanceUtils.parseDistance(distance: locationDistance)))"
+    }
+    self.init(identifier: String(searchResult.restaurant.id), display: searchResult.restaurant.name, subtitle: address, image: INImage(named: "da_beppe"))
+    self.name = searchResult.restaurant.name
+  }
 }
