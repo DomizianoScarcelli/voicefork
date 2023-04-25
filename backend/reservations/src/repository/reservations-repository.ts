@@ -1,4 +1,4 @@
-import { PrismaClient, Reservation } from "../../node_modules/.prisma/client"
+import { PrismaClient, Reservation } from "@prisma/client"
 import { ReservationInfo } from "../shared/types"
 
 const prisma: PrismaClient = new PrismaClient()
