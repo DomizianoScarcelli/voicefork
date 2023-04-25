@@ -1,5 +1,3 @@
-import { Reservation } from "@prisma/client"
-
 type ReservationInfo = {
     id: number,
     id_user: number,

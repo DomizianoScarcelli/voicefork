@@ -1,4 +1,4 @@
-import { PrismaClient, Reservation } from "@prisma/client"
+import { PrismaClient, Reservation } from "../../node_modules/.prisma/client"
 import { ReservationInfo } from "../shared/types"
 
 const prisma: PrismaClient = new PrismaClient()
@@ -8,7 +8,7 @@ const prisma: PrismaClient = new PrismaClient()
  */
 class ReservationsRepository {
 	async CreateReservation(id_user: number, id_restaurant: number, date: string, time: string, n_people: number): Promise<Reservation> {
-		const user = await prisma.reservation.create({
+		const reservation = await prisma.reservation.create({
 			data: {
 				id_user: id_user,
 				id_restaurant: id_restaurant,
