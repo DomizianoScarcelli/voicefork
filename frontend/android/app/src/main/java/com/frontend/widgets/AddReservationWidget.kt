@@ -13,6 +13,7 @@ import java.sql.Time
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.text.DateFormatSymbols;
 
 @RequiresApi(Build.VERSION_CODES.O)
 class AddReservationWidget (
@@ -41,52 +42,59 @@ class AddReservationWidget (
                 val ttsText = context.resources.getString(R.string.add_reservation_no_params)  + " " + context.resources.getString(R.string.add_reservation_example)
                 setTts(ttsText, ttsText)
             } else {
-                //TODO: CHECK PARAMETERS
                 restaurantName = params.getString("restaurantName").toString()
                 reservationDate = params.getString("reservationDate").toString()
                 reservationTime = params.getString("reservationTime").toString()
                 numberOfPeople = params.getString("numberOfPeople").toString()
 
-                //RESTAURANT
-                // boh me immagino "vedi se esiste un ristorante con quel nome..."
+                //RESTAURANT NAME
+                // TODO: check if the restaurant exist
 
-                //RESERVATION DATE AND TIME
-                // TODO: check if date and time are formatted correctly
+                //RESERVATION DATE
+                // TODO: check if date is formatted correctly
+                val formatDate = DateTimeFormatter.ofPattern("MMMM dd")
 
-                // TODO: set format in 12 hours
-                // val formatTime = DateTimeFormatter.ofPattern("HH:mm:ss")
-                // val newReservationTime = LocalDateTime.parse(reservationTime, formatTime)
-                // val reFormatTime = DateTimeFormatter.ofPattern("HH:mm a")
-                // reservationTime = newReservationTime.format(reFormatTime).toString()
-
-                // format date
-                val formatData = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val currentDate = LocalDateTime.now().format(formatData).toString()
-                val cmp = currentDate.compareTo(reservationDate.format(formatData))
-
-                when {
-                    cmp > 0 -> {
-                        // current date is after the reservation date -> ERROR
-                        val ttsText = context.resources.getString(R.string.add_reservation_wrong_reservationDate)
+                if (!(reservationDate.equals("today") or reservationDate.equals("tomorrow"))){
+                    try {
+                        formatDate.parse(reservationDate);
+                    } catch (e: Exception) {
+                        // reservation date != "Month day" format -> Error
+                        val ttsText = context.resources.getString(R.string.add_reservation_wrong_reservationDate_invalidFormat)
                         setTts(ttsText, ttsText)
                     }
-                    cmp < 0 -> {
-                        // current date is before the reservation date
-                        // check if the reservation date is for tomorrow
-                        val tomorrow = LocalDateTime.now().plusDays(1).format(formatData).toString()
-                        if (tomorrow.equals(reservationDate.format(formatData))) {
-                            reservationDate = "Tomorrow"
-                        } else {
-                            // TODO: format data in a fancy way (eg: 2020-04-22 -> April 22)
-                            
+
+                    val currentDate = LocalDateTime.now().format(formatDate)
+                    val cmp = currentDate.compareTo(reservationDate.format(formatDate))
+
+                    when {
+                        cmp > 0 -> {
+                            // current date is after the reservation date -> ERROR
+                            val ttsText = context.resources.getString(R.string.add_reservation_wrong_reservationDate_invalidDate)
+                            setTts(ttsText, ttsText)
                         }
-                    }
-                    else -> {
-                        // Both dates are equal -> Today
-                        reservationDate = "Today"
+                        cmp < 0 -> {
+                            // current date is before the reservation date
+                            // check if the reservation date is for tomorrow
+                            val tomorrow =
+                                LocalDateTime.now().plusDays(1).format(formatDate).toString()
+                            if (tomorrow.equals(reservationDate)) {
+                                reservationDate = "tomorrow"
+                            } else {
+                                // TODO: format data in a fancy way (eg: 2020-04-22 -> April 22)
+                            }
+                        }
+                        else -> {
+                            // Both dates are equal -> Today
+                            reservationDate = "today"
+                        }
                     }
                 }
 
+                //RESERVATION TIME
+                // TODO: check if time is formatted correctly (set format in 12 hours)
+                // val formatTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+                // val newReservationTime = LocalDateTime.parse(reservationTime, formatTime)
+                // val reFormatTime = DateTimeFormatter.ofPattern("HH:mm a")
 
                 //NUMBER OF PEOPLE
                 if (numberOfPeople.toInt() <= 0) {
