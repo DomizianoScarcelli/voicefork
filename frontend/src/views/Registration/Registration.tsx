@@ -4,7 +4,7 @@ import { Colors, FontSize, Fonts, Layout, Spacing } from '../../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../../components/InputField/InputField';
 import { ScrollView } from 'react-native-gesture-handler';
-import Login from '../../utils/api';
+import Login from '../../utils/api_users';
 import axios from 'axios';
 
 function Registration({navigation}:any) {
