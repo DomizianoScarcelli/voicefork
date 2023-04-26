@@ -1,6 +1,5 @@
 export { default as Homepage } from "./Homepage/Homepage";
 export { default as Reservations } from "./Reservations/Reservations";
 export { default as Settings } from "./Settings/Settings";
-
-//To delete:
-export { default as Test } from "./Test/Test";
+export { default as Welcome } from "./Welcome/Welcome";
+export { default as Registration } from "./Registration/Registration";

@@ -7,12 +7,11 @@ const prisma: PrismaClient = new PrismaClient()
  * The repository exposes methods that interacts with the database to put, modify and retrieve data
  */
 class UsersRepository {
-	async CreateUser(name: string, surname: string, username: string, email: string, password: string, role: string): Promise<User> {
+	async CreateUser(name: string, surname: string, email: string, password: string, role: string): Promise<User> {
 		const user = await prisma.user.create({
 			data: {
 				name: name,
 				surname: surname,
-				username: username,
 				email: email,
 				password: password,
 				role: Role[role as keyof typeof Role],
@@ -29,7 +28,6 @@ class UsersRepository {
 				id: true,
 				name: true,
 				surname: true,
-				username: true,
 				email: true,
 				avatar: true
 			},
@@ -47,7 +45,6 @@ class UsersRepository {
 				id: true,
 				name: true,
 				surname: true,
-				username: true,
 				email: true,
 				avatar: true
 			},
@@ -69,13 +66,10 @@ class UsersRepository {
 		return checkPass
 	}
 
-	async GetUserIdByEmailorUsername(email: string, username: string): Promise<number | null> {
+	async GetUserIdByEmail(email: string): Promise<number | null> {
 		const userId = await prisma.user.findFirst({
 			where: {
-				OR: [
-					{ username: username },
-					{ email: email },
-				]
+				email: email,
 			}, 
 			select: {
 				id: true
@@ -86,13 +80,10 @@ class UsersRepository {
 		return null
 	}
 
-	async Login(email: string, username: string, password: string): Promise<UserInfo | null> {
+	async Login(email: string, password: string): Promise<UserInfo | null> {
 		const userId = await prisma.user.findFirst({
 			where: {
-				OR: [
-					{ username: username },
-					{ email: email }
-				]
+					email: email
 			}, 
 			select: {
 				id: true
@@ -108,7 +99,6 @@ class UsersRepository {
 					id: true,
 					name: true,
 					surname: true,
-					username: true,
 					email: true,
 					avatar: true
 				},

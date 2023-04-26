@@ -1,14 +1,28 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider as ReduxProvider } from "react-redux";
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { BottomNavigation } from './src/components';
-import { Homepage, Reservations } from './src/views';
+import { Welcome, Registration, Homepage } from './src/views';
 
 function RootNavigation() {
+    const Stack = createStackNavigator();
+
     return (
-        <NavigationContainer
+        //TO DO: REDEFINE ALL NAVIGATION LOGIC!
+        <NavigationContainer>
+            <Stack.Navigator
+            initialRouteName = {"Welcome"}
+            screenOptions={{
+                headerShown: false
+              }}>
+                <Stack.Screen name="Welcome" component={Welcome}/>
+                <Stack.Screen name="Registration" component={Registration}/>
+                <Stack.Screen name="Homepage" component={Homepage}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+        
+        /**<NavigationContainer
         linking = {{
             prefixes: ['voicefork://'],
             config: {
@@ -20,7 +34,7 @@ function RootNavigation() {
             }
         }}>
             <BottomNavigation />
-        </NavigationContainer>
+        </NavigationContainer>*/
     );
 };
 
