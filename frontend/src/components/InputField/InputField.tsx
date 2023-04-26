@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { input_field_style } from "./styles";
 import { Colors } from "../../constants";
 
 function InputField({label, icon, error, inputType, keyboardType, fieldButtonLabel, fieldButtonFunction, ...props} : any) {
@@ -10,26 +11,17 @@ function InputField({label, icon, error, inputType, keyboardType, fieldButtonLab
             return Colors.darkGreen
         }
     }
-    
+
     return (
-        <View style={{
-            marginBottom: 5
-        }}>
+        <View style={input_field_style.external_view}>
             <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: "center",
-                    borderColor: isError(),
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    padding: 8
-                }}>
+                style={[input_field_style.internal_view, {borderColor: isError()}]}>
                 {icon}
                 {inputType == "password" ? (
                     <TextInput
                         placeholder={label}
                         keyboardType={keyboardType}
-                        style={{flex: 1, paddingVertical: 0}}
+                        style={input_field_style.text_input}
                         secureTextEntry={true}
                         {...props}
                     />
@@ -37,17 +29,17 @@ function InputField({label, icon, error, inputType, keyboardType, fieldButtonLab
                     <TextInput
                         placeholder={label}
                         keyboardType={keyboardType}
-                        style={{flex: 1, paddingVertical: 0}}
+                        style={input_field_style.text_input}
                         {...props}
                     />
                 )}
                 <TouchableOpacity onPress={fieldButtonFunction}>
-                    <Text style={{color: '#AD40AF', fontWeight: '700'}}>{fieldButtonLabel}</Text>
+                    <Text style={input_field_style.button}>{fieldButtonLabel}</Text>
                 </TouchableOpacity>
             </View>
             {error && (
-                <Text style={{marginTop: 7, color: Colors.lightRed}}>
-                {error}
+                <Text style={input_field_style.error_text}>
+                    {error}
                 </Text>
             )}
         </View>

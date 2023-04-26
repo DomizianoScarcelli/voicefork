@@ -103,7 +103,7 @@ function Welcome({ navigation } : any) {
             "password": formValues["password"]
         }
 
-        axios.post(`${Config.USERS_SERVER_BASE_URL}/login`, formData)
+        axios.post("http:localhost:3000/users/login", formData)
         .then(async function(response) {
             if (response.status === 200) {
                 const isDataStored = storeUserSession(response)
@@ -121,6 +121,7 @@ function Welcome({ navigation } : any) {
             }
         })
         .catch(function(error) {
+            console.log(error)
             Alert.alert(  
                 'Something is wrong',  
                 "We can't complete this task. Please, try again",  
