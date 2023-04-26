@@ -113,10 +113,9 @@ function Registration({navigation}:any) {
             }
         })
         .catch(function(error) {
-            console.log(error)
             Alert.alert(  
                 'Something is wrong',  
-                "We can't complete this task. Please, try again",  
+                error.response.data,
                 [  
                     {text: 'OK'},  
                 ]  

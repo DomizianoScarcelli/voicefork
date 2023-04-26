@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express"
+import { Prisma } from '@prisma/client'
 import UsersService from "../../service/users-service"
 
 const service = new UsersService()
@@ -12,18 +13,23 @@ const UsersController = {
 				data: data,
 			})
 		} catch (err) {
-			next(err)
+			if (err instanceof Prisma.PrismaClientKnownRequestError) {
+				if (err.code === 'P2002') {
+					return res.status(422).send("The email address is already in use. Please, choose another one.");
+				}
+			  }
+			  throw err
 		}
 	},
 
 	login: async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { email, username, password } = req.body
+			const { email, password } = req.body
 			const data = await service.Login(email, password)
 			if (data == null) {
 				res.status(404).json({
 					error: `Resource not found`,
-					message: `The specified email and password does not match with any user`,
+					message: `The specified email and password do not match with any user`,
 				})
 			}
 			res.json(data)

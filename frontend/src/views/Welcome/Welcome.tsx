@@ -112,7 +112,7 @@ function Welcome({ navigation } : any) {
                 } else {
                     Alert.alert(  
                         'Something is wrong',  
-                        "We can't complete this task. Please, try again",  
+                        "Can't store user data. Please, try again",  
                         [  
                             {text: 'OK'},  
                         ]  
@@ -121,10 +121,10 @@ function Welcome({ navigation } : any) {
             }
         })
         .catch(function(error) {
-            console.log(error)
+            console.log(error.response.data.message)
             Alert.alert(  
                 'Something is wrong',  
-                "We can't complete this task. Please, try again",  
+                error.response.data.message,  
                 [  
                     {text: 'OK'},  
                 ]  
