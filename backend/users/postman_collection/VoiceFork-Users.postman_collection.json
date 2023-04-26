@@ -24,7 +24,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Mario\",\n    \"surname\": \"Rossi\",\n    \"username\": \"Marietto01\",\n    \"email\": \"marietto01@gmail.com\",\n    \"password\": \"mariettoermitico\",\n    \"role\": \"customer\" //\"customer\" (default) or \"owner\"\n}",
+					"raw": "{\n    \"name\": \"Mario\",\n    \"surname\": \"Rossi\",\n    \"email\": \"marietto01@gmail.com\",\n    \"password\": \"mariettoermitico\",\n    \"role\": \"customer\" //\"customer\" (default) or \"owner\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -61,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"marietto01@gmail.com\", //Optional\n    \"username\": \"Marietto01\", //Optional\n    \"password\": \"mariettoermitico\" //Mandatory\n}",
+					"raw": "{\n    \"email\": \"marietto01@gmail.com\", //Mandatory\n    \"password\": \"mariettoermiti\" //Mandatory\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"avatar\": \"http://test.jpg\"\r\n}",
+					"raw": "{\r\n    \"id\": 1, //Mandatory\r\n    \"avatar\": \"http://test.jpg\" //Optional\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,7 +113,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"oldPassword\": \"mariettoermitico\",\r\n    \"newPassword\": \"mariettoergrande\"\r\n}",
+					"raw": "{\r\n    \"id\": 1, //Mandatory\r\n    \"oldPassword\": \"mariettoermitico\", //Mandatory\r\n    \"newPassword\": \"mariettoergrande\" //Mandatory\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -166,7 +166,8 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "1",
+							"description": "The id of the user"
 						}
 					]
 				}
@@ -190,7 +191,8 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "1",
+							"description": "The id of the user"
 						}
 					]
 				}
