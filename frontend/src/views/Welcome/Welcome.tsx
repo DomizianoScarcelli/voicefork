@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Alert, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
-import { Colors, FontSize, Fonts, Spacing, Layout } from "../../constants"
+import { Colors } from "../../constants"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import InputField from "../../components/InputField/InputField"
 import axios from "axios"
 import EncryptedStorage from "react-native-encrypted-storage"
 import { ScrollView } from "react-native-gesture-handler"
 import { welcome_style } from "./styles.js"
+import Config from "react-native-config"
 
 function Welcome({ navigation } : any) {
     const [formValues, setFormValues] = useState({ email: '', password: '' })
@@ -102,7 +103,7 @@ function Welcome({ navigation } : any) {
             "password": formValues["password"]
         }
 
-        axios.post('http://localhost:3000/users/login', formData)
+        axios.post(`${Config.USERS_SERVER_BASE_URL}/login`, formData)
         .then(async function(response) {
             if (response.status === 200) {
                 const isDataStored = storeUserSession(response)

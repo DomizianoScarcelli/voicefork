@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { Colors, FontSize, Fonts, Layout, Spacing } from '../../constants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import InputField from '../../components/InputField/InputField';
-import { ScrollView } from 'react-native-gesture-handler';
-import axios from 'axios';
+import React, { useState } from 'react'
+import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Colors } from '../../constants'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import InputField from '../../components/InputField/InputField'
+import { ScrollView } from 'react-native-gesture-handler'
+import axios from 'axios'
+import { registration_style } from "./styles.js"
+import Config from "react-native-config"
 
 function Registration({navigation}:any) {
     const [formValues, setFormValues] = useState({ email: '', password: '', name: '', surname: '' })
@@ -97,7 +99,7 @@ function Registration({navigation}:any) {
             "role": "customer"
         }
 
-        axios.post('http://localhost:3000/users/create-user', formData)
+        axios.post(`${Config.USERS_SERVER_BASE_URL}/create-user`, formData)
         .then(function(response) {
             if (response.status === 200) {
                 Alert.alert(  
@@ -132,55 +134,25 @@ function Registration({navigation}:any) {
     }
 
     return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-                alignItems: "center",
-                backgroundColor: Colors.gray,
-                height: Layout.height
-            }}>
+        <SafeAreaView style={registration_style.safe_area}>
             <ScrollView>
-                <View style={{
-                    justifyContent: "space-between",
-                    flexDirection: "column",
-                    alignItems: "center"
-                }}>
+                <View style={registration_style.external_view}>
                     <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "flex-start"
-                    }}>
+                    style={registration_style.upper_section}>
                         <View
-                            style={{
-                                paddingHorizontal: Spacing * 4,
-                                paddingTop: Spacing * 4,
-                            }}>
+                            style={registration_style.upper_section_spacing}>
                             <Text
-                                style={{
-                                    fontSize: FontSize.xxLarge,
-                                    color: Colors.black,
-                                    fontFamily: Fonts["poppins-bold"],
-                                    textAlign: "center",
-                                }}>
+                                style={registration_style.upper_section_text}>
                                 Join us!
                             </Text>
 
                             <Text
-                                style={{
-                                    fontSize: FontSize.small,
-                                    color: Colors.black,
-                                    fontFamily: Fonts["poppins-regular"],
-                                    textAlign: "center",
-                                    marginTop: Spacing * 2,
-                                }}>
+                                style={registration_style.upper_section_description}>
                                 Register a new account to start using the app
                             </Text>
                         </View>
                         <View
-                        style={{
-                            paddingHorizontal: Spacing * 3,
-                            paddingVertical: Spacing * 2,
-                        }}>
+                        style={registration_style.middle_section}>
                         <Text>Email:</Text>
                         <InputField
                             label = {"Email"}
@@ -224,60 +196,29 @@ function Registration({navigation}:any) {
                         />
                         </View>
                         <View
-                            style={{
-                                paddingHorizontal: Spacing * 2,
-                                paddingTop: Spacing,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}>
+                            style={registration_style.middle_section_button_spacing}>
                             <TouchableOpacity
                                 onPress={() => validateData()}
                                 disabled={loading}
-                                style={{
-                                    backgroundColor: Colors.green,
-                                    paddingVertical: Spacing,
-                                    paddingHorizontal: Spacing,
-                                    width: "48%",
-                                    borderRadius: Spacing,
-                                    shadowColor: Colors.black,
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: Spacing,
-                                    },
-                                    shadowOpacity: 0.3,
-                                    shadowRadius: Spacing,
-                                }}>
+                                style={registration_style.middle_section_button}>
                                 <Text
-                                    style={{
-                                        fontFamily: Fonts["poppins-bold"],
-                                        color: Colors.white,
-                                        fontSize: FontSize.large,
-                                        textAlign: "center",
-                                    }}>
+                                    style={registration_style.middle_section_button_text}>
                                     {loading ? "Signing in.." : "Sign in"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <KeyboardAvoidingView
-                        style={{
-                            flex: 1,
-                            justifyContent: "flex-end",
-                            marginVertical: 20
-                        }}>
+                    <View
+                        style={registration_style.lower_section}>
                         <Text>
                             Already have an account? &nbsp;
                             <Text
-                                style={{
-                                    paddingLeft: 10,
-                                    color: Colors.green
-                                }}
+                                style={registration_style.lower_section_text}
                                 onPress={() => navigation.navigate("Welcome")}>
                                 Login
                             </Text>
                         </Text>
-                    </KeyboardAvoidingView>
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
