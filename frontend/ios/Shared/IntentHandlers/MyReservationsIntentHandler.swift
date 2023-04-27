@@ -18,12 +18,12 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
     //TODO: if there are more than 1 active reservation, ask the user to pick one from a list of reservations
     let APIResponse: [[String: Any]] = [
       [
-        "restaurant": "Dar solito marione",
+        "restaurant": "Ristorante da marione",
         "dateTime": Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date()),
         "numberOfPeople": 2
       ],
       [
-        "restaurant": "Da mi frate er pagnottaro",
+        "restaurant": "Pizzeria da Giovanni ",
         "dateTime": Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date()),
         "numberOfPeople": 4
       ],
@@ -33,7 +33,7 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
         "numberOfPeople": 1
       ],
       [
-        "restaurant": "Dar mutanda",
+        "restaurant": "Ristorante Athene",
         "dateTime": Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date()),
         "numberOfPeople": 3
       ]
@@ -44,7 +44,7 @@ public class MyReservationsIntentHandler: NSObject, MyReservationsIntentHandling
     for reservation in APIResponse{
       var reservationObject: Reservation
       if #available(iOSApplicationExtension 14.0, *) {
-        reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String, subtitle: "daje bello", image: INImage(named: "da_beppe")) as Reservation
+        reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String, subtitle: "Tomorrow at 8pm for 2 people", image: INImage(named: "da_beppe")) as Reservation
       } else {
         reservationObject = Reservation.init(identifier: reservation["restaurant"] as? String, display: reservation["restaurant"] as! String) as Reservation
       }
