@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
     },
     restaurantTileContainer: {
         width: 150,
+        height: 250, // width + paddingBottom
         paddingBottom: 100,
-        height: 250,
         margin: 10,
     },
     cuisineTileContainer: {
@@ -40,17 +40,17 @@ export const styles = StyleSheet.create({
     },
     mediumBoldText: {
         fontSize: FontSize.medium,
-        fontFamily: Fonts['poppins-bold'], //TODO: change it in semibold maybe
+        fontFamily: Fonts['poppins-bold'],
         color: Colors.black,
     },
     smallRegularText: {
         fontSize: FontSize.small,
-        fontFamily: Fonts['poppins-regular'], //TODO: change it in semibold maybe
+        fontFamily: Fonts['poppins-regular'],
         color: Colors.black,
     },
     mediumBoldCenteredText: {
         fontSize: FontSize.medium,
-        fontFamily: Fonts['poppins-bold'], //TODO: change it in semibold maybe
+        fontFamily: Fonts['poppins-bold'],
         textAlign: 'center',
         color: Colors.black,
     },
