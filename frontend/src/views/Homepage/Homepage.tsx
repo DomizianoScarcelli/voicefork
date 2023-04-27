@@ -11,15 +11,21 @@ import {
     ScrollView,
     FlatList,
     ListRenderItem,
+    Image,
+    StyleSheet,
 } from 'react-native'
 import InputField from '../../components/InputField/InputField'
 import {Colors, FontSize, Fonts, Layout, Spacing} from '../../constants'
 import {homepageText} from './styles.js'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import HorizontalScrollingSection from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
+import HorizontalScrollingSection, {
+    CuisineTile,
+    RestaurantTile,
+} from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
+import {Restaurant} from '../../shared/types'
 
 function Homepage({navigation}: any) {
     async function retrieveUserSession() {
@@ -50,65 +56,104 @@ function Homepage({navigation}: any) {
         retrieveUserSession()
     }, [])
 
-    const nearbyData = [
-        {id: '1', title: 'Restaurant 1'},
-        {id: '2', title: 'Restaurant 2'},
-        {id: '3', title: 'Restaurant 3'},
-        {id: '4', title: 'Restaurant 4'},
-        {id: '5', title: 'Restaurant 5'},
-        {id: '6', title: 'Restaurant 6'},
+    const nearbyData: Restaurant[] = [
+        {
+            id: '1',
+            name: 'La Taverna Relais Castrum Boccea',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '2',
+            name: 'Palmerie Pokè Torrevecchia',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '3',
+            name: 'Nice Restaurant',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '4',
+            name: 'Restaurant 4',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '5',
+            name: 'Restaurant 5',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '6',
+            name: 'Restaurant 6',
+            cuisine: 'Mediterranean',
+            averagePrice: 25,
+            image: 'https://picsum.photos/100',
+        },
+    ]
+
+    const cuisineData = [
+        {
+            id: '1',
+            name: 'European',
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '2',
+            name: 'Italian',
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '3',
+            name: 'Mediterranean',
+            image: 'https://picsum.photos/100',
+        },
+        {
+            id: '4',
+            name: 'Pizza',
+            image: 'https://picsum.photos/100',
+        },
     ]
 
     return (
-        <SafeAreaView
-            style={{
-                backgroundColor: Colors.green,
-            }}>
-            <Navbar />
+        <>
+            <SafeAreaView
+                style={{
+                    backgroundColor: Colors.green,
+                    // flex: 1,
+                }}>
+                <Navbar />
+            </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
                     title={'Cuisines'}
-                    data={nearbyData}
+                    data={cuisineData}
                     renderItem={({item}) => (
-                        <View
-                            style={{
-                                width: 100,
-                                height: 100,
-                                backgroundColor: Colors.gray,
-                                margin: 10,
-                            }}>
-                            <Text>{item.title}</Text>
-                        </View>
+                        <CuisineTile name={item.name} image={item.image} />
                     )}
                 />
                 <HorizontalScrollingSection
                     title={'Nearby'}
                     data={nearbyData}
+                    showMore={true}
                     renderItem={({item}) => (
-                        <View
-                            style={{
-                                width: 100,
-                                height: 100,
-                                backgroundColor: Colors.gray,
-                                margin: 10,
-                            }}>
-                            <Text>{item.title}</Text>
-                        </View>
+                        <RestaurantTile restaurant={item} />
                     )}
                 />
                 <HorizontalScrollingSection
                     title={'Top picks for you'}
                     data={nearbyData}
                     renderItem={({item}) => (
-                        <View
-                            style={{
-                                width: 100,
-                                height: 100,
-                                backgroundColor: Colors.gray,
-                                margin: 10,
-                            }}>
-                            <Text>{item.title}</Text>
-                        </View>
+                        <RestaurantTile restaurant={item} />
                     )}
                 />
 
@@ -139,7 +184,7 @@ function Homepage({navigation}: any) {
                     </Text>
                 </TouchableOpacity>
             </ScrollView>
-        </SafeAreaView>
+        </>
     )
 }
 

@@ -1,11 +1,10 @@
 import {StyleSheet} from 'react-native'
 import {Colors, Fonts, FontSize} from '../../constants'
 
-export const navbar_style = StyleSheet.create({
-    external_view: {
+export const navbarStyle = StyleSheet.create({
+    mainContainer: {
         backgroundColor: Colors.green,
-        width: '100%',
-        height: '25%',
+        height: 60,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -15,7 +14,7 @@ export const navbar_style = StyleSheet.create({
         gap: 10,
         maxHeight: 60,
     },
-    input_field: {
+    searchBar: {
         position: 'relative',
         flexGrow: 1,
         height: '70%',
@@ -27,7 +26,7 @@ export const navbar_style = StyleSheet.create({
         justifyContent: 'center',
         paddingLeft: 40,
     },
-    text_input: {
+    text: {
         fontFamily: Fonts['poppins-regular'], //TODO insert bold, ios has problems
         fontSize: FontSize.small,
         alignSelf: 'flex-start',
