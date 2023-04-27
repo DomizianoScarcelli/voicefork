@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: FontSize.xxLarge,
         fontFamily: Fonts['poppins-bold'],
+        color: Colors.black,
     },
     moreText: {
         fontSize: FontSize.large,
@@ -40,14 +41,17 @@ export const styles = StyleSheet.create({
     mediumBoldText: {
         fontSize: FontSize.medium,
         fontFamily: Fonts['poppins-bold'], //TODO: change it in semibold maybe
+        color: Colors.black,
     },
     smallRegularText: {
         fontSize: FontSize.small,
         fontFamily: Fonts['poppins-regular'], //TODO: change it in semibold maybe
+        color: Colors.black,
     },
     mediumBoldCenteredText: {
         fontSize: FontSize.medium,
         fontFamily: Fonts['poppins-bold'], //TODO: change it in semibold maybe
         textAlign: 'center',
+        color: Colors.black,
     },
 })
