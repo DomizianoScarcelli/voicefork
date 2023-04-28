@@ -21,6 +21,12 @@ const requestLocationPermissionIOS = async () => {
     return result
 }
 const requestLocationPermissionAndroid = async () => {
-    //TODO: Implement this
-    return RESULTS.BLOCKED
+    const result = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+    if (result == RESULTS.DENIED) {
+        const permissionRes = await request(
+            PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        )
+        return RESULTS.GRANTED
+    }
+    return result
 }

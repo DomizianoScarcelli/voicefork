@@ -27,12 +27,9 @@ import HorizontalScrollingSection, {
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
 import {Restaurant} from '../../shared/types'
-import {requestLocationPermission} from '../../utils/geolocationUtils'
-import {GeoCoordinates, GeoPosition} from 'react-native-geolocation-service'
 import {useGeolocation} from '../../hooks/useLocation'
 import axios from 'axios'
 import {LatLng} from '../../shared/types'
-import {RESULTS} from 'react-native-permissions'
 
 const Homepage = ({navigation}: any) => {
     const coordinates = useGeolocation()
@@ -72,9 +69,8 @@ const Homepage = ({navigation}: any) => {
 
     const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
         const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=2000`
-        console.log(URL)
         const res = await axios.get(URL)
-        console.log(res.data)
+        return res.data
     }
 
     const nearbyData: Restaurant[] = [
