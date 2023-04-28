@@ -39,6 +39,22 @@ class ReservationsService {
 		const result = await this.repository.DeleteReservation(id)
 		return result
 	}
+
+	async UpdateDateTime(id: number, newDateTime: Date): Promise<boolean> {
+		const reservation = await this.repository.GetReservationById(id)
+		if (reservation == null) return false
+
+		const result = await this.repository.UpdateDateTime(id, newDateTime)
+		return result
+	}
+
+	async UpdateNumPeople(id: number, newNumPeople: number): Promise<boolean> {
+		const reservation = await this.repository.GetReservationById(id)
+		if (reservation == null) return false
+
+		const result = await this.repository.UpdateNumPeople(id, newNumPeople)
+		return result
+	}
 }
 
 export default ReservationsService

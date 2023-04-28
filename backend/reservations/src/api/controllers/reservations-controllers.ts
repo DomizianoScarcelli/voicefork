@@ -66,7 +66,41 @@ const ReservationsController = {
 		}
 	},
 
-	
+	updateDateTime: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id, newDateTime } = req.body
+			const result = await service.UpdateDateTime(id, newDateTime)
+			if (!result) {
+				res.json({
+					error: "Reservation not found",
+					message: `Reservation with id ${id} not found in the database`,
+				})
+			}
+			res.json({
+				message: `The date/time of the reservation with id ${id} was updated successfully`
+			})
+		} catch (err) {
+			next(err)
+		}
+	},
+
+	updateNumPeople: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id, newNumPeople } = req.body
+			const result = await service.UpdateNumPeople(id, newNumPeople)
+			if (!result) {
+				res.json({
+					error: "Reservation not found",
+					message: `Reservation with id ${id} not found in the database`,
+				})
+			}
+			res.json({
+				message: `The number of people of the reservation with id ${id} was updated successfully`
+			})
+		} catch (err) {
+			next(err)
+		}
+	},
 }
 
 export default ReservationsController

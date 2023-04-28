@@ -138,6 +138,58 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update Date/Time",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newDateTime\": \"2025-04-25T18:20:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-datetime",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-datetime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Num People",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newNumPeople\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-numpeople",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-numpeople"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

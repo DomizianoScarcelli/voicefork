@@ -30,6 +30,15 @@ const reservationsAPI = (app: Express) => {
 	 */
 	app.delete("/delete-reservation/:id", ReservationsController.deleteReservation)
 
+	/**
+	 * Update the reservation's date/time
+	 */
+	app.post("/update-datetime", ReservationsController.updateDateTime)
+
+	/**
+	 * Update the reservation's num people
+	 */
+	app.post("/update-numpeople", ReservationsController.updateNumPeople)
 }
 
 export default reservationsAPI

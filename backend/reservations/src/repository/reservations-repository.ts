@@ -56,6 +56,32 @@ class ReservationsRepository {
 		return reservation
 	}
 
+	async UpdateDateTime(id: number, newDateTime: Date): Promise<boolean> {
+		const result = !!await prisma.reservation.update({
+			where: {
+				id: id,
+			},
+			data: {
+				dateTime: newDateTime,
+			},
+		})
+		
+		return result
+	}
+
+	async UpdateNumPeople(id: number, newNumPeople: number): Promise<boolean> {
+		const result = !!await prisma.reservation.update({
+			where: {
+				id: id,
+			},
+			data: {
+				n_people: newNumPeople,
+			},
+		})
+		
+		return result
+	}
+
 }
 
 export default ReservationsRepository;
