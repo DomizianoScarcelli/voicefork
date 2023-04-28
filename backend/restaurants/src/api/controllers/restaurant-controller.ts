@@ -11,30 +11,6 @@ const RestaurantController = {
         next: NextFunction,
     ) => {
         try {
-            // const {
-            //     name,
-            //     street,
-            //     number,
-            //     CAP,
-            //     latitude,
-            //     longitude,
-            //     country,
-            //     region,
-            //     province,
-            //     city,
-            //     town,
-            //     tags,
-            //     cuisines,
-            //     specialDiets,
-            //     priceLevel,
-            //     meals,
-            //     avgRating,
-            //     vegetarianFriendly,
-            //     veganFriendly,
-            //     glutenFree,
-            //     reviewsNumber,
-            // } = req.body
-
             const restaurant = req.body
 
             const data = await service.CreateRestaurant(restaurant)

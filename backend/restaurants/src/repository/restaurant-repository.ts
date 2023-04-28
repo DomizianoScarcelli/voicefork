@@ -39,20 +39,16 @@ class RestaurantRepository {
     }
 
     async GetRestaurantByAddressName(
-        name: string,
-        number: string,
+        address: string,
     ): Promise<Restaurant | null> {
-        const address = await prisma.restaurant.findFirst({
+        const result = await prisma.restaurant.findFirst({
             where: {
-                street: {
-                    equals: name,
-                },
-                number: {
-                    equals: number,
+                address: {
+                    equals: address,
                 },
             },
         })
-        return address
+        return result
     }
 
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {

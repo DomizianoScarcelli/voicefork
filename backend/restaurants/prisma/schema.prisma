@@ -11,16 +11,13 @@ datasource db {
 model Restaurant {
     id                 Int     @id @default(autoincrement())
     name               String
-    street             String
-    number             String
-    CAP                Int?
+    address            String
     latitude           Float
     longitude          Float
     country            String
     region             String
     province           String
     city               String
-    town               String
     tags               String
     cuisines           String
     specialDiets       String
