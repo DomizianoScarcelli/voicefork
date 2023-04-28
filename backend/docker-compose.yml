@@ -47,7 +47,7 @@ services:
             - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
         volumes:
             - .:/app
-            - /src:/app/src:z
+            - /app/users/node_modules
         depends_on:
             - mysql_users
         restart: always
@@ -64,7 +64,7 @@ services:
             - DATABASE_URL=mysql://root:root@mysql_users:3306/restaurantsDB
         volumes:
             - .:/app
-            - /src:/app/src:z
+            - /app/restaurants/node_modules
         depends_on:
             - mysql_users
         restart: always
