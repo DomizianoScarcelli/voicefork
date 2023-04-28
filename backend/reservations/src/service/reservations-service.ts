@@ -1,5 +1,5 @@
 import ReservationsRepository from "../repository/reservations-repository"
-import { Reservation } from "../../node_modules/.prisma/client" // TODO: rimetti import { Reservation } from "@prisma/client"
+import { Reservation } from "@prisma/client"
 import { ReservationInfo } from "../shared/types"
 
 /**
