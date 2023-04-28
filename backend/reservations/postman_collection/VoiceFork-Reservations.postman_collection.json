@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "233a529c-b6cc-4a10-9066-6ea67c5527b6",
+		"name": "VoiceFork-Reservations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18224278"
+	},
+	"item": [
+		{
+			"name": "Create Reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id_user\": 1,\n    \"id_restaurant\": 1,\n    \"dateTime\": \"2023-04-25T18:20:00.000Z\",\n    \"n_people\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/create-reservation",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"create-reservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservation by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-reservation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservations by User ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-user-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-user-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservations by Restaurant ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-restaurant-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-restaurant-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/all-reservations",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"all-reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/delete-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"delete-reservation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Date/Time",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newDateTime\": \"2025-04-25T18:20:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-datetime",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-datetime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Num People",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newNumPeople\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-numpeople",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-numpeople"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RESERVATIONS_BASE",
+			"value": "localhost:3003"
+		}
+	]
+}
