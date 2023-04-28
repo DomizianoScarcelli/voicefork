@@ -11,6 +11,11 @@ const reservationsAPI = (app: Express) => {
 	app.post("/create-reservation", ReservationsController.createReservation)
 
 	/**
+	 * Returns the reservation with the specified ID.
+	 */
+	app.get("/find-reservation/:id", ReservationsController.getReservationById)
+
+	/**
 	 * Returns the reservations with the specified user ID.
 	 */
 	app.get("/find-user-reservations/:id", ReservationsController.getReservationsByUserId)
@@ -19,6 +24,11 @@ const reservationsAPI = (app: Express) => {
 	 * Returns the reservations with the specified restaurant ID.
 	 */
 	app.get("/find-restaurant-reservations/:id", ReservationsController.getReservationsByRestaurantId)
+
+	/**
+	 * Deletes the reservation with the specified ID.
+	 */
+	app.delete("/delete-reservation/:id", ReservationsController.deleteReservation)
 
 }
 

@@ -16,6 +16,16 @@ const ReservationsController = {
 		}
 	},
 
+	getReservationById: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id } = req.params
+			const data = await service.GetReservationById(parseInt(id))
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	},
+
 	getReservationsByUserId: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params
@@ -30,6 +40,26 @@ const ReservationsController = {
 		try {
 			const { id } = req.params
 			const data = await service.GetReservationsByRestaurantId(parseInt(id))
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	},
+
+	deleteReservation: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id } = req.params
+			const data = await service.DeleteReservation(parseInt(id))
+			if (data == null) {
+				res.json({
+					error: "Reservation not found",
+					message: `Reservation with id ${id} is not in the database`,
+				})
+			}
+			res.json({
+				message: `Reservation with id ${id} was deleted successfully!`,
+				data: data,
+			})
 			res.json(data)
 		} catch (err) {
 			next(err)

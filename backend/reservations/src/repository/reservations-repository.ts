@@ -20,6 +20,15 @@ class ReservationsRepository {
 		return reservation
 	}
 
+	async GetReservationById(id: number): Promise<Reservation | null> {
+		const reservation = await prisma.reservation.findUnique({
+			where: {
+				id: id,
+			},
+		})
+		return reservation
+	}
+
 	async GetReservationsByUserId(id: number): Promise<Reservation[] | null> {
 		const reservations = await prisma.reservation.findMany({
 			where: {
@@ -36,6 +45,15 @@ class ReservationsRepository {
 			},
 		})
 		return reservations
+	}
+
+	async DeleteReservation(id: number): Promise<Reservation | null> {
+		const reservation = await prisma.reservation.delete({
+			where: {
+				id: id,
+			},
+		})
+		return reservation
 	}
 
 }

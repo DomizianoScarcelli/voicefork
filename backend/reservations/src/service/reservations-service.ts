@@ -17,6 +17,11 @@ class ReservationsService {
 		return newReservation
 	}
 
+	async GetReservationById(id: number): Promise<Reservation | null> {
+		const reservation = await this.repository.GetReservationById(id)
+		return reservation
+	}
+
 	async GetReservationsByUserId(id: number): Promise<Reservation[] | null> {
 		const reservations = await this.repository.GetReservationsByUserId(id)
 		return reservations
@@ -25,6 +30,14 @@ class ReservationsService {
 	async GetReservationsByRestaurantId(id: number): Promise<Reservation[] | null> {
 		const reservations = await this.repository.GetReservationsByRestaurantId(id)
 		return reservations
+	}
+
+	async DeleteReservation(id: number): Promise<Reservation | null> {
+		const reservation = await this.repository.GetReservationById(id)
+		if (reservation == null) return null
+
+		const result = await this.repository.DeleteReservation(id)
+		return result
 	}
 }
 

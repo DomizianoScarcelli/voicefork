@@ -44,6 +44,30 @@
 			"response": []
 		},
 		{
+			"name": "Find Reservation by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-reservation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Find Reservations by User ID",
 			"request": {
 				"method": "GET",
@@ -79,6 +103,30 @@
 					],
 					"path": [
 						"find-restaurant-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/delete-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"delete-reservation",
 						":id"
 					],
 					"variable": [
