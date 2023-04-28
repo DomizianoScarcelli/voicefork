@@ -26,6 +26,11 @@ const reservationsAPI = (app: Express) => {
 	app.get("/find-restaurant-reservations/:id", ReservationsController.getReservationsByRestaurantId)
 
 	/**
+	 * Returns a list of all restaurants.
+	 */
+	app.get("/all-reservations", ReservationsController.getAllReservations)
+
+	/**
 	 * Deletes the reservation with the specified ID.
 	 */
 	app.delete("/delete-reservation/:id", ReservationsController.deleteReservation)

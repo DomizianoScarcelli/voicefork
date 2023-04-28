@@ -47,6 +47,11 @@ class ReservationsRepository {
 		return reservations
 	}
 
+	async GetAllReservations(): Promise<Reservation[]> {
+		const reservations = await prisma.reservation.findMany()
+		return reservations
+	}
+
 	async DeleteReservation(id: number): Promise<Reservation | null> {
 		const reservation = await prisma.reservation.delete({
 			where: {

@@ -32,6 +32,11 @@ class ReservationsService {
 		return reservations
 	}
 
+	async GetAllReservations(): Promise<Reservation[]> {
+		const reservations = await this.repository.GetAllReservations()
+		return reservations
+	}
+
 	async DeleteReservation(id: number): Promise<Reservation | null> {
 		const reservation = await this.repository.GetReservationById(id)
 		if (reservation == null) return null

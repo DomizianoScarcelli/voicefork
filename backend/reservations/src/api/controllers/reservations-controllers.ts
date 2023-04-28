@@ -46,6 +46,16 @@ const ReservationsController = {
 		}
 	},
 
+	getAllReservations: async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { localize } = req.query
+			const data = await service.GetAllReservations()
+			res.json(data)
+		} catch (err) {
+			next(err)
+		}
+	},
+
 	deleteReservation: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params

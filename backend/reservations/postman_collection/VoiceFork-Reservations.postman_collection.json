@@ -116,6 +116,23 @@
 			"response": []
 		},
 		{
+			"name": "Get All Reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/all-reservations",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"all-reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Reservation",
 			"request": {
 				"method": "DELETE",
