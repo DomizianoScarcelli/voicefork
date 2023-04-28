@@ -10,43 +10,15 @@ const reservationsAPI = (app: Express) => {
 	 */
 	app.post("/create-reservation", ReservationsController.createReservation)
 
-	// /**
-	//  * Creates a new user with the provided username, email, password, name, surname and avatar
-	//  */
-	// app.post("/create-user", UsersController.createUser)
+	/**
+	 * Returns the reservations with the specified user ID.
+	 */
+	app.get("/find-user-reservations/:id", ReservationsController.getReservationsByUserId)
 
-	// /**
-	//  * Allows the user to login
-	//  */
-	// app.post("/login", UsersController.login)
-
-	// /**
-	//  * Returns the users' info 
-	//  */
-	// app.get("/get-all-users", UsersController.getAllUsers)
-
-	// /**
-	//  * Returns the user's info with the specified ID
-	//  */
-	// app.get("/get-user/:id", UsersController.getUserById)
-
-	// /**
-	//  * Remove the user with the specified ID
-	//  */
-	// app.delete("/delete-user/:id", UsersController.deleteUser)
-
-	// /**
-	//  * Update the user's avatar
-	//  */
-	// app.post("/update-avatar", UsersController.updateAvatar)
-
-	// /**
-	//  * Update the user's avatar
-	//  */
-	// app.post("/update-password", UsersController.updatePassword)
-
-	// //TO DO: UPDATE USER INFO
-
+	/**
+	 * Returns the reservations with the specified restaurant ID.
+	 */
+	app.get("/find-restaurant-reservations/:id", ReservationsController.getReservationsByRestaurantId)
 
 }
 

@@ -42,6 +42,54 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Find Reservations by User ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-user-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-user-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservations by Restaurant ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-restaurant-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-restaurant-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
