@@ -1,4 +1,4 @@
-import React, {ReactComponentElement, useEffect} from 'react'
+import React, {ReactComponentElement, useEffect, useState} from 'react'
 import {
     Text,
     Button,
@@ -12,6 +12,7 @@ import {
     FlatList,
     ListRenderItem,
     Image,
+    PermissionStatus,
     StyleSheet,
 } from 'react-native'
 import InputField from '../../components/InputField/InputField'
@@ -26,9 +27,26 @@ import HorizontalScrollingSection, {
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
 import {Restaurant} from '../../shared/types'
+import {requestLocationPermission} from '../../utils/geolocationUtils'
+import {GeoCoordinates, GeoPosition} from 'react-native-geolocation-service'
+import {useGeolocation} from '../../hooks/useLocation'
+import axios from 'axios'
+import {LatLng} from '../../shared/types'
+import {RESULTS} from 'react-native-permissions'
 
-function Homepage({navigation}: any) {
-    async function retrieveUserSession() {
+const Homepage = ({navigation}: any) => {
+    const coordinates = useGeolocation()
+    const [nearbyRestaurants, setNearbyRestaurants] = useState<any[]>([])
+
+    useEffect(() => {
+        retrieveUserSession()
+    }, [])
+
+    useEffect(() => {
+        console.log(coordinates)
+    }, [coordinates])
+
+    const retrieveUserSession = async () => {
         try {
             const session = await EncryptedStorage.getItem('user_session')
             if (session === null) {
@@ -39,7 +57,7 @@ function Homepage({navigation}: any) {
         }
     }
 
-    async function logout() {
+    const logout = async () => {
         try {
             await EncryptedStorage.removeItem('user_session')
             navigation.navigate('Welcome')
@@ -52,9 +70,12 @@ function Homepage({navigation}: any) {
         }
     }
 
-    useEffect(() => {
-        retrieveUserSession()
-    }, [])
+    const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
+        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=2000`
+        console.log(URL)
+        const res = await axios.get(URL)
+        console.log(res.data)
+    }
 
     const nearbyData: Restaurant[] = [
         {

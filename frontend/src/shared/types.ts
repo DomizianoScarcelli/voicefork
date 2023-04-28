@@ -5,4 +5,8 @@ type Restaurant = {
     cuisine?: string
     averagePrice?: number
 }
-export type {Restaurant}
+type LatLng = {
+    latitude: number
+    longitude: number
+}
+export type {Restaurant, LatLng}
