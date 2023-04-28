@@ -2,7 +2,7 @@
 FROM node:14-alpine
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /app/reservations
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
@@ -16,6 +16,6 @@ COPY . .
 RUN npm build
 COPY . .
 # Expose the port that the app will run on
-EXPOSE 3004
+EXPOSE 3003
 # Start the app
 CMD npm run dev

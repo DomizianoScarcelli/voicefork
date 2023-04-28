@@ -35,6 +35,24 @@ services:
             - 3308
         volumes:
             - db-restaurants:/var/lib/mysql
+    
+    mysql_reservations:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: reservationsDB
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_TCP_PORT: 3306
+        container_name: mysql_reservations
+        ports:
+            - 3309:3306
+        expose:
+            - 3309
+        volumes:
+            - db-reservations:/var/lib/mysql
 
     users:
         build:
@@ -61,12 +79,29 @@ services:
         ports:
             - '3002:3002'
         environment:
-            - DATABASE_URL=mysql://root:root@mysql_users:3306/restaurantsDB
+            - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
         volumes:
             - .:/app
             - /app/restaurants/node_modules
         depends_on:
-            - mysql_users
+            - mysql_restaurants
+        restart: always
+        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+    
+    reservations:
+        build:
+            dockerfile: Dockerfile
+            context: ./reservations
+        container_name: reservations
+        ports:
+            - '3003:3003'
+        environment:
+            - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
+        volumes:
+            - .:/app
+            - /app/reservations/node_modules
+        depends_on:
+            - mysql_reservations
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
 
@@ -77,9 +112,11 @@ services:
         depends_on:
             - users
             - restaurants
+            - reservations
         ports:
           - "80:80"
 
 volumes:
     db-users:
     db-restaurants:
+    db-reservations:
