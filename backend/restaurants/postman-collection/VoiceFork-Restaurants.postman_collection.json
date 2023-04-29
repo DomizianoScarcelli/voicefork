@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Pizzeria matta fracica\",\n    \"address\": \"Via di casal selce, 381\",\n    \"city\": \"Roma\"\n}",
+					"raw": "{\n    \"name\": \"Trattoria da Mario\",\n    \"street\": \"Via Roma\",\n    \"number\": \"10\",\n    \"CAP\": 20121,\n    \"latitude\": 45.4642,\n    \"longitude\": 9.1900,\n    \"country\": \"Italy\",\n    \"region\": \"Lombardy\",\n    \"province\": \"Milan\",\n    \"city\": \"Milan\",\n    \"town\": \"Centro Storico\",\n    \"tags\": \"Italian, Family-friendly\",\n    \"cuisines\": \"Italian\",\n    \"specialDiets\": \"Gluten-free\",\n    \"priceLevel\": \"Moderate\",\n    \"meals\": \"Lunch, Dinner\",\n    \"avgRating\": 4.5,\n    \"vegetarianFriendly\": true,\n    \"veganFriendly\": false,\n    \"glutenFree\": true,\n    \"reviewsNumber\": 123\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,18 +98,17 @@
 			"response": []
 		},
 		{
-			"name": "Seach Restaurant",
+			"name": "Search Restaurant",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/search-restaurants/?query=Mario&latitude=41.909734&longitude=12.349999&maxDistance=2000&limit=10",
+					"raw": "{{RESTAURANTS_BASE}}/search-restaurants?query=Mario&latitude=41.909734&longitude=12.349999&maxDistance=2000&limit=10",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
 					"path": [
-						"search-restaurants",
-						""
+						"search-restaurants"
 					],
 					"query": [
 						{
@@ -134,14 +133,6 @@
 						}
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search Nearby Restaurant",
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		},
