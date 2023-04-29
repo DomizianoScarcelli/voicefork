@@ -35,6 +35,60 @@ services:
             - 3308
         volumes:
             - db-restaurants:/var/lib/mysql
+
+    minio-users:
+        image: minio/minio
+        restart: always
+        container_name: minio-users
+        ports:
+        - 9001:9001
+        - 9091:9091
+        volumes:
+        - minio-users-data:/data
+        command: server /data --address :9001 --console-address :9091
+        environment:
+            - "MINIO_ROOT_USER=root"
+            - "MINIO_ROOT_PASSWORD=root12345"
+    
+    createbucket-users:
+        image: minio/mc
+        container_name: minio_createbucket_users
+        depends_on:
+            - minio-users
+        entrypoint: >
+            /bin/sh -c "
+            /usr/bin/mc config host add --api s3v4 minio http://minio-users:9001 root root12345;
+            /usr/bin/mc mb minio/avatars;
+            /usr/bin/mc anonymous set download minio/avatars;
+            exit 0;
+            "
+    
+    minio-restaurants:
+        image: minio/minio
+        restart: always
+        container_name: minio-restaurants
+        ports:
+        - 9002:9002
+        - 9092:9092
+        volumes:
+        - minio-restaurants-data:/data
+        command: server /data --address :9002 --console-address :9092
+        environment:
+            - "MINIO_ROOT_USER=root"
+            - "MINIO_ROOT_PASSWORD=root12345"
+    
+    createbucket-restaurants:
+        image: minio/mc
+        container_name: minio_createbucket_restaurants
+        depends_on:
+            - minio-restaurants
+        entrypoint: >
+            /bin/sh -c "
+            /usr/bin/mc config host add --api s3v4 minio http://minio-restaurants:9002 root root12345;
+            /usr/bin/mc mb minio/images;
+            /usr/bin/mc anonymous set download minio/images;
+            exit 0;
+            "
     
     mysql_reservations:
         image: mysql
@@ -68,6 +122,7 @@ services:
             - /app/users/node_modules
         depends_on:
             - mysql_users
+            - minio-users
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
 
@@ -85,6 +140,7 @@ services:
             - /app/restaurants/node_modules
         depends_on:
             - mysql_restaurants
+            - minio-restaurants
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
     
@@ -109,6 +165,7 @@ services:
         build:
             dockerfile: Dockerfile
             context: ./proxy
+        container_name: nginx-proxy
         depends_on:
             - users
             - restaurants
@@ -120,3 +177,5 @@ volumes:
     db-users:
     db-restaurants:
     db-reservations:
+    minio-users-data:
+    minio-restaurants-data:
