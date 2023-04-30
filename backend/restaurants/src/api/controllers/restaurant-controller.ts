@@ -1,17 +1,19 @@
 import {Request, Response, NextFunction} from 'express'
 import RestaurantService from '../../service/restaurant-service'
 import {LatLng, RestaurantSearchResult} from '../../shared/types'
+import {Restaurant} from '@prisma/client'
 
 const service = new RestaurantService()
 const RestaurantController = {
     createRestaurant: async (
-        req: Request,
+        req: Request<{}, {}, Restaurant, {}>,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const {name, address, city} = req.body
-            const data = await service.CreateRestaurant(name, address, city)
+            const restaurant = req.body
+
+            const data = await service.CreateRestaurant(restaurant)
             res.json({
                 message: 'Restaurant was created successfully!',
                 data: data,

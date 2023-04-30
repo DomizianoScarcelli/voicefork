@@ -21,18 +21,11 @@ class RestaurantService {
         this.repository = new RestaurantRepository()
     }
 
-    async CreateRestaurant(name: string, address: string, city: string) {
-        //TODO: Handle the case in which city is not in the input
-        const {latitude, longitude} = await addressToLatLng(
-            `${address}, ${city}`,
-        )
-        const newRestaurant = await this.repository.CreateRestaurant(
-            name,
-            address,
-            city,
-            latitude,
-            longitude,
-        )
+    async CreateRestaurant(restaurant: Restaurant) {
+        // const {latitude, longitude} = await addressToLatLng(
+        //     `${address}, ${city}`,
+        // )
+        const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
     }
 
@@ -52,7 +45,6 @@ class RestaurantService {
         limit?: number,
     ): Promise<RestaurantDistanceResult[]> {
         let result: RestaurantDistanceResult[] = []
-        const {latitude, longitude} = coordinates
         const restaurants = await this.repository.GetAllRestaurants()
         restaurants.forEach(restaurant => {
             const destination: LatLng = {
