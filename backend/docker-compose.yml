@@ -17,6 +17,8 @@ services:
             - 3307
         volumes:
             - db-users:/var/lib/mysql
+        networks:
+            - users-network
       
     mysql_restaurants:
         image: mysql
@@ -35,60 +37,8 @@ services:
             - 3308
         volumes:
             - db-restaurants:/var/lib/mysql
-
-    minio-users:
-        image: minio/minio
-        restart: always
-        container_name: minio-users
-        ports:
-        - 9001:9001
-        - 9091:9091
-        volumes:
-        - minio-users-data:/data
-        command: server /data --address :9001 --console-address :9091
-        environment:
-            - "MINIO_ROOT_USER=root"
-            - "MINIO_ROOT_PASSWORD=root12345"
-    
-    createbucket-users:
-        image: minio/mc
-        container_name: minio_createbucket_users
-        depends_on:
-            - minio-users
-        entrypoint: >
-            /bin/sh -c "
-            /usr/bin/mc config host add --api s3v4 minio http://minio-users:9001 root root12345;
-            /usr/bin/mc mb minio/avatars;
-            /usr/bin/mc anonymous set download minio/avatars;
-            exit 0;
-            "
-    
-    minio-restaurants:
-        image: minio/minio
-        restart: always
-        container_name: minio-restaurants
-        ports:
-        - 9002:9002
-        - 9092:9092
-        volumes:
-        - minio-restaurants-data:/data
-        command: server /data --address :9002 --console-address :9092
-        environment:
-            - "MINIO_ROOT_USER=root"
-            - "MINIO_ROOT_PASSWORD=root12345"
-    
-    createbucket-restaurants:
-        image: minio/mc
-        container_name: minio_createbucket_restaurants
-        depends_on:
-            - minio-restaurants
-        entrypoint: >
-            /bin/sh -c "
-            /usr/bin/mc config host add --api s3v4 minio http://minio-restaurants:9002 root root12345;
-            /usr/bin/mc mb minio/images;
-            /usr/bin/mc anonymous set download minio/images;
-            exit 0;
-            "
+        networks:
+            - restaurants-network
     
     mysql_reservations:
         image: mysql
@@ -107,6 +57,70 @@ services:
             - 3309
         volumes:
             - db-reservations:/var/lib/mysql
+        networks:
+            - reservations-network
+
+    minio-users:
+        image: minio/minio
+        restart: always
+        container_name: minio-users
+        ports:
+        - 9001:9001
+        - 9091:9091
+        volumes:
+        - minio-users-data:/data
+        command: server /data --address :9001 --console-address :9091
+        environment:
+            - "MINIO_ROOT_USER=root"
+            - "MINIO_ROOT_PASSWORD=root12345"
+        networks:
+            - users-network
+    
+    createbucket-users:
+        image: minio/mc
+        container_name: minio_createbucket_users
+        depends_on:
+            - minio-users
+        entrypoint: >
+            /bin/sh -c "
+            /usr/bin/mc config host add --api s3v4 minio http://minio-users:9001 root root12345;
+            /usr/bin/mc mb minio/avatars;
+            /usr/bin/mc anonymous set download minio/avatars;
+            exit 0;
+            "
+        networks:
+            - users-network
+    
+    minio-restaurants:
+        image: minio/minio
+        restart: always
+        container_name: minio-restaurants
+        ports:
+        - 9002:9002
+        - 9092:9092
+        volumes:
+        - minio-restaurants-data:/data
+        command: server /data --address :9002 --console-address :9092
+        environment:
+            - "MINIO_ROOT_USER=root"
+            - "MINIO_ROOT_PASSWORD=root12345"
+        networks:
+            - restaurants-network
+    
+    createbucket-restaurants:
+        image: minio/mc
+        container_name: minio_createbucket_restaurants
+        depends_on:
+            - minio-restaurants
+        entrypoint: >
+            /bin/sh -c "
+            /usr/bin/mc config host add --api s3v4 minio http://minio-restaurants:9002 root root12345;
+            /usr/bin/mc mb minio/images;
+            /usr/bin/mc anonymous set download minio/images;
+            exit 0;
+            "
+        networks:
+            - restaurants-network
 
     users:
         build:
@@ -125,6 +139,9 @@ services:
             - minio-users
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        networks:
+            - gateway
+            - users-network
 
     restaurants:
         build:
@@ -143,6 +160,9 @@ services:
             - minio-restaurants
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        networks:
+            - gateway
+            - restaurants-network
     
     reservations:
         build:
@@ -160,6 +180,9 @@ services:
             - mysql_reservations
         restart: always
         entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        networks:
+            - gateway
+            - reservations-network
 
     nginx-proxy:
         build:
@@ -171,7 +194,9 @@ services:
             - restaurants
             - reservations
         ports:
-          - "80:80"
+            - "80:80"
+        networks:
+            - gateway
 
 volumes:
     db-users:
@@ -179,3 +204,10 @@ volumes:
     db-reservations:
     minio-users-data:
     minio-restaurants-data:
+
+networks:
+    gateway:
+        driver: bridge
+    users-network:
+    restaurants-network:
+    reservations-network:
