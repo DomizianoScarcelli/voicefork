@@ -3,6 +3,8 @@ import {FontSize, Fonts, Colors} from '../../constants'
 import {Restaurant} from '../../shared/types'
 import {styles} from './styles'
 import {TileType} from '../../shared/enums'
+import {metersToKm} from '../../utils/geolocationUtils'
+
 type HorizontalScrollingSectionProps = {
     title: String
     data: Array<any>
@@ -66,18 +68,23 @@ const RestaurantTile = ({
                 source={{uri: 'https://picsum.photos/100'}}
                 style={styles.restaurantTileImage}></Image>
             <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
-            {restaurant.cuisines != '' ? (
+            {restaurant.cuisines ? (
                 <Text style={styles.smallRegularText}>
                     {restaurant.cuisines}
                 </Text>
             ) : (
                 <></>
             )}
-            <Text style={styles.smallRegularText}>
-                {`Price level ${restaurant.priceLevel}`}
-            </Text>
-            <Text style={styles.smallRegularText}>
-                {`${distance}m from you`}
+            {restaurant.priceLevel ? (
+                <Text style={styles.smallRegularText}>
+                    {`Price level ${restaurant.priceLevel}`}
+                </Text>
+            ) : (
+                <></>
+            )}
+
+            <Text style={styles.smallRegularSubText}>
+                {`${metersToKm(distance!)} from you`}
             </Text>
         </View>
     )
@@ -87,7 +94,9 @@ const CuisineTile = ({name, image}: {name: string; image: string}) => {
     return (
         <View style={styles.cuisineTileContainer}>
             <Image source={{uri: image}} style={styles.roundImage}></Image>
-            <Text style={styles.mediumBoldCenteredText}>{name}</Text>
+            <Text style={[styles.mediumBoldText, styles.centerdText]}>
+                {name}
+            </Text>
         </View>
     )
 }
@@ -95,10 +104,10 @@ const CuisineTile = ({name, image}: {name: string; image: string}) => {
 const LoadingRestaurantTile = () => {
     return (
         <View style={styles.restaurantTileContainer}>
-            <View style={styles.loadingImage}></View>
-            <View style={styles.loadingText}></View>
-            <View style={styles.loadingText}></View>
-            <View style={styles.loadingText}></View>
+            <View style={styles.loadingImage} />
+            <View style={styles.loadingText} />
+            <View style={styles.loadingText} />
+            <View style={styles.loadingText} />
         </View>
     )
 }
@@ -106,7 +115,8 @@ const LoadingRestaurantTile = () => {
 const LoadingCuisineTile = () => {
     return (
         <View style={styles.cuisineTileContainer}>
-            <View style={styles.roundLoadingImage}></View>
+            <View style={styles.roundLoadingImage} />
+            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
         </View>
     )
 }

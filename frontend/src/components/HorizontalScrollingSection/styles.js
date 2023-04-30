@@ -48,11 +48,13 @@ export const styles = StyleSheet.create({
         fontFamily: Fonts['poppins-regular'],
         color: Colors.black,
     },
-    mediumBoldCenteredText: {
-        fontSize: FontSize.medium,
-        fontFamily: Fonts['poppins-bold'],
+    smallRegularSubText: {
+        fontSize: FontSize.small,
+        fontFamily: Fonts['poppins-semiBold'],
+        color: Colors.darkGreen,
+    },
+    centerdText: {
         textAlign: 'center',
-        color: Colors.black,
     },
     loadingImage: {
         width: '100%',
@@ -75,5 +77,9 @@ export const styles = StyleSheet.create({
         backgroundColor: '#cccccc',
         opacity: 0.5,
         borderRadius: 5,
+    },
+
+    selfAlignedCenter: {
+        alignSelf: 'center',
     },
 })

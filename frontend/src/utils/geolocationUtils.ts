@@ -30,3 +30,8 @@ const requestLocationPermissionAndroid = async () => {
     }
     return result
 }
+
+export const metersToKm = (meters: number): string => {
+    if (meters > 1000) return `${(meters / 1000).toFixed(1)}km`
+    return `${meters.toFixed(0)}m`
+}

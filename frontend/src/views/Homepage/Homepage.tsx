@@ -1,29 +1,15 @@
-import React, {ReactComponentElement, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Text,
-    Button,
     SafeAreaView,
-    Linking,
     Alert,
     TouchableOpacity,
-    View,
-    TextInput,
     ScrollView,
-    FlatList,
-    ListRenderItem,
-    Image,
-    PermissionStatus,
-    StyleSheet,
 } from 'react-native'
-import InputField from '../../components/InputField/InputField'
-import {Colors, FontSize, Fonts, Layout, Spacing} from '../../constants'
-import {homepageText} from './styles.js'
+import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import HorizontalScrollingSection, {
     CuisineTile,
-    LoadingCuisineTile,
-    LoadingRestaurantTile,
     RestaurantTile,
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
@@ -81,7 +67,7 @@ const Homepage = ({navigation}: any) => {
     }
 
     const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=1000&limit=10`
+        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=3000&limit=10`
         console.log('axios call made')
         const result: DistanceResult[] = (await axios.get(URL)).data
         setLoading(false)
@@ -126,16 +112,12 @@ const Homepage = ({navigation}: any) => {
                     data={cuisineData}
                     isLoading={isLoading}
                     tileType={TileType.CUISINE}
-                    renderItem={({item}) =>
-                        isLoading ? (
-                            <LoadingCuisineTile />
-                        ) : (
-                            <CuisineTile
-                                name={item.name}
-                                image={'https://picsum.photos/100'}
-                            />
-                        )
-                    }
+                    renderItem={({item}) => (
+                        <CuisineTile
+                            name={item.name}
+                            image={'https://picsum.photos/100'}
+                        />
+                    )}
                 />
                 <HorizontalScrollingSection
                     title={'Nearby'}
