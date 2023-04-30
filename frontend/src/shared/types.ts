@@ -1,12 +1,36 @@
-type Restaurant = {
-    id: string
+export type Restaurant = {
+    id: number
     name: string
-    image: string
-    cuisine?: string
-    averagePrice?: number
+    address: string
+    latitude: number
+    longitude: number
+    country: string
+    region: string
+    province: string
+    city: string
+    tags: string
+    cuisines: string
+    specialDiets: string
+    priceLevel: string
+    meals: string
+    avgRating: number
+    vegetarianFriendly: boolean
+    veganFriendly: boolean
+    glutenFree: boolean
+    reviewsNumber: number
 }
-type LatLng = {
+
+export type DistanceResult = {
+    distance: number
+    restaurant: Restaurant
+}
+
+export enum TileType {
+    RESTAURANT = 'RestaurantTile',
+    CUISINE = 'CuisineTile',
+}
+
+export type LatLng = {
     latitude: number
     longitude: number
 }
-export type {Restaurant, LatLng}

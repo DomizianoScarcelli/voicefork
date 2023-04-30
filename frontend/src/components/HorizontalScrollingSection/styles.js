@@ -54,4 +54,26 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         color: Colors.black,
     },
+    loadingImage: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#cccccc',
+        opacity: 0.5,
+        borderRadius: 10,
+    },
+    roundLoadingImage: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#cccccc',
+        opacity: 0.5,
+        borderRadius: 100,
+    },
+    loadingText: {
+        width: '80%',
+        height: 15,
+        marginTop: 10,
+        backgroundColor: '#cccccc',
+        opacity: 0.5,
+        borderRadius: 5,
+    },
 })
