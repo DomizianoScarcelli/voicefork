@@ -39,7 +39,7 @@ To use postman, you can import the collection that is in the `/postman-collectio
 To export the database, put yourself into the /db folder and just do:
 
 ```
-docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaurantDB > backup.sql
+docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaurantsDB > backup.sql
 ```
 
 ### Import
@@ -47,5 +47,5 @@ docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaur
 To import the database, put yourself into the /db folder and just do:
 
 ```
-docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantDB < backup.sql
+docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql
 ```
