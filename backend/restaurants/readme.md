@@ -49,4 +49,8 @@ To import the database, put yourself into the /db folder and just do:
 ```
 docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql
 ```
-IMPORTANT: In Windows put cmd /c "command" to execute them (e.g. cmd /c "docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql")
+IMPORTANT: In Windows put cmd /c "command" to execute them:
+
+```
+cmd /c "docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql"
+```
