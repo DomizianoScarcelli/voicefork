@@ -8,21 +8,21 @@ import {
 } from 'react-native'
 import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
-// import HorizontalScrollingSection, {
-//     ReservationTile,
-// } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
+import HorizontalScrollingSection, {
+    ReservationTile,
+} from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
 import axios from 'axios'
-import {ReservationsResult} from '../../shared/types'
+import {Reservation} from '../../shared/types'
 import {TileType} from '../../shared/enums'
 
 var user_id: number
 
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
-    const [myReservations, showMyReservations] = useState<
-        ReservationsResult[]
+    const [userReservations, showUserReservations] = useState<
+        Reservation[]
     >([])
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const Reservations = ({navigation}: any) => {
 
     useEffect(() => {
         if (user_id != undefined) {
-            getMyReservations(user_id)
+            getUserReservations(user_id)
         }
     }, [user_id])
 
@@ -62,13 +62,12 @@ const Reservations = ({navigation}: any) => {
         }
     }
 
-    const getMyReservations = async (user_id: number) => {
+    const getUserReservations = async (user_id: number) => {
         const URL = `http://localhost:3000/reservations/find-user-reservations/${user_id}`
         console.log('axios call made')
-        const result: ReservationsResult[] = (await axios.get(URL)).data
-        console.log(result)
-        // setLoading(false)
-        // showMyReservations(result)
+        const result: Reservation[] = (await axios.get(URL)).data
+        setLoading(false)
+        showUserReservations(result)
     }
 
     return (
@@ -81,6 +80,18 @@ const Reservations = ({navigation}: any) => {
                 <Navbar />
             </SafeAreaView>
             <ScrollView style={reservations_style.main_view}>
+                <HorizontalScrollingSection
+                    title={'My reservations'}
+                    data={userReservations}
+                    isLoading={isLoading}
+                    tileType={TileType.RESERVATION}
+                    renderItem={({item}) => (
+                        <ReservationTile
+                            id_restaurant={item.id_restaurant}
+                            dateTime={item.dateTime}
+                        />
+                    )}
+                />
                 <TouchableOpacity
                     onPress={() => logout()}
                     style={{

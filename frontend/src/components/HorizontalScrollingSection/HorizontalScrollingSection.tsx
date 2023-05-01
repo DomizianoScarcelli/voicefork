@@ -101,6 +101,19 @@ const CuisineTile = ({name, image}: {name: string; image: string}) => {
     )
 }
 
+const ReservationTile = ({id_restaurant, dateTime}: {id_restaurant: number; dateTime: Date}) => {
+    return (
+        <View style={styles.reservationTileContainer}>
+            <Text style={[styles.mediumBoldText, styles.centerdText]}>
+                {id_restaurant}
+            </Text>
+            <Text style={[styles.mediumBoldText, styles.centerdText]}>
+                {dateTime}
+            </Text>
+        </View>
+    )
+}
+
 const LoadingRestaurantTile = () => {
     return (
         <View style={styles.restaurantTileContainer}>
@@ -121,5 +134,14 @@ const LoadingCuisineTile = () => {
     )
 }
 
+const LoadingReservationTile = () => {
+    return (
+        <View style={styles.reservationTileContainer}>
+            <View style={styles.roundLoadingImage} />
+            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
+        </View>
+    )
+}
+
 export default HorizontalScrollingSection
-export {RestaurantTile, CuisineTile, LoadingCuisineTile, LoadingRestaurantTile}
+export {RestaurantTile, CuisineTile, ReservationTile, LoadingCuisineTile, LoadingRestaurantTile, LoadingReservationTile}

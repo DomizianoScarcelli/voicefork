@@ -30,7 +30,10 @@ export type LatLng = {
     longitude: number
 }
 
-export type ReservationsResult = {
+export type Reservation = {
     id: number
-    restaurant_name: string
+    id_restaurant: number
+    id_user: number
+    dateTime: Date
+    n_people: number
 }

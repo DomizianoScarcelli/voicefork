@@ -29,6 +29,12 @@ export const styles = StyleSheet.create({
         paddingBottom: 25,
         margin: 10,
     },
+    reservationTileContainer: {
+        width: 120,
+        height: 145, // width + paddingBottom
+        paddingBottom: 25,
+        margin: 10,
+    },
     roundImage: {
         height: '100%',
         borderRadius: 100,
