@@ -8,7 +8,11 @@ import {useGeolocation} from '../../hooks/useLocation'
 import SearchResultItem, {
     LoadingSearchResultItem,
 } from '../../components/SearchResultItem/SearchResultItem'
-import {getNearbyRestaurants, performSearch} from '../../utils/apiCalls'
+import {
+    getNearbyRestaurants,
+    getTopRatedRestaurants,
+    performSearch,
+} from '../../utils/apiCalls'
 import {DistanceResult} from '../../shared/types'
 import {styles} from './styles'
 import {SearchStrategy} from '../../shared/enums'
@@ -35,7 +39,7 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                     coordinates,
                 )
                 if (nearbySearchResult == undefined) return
-                const parsedData: SearchResult[] = nearbySearchResult.map(
+                const nearbyParsedData: SearchResult[] = nearbySearchResult.map(
                     (item: DistanceResult) => {
                         return {
                             restaurant: item.restaurant,
@@ -44,9 +48,21 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                         }
                     },
                 )
-                setSearchResults(parsedData)
+                setSearchResults(nearbyParsedData)
                 break
             case SearchStrategy.RATING:
+                const topRatedResult = await getTopRatedRestaurants(coordinates)
+                if (topRatedResult == undefined) return
+                const topRatedParsedData: SearchResult[] = topRatedResult.map(
+                    (item: DistanceResult) => {
+                        return {
+                            restaurant: item.restaurant,
+                            nameDistance: 0,
+                            locationDistance: item.distance,
+                        }
+                    },
+                )
+                setSearchResults(topRatedParsedData)
                 break
         }
     }

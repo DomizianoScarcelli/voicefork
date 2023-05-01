@@ -148,6 +148,11 @@ const Homepage = ({navigation}: any) => {
                 <HorizontalScrollingSection
                     title={'Top picks for you'}
                     data={topPicksRestaurants}
+                    onMoreClick={() =>
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.RATING,
+                        })
+                    }
                     renderItem={({item}: {item: DistanceResult}) =>
                         topPicksRestaurants.length == 0 ? (
                             <RestaurantLoadingTile />
