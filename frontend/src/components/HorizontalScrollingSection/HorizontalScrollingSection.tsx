@@ -8,17 +8,15 @@ type HorizontalScrollingSectionProps = {
     data: Array<any>
     renderItem: ListRenderItem<any>
     showMore?: boolean
-    isLoading: boolean
 }
 
-const HorizontalScrollingSection = ({
+function HorizontalScrollingSection({
     title,
     data,
     renderItem,
     showMore,
-    isLoading,
     ...props
-}: HorizontalScrollingSectionProps) => {
+}: HorizontalScrollingSectionProps) {
     return (
         <View style={{display: 'flex'}}>
             <View style={styles.mainContainer}>
@@ -27,7 +25,7 @@ const HorizontalScrollingSection = ({
             </View>
             <FlatList
                 horizontal={true}
-                data={data}
+                data={data.length == 0 ? Array(5) : data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
             />
@@ -38,20 +36,13 @@ const HorizontalScrollingSection = ({
 const RestaurantTile = ({
     restaurant,
     distance,
-    isLoading,
+    showRating,
 }: {
     restaurant: Restaurant
     distance?: number
-    isLoading: boolean
+    showRating?: boolean
 }) => {
-    return isLoading ? (
-        <View style={styles.restaurantTileContainer}>
-            <View style={styles.loadingImage} />
-            <View style={styles.loadingText} />
-            <View style={styles.loadingText} />
-            <View style={styles.loadingText} />
-        </View>
-    ) : (
+    return (
         <View style={styles.restaurantTileContainer}>
             <Image
                 source={{uri: 'https://picsum.photos/100'}}
@@ -59,41 +50,33 @@ const RestaurantTile = ({
             <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
             {restaurant.cuisines ? (
                 <Text style={styles.smallRegularText}>
-                    {restaurant.cuisines}
+                    {restaurant.cuisines.split(',').slice(0, 3).join(' •')}
                 </Text>
             ) : (
                 <></>
             )}
             {restaurant.priceLevel ? (
                 <Text style={styles.smallRegularText}>
-                    {`Price level ${restaurant.priceLevel}`}
+                    {`${restaurant.priceLevel}`}
                 </Text>
             ) : (
                 <></>
             )}
-
-            <Text style={styles.smallRegularSubText}>
-                {`${metersToKm(distance!)} from you`}
-            </Text>
+            {showRating ? (
+                <Text style={styles.smallRegularSubText}>
+                    {`Rated ${restaurant.avgRating} stars`}
+                </Text>
+            ) : (
+                <Text style={styles.smallRegularSubText}>
+                    {`${metersToKm(distance!)} from you`}
+                </Text>
+            )}
         </View>
     )
 }
 
-const CuisineTile = ({
-    name,
-    image,
-    isLoading,
-}: {
-    name: string
-    image: string
-    isLoading: boolean
-}) => {
-    return isLoading ? (
-        <View style={styles.cuisineTileContainer}>
-            <View style={styles.roundLoadingImage} />
-            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
-        </View>
-    ) : (
+const CuisineTile = ({name, image}: {name: string; image: string}) => {
+    return (
         <View style={styles.cuisineTileContainer}>
             <Image source={{uri: image}} style={styles.roundImage}></Image>
             <Text style={[styles.mediumBoldText, styles.centerdText]}>
@@ -103,5 +86,25 @@ const CuisineTile = ({
     )
 }
 
+const CuisineLoadingTile = () => {
+    return (
+        <View style={styles.cuisineTileContainer}>
+            <View style={styles.roundLoadingImage} />
+            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
+        </View>
+    )
+}
+
+const RestaurantLoadingTile = () => {
+    return (
+        <View style={styles.restaurantTileContainer}>
+            <View style={styles.loadingImage} />
+            <View style={styles.loadingText} />
+            <View style={styles.loadingText} />
+            <View style={styles.loadingText} />
+        </View>
+    )
+}
+
 export default HorizontalScrollingSection
-export {RestaurantTile, CuisineTile}
+export {RestaurantTile, CuisineTile, CuisineLoadingTile, RestaurantLoadingTile}

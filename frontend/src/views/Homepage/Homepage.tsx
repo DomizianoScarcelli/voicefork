@@ -11,6 +11,8 @@ import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
     RestaurantTile,
+    CuisineLoadingTile,
+    RestaurantLoadingTile,
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
@@ -18,27 +20,34 @@ import {DistanceResult} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
 import axios from 'axios'
 import {LatLng} from '../../shared/types'
+import {BASE_URL} from '../../constants'
 
 const Homepage = ({navigation}: any) => {
-    const [isLoading, setLoading] = useState<boolean>(true)
-    const coordinates = useGeolocation()
+    const [isLoadingNearbyRestaurants, setLoadingNearbyRestaurants] =
+        useState<boolean>(true)
+    const [isLoadingTopPicksRestaurant, setLoadingTopPicksRestaurant] =
+        useState<boolean>(true)
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
         DistanceResult[]
     >([])
+    const [topPicksRestaurants, setTopPicksRestaurants] = useState<
+        DistanceResult[]
+    >([])
+    const coordinates = useGeolocation()
 
     useEffect(() => {
         retrieveUserSession()
     }, [])
 
     useEffect(() => {
-        console.log(nearbyRestaurants)
-    }, [nearbyRestaurants])
-
-    useEffect(() => {
         console.log(coordinates)
-        if (coordinates != undefined) {
-            getNearbyRestaurants(coordinates)
+        const populateData = async () => {
+            if (coordinates != undefined) {
+                await getNearbyRestaurants(coordinates)
+                await getTopRatedRestaurants(coordinates)
+            }
         }
+        populateData()
     }, [coordinates])
 
     const retrieveUserSession = async () => {
@@ -66,14 +75,32 @@ const Homepage = ({navigation}: any) => {
     }
 
     const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=3000&limit=10`
-        console.log('axios call made')
+        console.log('Getting nearby restaurants')
+        const MAX_DISTANCE = 3000
+        const LIMIT = 10
+        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
         const result: DistanceResult[] = (await axios.get(URL)).data
-        setLoading(false)
         setNearbyRestaurants(result)
+        setLoadingNearbyRestaurants(false)
     }
 
-    const cuisineData = [
+    const getTopRatedRestaurants = async ({latitude, longitude}: LatLng) => {
+        console.log('Getting top picks restaurants')
+        const MAX_DISTANCE = 3000
+        const LIMIT = 10
+        const MIN_RATING = 4.0
+        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
+        const result: DistanceResult[] = (await axios.get(URL)).data
+        setTopPicksRestaurants(result)
+        setLoadingTopPicksRestaurant(false)
+    }
+
+    type CuisineData = {
+        id: string
+        name: string
+        image: string
+    }
+    const cuisineData: CuisineData[] = [
         {
             id: '1',
             name: 'European',
@@ -101,7 +128,6 @@ const Homepage = ({navigation}: any) => {
             <SafeAreaView
                 style={{
                     backgroundColor: Colors.green,
-                    // flex: 1,
                 }}>
                 <Navbar />
             </SafeAreaView>
@@ -109,39 +135,39 @@ const Homepage = ({navigation}: any) => {
                 <HorizontalScrollingSection
                     title={'Cuisines'}
                     data={cuisineData}
-                    isLoading={isLoading}
-                    renderItem={({item}) => (
-                        <CuisineTile
-                            name={item.name}
-                            image={'https://picsum.photos/100'}
-                            isLoading={isLoading}
-                        />
+                    renderItem={({item}: {item: CuisineData}) => (
+                        <CuisineTile name={item.name} image={item.image} />
                     )}
                 />
                 <HorizontalScrollingSection
                     title={'Nearby'}
                     data={nearbyRestaurants}
                     showMore={true}
-                    isLoading={isLoading}
-                    renderItem={({item}) => (
-                        <RestaurantTile
-                            restaurant={item.restaurant}
-                            distance={item.distance}
-                            isLoading={isLoading}
-                        />
-                    )}
+                    renderItem={({item}: {item: DistanceResult}) =>
+                        isLoadingNearbyRestaurants ? (
+                            <RestaurantLoadingTile />
+                        ) : (
+                            <RestaurantTile
+                                restaurant={item.restaurant}
+                                distance={item.distance}
+                            />
+                        )
+                    }
                 />
                 <HorizontalScrollingSection
                     title={'Top picks for you'}
-                    data={nearbyRestaurants}
-                    isLoading={isLoading}
-                    renderItem={({item}) => (
-                        <RestaurantTile
-                            restaurant={item.restaurant}
-                            distance={item.distance}
-                            isLoading={isLoading}
-                        />
-                    )}
+                    data={topPicksRestaurants}
+                    renderItem={({item}: {item: DistanceResult}) =>
+                        isLoadingTopPicksRestaurant ? (
+                            <RestaurantLoadingTile />
+                        ) : (
+                            <RestaurantTile
+                                restaurant={item.restaurant}
+                                distance={item.distance}
+                                showRating={true}
+                            />
+                        )
+                    }
                 />
 
                 <TouchableOpacity

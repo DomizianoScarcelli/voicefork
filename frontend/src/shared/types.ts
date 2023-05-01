@@ -1,3 +1,8 @@
+import {
+    CuisineTile,
+    RestaurantTile,
+} from '../components/HorizontalScrollingSection/HorizontalScrollingSection'
+
 export type Restaurant = {
     id: number
     name: string
