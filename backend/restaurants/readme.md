@@ -31,3 +31,21 @@ npx prisma migrate dev --name init
 -   The mysql database is running on the 3306 port.
 
 To use postman, you can import the collection that is in the `/postman-collection` folder
+
+## Import and Export the DB
+
+### Export
+
+To export the database, put yourself into the /db folder and just do:
+
+```
+docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaurantsDB > backup.sql
+```
+
+### Import
+
+To import the database, put yourself into the /db folder and just do:
+
+```
+docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql
+```

@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Colors } from "../../constants"
+import {StyleSheet} from 'react-native'
+import {Colors} from '../../constants'
 
 export const input_field_style = StyleSheet.create({
     external_view: {
@@ -7,14 +7,14 @@ export const input_field_style = StyleSheet.create({
     },
 
     internal_view: {
-    flexDirection: 'row',
-    alignItems: "center",
-    borderWidth: 2,
-    borderRadius: 8,
-    padding: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderRadius: 8,
+        padding: 8,
     },
 
-    text_input:{
+    text_input: {
         flex: 1,
         paddingVertical: 0,
     },
@@ -26,7 +26,6 @@ export const input_field_style = StyleSheet.create({
 
     error_text: {
         marginTop: 7,
-        color: Colors.lightRed
-    }
-
+        color: Colors.lightRed,
+    },
 })
