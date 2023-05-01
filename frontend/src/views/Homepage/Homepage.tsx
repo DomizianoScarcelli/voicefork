@@ -11,20 +11,17 @@ import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
     RestaurantTile,
-    CuisineLoadingTile,
     RestaurantLoadingTile,
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
 import {DistanceResult} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
-import axios from 'axios'
-import {LatLng} from '../../shared/types'
-import {BASE_URL} from '../../constants'
 import {
     getNearbyRestaurants,
     getTopRatedRestaurants,
 } from '../../utils/apiCalls'
+import {SearchStrategy} from '../../shared/enums'
 
 const Homepage = ({navigation}: any) => {
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
@@ -42,16 +39,14 @@ const Homepage = ({navigation}: any) => {
     useEffect(() => {
         console.log(coordinates)
         const populateData = async () => {
-            if (coordinates != undefined) {
-                const nearbyRestaurantsResult = await getNearbyRestaurants(
-                    coordinates,
-                )
-                const topRatedRestaurantsResult = await getTopRatedRestaurants(
-                    coordinates,
-                )
-                setNearbyRestaurants(nearbyRestaurants)
-                setTopPicksRestaurants(topPicksRestaurants)
-            }
+            const nearbyRestaurantsResult = await getNearbyRestaurants(
+                coordinates,
+            )
+            const topRatedRestaurantsResult = await getTopRatedRestaurants(
+                coordinates,
+            )
+            setNearbyRestaurants(nearbyRestaurantsResult)
+            setTopPicksRestaurants(topRatedRestaurantsResult)
         }
         populateData()
     }, [coordinates])
@@ -116,7 +111,10 @@ const Homepage = ({navigation}: any) => {
                 }}>
                 <Navbar
                     onSearch={query =>
-                        navigation.navigate('Search', {query: query})
+                        navigation.navigate('Search', {
+                            query: query,
+                            searchStrategy: SearchStrategy.KEYWORD,
+                        })
                     }
                 />
             </SafeAreaView>
@@ -132,7 +130,9 @@ const Homepage = ({navigation}: any) => {
                     title={'Nearby'}
                     data={nearbyRestaurants}
                     onMoreClick={() =>
-                        navigation.navigate('Search', {query: 'Nearby'})
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.NEARBY,
+                        })
                     }
                     renderItem={({item}: {item: DistanceResult}) =>
                         nearbyRestaurants.length == 0 ? (

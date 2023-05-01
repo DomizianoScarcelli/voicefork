@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        // textAlign: 'center',
         fontFamily: Fonts['poppins-semiBold'],
         fontSize: FontSize.medium,
         paddingTop: 15,

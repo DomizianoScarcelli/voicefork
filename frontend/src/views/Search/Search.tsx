@@ -11,18 +11,31 @@ import SearchResultItem, {
 import {getNearbyRestaurants, performSearch} from '../../utils/apiCalls'
 import {DistanceResult} from '../../shared/types'
 import {styles} from './styles'
+import {SearchStrategy} from '../../shared/enums'
 
 const Search = ({route, navigation}: {route: any; navigation: any}) => {
     const coordinates = useGeolocation()
     const [searchResults, setSearchResults] = useState<SearchResult[]>([])
-    const {query} = route.params
+    const [searchStrategy, setsearchStrategy] = useState<SearchStrategy>(
+        route.params.searchStrategy,
+    )
+    const [query, setquery] = useState<string>(route.params.query)
 
-    useEffect(() => {
-        const handleSearch = async () => {
-            if (query == 'Nearby') {
-                const data = await getNearbyRestaurants(coordinates)
-                if (data == undefined) return
-                const parsedData: SearchResult[] = data.map(
+    const performSearchWithStrategy = async () => {
+        switch (searchStrategy) {
+            case SearchStrategy.KEYWORD:
+                const keywordSearchResult = await performSearch(
+                    query,
+                    coordinates,
+                )
+                setSearchResults(keywordSearchResult)
+                break
+            case SearchStrategy.NEARBY:
+                const nearbySearchResult = await getNearbyRestaurants(
+                    coordinates,
+                )
+                if (nearbySearchResult == undefined) return
+                const parsedData: SearchResult[] = nearbySearchResult.map(
                     (item: DistanceResult) => {
                         return {
                             restaurant: item.restaurant,
@@ -32,12 +45,33 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                     },
                 )
                 setSearchResults(parsedData)
-            } else {
-                const data = await performSearch(query, coordinates)
-                setSearchResults(data)
-            }
+                break
+            case SearchStrategy.RATING:
+                break
         }
-        handleSearch()
+    }
+
+    const rederSearchText = () => {
+        switch (searchStrategy) {
+            case SearchStrategy.KEYWORD:
+                return 'Search results for: '
+            case SearchStrategy.NEARBY:
+                return 'Nearby restaurants'
+            case SearchStrategy.RATING:
+                return 'Top picks for you'
+        }
+    }
+
+    const newSearch = async (query: string) => {
+        setquery(query)
+        setsearchStrategy(SearchStrategy.KEYWORD)
+        setSearchResults([])
+        const data = await performSearch(query, coordinates)
+        setSearchResults(data)
+    }
+
+    useEffect(() => {
+        performSearchWithStrategy()
     }, [coordinates])
 
     return (
@@ -46,16 +80,12 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                 style={{
                     backgroundColor: Colors.green,
                 }}>
-                <Navbar onSearch={query => performSearch(query, coordinates)} />
+                <Navbar onSearch={query => newSearch(query)} />
             </SafeAreaView>
             <ScrollView>
                 <View style={styles.horizontalContainer}>
-                    <Text style={styles.title}>
-                        {query == 'Nearby'
-                            ? 'Nearby restaurants'
-                            : `Search results for: `}
-                    </Text>
-                    {query != 'Nearby' ? (
+                    <Text style={styles.title}>{rederSearchText()}</Text>
+                    {searchStrategy == SearchStrategy.KEYWORD ? (
                         <Text style={[styles.title, styles.query]}>
                             {query}
                         </Text>
