@@ -23,10 +23,6 @@ import {LatLng} from '../../shared/types'
 import {BASE_URL} from '../../constants'
 
 const Homepage = ({navigation}: any) => {
-    const [isLoadingNearbyRestaurants, setLoadingNearbyRestaurants] =
-        useState<boolean>(true)
-    const [isLoadingTopPicksRestaurant, setLoadingTopPicksRestaurant] =
-        useState<boolean>(true)
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
         DistanceResult[]
     >([])
@@ -81,7 +77,6 @@ const Homepage = ({navigation}: any) => {
         const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
         const result: DistanceResult[] = (await axios.get(URL)).data
         setNearbyRestaurants(result)
-        setLoadingNearbyRestaurants(false)
     }
 
     const getTopRatedRestaurants = async ({latitude, longitude}: LatLng) => {
@@ -92,7 +87,6 @@ const Homepage = ({navigation}: any) => {
         const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
         const result: DistanceResult[] = (await axios.get(URL)).data
         setTopPicksRestaurants(result)
-        setLoadingTopPicksRestaurant(false)
     }
 
     type CuisineData = {
@@ -142,9 +136,11 @@ const Homepage = ({navigation}: any) => {
                 <HorizontalScrollingSection
                     title={'Nearby'}
                     data={nearbyRestaurants}
-                    showMore={true}
+                    onMoreClick={() =>
+                        navigation.navigate('Search', {query: 'Nearby'})
+                    }
                     renderItem={({item}: {item: DistanceResult}) =>
-                        isLoadingNearbyRestaurants ? (
+                        nearbyRestaurants.length == 0 ? (
                             <RestaurantLoadingTile />
                         ) : (
                             <RestaurantTile
@@ -158,7 +154,7 @@ const Homepage = ({navigation}: any) => {
                     title={'Top picks for you'}
                     data={topPicksRestaurants}
                     renderItem={({item}: {item: DistanceResult}) =>
-                        isLoadingTopPicksRestaurant ? (
+                        topPicksRestaurants.length == 0 ? (
                             <RestaurantLoadingTile />
                         ) : (
                             <RestaurantTile

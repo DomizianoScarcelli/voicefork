@@ -7,23 +7,30 @@ type HorizontalScrollingSectionProps = {
     title: String
     data: Array<any>
     renderItem: ListRenderItem<any>
-    showMore?: boolean
+    onMoreClick?: () => any
 }
 
 function HorizontalScrollingSection({
     title,
     data,
     renderItem,
-    showMore,
+    onMoreClick,
     ...props
 }: HorizontalScrollingSectionProps) {
     return (
         <View style={{display: 'flex'}}>
             <View style={styles.mainContainer}>
                 <Text style={styles.title}>{title}</Text>
-                {showMore ? <Text style={styles.moreText}>MORE</Text> : <></>}
+                {onMoreClick ? (
+                    <Text style={styles.moreText} onPress={onMoreClick}>
+                        MORE
+                    </Text>
+                ) : (
+                    <></>
+                )}
             </View>
             <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal={true}
                 data={data.length == 0 ? Array(5) : data}
                 renderItem={renderItem}

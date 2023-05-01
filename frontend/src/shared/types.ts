@@ -30,6 +30,12 @@ export type DistanceResult = {
     restaurant: Restaurant
 }
 
+export type SearchResult = {
+    restaurant: Restaurant
+    nameDistance: number
+    locationDistance: number
+}
+
 export type LatLng = {
     latitude: number
     longitude: number
