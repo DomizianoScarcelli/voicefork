@@ -14,11 +14,10 @@ import HorizontalScrollingSection, {
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
-import {DistanceResult, Restaurant} from '../../shared/types'
+import {DistanceResult} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
 import axios from 'axios'
 import {LatLng} from '../../shared/types'
-import {TileType} from '../../shared/enums'
 
 const Homepage = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
@@ -111,11 +110,11 @@ const Homepage = ({navigation}: any) => {
                     title={'Cuisines'}
                     data={cuisineData}
                     isLoading={isLoading}
-                    tileType={TileType.CUISINE}
                     renderItem={({item}) => (
                         <CuisineTile
                             name={item.name}
                             image={'https://picsum.photos/100'}
+                            isLoading={isLoading}
                         />
                     )}
                 />
@@ -124,11 +123,11 @@ const Homepage = ({navigation}: any) => {
                     data={nearbyRestaurants}
                     showMore={true}
                     isLoading={isLoading}
-                    tileType={TileType.RESTAURANT}
                     renderItem={({item}) => (
                         <RestaurantTile
                             restaurant={item.restaurant}
                             distance={item.distance}
+                            isLoading={isLoading}
                         />
                     )}
                 />
@@ -136,11 +135,11 @@ const Homepage = ({navigation}: any) => {
                     title={'Top picks for you'}
                     data={nearbyRestaurants}
                     isLoading={isLoading}
-                    tileType={TileType.RESTAURANT}
                     renderItem={({item}) => (
                         <RestaurantTile
                             restaurant={item.restaurant}
                             distance={item.distance}
+                            isLoading={isLoading}
                         />
                     )}
                 />
