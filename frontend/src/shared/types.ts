@@ -25,11 +25,6 @@ export type DistanceResult = {
     restaurant: Restaurant
 }
 
-export enum TileType {
-    RESTAURANT = 'RestaurantTile',
-    CUISINE = 'CuisineTile',
-}
-
 export type LatLng = {
     latitude: number
     longitude: number
