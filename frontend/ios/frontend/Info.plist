@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>BookRestaurantIntent</string>
@@ -62,9 +62,10 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-        <string>poppins-bold.ttf</string>
-        <string>poppins-regular.ttf</string>
-        <string>poppins-semibold.ttf</string>
+		<string>poppins-bold.ttf</string>
+		<string>poppins-regular.ttf</string>
+		<string>poppins-semibold.ttf</string>
+		<string>poppins-semiBold.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

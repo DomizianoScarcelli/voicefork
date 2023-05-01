@@ -1,33 +1,69 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model Restaurant {
-  id      Int    @id @default(autoincrement())
-  name    String
-  address String
-  city    String
-  latitude Float
-  longitude Float
-
-  @@unique([name, address])
+    id                 Int     @id @default(autoincrement())
+    name               String
+    address            String
+    latitude           Float
+    longitude          Float
+    country            String
+    region             String
+    province           String
+    city               String
+    tags               String
+    cuisines           String
+    specialDiets       String
+    priceLevel         String
+    meals              String
+    avgRating          Float
+    vegetarianFriendly Boolean
+    veganFriendly      Boolean
+    glutenFree         Boolean
+    reviewsNumber      Int
 }
 
-// model Address {
-//   id           Int          @id @default(autoincrement())
-//   street       String
-//   number Int
-//   city         String?
-//   Restaurant   Restaurant[]
-//   latitude Float?
-//   longitude Float?
+// model Zone {
+//     country     String
+//     region      String
+//     province    String
+//     city        String
+//     town        String
+//     restaurants Restaurant[]
+
+//     @@id([province, city, town])
+// }
+
+// model Tag {
+//     name        String       @id
+//     restaurants Restaurant[] @relation("TagToRestaurant")
+// }
+
+// model Cuisine {
+//     name        String       @id
+//     restaurants Restaurant[] @relation("CuisineToRestaurant")
+// }
+
+// model Diet {
+//     name        String       @id
+//     restaurants Restaurant[] @relation("DietToRestaurant")
+// }
+
+// enum Meal {
+//     BREAKFAST
+//     LUNCH
+//     DINNER
+// }
+
+// enum PriceLevel {
+//     LOW
+//     MEDIUM
+//     HIGH
 // }
