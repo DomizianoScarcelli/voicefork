@@ -1,56 +1,41 @@
 import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
-import {FontSize, Fonts, Colors} from '../../constants'
 import {Restaurant} from '../../shared/types'
 import {styles} from './styles'
-import {TileType} from '../../shared/enums'
 import {metersToKm} from '../../utils/geolocationUtils'
 
 type HorizontalScrollingSectionProps = {
     title: String
     data: Array<any>
     renderItem: ListRenderItem<any>
-    showMore?: boolean
-    isLoading: boolean
-    tileType: TileType
+    onMoreClick?: () => any
 }
 
-const HorizontalScrollingSection = ({
+function HorizontalScrollingSection({
     title,
     data,
     renderItem,
-    showMore,
-    isLoading,
-    tileType,
+    onMoreClick,
     ...props
-}: HorizontalScrollingSectionProps) => {
-    const renderLoadingTile = () => {
-        return tileType == TileType.RESTAURANT ? (
-            <LoadingRestaurantTile />
-        ) : (
-            <LoadingCuisineTile />
-        )
-    }
+}: HorizontalScrollingSectionProps) {
     return (
         <View style={{display: 'flex'}}>
             <View style={styles.mainContainer}>
                 <Text style={styles.title}>{title}</Text>
-                {showMore ? <Text style={styles.moreText}>MORE</Text> : <></>}
+                {onMoreClick ? (
+                    <Text style={styles.moreText} onPress={onMoreClick}>
+                        MORE
+                    </Text>
+                ) : (
+                    <></>
+                )}
             </View>
-            {isLoading ? (
-                <FlatList
-                    horizontal={true}
-                    data={[...Array(5)]}
-                    renderItem={item => renderLoadingTile()}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            ) : (
-                <FlatList
-                    horizontal={true}
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            )}
+            <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                data={data.length == 0 ? Array(5) : data}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+            />
         </View>
     )
 }
@@ -58,9 +43,11 @@ const HorizontalScrollingSection = ({
 const RestaurantTile = ({
     restaurant,
     distance,
+    showRating,
 }: {
     restaurant: Restaurant
     distance?: number
+    showRating?: boolean
 }) => {
     return (
         <View style={styles.restaurantTileContainer}>
@@ -70,22 +57,27 @@ const RestaurantTile = ({
             <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
             {restaurant.cuisines ? (
                 <Text style={styles.smallRegularText}>
-                    {restaurant.cuisines}
+                    {restaurant.cuisines.split(',').slice(0, 3).join(' •')}
                 </Text>
             ) : (
                 <></>
             )}
             {restaurant.priceLevel ? (
                 <Text style={styles.smallRegularText}>
-                    {`Price level ${restaurant.priceLevel}`}
+                    {`${restaurant.priceLevel}`}
                 </Text>
             ) : (
                 <></>
             )}
-
-            <Text style={styles.smallRegularSubText}>
-                {`${metersToKm(distance!)} from you`}
-            </Text>
+            {showRating ? (
+                <Text style={styles.smallRegularSubText}>
+                    {`Rated ${restaurant.avgRating} stars`}
+                </Text>
+            ) : (
+                <Text style={styles.smallRegularSubText}>
+                    {`${metersToKm(distance!)} from you`}
+                </Text>
+            )}
         </View>
     )
 }
@@ -101,7 +93,16 @@ const CuisineTile = ({name, image}: {name: string; image: string}) => {
     )
 }
 
-const LoadingRestaurantTile = () => {
+const CuisineLoadingTile = () => {
+    return (
+        <View style={styles.cuisineTileContainer}>
+            <View style={styles.roundLoadingImage} />
+            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
+        </View>
+    )
+}
+
+const RestaurantLoadingTile = () => {
     return (
         <View style={styles.restaurantTileContainer}>
             <View style={styles.loadingImage} />
@@ -112,14 +113,5 @@ const LoadingRestaurantTile = () => {
     )
 }
 
-const LoadingCuisineTile = () => {
-    return (
-        <View style={styles.cuisineTileContainer}>
-            <View style={styles.roundLoadingImage} />
-            <View style={[styles.loadingText, styles.selfAlignedCenter]} />
-        </View>
-    )
-}
-
 export default HorizontalScrollingSection
-export {RestaurantTile, CuisineTile, LoadingCuisineTile, LoadingRestaurantTile}
+export {RestaurantTile, CuisineTile, CuisineLoadingTile, RestaurantLoadingTile}
