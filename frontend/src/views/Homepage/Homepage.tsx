@@ -67,7 +67,7 @@ const Homepage = ({navigation}: any) => {
     }
 
     const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        const URL = `http://localhost/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=3000&limit=10`
+        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=3000&limit=10`
         console.log('axios call made')
         const result: DistanceResult[] = (await axios.get(URL)).data
         setLoading(false)

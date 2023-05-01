@@ -194,7 +194,7 @@ services:
             - restaurants
             - reservations
         ports:
-            - "80:80"
+            - "3000:3000"
         networks:
             - gateway
 
