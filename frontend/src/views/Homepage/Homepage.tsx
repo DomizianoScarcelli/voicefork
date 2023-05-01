@@ -11,16 +11,17 @@ import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
     RestaurantTile,
-    CuisineLoadingTile,
     RestaurantLoadingTile,
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
 import {DistanceResult} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
-import axios from 'axios'
-import {LatLng} from '../../shared/types'
-import {BASE_URL} from '../../constants'
+import {
+    getNearbyRestaurants,
+    getTopRatedRestaurants,
+} from '../../utils/apiCalls'
+import {SearchStrategy} from '../../shared/enums'
 
 const Homepage = ({navigation}: any) => {
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
@@ -38,10 +39,14 @@ const Homepage = ({navigation}: any) => {
     useEffect(() => {
         console.log(coordinates)
         const populateData = async () => {
-            if (coordinates != undefined) {
-                await getNearbyRestaurants(coordinates)
-                await getTopRatedRestaurants(coordinates)
-            }
+            const nearbyRestaurantsResult = await getNearbyRestaurants(
+                coordinates,
+            )
+            const topRatedRestaurantsResult = await getTopRatedRestaurants(
+                coordinates,
+            )
+            setNearbyRestaurants(nearbyRestaurantsResult)
+            setTopPicksRestaurants(topRatedRestaurantsResult)
         }
         populateData()
     }, [coordinates])
@@ -68,25 +73,6 @@ const Homepage = ({navigation}: any) => {
                 [{text: 'OK'}],
             )
         }
-    }
-
-    const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        console.log('Getting nearby restaurants')
-        const MAX_DISTANCE = 3000
-        const LIMIT = 10
-        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
-        const result: DistanceResult[] = (await axios.get(URL)).data
-        setNearbyRestaurants(result)
-    }
-
-    const getTopRatedRestaurants = async ({latitude, longitude}: LatLng) => {
-        console.log('Getting top picks restaurants')
-        const MAX_DISTANCE = 3000
-        const LIMIT = 10
-        const MIN_RATING = 4.0
-        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
-        const result: DistanceResult[] = (await axios.get(URL)).data
-        setTopPicksRestaurants(result)
     }
 
     type CuisineData = {
@@ -123,7 +109,14 @@ const Homepage = ({navigation}: any) => {
                 style={{
                     backgroundColor: Colors.green,
                 }}>
-                <Navbar />
+                <Navbar
+                    onSearch={query =>
+                        navigation.navigate('Search', {
+                            query: query,
+                            searchStrategy: SearchStrategy.KEYWORD,
+                        })
+                    }
+                />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
@@ -137,7 +130,9 @@ const Homepage = ({navigation}: any) => {
                     title={'Nearby'}
                     data={nearbyRestaurants}
                     onMoreClick={() =>
-                        navigation.navigate('Search', {query: 'Nearby'})
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.NEARBY,
+                        })
                     }
                     renderItem={({item}: {item: DistanceResult}) =>
                         nearbyRestaurants.length == 0 ? (
@@ -153,6 +148,11 @@ const Homepage = ({navigation}: any) => {
                 <HorizontalScrollingSection
                     title={'Top picks for you'}
                     data={topPicksRestaurants}
+                    onMoreClick={() =>
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.RATING,
+                        })
+                    }
                     renderItem={({item}: {item: DistanceResult}) =>
                         topPicksRestaurants.length == 0 ? (
                             <RestaurantLoadingTile />
