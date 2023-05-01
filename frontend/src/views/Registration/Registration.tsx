@@ -99,7 +99,7 @@ function Registration({navigation}:any) {
             "role": "customer"
         }
 
-        axios.post("http:localhost:3000/users/create-user", formData)
+        axios.post("http://localhost/users/create-user", formData)
         .then(function(response) {
             if (response.status === 200) {
                 Alert.alert(  

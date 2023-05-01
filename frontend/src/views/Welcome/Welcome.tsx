@@ -103,7 +103,7 @@ function Welcome({ navigation } : any) {
             "password": formValues["password"]
         }
 
-        axios.post("http:localhost:3000/users/login", formData)
+        axios.post("http://localhost/users/login", formData)
         .then(async function(response) {
             if (response.status === 200) {
                 const isDataStored = storeUserSession(response)
