@@ -19,9 +19,13 @@ const SearchResultItem: React.FC<Props> = ({searchResult}) => {
                     <Text style={styles.title}>
                         {searchResult.restaurant.name}
                     </Text>
-                    <Text style={styles.rating}>
-                        {searchResult.restaurant.avgRating}
-                    </Text>
+                    {searchResult.restaurant.avgRating != 0 ? (
+                        <Text style={styles.rating}>
+                            {searchResult.restaurant.avgRating}
+                        </Text>
+                    ) : (
+                        <></>
+                    )}
                 </View>
 
                 <Text style={styles.address}>

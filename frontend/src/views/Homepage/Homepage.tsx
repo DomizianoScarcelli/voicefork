@@ -21,6 +21,10 @@ import {useGeolocation} from '../../hooks/useLocation'
 import axios from 'axios'
 import {LatLng} from '../../shared/types'
 import {BASE_URL} from '../../constants'
+import {
+    getNearbyRestaurants,
+    getTopRatedRestaurants,
+} from '../../utils/apiCalls'
 
 const Homepage = ({navigation}: any) => {
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
@@ -39,8 +43,14 @@ const Homepage = ({navigation}: any) => {
         console.log(coordinates)
         const populateData = async () => {
             if (coordinates != undefined) {
-                await getNearbyRestaurants(coordinates)
-                await getTopRatedRestaurants(coordinates)
+                const nearbyRestaurantsResult = await getNearbyRestaurants(
+                    coordinates,
+                )
+                const topRatedRestaurantsResult = await getTopRatedRestaurants(
+                    coordinates,
+                )
+                setNearbyRestaurants(nearbyRestaurants)
+                setTopPicksRestaurants(topPicksRestaurants)
             }
         }
         populateData()
@@ -68,25 +78,6 @@ const Homepage = ({navigation}: any) => {
                 [{text: 'OK'}],
             )
         }
-    }
-
-    const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        console.log('Getting nearby restaurants')
-        const MAX_DISTANCE = 3000
-        const LIMIT = 10
-        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
-        const result: DistanceResult[] = (await axios.get(URL)).data
-        setNearbyRestaurants(result)
-    }
-
-    const getTopRatedRestaurants = async ({latitude, longitude}: LatLng) => {
-        console.log('Getting top picks restaurants')
-        const MAX_DISTANCE = 3000
-        const LIMIT = 10
-        const MIN_RATING = 4.0
-        const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
-        const result: DistanceResult[] = (await axios.get(URL)).data
-        setTopPicksRestaurants(result)
     }
 
     type CuisineData = {
@@ -123,7 +114,11 @@ const Homepage = ({navigation}: any) => {
                 style={{
                     backgroundColor: Colors.green,
                 }}>
-                <Navbar />
+                <Navbar
+                    onSearch={query =>
+                        navigation.navigate('Search', {query: query})
+                    }
+                />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
