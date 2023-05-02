@@ -39,7 +39,7 @@ To use postman, you can import the collection that is in the `/postman-collectio
 To export the database, put yourself into the /db folder and just do:
 
 ```
-docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaurantsDB > backup.sql
+docker exec postgres_restaurants pg_dump --data-only -U admin -Fc restaurantsDB > backup.sql
 ```
 
 ### Import
@@ -47,10 +47,15 @@ docker exec mysql_restaurants /usr/bin/mysqldump -u root --password=root restaur
 To import the database, put yourself into the /db folder and just do:
 
 ```
-docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql
+docker exec -i postgres_restaurants pg_restore -U admin -d restaurantsDB < backup.sql
 ```
+
 IMPORTANT: In Windows put cmd /c "command" to execute them:
 
 ```
-cmd /c "docker exec -i mysql_restaurants /usr/bin/mysql -u root --password=root restaurantsDB < backup.sql"
+cmd /c "docker exec -i postgres_restaurants pg_restore -U admin -d restaurantsDB < backup.dump"
 ```
+
+## Note
+
+If you get any errors about prisma raw query not working, try the magic command and try restarting the containers with the --build tags
