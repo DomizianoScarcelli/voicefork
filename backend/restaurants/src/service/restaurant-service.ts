@@ -16,9 +16,11 @@ import {
  */
 class RestaurantService {
     repository: RestaurantRepository
+    readonly RESULTS_PER_PAGE: number
 
     constructor() {
         this.repository = new RestaurantRepository()
+        this.RESULTS_PER_PAGE = 20
     }
 
     private filterRestaurantsByDistance(
@@ -46,6 +48,12 @@ class RestaurantService {
         return nearbyRestaurants
     }
 
+    private paginateResults<T>(pageNumber: number, results: T[]): T[] {
+        const itemsToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+        const finalIndex = itemsToSkip + this.RESULTS_PER_PAGE
+        return results.slice(itemsToSkip, finalIndex)
+    }
+
     async CreateRestaurant(restaurant: Restaurant) {
         const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
@@ -65,6 +73,7 @@ class RestaurantService {
         coordinates: LatLng,
         maxDistance: number,
         limit?: number,
+        pageNumber?: number,
     ): Promise<RestaurantDistanceResult[]> {
         const restaurants = await this.repository.GetAllRestaurants()
         let nearbyRestaurants = this.filterRestaurantsByDistance(
@@ -78,11 +87,25 @@ class RestaurantService {
         if (limit != null) {
             return nearbyRestaurants.slice(0, limit)
         }
+        if (pageNumber != undefined)
+            nearbyRestaurants = this.paginateResults<RestaurantDistanceResult>(
+                pageNumber,
+                nearbyRestaurants,
+            )
         return nearbyRestaurants
     }
 
-    async GetAllRestaurants(): Promise<Restaurant[]> {
-        const restaurants = await this.repository.GetAllRestaurants()
+    async GetAllRestaurants(pageNumber?: number): Promise<Restaurant[]> {
+        let restaurants: Restaurant[] = []
+        if (pageNumber != undefined) {
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            restaurants = await this.repository.GetAllRestaurants(
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+        } else {
+            restaurants = await this.repository.GetAllRestaurants()
+        }
         return restaurants
     }
 
@@ -131,11 +154,12 @@ class RestaurantService {
         maxDistance: number,
         minRating: number,
         limit?: number,
+        pageNumber?: number,
     ): Promise<RestaurantDistanceResult[]> {
         const topRestaurants = await this.repository.GetTopRatedRestaurants(
             parseFloat(minRating.toString()),
         )
-        const topNearbyRestaurants = this.filterRestaurantsByDistance(
+        let topNearbyRestaurants = this.filterRestaurantsByDistance(
             topRestaurants,
             coordinates,
             maxDistance,
@@ -146,6 +170,12 @@ class RestaurantService {
         if (limit != undefined) {
             return topNearbyRestaurants.slice(0, limit)
         }
+        if (pageNumber != undefined)
+            topNearbyRestaurants =
+                this.paginateResults<RestaurantDistanceResult>(
+                    pageNumber,
+                    topNearbyRestaurants,
+                )
         return topNearbyRestaurants
     }
 

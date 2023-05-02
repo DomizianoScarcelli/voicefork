@@ -33,18 +33,30 @@ class RestaurantRepository {
         return restaurants
     }
 
-    async GetAllRestaurants(): Promise<Restaurant[]> {
-        const restaurants = await prisma.restaurant.findMany()
+    async GetAllRestaurants(
+        skip?: number,
+        take?: number,
+    ): Promise<Restaurant[]> {
+        const restaurants = await prisma.restaurant.findMany({
+            skip: skip,
+            take: take,
+        })
         return restaurants
     }
 
-    async GetTopRatedRestaurants(threshold: number): Promise<Restaurant[]> {
+    async GetTopRatedRestaurants(
+        threshold: number,
+        skip?: number,
+        take?: number,
+    ): Promise<Restaurant[]> {
         const restaurants = await prisma.restaurant.findMany({
             where: {
                 avgRating: {
                     gte: threshold,
                 },
             },
+            skip: skip,
+            take: take,
         })
         return restaurants
     }
