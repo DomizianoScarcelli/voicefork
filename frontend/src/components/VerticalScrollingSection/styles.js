@@ -17,16 +17,10 @@ export const styles = StyleSheet.create({
         color: Colors.green,
         fontFamily: Fonts['poppins-bold'],
     },
-    restaurantTileContainer: {
+    reservationTileContainer: {
         width: 150,
         height: 250, // width + paddingBottom
         paddingBottom: 100,
-        margin: 10,
-    },
-    cuisineTileContainer: {
-        width: 120,
-        height: 145, // width + paddingBottom
-        paddingBottom: 25,
         margin: 10,
     },
     roundImage: {
