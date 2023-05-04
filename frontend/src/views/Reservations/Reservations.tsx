@@ -14,7 +14,7 @@ import VerticalScrollingSection, {
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
 import axios from 'axios'
-import {Reservation, ReservationRaw, Restaurant} from '../../shared/types'
+import {Reservation, ReservationRaw} from '../../shared/types'
 import {TileType} from '../../shared/enums'
 
 var user_id: number
@@ -90,7 +90,6 @@ const Reservations = ({navigation}: any) => {
                 reservations.push(reservation)
             }
         }
-        console.log(reservations)
         setLoading(false)
         showUserReservations(reservations)
     }
