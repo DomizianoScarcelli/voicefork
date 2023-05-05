@@ -114,7 +114,7 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                           <LoadingSearchResultItem id={item} />
                       ))
                     : searchResults.map((item: any, index: number) => (
-                          <SearchResultItem searchResult={item} />
+                          <SearchResultItem searchResult={item} navigation={navigation} />
                       ))}
             </ScrollView>
         </>
