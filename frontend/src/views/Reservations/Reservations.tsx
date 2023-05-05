@@ -40,7 +40,7 @@ const Reservations = ({navigation}: any) => {
         if (user_id != undefined) {
             getUserReservations(user_id)
         }
-    }, [user_id])
+    }, [user_id, userReservations])
 
     const retrieveUserSession = async () => {
         try {
