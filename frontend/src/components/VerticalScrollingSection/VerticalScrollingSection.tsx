@@ -1,9 +1,8 @@
 import {ListRenderItem, Text, FlatList, View, Image } from 'react-native'
 import {FontSize, Fonts, Colors} from '../../constants'
-import {Reservation} from '../../shared/types'
+import {ReservationWithRestaurant} from '../../shared/types'
 import {styles} from './styles'
 import {TileType} from '../../shared/enums'
-import {metersToKm} from '../../utils/geolocationUtils'
 
 type VerticalScrollingSectionProps = {
     title: String
@@ -23,7 +22,13 @@ const VerticalScrollingSection = ({
     tileType,
     ...props
 }: VerticalScrollingSectionProps) => {
-    <LoadingReservationTile />
+    const renderLoadingTile = () => {
+        return tileType == TileType.RESERVATION ? (
+            <LoadingReservationTile />
+        ) : (
+            <LoadingNoneTile />
+        )
+    }
     return (
         <View style={{display: 'flex'}}>
             <View style={styles.mainContainer}>
@@ -34,7 +39,7 @@ const VerticalScrollingSection = ({
                 <FlatList
                     horizontal={true}
                     data={[...Array(5)]}
-                    renderItem={item => <LoadingReservationTile />}
+                    renderItem={item => renderLoadingTile()}
                     keyExtractor={(item, index) => index.toString()}
                 />
             ) : (
@@ -49,20 +54,26 @@ const VerticalScrollingSection = ({
     )
 }
 
-const ReservationTile = ({
-    reservation
-}: {
-    reservation: Reservation
-}) => {
+//const ReservationTile = ({reservation}: {reservation: ReservationWithRestaurant}) => {
+const ReservationTile = ({reservation}: {reservation: number}) => {
     return (
         <View style={styles.reservationTileContainer}>
-            <Image
+            {/* <Image
                 source={{uri: 'https://picsum.photos/100'}}
-                style={styles.restaurantTileImage}></Image>
-            <Text style={styles.mediumBoldText}>{reservation.restaurant.name}</Text>
+                style={styles.restaurantTileImage}></Image> */}
+            <Text style={styles.mediumBoldText}>{reservation}</Text>
+            {/* <Text style={styles.mediumBoldText}>{reservation.restaurant.name}</Text>
             <Text style={styles.mediumBoldText}>{reservation.restaurant.cuisines}</Text>
             <Text style={styles.mediumBoldText}>{reservation.dateTime}</Text>
-            <Text style={styles.mediumBoldText}>{reservation.n_people}</Text>
+            <Text style={styles.mediumBoldText}>{reservation.n_people}</Text> */}
+        </View>
+    )
+}
+
+const NoneTile = () => {
+    return (
+        <View style={styles.noneTileContainer}>
+            <Text style={styles.mediumBoldText}>{'There is no reservation'}</Text>
         </View>
     )
 }
@@ -79,5 +90,13 @@ const LoadingReservationTile = () => {
     )
 }
 
+const LoadingNoneTile = () => {
+    return (
+        <View style={styles.noneTileContainer}>
+            <View style={styles.loadingText} />
+        </View>
+    )
+}
+
 export default VerticalScrollingSection
-export {ReservationTile, LoadingReservationTile}
+export {ReservationTile, LoadingReservationTile, NoneTile, LoadingNoneTile}

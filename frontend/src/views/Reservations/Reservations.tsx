@@ -14,14 +14,14 @@ import VerticalScrollingSection, {
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
 import axios from 'axios'
-import {Reservation, ReservationRaw} from '../../shared/types'
+import {ReservationWithRestaurant, Reservation, Restaurant} from '../../shared/types'
 import {TileType} from '../../shared/enums'
 
 var user_id: number
 
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
-    const [userReservations, showUserReservations] = useState<
+    const [reservationsData, setReservationData] = useState<
         Reservation[]
     >([])
 
@@ -34,6 +34,10 @@ const Reservations = ({navigation}: any) => {
             getUserReservations(user_id)
         }
     }, [user_id])
+
+    useEffect(() => {
+        console.log(reservationsData)
+    }, [reservationsData])
 
     const retrieveUserSession = async () => {
         try {
@@ -65,33 +69,31 @@ const Reservations = ({navigation}: any) => {
     const getUserReservations = async (user_id: number) => {
         const URL = `http://localhost:3000/reservations/find-user-reservations/${user_id}`
         console.log('axios call made')
-        const reservationsRaw: ReservationRaw[] = (await axios.get(URL)).data
-        var reservations: Reservation[] = []
-        var reservation: Reservation = {
-            id: 0,
-            restaurant: {} as any,
-            id_user: 0,
-            dateTime: '',
-            n_people: 0
-        }
-        for (const key in reservationsRaw) {
-            if (reservationsRaw.hasOwnProperty(key)) {
-                const value = reservationsRaw[key];
+        var reservations: Reservation[] = (await axios.get(URL)).data
 
-                // retrive restaurant data
-                const URL = `http://localhost:3000/restaurants/find-restaurant/${value["id_restaurant"]}`
-                console.log('axios call made')
-                reservation["id"] = value["id"]
-                reservation["restaurant"] = (await axios.get(URL)).data
-                reservation["id_user"] = value["id_user"]
-                reservation["dateTime"] = value["dateTime"]
-                reservation["n_people"] = value["n_people"]
+        // let reservationsWithRestaurant: ReservationWithRestaurant[]
+        // let tmp_reservation: ReservationWithRestaurant
 
-                reservations.push(reservation)
-            }
-        }
+        // for (const key in reservations) {
+        //     if (reservations.hasOwnProperty(key)) {
+        //         const value = reservations[key];
+
+        //         // retrive restaurant data
+        //         const URL = `http://localhost:3000/restaurants/find-restaurant/${value["id_restaurant"]}`
+        //         console.log('axios call made')
+        //         var restaurant: Restaurant = (await axios.get(URL)).data
+
+        //         tmp_reservation["id"] = value["id"]
+        //         tmp_reservation["restaurant"] = restaurant
+        //         tmp_reservation["id_user"] = value["id_user"]
+        //         tmp_reservation["dateTime"] = value["dateTime"]
+        //         tmp_reservation["n_people"] = value["n_people"]
+
+        //         reservationsWithRestaurant.push(tmp_reservation)
+        //     }
+        // }
         setLoading(false)
-        showUserReservations(reservations)
+        setReservationData(reservations)
     }
 
     return (
@@ -107,11 +109,12 @@ const Reservations = ({navigation}: any) => {
             <ScrollView style={reservations_style.main_view}>
                 <VerticalScrollingSection
                     title={'My reservations'}
-                    data={userReservations}
+                    data={reservationsData}
                     isLoading={isLoading}
                     tileType={TileType.RESERVATION}
                     renderItem={({item}) => (
                         <ReservationTile
+                            //reservation={item.reservation}
                             reservation={item.reservation}
                         />
                     )}

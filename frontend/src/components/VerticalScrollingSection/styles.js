@@ -23,6 +23,12 @@ export const styles = StyleSheet.create({
         paddingBottom: 100,
         margin: 10,
     },
+    noneTileContainer: {
+        width: 150,
+        height: 250, // width + paddingBottom
+        paddingBottom: 100,
+        margin: 10,
+    },
     roundImage: {
         height: '100%',
         borderRadius: 100,
