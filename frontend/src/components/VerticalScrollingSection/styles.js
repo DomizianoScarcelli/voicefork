@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         paddingBottom: 100,
         margin: 10,
     },
-    noneTileContainer: {
+    emptyTileContainer: {
         width: 150,
         height: 250, // width + paddingBottom
         paddingBottom: 100,

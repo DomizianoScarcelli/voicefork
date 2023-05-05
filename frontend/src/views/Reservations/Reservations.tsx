@@ -10,19 +10,21 @@ import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import VerticalScrollingSection, {
     ReservationTile,
+    EmptyTile,
 } from '../../components/VerticalScrollingSection/VerticalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
+import {Reservation, ReservationWithRestaurant, Restaurant} from '../../shared/types'
 import axios from 'axios'
-import {ReservationWithRestaurant, Reservation, Restaurant} from '../../shared/types'
 import {TileType} from '../../shared/enums'
 
+//GLOBAL
 var user_id: number
 
-const Reservations = ({navigation}: any) => {
+const Homepage = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
-    const [reservationsData, setReservationData] = useState<
-        Reservation[]
+    const [userReservations, setReservations] = useState<
+        ReservationWithRestaurant[]
     >([])
 
     useEffect(() => {
@@ -30,14 +32,15 @@ const Reservations = ({navigation}: any) => {
     }, [])
 
     useEffect(() => {
+        console.log('userReservations', userReservations)
+    }, [userReservations])
+
+    useEffect(() => {
+        console.log('user_id', user_id)
         if (user_id != undefined) {
             getUserReservations(user_id)
         }
     }, [user_id])
-
-    useEffect(() => {
-        console.log(reservationsData)
-    }, [reservationsData])
 
     const retrieveUserSession = async () => {
         try {
@@ -50,7 +53,6 @@ const Reservations = ({navigation}: any) => {
         } catch (error) {
             navigation.navigate('Welcome')
         }
-
     }
 
     const logout = async () => {
@@ -71,29 +73,31 @@ const Reservations = ({navigation}: any) => {
         console.log('axios call made')
         var reservations: Reservation[] = (await axios.get(URL)).data
 
-        // let reservationsWithRestaurant: ReservationWithRestaurant[]
-        // let tmp_reservation: ReservationWithRestaurant
+        var reservationsWithRestaurant: ReservationWithRestaurant[] = []
 
-        // for (const key in reservations) {
-        //     if (reservations.hasOwnProperty(key)) {
-        //         const value = reservations[key];
+        for (const key in reservations) {
+            if (reservations.hasOwnProperty(key)) {
+                const value = reservations[key];
 
-        //         // retrive restaurant data
-        //         const URL = `http://localhost:3000/restaurants/find-restaurant/${value["id_restaurant"]}`
-        //         console.log('axios call made')
-        //         var restaurant: Restaurant = (await axios.get(URL)).data
+                // retrive restaurant data
+                const URL = `http://localhost:3000/restaurants/find-restaurant/${value["id_restaurant"]}`
+                console.log('axios call made')
+                var restaurant: Restaurant = (await axios.get(URL)).data
 
-        //         tmp_reservation["id"] = value["id"]
-        //         tmp_reservation["restaurant"] = restaurant
-        //         tmp_reservation["id_user"] = value["id_user"]
-        //         tmp_reservation["dateTime"] = value["dateTime"]
-        //         tmp_reservation["n_people"] = value["n_people"]
+                var new_reservation: ReservationWithRestaurant = {
+                    id: value["id"],
+                    id_user: value["id_user"],
+                    restaurant: restaurant,
+                    dateTime: value["dateTime"],
+                    n_people: value["n_people"],
+                }
 
-        //         reservationsWithRestaurant.push(tmp_reservation)
-        //     }
-        // }
+                reservationsWithRestaurant.push(new_reservation)
+            }
+        }
+        console.log('reservationsWithRestaurant', reservationsWithRestaurant)
         setLoading(false)
-        setReservationData(reservations)
+        setReservations(reservationsWithRestaurant)
     }
 
     return (
@@ -105,20 +109,30 @@ const Reservations = ({navigation}: any) => {
                 }}>
                 <Navbar />
             </SafeAreaView>
-
             <ScrollView style={reservations_style.main_view}>
-                <VerticalScrollingSection
-                    title={'My reservations'}
-                    data={reservationsData}
-                    isLoading={isLoading}
-                    tileType={TileType.RESERVATION}
-                    renderItem={({item}) => (
-                        <ReservationTile
-                            //reservation={item.reservation}
-                            reservation={item.reservation}
-                        />
-                    )}
-                />
+                {userReservations ? (
+                    <VerticalScrollingSection
+                        title={'My reservations'}
+                        data={userReservations}
+                        isLoading={isLoading}
+                        tileType={TileType.RESERVATION}
+                        renderItem={({item}) => (
+                            <ReservationTile
+                                reservation={item.reservation}
+                            />
+                        )}
+                    />
+                ) : (
+                    <VerticalScrollingSection
+                        title={'My reservations'}
+                        data={userReservations}
+                        isLoading={isLoading}
+                        tileType={TileType.RESERVATION}
+                        renderItem={({item}) => (
+                            <EmptyTile/>
+                        )}
+                    />
+                )}
                 <TouchableOpacity
                     onPress={() => logout()}
                     style={{
@@ -150,4 +164,4 @@ const Reservations = ({navigation}: any) => {
     )
 }
 
-export default Reservations
+export default Homepage
