@@ -56,16 +56,20 @@ const VerticalScrollingSection = ({
 }
 
 const ReservationTile = ({
-    reservation
+    reservation,
 }: {
     reservation: ReservationWithRestaurant
 }) => {
-    return (
+    return reservation == undefined ? (
+        <>{reservation}</>
+    ) : (
         <View style={styles.reservationTileContainer}>
             <Image
                 source={{uri: 'https://picsum.photos/100'}}
                 style={styles.restaurantTileImage}></Image>
-            <Text style={styles.mediumBoldText}>{reservation.restaurant.name}</Text>
+            <Text style={styles.mediumBoldText}>
+                {reservation.restaurant.name}
+            </Text>
             <Text style={styles.smallRegularText}>
                 {reservation.restaurant.cuisines}
             </Text>
@@ -83,7 +87,7 @@ const EmptyTile = () => {
     return (
         <View style={styles.emptyTileContainer}>
             <Text style={[styles.mediumBoldText, styles.centerdText]}>
-                {"No reservations"}
+                {'No reservations'}
             </Text>
         </View>
     )
@@ -107,7 +111,6 @@ const LoadingEmptyTile = () => {
         </View>
     )
 }
-
 
 export default VerticalScrollingSection
 export {ReservationTile, EmptyTile, LoadingEmptyTile, LoadingReservationTile}

@@ -14,15 +14,17 @@ import VerticalScrollingSection, {
 } from '../../components/VerticalScrollingSection/VerticalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
-import {Reservation, ReservationWithRestaurant, Restaurant} from '../../shared/types'
+import {
+    Reservation,
+    ReservationWithRestaurant,
+    Restaurant,
+} from '../../shared/types'
 import axios from 'axios'
 import {TileType} from '../../shared/enums'
 
-//GLOBAL
-var user_id: number
-
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
+    const [userId, setUserId] = useState<number>()
     const [userReservations, setReservations] = useState<
         ReservationWithRestaurant[]
     >([])
@@ -36,11 +38,9 @@ const Reservations = ({navigation}: any) => {
     }, [userReservations])
 
     useEffect(() => {
-        console.log('user_id', user_id)
-        if (user_id != undefined) {
-            getUserReservations(user_id)
-        }
-    }, [user_id, userReservations])
+        console.log('userId', userId)
+        if (userId != undefined) getUserReservations(userId)
+    }, [userId])
 
     const retrieveUserSession = async () => {
         try {
@@ -48,7 +48,9 @@ const Reservations = ({navigation}: any) => {
             if (session === null) {
                 navigation.navigate('Welcome')
             } else {
-                user_id = JSON.parse(session)["id"]
+                const user_id = JSON.parse(session)['id']
+                setUserId(user_id)
+                console.log('user id get')
             }
         } catch (error) {
             navigation.navigate('Welcome')
@@ -71,25 +73,25 @@ const Reservations = ({navigation}: any) => {
     const getUserReservations = async (user_id: number) => {
         const URL = `http://localhost:3000/reservations/find-user-reservations/${user_id}`
         console.log('axios call made')
-        var reservations: Reservation[] = (await axios.get(URL)).data
+        const reservations: Reservation[] = (await axios.get(URL)).data
 
-        var reservationsWithRestaurant: ReservationWithRestaurant[] = []
+        const reservationsWithRestaurant: ReservationWithRestaurant[] = []
 
         for (const key in reservations) {
             if (reservations.hasOwnProperty(key)) {
-                const value = reservations[key];
+                const value = reservations[key]
 
                 // retrive restaurant data
-                const URL = `http://localhost:3000/restaurants/find-restaurant/${value["id_restaurant"]}`
+                const URL = `http://localhost:3000/restaurants/find-restaurant/${value.id_restaurant}`
                 console.log('axios call made')
-                var restaurant: Restaurant = (await axios.get(URL)).data
+                const restaurant: Restaurant = (await axios.get(URL)).data
 
-                var new_reservation: ReservationWithRestaurant = {
-                    id: value["id"],
-                    id_user: value["id_user"],
+                const new_reservation: ReservationWithRestaurant = {
+                    id: value.id,
+                    id_user: value.id_user,
                     restaurant: restaurant,
-                    dateTime: value["dateTime"],
-                    n_people: value["n_people"],
+                    dateTime: value.dateTime,
+                    n_people: value.n_people,
                 }
 
                 reservationsWithRestaurant.push(new_reservation)
@@ -116,11 +118,11 @@ const Reservations = ({navigation}: any) => {
                         data={userReservations}
                         isLoading={isLoading}
                         tileType={TileType.RESERVATION}
-                        renderItem={({item}) => (
-                            <ReservationTile
-                                reservation={item.reservation}
-                            />
-                        )}
+                        renderItem={({
+                            item,
+                        }: {
+                            item: ReservationWithRestaurant
+                        }) => <ReservationTile reservation={item} />}
                     />
                 ) : (
                     <VerticalScrollingSection
@@ -128,9 +130,7 @@ const Reservations = ({navigation}: any) => {
                         data={userReservations}
                         isLoading={isLoading}
                         tileType={TileType.EMPTY}
-                        renderItem={({item}) => (
-                            <EmptyTile/>
-                        )}
+                        renderItem={({item}) => <EmptyTile />}
                     />
                 )}
                 <TouchableOpacity
