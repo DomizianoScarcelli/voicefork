@@ -20,23 +20,30 @@ services:
         networks:
             - users-network
 
-    mysql_restaurants:
-        image: mysql
-        command: --default-authentication-plugin=mysql_native_password
+    postgres_restaurants:
+        image: postgres
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: restaurantDB
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: admin
-            MYSQL_TCP_PORT: 3306
-        container_name: mysql_restaurants
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: restaurantsDB
+            # POSTGRES_PORT: 3306
+        container_name: postgres_restaurants
         ports:
-            - 3308:3306
+            - 3308:5432
         expose:
             - 3308
         volumes:
-            - db-restaurants:/var/lib/mysql
+            - db-restaurants:/var/lib/postgres
+        entrypoint: >
+            bash -c "
+              /usr/local/bin/docker-entrypoint.sh postgres &
+              while ! pg_isready -h localhost -p 5432 > /dev/null 2>&1; do sleep 1; done
+              apt-get update &&
+              apt-get install -y postgis &&
+              PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION postgis;' &&
+              tail -f /dev/null
+            "
         networks:
             - restaurants-network
 
@@ -151,12 +158,12 @@ services:
         ports:
             - "3002:3002"
         environment:
-            - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
+            - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
         volumes:
             - .:/app
             - /app/restaurants/node_modules
         depends_on:
-            - mysql_restaurants
+            - postgres_restaurants
             - minio-restaurants
         restart: always
         entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]

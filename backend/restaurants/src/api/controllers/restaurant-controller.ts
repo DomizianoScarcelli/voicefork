@@ -87,13 +87,25 @@ const RestaurantController = {
     },
 
     getAllRestaurants: async (
-        req: Request,
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                page: number
+            }
+        >,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const {localize} = req.query
-            const data = await service.GetAllRestaurants()
+            const {page} = req.query
+            let data: Restaurant[] = []
+            if (page != undefined) {
+                data = await service.GetAllRestaurants(page)
+            } else {
+                data = await service.GetAllRestaurants()
+            }
             res.json(data)
         } catch (err) {
             next(err)
@@ -151,14 +163,21 @@ const RestaurantController = {
                 limit?: number
                 minRating?: number
                 sortedBy?: typeof SortingStrategy
+                pageNumber?: number
             }
         >,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const {latitude, longitude, maxDistance, limit, minRating} =
-                req.query
+            const {
+                latitude,
+                longitude,
+                maxDistance,
+                limit,
+                minRating,
+                pageNumber,
+            } = req.query
             const coordinates: LatLng = {
                 latitude: latitude,
                 longitude: longitude,
@@ -171,12 +190,14 @@ const RestaurantController = {
                     maxDistance,
                     minRating,
                     limit,
+                    pageNumber,
                 )
             } else {
                 data = await service.GetRestaurantsNearCoordinates(
                     coordinates,
                     maxDistance,
                     limit,
+                    pageNumber,
                 )
             }
             res.json(data)

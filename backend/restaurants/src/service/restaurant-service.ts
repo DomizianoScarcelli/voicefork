@@ -16,9 +16,11 @@ import {
  */
 class RestaurantService {
     repository: RestaurantRepository
+    readonly RESULTS_PER_PAGE: number
 
     constructor() {
         this.repository = new RestaurantRepository()
+        this.RESULTS_PER_PAGE = 20
     }
 
     private filterRestaurantsByDistance(
@@ -65,24 +67,47 @@ class RestaurantService {
         coordinates: LatLng,
         maxDistance: number,
         limit?: number,
+        pageNumber?: number,
     ): Promise<RestaurantDistanceResult[]> {
-        const restaurants = await this.repository.GetAllRestaurants()
-        let nearbyRestaurants = this.filterRestaurantsByDistance(
-            restaurants,
-            coordinates,
-            maxDistance,
-        )
-        nearbyRestaurants.sort((a, b) =>
+        const {latitude, longitude} = coordinates
+        let restaurants: RestaurantDistanceResult[] = []
+        if (pageNumber == undefined) {
+            restaurants = await this.repository.GetRestaurantsNearCoordinates(
+                latitude,
+                longitude,
+                maxDistance,
+            )
+        } else {
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            restaurants = await this.repository.GetRestaurantsNearCoordinates(
+                latitude,
+                longitude,
+                maxDistance,
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+        }
+
+        restaurants.sort((a, b) =>
             (a.distance ?? 0) > (b.distance ?? 0) ? 1 : -1,
         )
         if (limit != null) {
-            return nearbyRestaurants.slice(0, limit)
+            return restaurants.slice(0, limit)
         }
-        return nearbyRestaurants
+        return restaurants
     }
 
-    async GetAllRestaurants(): Promise<Restaurant[]> {
-        const restaurants = await this.repository.GetAllRestaurants()
+    async GetAllRestaurants(pageNumber?: number): Promise<Restaurant[]> {
+        let restaurants: Restaurant[] = []
+        if (pageNumber != undefined) {
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            restaurants = await this.repository.GetAllRestaurants(
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+        } else {
+            restaurants = await this.repository.GetAllRestaurants()
+        }
         return restaurants
     }
 
@@ -91,14 +116,16 @@ class RestaurantService {
         limit?: number,
         locationInfo?: {coordinates: LatLng; maxDistance: number},
     ): Promise<RestaurantSearchResult[]> {
-        let filteredRestaurants: RestaurantDistanceResult[]
+        let filteredRestaurants: RestaurantDistanceResult[] | Restaurant[]
         if (locationInfo != undefined) {
             const {coordinates, maxDistance} = locationInfo
-            filteredRestaurants = await this.GetRestaurantsNearCoordinates(
-                coordinates,
-                maxDistance,
-                limit,
-            )
+            const {latitude, longitude} = coordinates
+            filteredRestaurants =
+                await this.repository.GetRestaurantsNearCoordinates(
+                    latitude,
+                    longitude,
+                    maxDistance,
+                )
         } else {
             const allRestaurants = await this.repository.GetAllRestaurants()
             filteredRestaurants = allRestaurants.map(element => ({
@@ -131,22 +158,35 @@ class RestaurantService {
         maxDistance: number,
         minRating: number,
         limit?: number,
+        pageNumber?: number,
     ): Promise<RestaurantDistanceResult[]> {
-        const topRestaurants = await this.repository.GetTopRatedRestaurants(
-            parseFloat(minRating.toString()),
-        )
-        const topNearbyRestaurants = this.filterRestaurantsByDistance(
-            topRestaurants,
-            coordinates,
-            maxDistance,
-        )
-        topNearbyRestaurants.sort((a, b) =>
+        const {latitude, longitude} = coordinates
+        let restaurants: RestaurantDistanceResult[] = []
+        if (pageNumber == undefined) {
+            restaurants = await this.repository.GetTopRatedRestaurants(
+                parseFloat(minRating.toString()),
+                latitude,
+                longitude,
+                maxDistance,
+            )
+        } else {
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            restaurants = await this.repository.GetTopRatedRestaurants(
+                latitude,
+                longitude,
+                maxDistance,
+                parseFloat(minRating.toString()),
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+        }
+        restaurants.sort((a, b) =>
             a.restaurant.avgRating < b.restaurant.avgRating ? 1 : -1,
         )
         if (limit != undefined) {
-            return topNearbyRestaurants.slice(0, limit)
+            return restaurants.slice(0, limit)
         }
-        return topNearbyRestaurants
+        return restaurants
     }
 
     async DeleteRestaurant(id: number): Promise<Restaurant | null> {
