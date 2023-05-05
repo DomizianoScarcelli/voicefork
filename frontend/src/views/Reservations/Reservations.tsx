@@ -127,7 +127,7 @@ const Reservations = ({navigation}: any) => {
                         title={'My reservations'}
                         data={userReservations}
                         isLoading={isLoading}
-                        tileType={TileType.RESERVATION}
+                        tileType={TileType.EMPTY}
                         renderItem={({item}) => (
                             <EmptyTile/>
                         )}
