@@ -3,7 +3,7 @@
 First you have to create a .env file in the root directory with the current content:
 
 ```
-DATABASE_URL="mysql://root:root@localhost:3308/restaurantsDB"
+DATABASE_URL="postgresql://admin:admin@postgres_restaurants:3308/restaurantsDB"
 PORT = 3002
 API_KEY = "8c9c59ff99f358710262c503c158f4a4"
 ```
@@ -53,7 +53,7 @@ docker exec -i postgres_restaurants pg_restore -U admin -d restaurantsDB < backu
 IMPORTANT: In Windows put cmd /c "command" to execute them:
 
 ```
-cmd /c "docker exec -i postgres_restaurants pg_restore -U admin -d restaurantsDB < backup.dump"
+cmd /c "docker exec -i postgres_restaurants pg_restore -U admin -d restaurantsDB < backup.sql"
 ```
 
 ## Note
