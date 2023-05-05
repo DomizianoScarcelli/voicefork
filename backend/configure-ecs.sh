@@ -17,3 +17,13 @@ ecs-cli up \
     --tags project=voicefork-cluster,owner=DomizianoScarcelli \
     --cluster-config DomizianoScarcelli \
     --ecs-profile DomizianoScarcelli
+
+
+
+    aws ecs execute-command  \
+    --region us-east-1 \
+    --cluster voicefork-cluster \
+    --task e3dc0e20a76a4b9aae0d42b9145c52bc \
+    --container users \
+    --command "/bin/bash" \
+    --interactive
