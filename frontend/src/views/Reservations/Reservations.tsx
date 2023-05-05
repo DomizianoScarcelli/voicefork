@@ -21,7 +21,7 @@ import {TileType} from '../../shared/enums'
 //GLOBAL
 var user_id: number
 
-const Homepage = ({navigation}: any) => {
+const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
     const [userReservations, setReservations] = useState<
         ReservationWithRestaurant[]
@@ -164,4 +164,4 @@ const Homepage = ({navigation}: any) => {
     )
 }
 
-export default Homepage
+export default Reservations
