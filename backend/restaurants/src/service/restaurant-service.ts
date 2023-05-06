@@ -10,7 +10,6 @@ import {
     RestaurantDistanceResult,
     RestaurantSearchResult,
 } from '../shared/types'
-
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
