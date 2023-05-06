@@ -14,12 +14,11 @@ services:
             - 3307
         container_name: mysql_users
         ports:
-            - 3307:3307
+            - "3307:3307"
         volumes:
             - db-users:/var/lib/mysql
     users:
         image: doviscarcelli/users
-        platform: linux/amd64
         build:
             dockerfile: Dockerfile
             context: ./users
@@ -41,10 +40,9 @@ services:
             POSTGRES_USER: admin
             POSTGRES_PASSWORD: admin
             POSTGRES_DB: restaurantsDB
-            # POSTGRES_PORT: 3306
         container_name: postgres_restaurants
         ports:
-            - 5432:5432
+            - "5432:5432"
         expose:
             - 5432
         volumes:

@@ -3,7 +3,7 @@
 First you have to create a .env file in the root directory with the current content:
 
 ```
-DATABASE_URL="postgresql://admin:admin@postgres_restaurants:3308/restaurantsDB"
+DATABASE_URL="postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB"
 PORT = 3002
 API_KEY = "8c9c59ff99f358710262c503c158f4a4"
 ```
