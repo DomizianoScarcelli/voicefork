@@ -41,7 +41,7 @@ services:
               while ! pg_isready -h localhost -p 5432 > /dev/null 2>&1; do sleep 1; done
               apt-get update &&
               apt-get install -y postgis &&
-              PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION postgis;' &&
+              PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION IF NOT EXISTS postgis;' &&
               tail -f /dev/null
             "
         networks:

@@ -23,31 +23,6 @@ class RestaurantService {
         this.RESULTS_PER_PAGE = 20
     }
 
-    private filterRestaurantsByDistance(
-        restaurants: Restaurant[],
-        coordinates: LatLng,
-        maxDistance: number,
-    ): RestaurantDistanceResult[] {
-        let nearbyRestaurants: RestaurantDistanceResult[] = []
-        restaurants.forEach(restaurant => {
-            const destination: LatLng = {
-                latitude: restaurant.latitude,
-                longitude: restaurant.longitude,
-            }
-            const distance = distanceBetweenCoordinates(
-                destination,
-                coordinates,
-            )
-            if (distance <= maxDistance) {
-                nearbyRestaurants.push({
-                    restaurant: restaurant,
-                    distance: distance,
-                })
-            }
-        })
-        return nearbyRestaurants
-    }
-
     async CreateRestaurant(restaurant: Restaurant) {
         const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
