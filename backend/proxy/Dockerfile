@@ -1,4 +1,4 @@
-FROM nginx
+FROM --platform=linux/amd64 nginx
 
 RUN rm /etc/nginx/nginx.conf 
 

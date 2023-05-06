@@ -18,7 +18,7 @@ services:
         volumes:
             - db-users:/var/lib/mysql
     users:
-        image: doviscarcelli/users-amd64
+        image: doviscarcelli/users
         platform: linux/amd64
         build:
             dockerfile: Dockerfile
@@ -34,23 +34,30 @@ services:
             # - minio-users
         restart: always
 
-    mysql_restaurants:
-        image: mysql
-        command: --default-authentication-plugin=mysql_native_password
+    postgres_restaurants:
+        image: postgres
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: restaurantsDB
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: admin
-            MYSQL_TCP_PORT: 3308
-        container_name: mysql_restaurants
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: restaurantsDB
+            # POSTGRES_PORT: 3306
+        container_name: postgres_restaurants
         ports:
-            - 3308:3308
+            - 5432:5432
         expose:
-            - 3308
+            - 5432
         volumes:
-            - db-restaurants:/var/lib/mysql
+            - db-restaurants:/var/lib/postgres
+        entrypoint: >
+            bash -c "
+              /usr/local/bin/docker-entrypoint.sh postgres &
+              while ! pg_isready -h localhost -p 5432 > /dev/null 2>&1; do sleep 1; done
+              apt-get update &&
+              apt-get install -y postgis &&
+              PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION IF NOT EXISTS postgis;' &&
+              tail -f /dev/null
+            "
     restaurants:
         image: doviscarcelli/restaurants
         build:
@@ -62,10 +69,23 @@ services:
         env_file:
             - ./restaurants/.env
         depends_on:
-            - mysql_restaurants
+            - postgres_restaurants
             # - minio-restaurants
         restart: always
         entrypoint: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+
+    nginx-proxy:
+        image: doviscarcelli/nginx
+        build:
+            dockerfile: Dockerfile
+            context: ./proxy
+        container_name: nginx-proxy
+        depends_on:
+            - users
+            - restaurants
+            # - reservations
+        ports:
+            - "3000:3000"
 
 volumes:
     db-users:
