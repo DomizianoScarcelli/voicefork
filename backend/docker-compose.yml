@@ -84,6 +84,10 @@ services:
             - users
             - restaurants
             # - reservations
+        environment:
+            RESTAURANTS_IP: restaurants
+            USERS_IP: users
+            RESERVATIONS_IP: reservations
         ports:
             - "3000:3000"
 
