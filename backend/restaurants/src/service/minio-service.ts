@@ -11,6 +11,7 @@ class MinioService {
     bucketName: string
 
     constructor() {
+        // Local configuration
         if (process.env.USE_MINIO_LOCAL) {
             if (
                 process.env.MINIO_ACCESS_KEY == undefined ||
@@ -26,6 +27,7 @@ class MinioService {
             })
             this.bucketName = 'images'
         } else {
+            // AWS S3 configuration
             if (
                 process.env.AWS_ACCESS_KEY == undefined ||
                 process.env.AWS_SECRET_KEY == undefined ||
