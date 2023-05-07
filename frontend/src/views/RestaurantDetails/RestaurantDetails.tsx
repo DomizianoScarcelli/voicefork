@@ -1,10 +1,8 @@
 import React, { useState } from "react"
-import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { styles } from "./styles"
 import { Restaurant } from "../../shared/types"
-import { Navbar, BackButton } from "../../components"
-import { Colors, FontSize } from "../../constants"
-import { SearchStrategy } from "../../shared/enums"
+import { Colors } from "../../constants"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
@@ -20,21 +18,31 @@ function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
     return (
         <>
             <ScrollView>
-                <Image source={{uri: 'https://picsum.photos/100'}} style={styles.restaurantImage} />
+                <Image source={{uri: 'https://i.pinimg.com/originals/3d/a3/7d/3da37dc6421f978a50e165466f221d72.jpg'}} style={{height: 200}} />
                 <View style={styles.restaurantContainer}>
-                    <Text style={styles.restaurantName}>{restaurantDetails.name}</Text>
-                    <View style={styles.restaurantRow}>
-                        <Ionicons name={"pin-outline"} size={20} color={Colors.green} style={{marginRight: 5}}/>
-                        <Text>{restaurantDetails.address}</Text>
+                    <View style={styles.restaurantColumn}>
+                        <Text style={styles.restaurantName}>{restaurantDetails.name}</Text>
+                        <View style={styles.restaurantRow}>
+                            <Ionicons name={"map-outline"} size={20} color={Colors.green} style={{marginRight: 5}}/>
+                            <Text style={styles.restaurantAddress}>{restaurantDetails.address}</Text>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.horizontalLine} />
                 <View style={styles.restaurantContainer}>
                     <View style={styles.restaurantColumn}>
-                        <Text>{restaurantDetails.cuisines}</Text>
+                        <View style={styles.restaurantRow}>{restaurantDetails.cuisines !== "" ? 
+                            restaurantDetails.cuisines.split(',').map((item, index) => (
+                                <View style={styles.restaurantCuisineItem} key={index}>
+                                    <Text style={styles.restaurantCuisineText}>{item}</Text>
+                                </View>
+                            )
+                            )
+                        : ""}
+                        </View>
                         <View style={styles.restaurantRow}>
-                            <Ionicons name={"cash-outline"} size={20} color={Colors.green} style={{marginRight: 5}}/>
-                            <Text>Price: {restaurantDetails.priceLevel}</Text>
+                            <Ionicons name={"cash-outline"} size={20} color={Colors.black} style={{marginRight: 5}}/>
+                            <Text>PRICE: {restaurantDetails.priceLevel}</Text>
                         </View>
                     </View>
                 </View>

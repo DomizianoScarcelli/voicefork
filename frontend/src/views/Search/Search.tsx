@@ -110,11 +110,11 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                     )}
                 </View>
                 {searchResults.length == 0
-                    ? [1, 2, 3, 4, 5].map(item => (
-                          <LoadingSearchResultItem id={item} />
+                    ? [1, 2, 3, 4, 5].map((item: any, index: number) => (
+                          <LoadingSearchResultItem key={index} id={item} />
                       ))
                     : searchResults.map((item: any, index: number) => (
-                          <SearchResultItem searchResult={item} navigation={navigation} />
+                          <SearchResultItem key={index} searchResult={item} navigation={navigation} />
                       ))}
             </ScrollView>
         </>

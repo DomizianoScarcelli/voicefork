@@ -16,6 +16,7 @@ export const navbarStyle = StyleSheet.create({
     },
     searchBar: {
         position: 'relative',
+        flex: 1,
         flexGrow: 1,
         height: '70%',
         backgroundColor: Colors.white,
@@ -27,7 +28,7 @@ export const navbarStyle = StyleSheet.create({
         paddingLeft: 40,
     },
     text: {
-        fontFamily: Fonts['poppins-regular'], //TODO insert bold, ios has problems
+        fontFamily: Fonts['poppins-regular'],  //TODO insert bold, ios has problems
         fontSize: FontSize.small,
         alignSelf: 'flex-start',
     },

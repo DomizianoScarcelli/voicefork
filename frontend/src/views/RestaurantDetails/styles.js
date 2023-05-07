@@ -4,23 +4,20 @@ import { Colors, FontSize, Fonts, Spacing } from '../../constants'
 export const styles = StyleSheet.create({
     restaurantContainer: {
         paddingVertical: 10,
-        paddingHorizontal: 15
-    },
-
-    restaurantImage: {
-        height: 200
+        paddingHorizontal: 15,
     },
 
     restaurantName: {
         color: Colors.black,
         fontSize: FontSize.xLarge,
-        fontFamily: Fonts["poppins-bold"],
+        fontWeight: 500
     },
 
     restaurantRow: {
         display: "flex",
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        flexWrap: "wrap"
     },
 
     restaurantColumn: {
@@ -29,16 +26,35 @@ export const styles = StyleSheet.create({
         gap: 10
     },
 
+    restaurantAddress: {
+        flex: 1,
+        width: 0,
+        flexWrap: "wrap",
+        flexGrow: 1,
+        flexShrink: 1
+    },
+
+    restaurantCuisineItem: {
+        margin: 1,
+    },
+
+    restaurantCuisineText: {
+        backgroundColor: Colors.darkGray,
+        color: Colors.black,
+        paddingVertical: Spacing,
+        paddingHorizontal: Spacing,
+        borderRadius: Spacing,
+    },
+
     horizontalLine: {
         flex: 1,
         height: 1,
-        backgroundColor: 'black',
+        backgroundColor: Colors.darkGray,
         marginVertical: 10
     },
 
     rating: {
         fontSize: FontSize.large,
-        fontFamily: Fonts['poppins-bold'],
         color: Colors.white,
         backgroundColor: Colors.green,
         paddingHorizontal: 8,
@@ -71,7 +87,6 @@ export const styles = StyleSheet.create({
     },
 
     button_text: {
-        fontFamily: Fonts["poppins-bold"],
         color: Colors.white,
         fontSize: FontSize.medium,
         textAlign: "center",
