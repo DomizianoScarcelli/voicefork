@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {
+    View,
     Text,
     SafeAreaView,
     Alert,
@@ -70,6 +71,18 @@ const Reservations = ({navigation}: any) => {
         }
     }
 
+    const homepage = async () => {
+        try {
+            navigation.navigate("Homepage")
+        } catch (error) {
+            Alert.alert(
+                'Something is wrong',
+                "We can't complete this task. Please, try again",
+                [{text: 'OK'}],
+            )
+        }
+    }
+
     const getUserReservations = async (user_id: number) => {
         const URL = `http://localhost:3000/reservations/find-user-reservations/${user_id}`
         console.log('axios call made')
@@ -112,7 +125,7 @@ const Reservations = ({navigation}: any) => {
                 <Navbar />
             </SafeAreaView>
             <ScrollView style={reservations_style.main_view}>
-                {userReservations ? (
+                {userReservations.length != 0 ? (
                     <VerticalScrollingSection
                         title={'My reservations'}
                         data={userReservations}
@@ -125,13 +138,50 @@ const Reservations = ({navigation}: any) => {
                         }) => <ReservationTile reservation={item} />}
                     />
                 ) : (
-                    <VerticalScrollingSection
-                        title={'My reservations'}
-                        data={userReservations}
-                        isLoading={isLoading}
-                        tileType={TileType.EMPTY}
-                        renderItem={({item}) => <EmptyTile />}
-                    />
+                    <View style={reservations_style.main_view}>
+                        <Text
+                            style={{
+                                fontFamily: Fonts['poppins-bold'],
+                                color: Colors.black,
+                                fontSize: FontSize.medium,
+                                textAlign: 'center',
+                            }}>
+                            {"You haven't made any reservations yet.. \n\n Go to the homepage to make one!"}
+                        </Text>
+                        <TouchableOpacity
+                            onPress={() => homepage()}
+                            style={{
+                                backgroundColor: Colors.green,
+                                paddingVertical: Spacing,
+                                paddingHorizontal: Spacing,
+                                width: '100%',
+                                borderRadius: Spacing,
+                                shadowColor: Colors.black,
+                                shadowOffset: {
+                                    width: 0,
+                                    height: Spacing,
+                                },
+                                shadowOpacity: 0.3,
+                                shadowRadius: Spacing,
+                            }}>
+                            <Text
+                                style={{
+                                    fontFamily: Fonts['poppins-bold'],
+                                    color: Colors.white,
+                                    fontSize: FontSize.large,
+                                    textAlign: 'center',
+                                }}>
+                                Homepage
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    // <VerticalScrollingSection
+                    //     title={'My reservations'}
+                    //     data={userReservations}
+                    //     isLoading={isLoading}
+                    //     tileType={TileType.EMPTY}
+                    //     renderItem={({item}) => <EmptyTile />}
+                    // />
                 )}
                 <TouchableOpacity
                     onPress={() => logout()}

@@ -32,10 +32,6 @@ const VerticalScrollingSection = ({
     }
     return (
         <View style={{display: 'flex'}}>
-            <View style={styles.mainContainer}>
-                <Text style={styles.title}>{title}</Text>
-                {showMore ? <Text style={styles.moreText}>MORE</Text> : <></>}
-            </View>
             {isLoading ? (
                 <FlatList
                     horizontal={true}
@@ -45,7 +41,7 @@ const VerticalScrollingSection = ({
                 />
             ) : (
                 <FlatList
-                    horizontal={true}
+                    horizontal={false}
                     data={data}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
