@@ -107,7 +107,7 @@ const Reservations = ({navigation}: any) => {
                     month: '2-digit',
                     day: '2-digit',
                   }).replace(/\//g, '/');
-                  
+
                 const time = dateTime.toString().split('T')[1].split('.')[0];
                 const [hours, minutes] = time.split(':');
                 const formattedTime = `${hours}:${minutes}`;
@@ -189,13 +189,6 @@ const Reservations = ({navigation}: any) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    // <VerticalScrollingSection
-                    //     title={'My reservations'}
-                    //     data={userReservations}
-                    //     isLoading={isLoading}
-                    //     tileType={TileType.EMPTY}
-                    //     renderItem={({item}) => <EmptyTile />}
-                    // />
                 )}
                 <TouchableOpacity
                     onPress={() => logout()}

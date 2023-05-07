@@ -1,11 +1,9 @@
 import {StyleSheet} from 'react-native'
-import {Colors, Fonts, FontSize} from '../../constants'
+import { Colors, FontSize, Fonts } from '../../constants'
 export const styles = StyleSheet.create({
-
     reservationTextContainer: {
     flex: 1,
     },
-
     mainContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -33,8 +31,8 @@ export const styles = StyleSheet.create({
     },
     restaurantTileImage: {
         borderRadius: 10,
-        width: 100, 
-        height: 100, 
+        width: 120, 
+        height: 120, 
         marginRight: 10, 
     },
     mediumBoldText: {
@@ -80,5 +78,11 @@ export const styles = StyleSheet.create({
 
     selfAlignedCenter: {
         alignSelf: 'center',
+    },
+    horizontalLine: {
+        flex: 1,
+        height: 1,
+        backgroundColor: Colors.darkGray,
+        marginVertical: 10
     },
 })

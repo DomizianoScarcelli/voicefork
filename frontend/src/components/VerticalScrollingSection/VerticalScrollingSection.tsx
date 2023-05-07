@@ -48,45 +48,31 @@ const ReservationTile = ({
     return reservation == undefined ? (
         <>{reservation}</>
     ) : (
-        <View style={styles.mainContainer}>
-            <Image
-                source={{uri: 'https://picsum.photos/100'}}
-                style={styles.restaurantTileImage}></Image>
-            <View style={styles.reservationTextContainer}>
-                <Text style={styles.mediumBoldText}>
-                    {reservation.restaurant.name}
-                </Text>
-                <Text style={styles.smallRegularSubText}>
-                    {reservation.restaurant.cuisines}
-                </Text>
-                <Text style={styles.smallRegularText}>
-                    {`Date: ${reservation.date}`}
-                </Text>
-                <Text style={styles.smallRegularText}>
-                    {`Time: ${reservation.time}`}
-                </Text>
-                <Text style={styles.smallRegularText}>
-                    {`Num. people: ${reservation.n_people}`}
-                </Text>
+        <View >
+            <View style={styles.mainContainer}>
+                <Image
+                    source={{uri: 'https://picsum.photos/100'}}
+                    style={styles.restaurantTileImage}></Image>
+                <View style={styles.reservationTextContainer}>
+                    <Text style={styles.mediumBoldText}>
+                        {reservation.restaurant.name}
+                    </Text>
+                    <Text style={styles.smallRegularSubText}>
+                        {reservation.restaurant.cuisines}
+                    </Text>
+                    <Text style={styles.smallRegularText}>
+                        {`Date: ${reservation.date}`}
+                    </Text>
+                    <Text style={styles.smallRegularText}>
+                        {`Time: ${reservation.time}`}
+                    </Text>
+                    <Text style={styles.smallRegularText}>
+                        {`Num. people: ${reservation.n_people}`}
+                    </Text>
+                </View>
             </View>
+            <View style={styles.horizontalLine} />
         </View>
-        // <View style={styles.reservationTileContainer}>
-        //     <Image
-        //         source={{uri: 'https://picsum.photos/100'}}
-        //         style={styles.restaurantTileImage}></Image>
-        //     <Text style={styles.mediumBoldText}>
-        //         {reservation.restaurant.name}
-        //     </Text>
-        //     <Text style={styles.smallRegularText}>
-        //         {reservation.restaurant.cuisines}
-        //     </Text>
-        //     <Text style={styles.smallRegularText}>
-        //         {`Date / time: ${reservation.dateTime}`}
-        //     </Text>
-        //     <Text style={styles.smallRegularSubText}>
-        //         {`Num. people: ${reservation.n_people}`}
-        //     </Text>
-        // </View>
     )
 }
 
