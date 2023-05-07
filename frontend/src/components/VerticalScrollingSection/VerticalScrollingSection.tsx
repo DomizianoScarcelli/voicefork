@@ -56,11 +56,14 @@ const ReservationTile = ({
                 <Text style={styles.mediumBoldText}>
                     {reservation.restaurant.name}
                 </Text>
-                <Text style={styles.smallRegularText}>
+                <Text style={styles.smallRegularSubText}>
                     {reservation.restaurant.cuisines}
                 </Text>
                 <Text style={styles.smallRegularText}>
-                    {`Date / time: ${reservation.dateTime}`}
+                    {`Date: ${reservation.date}`}
+                </Text>
+                <Text style={styles.smallRegularText}>
+                    {`Time: ${reservation.time}`}
                 </Text>
                 <Text style={styles.smallRegularText}>
                     {`Num. people: ${reservation.n_people}`}

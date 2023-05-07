@@ -42,6 +42,7 @@ export type ReservationWithRestaurant = {
     id: number
     id_user: number
     restaurant: Restaurant
-    dateTime: string
+    date: string
+    time: string
     n_people: number
 }

@@ -98,11 +98,26 @@ const Reservations = ({navigation}: any) => {
                 console.log('axios call made')
                 const restaurant: Restaurant = (await axios.get(URL)).data
 
+                // separate dateTime and format them correctly
+                const dateTime = value.dateTime
+
+                const date = dateTime.toString().split('T')[0];
+                const formattedDate = new Date(date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                  }).replace(/\//g, '/');
+                  
+                const time = dateTime.toString().split('T')[1].split('.')[0];
+                const [hours, minutes] = time.split(':');
+                const formattedTime = `${hours}:${minutes}`;
+
                 const new_reservation: ReservationWithRestaurant = {
                     id: value.id,
                     id_user: value.id_user,
                     restaurant: restaurant,
-                    dateTime: value.dateTime,
+                    date: formattedDate,
+                    time: formattedTime,
                     n_people: value.n_people,
                 }
 
