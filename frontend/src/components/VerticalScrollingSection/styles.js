@@ -1,6 +1,11 @@
 import {StyleSheet} from 'react-native'
 import {Colors, Fonts, FontSize} from '../../constants'
 export const styles = StyleSheet.create({
+
+    reservationTextContainer: {
+    flex: 1,
+    },
+
     mainContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -18,16 +23,8 @@ export const styles = StyleSheet.create({
         fontFamily: Fonts['poppins-bold'],
     },
     reservationTileContainer: {
-        width: 150,
-        height: 250, // width + paddingBottom
-        paddingBottom: 100,
-        margin: 10,
-    },
-    emptyTileContainer: {
-        width: 150,
-        height: 250, // width + paddingBottom
-        paddingBottom: 100,
-        margin: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     roundImage: {
         height: '100%',
@@ -35,8 +32,10 @@ export const styles = StyleSheet.create({
         marginBottom: 5,
     },
     restaurantTileImage: {
-        height: '100%',
         borderRadius: 10,
+        width: 100, 
+        height: 100, 
+        marginRight: 10, 
     },
     mediumBoldText: {
         fontSize: FontSize.medium,

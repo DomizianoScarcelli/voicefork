@@ -11,7 +11,6 @@ import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import VerticalScrollingSection, {
     ReservationTile,
-    EmptyTile,
 } from '../../components/VerticalScrollingSection/VerticalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
