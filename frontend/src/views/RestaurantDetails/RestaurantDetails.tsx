@@ -34,7 +34,7 @@ function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
                         <View style={styles.restaurantRow}>{restaurantDetails.cuisines !== "" ? 
                             restaurantDetails.cuisines.split(',').map((item, index) => (
                                 <View style={styles.restaurantCuisineItem} key={index}>
-                                    <Text style={styles.restaurantCuisineText}>{item}</Text>
+                                    <Text style={styles.restaurantCuisineText}>{item.trim()}</Text>
                                 </View>
                             )
                             )
