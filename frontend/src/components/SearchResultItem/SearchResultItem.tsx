@@ -3,40 +3,44 @@ import {View, Text, Image, StyleSheet} from 'react-native'
 import {SearchResult} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 interface Props {
     searchResult: SearchResult
+    navigation: any
 }
 
-const SearchResultItem: React.FC<Props> = ({searchResult}) => {
+const SearchResultItem: React.FC<Props> = ({searchResult, navigation}) => {
     return (
         <View key={searchResult.restaurant.id} style={styles.container}>
-            <Image
-                source={{uri: 'https://picsum.photos/100'}}
-                style={styles.image}
-            />
-            <View style={styles.details}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>
-                        {searchResult.restaurant.name}
-                    </Text>
-                    {searchResult.restaurant.avgRating != 0 ? (
-                        <Text style={styles.rating}>
-                            {searchResult.restaurant.avgRating}
+            <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails", {restaurant: searchResult.restaurant})}>
+                <Image
+                    source={{uri: 'https://picsum.photos/100'}}
+                    style={styles.image}
+                />
+                <View style={styles.details}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            {searchResult.restaurant.name}
                         </Text>
-                    ) : (
-                        <></>
-                    )}
-                </View>
+                        {searchResult.restaurant.avgRating != 0 ? (
+                            <Text style={styles.rating}>
+                                {searchResult.restaurant.avgRating}
+                            </Text>
+                        ) : (
+                            <></>
+                        )}
+                    </View>
 
-                <Text style={styles.address}>
-                    {`${metersToKm(searchResult.locationDistance)} • ${
-                        searchResult.restaurant.address
-                    }`}
-                </Text>
-                <Text style={styles.address}>
-                    {`Price level ${searchResult.restaurant.priceLevel}`}
-                </Text>
-            </View>
+                    <Text style={styles.address}>
+                        {`${metersToKm(searchResult.locationDistance)} • ${
+                            searchResult.restaurant.address
+                        }`}
+                    </Text>
+                    <Text style={styles.address}>
+                        {`Price level ${searchResult.restaurant.priceLevel}`}
+                    </Text>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
