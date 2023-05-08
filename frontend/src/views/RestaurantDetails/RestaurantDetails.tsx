@@ -66,7 +66,7 @@ function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
                 )}
             </ScrollView>
             <View style={{justifyContent: "center", alignItems: "center"}}>
-                <TouchableOpacity style={styles.book_button}>
+                <TouchableOpacity style={styles.book_button} onPress={() => navigation.navigate("ReservationCreation", {restaurant: route.params.restaurant} )}>
                     <Text style={styles.button_text}>BOOK A TABLE</Text>
                 </TouchableOpacity>
             </View>
