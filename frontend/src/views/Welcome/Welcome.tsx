@@ -18,7 +18,7 @@ function Welcome({ navigation } : any) {
         try {   
             const session = await EncryptedStorage.getItem("user_session");
             if (session !== undefined) {
-                navigation.navigate("Reservations") // TODO: to change in navigation.navigate("Homepage")
+                navigation.navigate("Homepage")
             }
         } catch (error) {
             // Stay in Welcome page
@@ -108,7 +108,7 @@ function Welcome({ navigation } : any) {
             if (response.status === 200) {
                 const isDataStored = storeUserSession(response)
                 if (await isDataStored) {
-                    navigation.navigate("Reservations") // // TODO: to change in navigation.navigate("Homepage")
+                    navigation.navigate("Homepage")
                 } else {
                     Alert.alert(  
                         'Something is wrong',  
