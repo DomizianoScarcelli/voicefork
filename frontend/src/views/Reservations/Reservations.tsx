@@ -11,6 +11,7 @@ import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import VerticalScrollingSection, {
     ReservationTile,
+    LoadingReservationTile,
 } from '../../components/VerticalScrollingSection/VerticalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {reservations_style} from './styles.js'
@@ -21,6 +22,8 @@ import {
 } from '../../shared/types'
 import axios from 'axios'
 import {TileType} from '../../shared/enums'
+
+var reservationsIsEmpty: number = -1 // default state
 
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
@@ -87,6 +90,12 @@ const Reservations = ({navigation}: any) => {
         console.log('axios call made')
         const reservations: Reservation[] = (await axios.get(URL)).data
 
+        if (reservations.length == 0) {
+            reservationsIsEmpty = 1
+        } else {
+            reservationsIsEmpty = 0
+        }
+
         const reservationsWithRestaurant: ReservationWithRestaurant[] = []
 
         for (const key in reservations) {
@@ -139,7 +148,11 @@ const Reservations = ({navigation}: any) => {
                 <Navbar />
             </SafeAreaView>
             <ScrollView style={reservations_style.main_view}>
-                {userReservations.length != 0 ? (
+                {reservationsIsEmpty == -1 ? (
+                    // Loading tile
+                    <LoadingReservationTile />
+                ) : reservationsIsEmpty == 0 ? (
+                    // Reservations tile
                     <VerticalScrollingSection
                         title={'My reservations'}
                         data={userReservations}
@@ -152,6 +165,7 @@ const Reservations = ({navigation}: any) => {
                         }) => <ReservationTile reservation={item} />}
                     />
                 ) : (
+                    // Empty tile
                     <View style={reservations_style.main_view}>
                         <Text
                             style={{
