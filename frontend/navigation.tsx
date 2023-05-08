@@ -1,28 +1,29 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react'
+import {NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
 
-import { BottomNavigation } from './src/components';
-import { Welcome, Registration, Homepage, Reservations } from './src/views';
+import {BottomNavigation} from './src/components'
+import {Welcome, Registration, Homepage, Search, RestaurantDetails} from './src/views'
 
 function RootNavigation() {
-    const Stack = createStackNavigator();
+    const Stack = createStackNavigator()
 
     return (
         //TO DO: REDEFINE ALL NAVIGATION LOGIC!
         <NavigationContainer>
             <Stack.Navigator
-            initialRouteName = {"Welcome"}
-            screenOptions={{
-                headerShown: false
-              }}>
-                <Stack.Screen name="Welcome" component={Welcome}/>
-                <Stack.Screen name="Registration" component={Registration}/>
-                <Stack.Screen name="Homepage" component={Homepage}/>
-                <Stack.Screen name="Reservations" component={Reservations}/>
+                initialRouteName={'Welcome'}
+                screenOptions={{
+                    headerShown: false,
+                }}>
+                <Stack.Screen name="Welcome" component={Welcome} />
+                <Stack.Screen name="Registration" component={Registration} />
+                <Stack.Screen name="Homepage" component={Homepage} />
+                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
             </Stack.Navigator>
         </NavigationContainer>
-        
+
         /**<NavigationContainer
         linking = {{
             prefixes: ['voicefork://'],
@@ -36,7 +37,7 @@ function RootNavigation() {
         }}>
             <BottomNavigation />
         </NavigationContainer>*/
-    );
-};
+    )
+}
 
 export default RootNavigation

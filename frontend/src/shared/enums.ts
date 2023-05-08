@@ -3,4 +3,8 @@ export enum TileType {
     CUISINE = 'CuisineTile',
     RESERVATION = 'ReservationTile',
     EMPTY = 'EmptyTile',
+export enum SearchStrategy {
+    NEARBY,
+    KEYWORD,
+    RATING,
 }

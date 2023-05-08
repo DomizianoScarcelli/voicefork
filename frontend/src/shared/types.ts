@@ -1,3 +1,8 @@
+import {
+    CuisineTile,
+    RestaurantTile,
+} from '../components/HorizontalScrollingSection/HorizontalScrollingSection'
+
 export type Restaurant = {
     id: number
     name: string
@@ -23,6 +28,12 @@ export type Restaurant = {
 export type DistanceResult = {
     distance: number
     restaurant: Restaurant
+}
+
+export type SearchResult = {
+    restaurant: Restaurant
+    nameDistance: number
+    locationDistance: number
 }
 
 export type LatLng = {

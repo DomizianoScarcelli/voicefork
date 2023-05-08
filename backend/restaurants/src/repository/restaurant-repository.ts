@@ -1,4 +1,5 @@
 import {PrismaClient, Restaurant} from '@prisma/client'
+import {RestaurantDistanceResult} from '../shared/types'
 const prisma: PrismaClient = new PrismaClient()
 
 /**
@@ -6,6 +7,34 @@ const prisma: PrismaClient = new PrismaClient()
  */
 
 class RestaurantRepository {
+    private async getNearbyRestaurantsIds(
+        latitude: number,
+        longitude: number,
+        maxDistance: number,
+    ) {
+        const restaurants = await prisma.$queryRaw<
+            {id: number; distance_meters: number}[]
+        >`
+    SELECT
+      id,
+      ST_Distance(
+        ST_MakePoint(longitude, latitude)::geography,
+        ST_MakePoint(${parseFloat(longitude.toString())}, ${parseFloat(
+            latitude.toString(),
+        )})::geography
+      ) AS distance_meters
+    FROM "Restaurant"
+    WHERE ST_DWithin(
+      ST_MakePoint(longitude, latitude)::geography,
+      ST_MakePoint(${parseFloat(longitude.toString())}, ${parseFloat(
+            latitude.toString(),
+        )})::geography,
+      ${parseFloat(maxDistance.toString())}
+    )
+  `
+        return restaurants
+    }
+
     async CreateRestaurant(restaurant: Restaurant): Promise<Restaurant> {
         const result = await prisma.restaurant.create({
             data: restaurant,
@@ -33,9 +62,98 @@ class RestaurantRepository {
         return restaurants
     }
 
-    async GetAllRestaurants(): Promise<Restaurant[]> {
-        const restaurants = await prisma.restaurant.findMany()
+    async GetRestaurantsNearCoordinates(
+        latitude: number,
+        longitude: number,
+        maxDistance: number,
+        skip?: number,
+        take?: number,
+    ): Promise<RestaurantDistanceResult[]> {
+        const restaurants = await this.getNearbyRestaurantsIds(
+            latitude,
+            longitude,
+            maxDistance,
+        )
+        const restaurantInfo = await prisma.restaurant.findMany({
+            where: {
+                id: {
+                    in: restaurants.map(({id}: {id: number}) => id),
+                },
+            },
+            skip: skip,
+            take: take,
+        })
+
+        const result = restaurantInfo.map(restaurant => {
+            const distance = restaurants.find(
+                r => r.id === restaurant.id,
+            )?.distance_meters
+
+            return {
+                restaurant,
+                distance,
+            }
+        })
+
+        return result
+    }
+
+    async GetAllRestaurants(
+        skip?: number,
+        take?: number,
+    ): Promise<Restaurant[]> {
+        const restaurants = await prisma.restaurant.findMany({
+            skip: skip,
+            take: take,
+        })
         return restaurants
+    }
+
+    async GetTopRatedRestaurants(
+        threshold: number,
+        latitude: number,
+        longitude: number,
+        maxDistance: number,
+        skip?: number,
+        take?: number,
+    ): Promise<RestaurantDistanceResult[]> {
+        let restaurantInfo: Restaurant[] = []
+
+        const restaurants = await this.getNearbyRestaurantsIds(
+            latitude,
+            longitude,
+            maxDistance,
+        )
+        restaurantInfo = await prisma.restaurant.findMany({
+            where: {
+                AND: [
+                    {
+                        avgRating: {
+                            gte: threshold,
+                        },
+                    },
+                    {
+                        id: {
+                            in: restaurants.map(({id}: {id: number}) => id),
+                        },
+                    },
+                ],
+            },
+            skip: skip,
+            take: take,
+        })
+
+        const result = restaurantInfo.map(restaurant => {
+            const distance = restaurants.find(
+                r => r.id === restaurant.id,
+            )?.distance_meters
+
+            return {
+                restaurant,
+                distance,
+            }
+        })
+        return result
     }
 
     async GetRestaurantByAddressName(

@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
     mysql_users:
         image: mysql
@@ -19,27 +19,34 @@ services:
             - db-users:/var/lib/mysql
         networks:
             - users-network
-      
-    mysql_restaurants:
-        image: mysql
-        command: --default-authentication-plugin=mysql_native_password
+
+    postgres_restaurants:
+        image: postgres
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: restaurantDB
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: admin
-            MYSQL_TCP_PORT: 3306
-        container_name: mysql_restaurants
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: restaurantsDB
+            # POSTGRES_PORT: 3306
+        container_name: postgres_restaurants
         ports:
-            - 3308:3306
+            - 3308:5432
         expose:
             - 3308
         volumes:
-            - db-restaurants:/var/lib/mysql
+            - db-restaurants:/var/lib/postgres
+        entrypoint: >
+            bash -c "
+              /usr/local/bin/docker-entrypoint.sh postgres &
+              while ! pg_isready -h localhost -p 5432 > /dev/null 2>&1; do sleep 1; done
+              apt-get update &&
+              apt-get install -y postgis &&
+              PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION IF NOT EXISTS postgis;' &&
+              tail -f /dev/null
+            "
         networks:
             - restaurants-network
-    
+
     mysql_reservations:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
@@ -65,17 +72,17 @@ services:
         restart: always
         container_name: minio-users
         ports:
-        - 9001:9001
-        - 9091:9091
+            - 9001:9001
+            - 9091:9091
         volumes:
-        - minio-users-data:/data
+            - minio-users-data:/data
         command: server /data --address :9001 --console-address :9091
         environment:
             - "MINIO_ROOT_USER=root"
             - "MINIO_ROOT_PASSWORD=root12345"
         networks:
             - users-network
-    
+
     createbucket-users:
         image: minio/mc
         container_name: minio_createbucket_users
@@ -90,23 +97,23 @@ services:
             "
         networks:
             - users-network
-    
+
     minio-restaurants:
         image: minio/minio
         restart: always
         container_name: minio-restaurants
         ports:
-        - 9002:9002
-        - 9092:9092
+            - 9002:9002
+            - 9092:9092
         volumes:
-        - minio-restaurants-data:/data
+            - minio-restaurants-data:/data
         command: server /data --address :9002 --console-address :9092
         environment:
             - "MINIO_ROOT_USER=root"
             - "MINIO_ROOT_PASSWORD=root12345"
         networks:
             - restaurants-network
-    
+
     createbucket-restaurants:
         image: minio/mc
         container_name: minio_createbucket_restaurants
@@ -128,7 +135,7 @@ services:
             context: ./users
         container_name: users
         ports:
-            - '3001:3001'
+            - "3001:3001"
         environment:
             - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
         volumes:
@@ -138,7 +145,7 @@ services:
             - mysql_users
             - minio-users
         restart: always
-        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
         networks:
             - gateway
             - users-network
@@ -149,28 +156,29 @@ services:
             context: ./restaurants
         container_name: restaurants
         ports:
-            - '3002:3002'
+            - "3002:3002"
         environment:
-            - DATABASE_URL=mysql://root:root@mysql_restaurants:3306/restaurantsDB
+            - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
         volumes:
             - .:/app
             - /app/restaurants/node_modules
         depends_on:
-            - mysql_restaurants
+            - postgres_restaurants
             - minio-restaurants
         restart: always
-        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+
         networks:
             - gateway
             - restaurants-network
-    
+
     reservations:
         build:
             dockerfile: Dockerfile
             context: ./reservations
         container_name: reservations
         ports:
-            - '3003:3003'
+            - "3003:3003"
         environment:
             - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
         volumes:
@@ -179,7 +187,7 @@ services:
         depends_on:
             - mysql_reservations
         restart: always
-        entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run dev']
+        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
         networks:
             - gateway
             - reservations-network

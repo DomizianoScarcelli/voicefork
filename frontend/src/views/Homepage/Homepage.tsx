@@ -11,35 +11,44 @@ import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
     RestaurantTile,
+    RestaurantLoadingTile,
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
-import {DistanceResult, Restaurant} from '../../shared/types'
+import {DistanceResult} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
-import axios from 'axios'
-import {LatLng} from '../../shared/types'
-import {TileType} from '../../shared/enums'
+import {
+    getNearbyRestaurants,
+    getTopRatedRestaurants,
+} from '../../utils/apiCalls'
+import {SearchStrategy} from '../../shared/enums'
 
 const Homepage = ({navigation}: any) => {
-    const [isLoading, setLoading] = useState<boolean>(true)
-    const coordinates = useGeolocation()
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
         DistanceResult[]
     >([])
+    const [topPicksRestaurants, setTopPicksRestaurants] = useState<
+        DistanceResult[]
+    >([])
+    const coordinates = useGeolocation()
 
     useEffect(() => {
         retrieveUserSession()
     }, [])
 
     useEffect(() => {
-        console.log(nearbyRestaurants)
-    }, [nearbyRestaurants])
-
-    useEffect(() => {
         console.log(coordinates)
-        if (coordinates != undefined) {
-            getNearbyRestaurants(coordinates)
+        const populateData = async () => {
+            const nearbyRestaurantsResult = await getNearbyRestaurants(
+                coordinates,
+            )
+            const topRatedRestaurantsResult = await getTopRatedRestaurants(
+                coordinates,
+            )
+            setNearbyRestaurants(nearbyRestaurantsResult)
+            setTopPicksRestaurants(topRatedRestaurantsResult)
         }
+        populateData()
     }, [coordinates])
 
     const retrieveUserSession = async () => {
@@ -66,15 +75,12 @@ const Homepage = ({navigation}: any) => {
         }
     }
 
-    const getNearbyRestaurants = async ({latitude, longitude}: LatLng) => {
-        const URL = `http://localhost:3000/restaurants/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=3000&limit=10`
-        console.log('axios call made')
-        const result: DistanceResult[] = (await axios.get(URL)).data
-        setLoading(false)
-        setNearbyRestaurants(result)
+    type CuisineData = {
+        id: string
+        name: string
+        image: string
     }
-
-    const cuisineData = [
+    const cuisineData: CuisineData[] = [
         {
             id: '1',
             name: 'European',
@@ -102,47 +108,64 @@ const Homepage = ({navigation}: any) => {
             <SafeAreaView
                 style={{
                     backgroundColor: Colors.green,
-                    // flex: 1,
                 }}>
-                <Navbar />
+                <Navbar
+                    onSearch={query =>
+                        navigation.navigate('Search', {
+                            query: query,
+                            searchStrategy: SearchStrategy.KEYWORD,
+                        })
+                    }
+                />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
                     title={'Cuisines'}
                     data={cuisineData}
-                    isLoading={isLoading}
-                    tileType={TileType.CUISINE}
-                    renderItem={({item}) => (
-                        <CuisineTile
-                            name={item.name}
-                            image={'https://picsum.photos/100'}
-                        />
+                    renderItem={({item}: {item: CuisineData}) => (
+                        <CuisineTile name={item.name} image={item.image} />
                     )}
                 />
                 <HorizontalScrollingSection
                     title={'Nearby'}
                     data={nearbyRestaurants}
-                    showMore={true}
-                    isLoading={isLoading}
-                    tileType={TileType.RESTAURANT}
-                    renderItem={({item}) => (
-                        <RestaurantTile
-                            restaurant={item.restaurant}
-                            distance={item.distance}
-                        />
-                    )}
+                    onMoreClick={() =>
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.NEARBY,
+                        })
+                    }
+                    renderItem={({item}: {item: DistanceResult}) =>
+                        nearbyRestaurants.length == 0 ? (
+                            <RestaurantLoadingTile />
+                        ) : (
+                            <RestaurantTile
+                                restaurant={item.restaurant}
+                                distance={item.distance}
+                                navigation={navigation}
+                            />
+                        )
+                    }
                 />
                 <HorizontalScrollingSection
                     title={'Top picks for you'}
-                    data={nearbyRestaurants}
-                    isLoading={isLoading}
-                    tileType={TileType.RESTAURANT}
-                    renderItem={({item}) => (
-                        <RestaurantTile
-                            restaurant={item.restaurant}
-                            distance={item.distance}
-                        />
-                    )}
+                    data={topPicksRestaurants}
+                    onMoreClick={() =>
+                        navigation.navigate('Search', {
+                            searchStrategy: SearchStrategy.RATING,
+                        })
+                    }
+                    renderItem={({item}: {item: DistanceResult}) =>
+                        topPicksRestaurants.length == 0 ? (
+                            <RestaurantLoadingTile />
+                        ) : (
+                            <RestaurantTile
+                                restaurant={item.restaurant}
+                                distance={item.distance}
+                                showRating={true}
+                                navigation={navigation}
+                            />
+                        )
+                    }
                 />
 
                 <TouchableOpacity

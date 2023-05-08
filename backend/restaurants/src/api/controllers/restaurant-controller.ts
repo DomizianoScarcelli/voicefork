@@ -1,7 +1,12 @@
 import {Request, Response, NextFunction} from 'express'
 import RestaurantService from '../../service/restaurant-service'
-import {LatLng, RestaurantSearchResult} from '../../shared/types'
+import {
+    LatLng,
+    RestaurantDistanceResult,
+    RestaurantSearchResult,
+} from '../../shared/types'
 import {Restaurant} from '@prisma/client'
+import {SortingStrategy} from '../../shared/enums'
 
 const service = new RestaurantService()
 const RestaurantController = {
@@ -82,13 +87,25 @@ const RestaurantController = {
     },
 
     getAllRestaurants: async (
-        req: Request,
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                page: number
+            }
+        >,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const {localize} = req.query
-            const data = await service.GetAllRestaurants()
+            const {page} = req.query
+            let data: Restaurant[] = []
+            if (page != undefined) {
+                data = await service.GetAllRestaurants(page)
+            } else {
+                data = await service.GetAllRestaurants()
+            }
             res.json(data)
         } catch (err) {
             next(err)
@@ -144,22 +161,45 @@ const RestaurantController = {
                 longitude: number
                 maxDistance: number
                 limit?: number
+                minRating?: number
+                sortedBy?: typeof SortingStrategy
+                pageNumber?: number
             }
         >,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const {latitude, longitude, maxDistance, limit} = req.query
+            const {
+                latitude,
+                longitude,
+                maxDistance,
+                limit,
+                minRating,
+                pageNumber,
+            } = req.query
             const coordinates: LatLng = {
                 latitude: latitude,
                 longitude: longitude,
             }
-            const data = await service.GetRestaurantsNearCoordinates(
-                coordinates,
-                maxDistance,
-                limit,
-            )
+            let data: RestaurantDistanceResult[]
+
+            if (minRating != undefined) {
+                data = await service.GetTopRatedRestaurants(
+                    coordinates,
+                    maxDistance,
+                    minRating,
+                    limit,
+                    pageNumber,
+                )
+            } else {
+                data = await service.GetRestaurantsNearCoordinates(
+                    coordinates,
+                    maxDistance,
+                    limit,
+                    pageNumber,
+                )
+            }
             res.json(data)
         } catch (err) {
             next(err)

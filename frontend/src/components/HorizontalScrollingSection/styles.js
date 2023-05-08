@@ -8,19 +8,19 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: FontSize.xxLarge,
+        fontSize: FontSize.xLarge,
         fontFamily: Fonts['poppins-bold'],
         color: Colors.black,
     },
     moreText: {
-        fontSize: FontSize.large,
+        fontSize: FontSize.medium,
         color: Colors.green,
         fontFamily: Fonts['poppins-bold'],
     },
     restaurantTileContainer: {
         width: 150,
-        height: 250, // width + paddingBottom
-        paddingBottom: 100,
+        height: 300, // width + paddingBottom
+        paddingBottom: 150,
         margin: 10,
     },
     cuisineTileContainer: {
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
     },
     mediumBoldText: {
-        fontSize: FontSize.medium,
+        fontSize: FontSize.small,
         fontFamily: Fonts['poppins-bold'],
         color: Colors.black,
     },
