@@ -15,6 +15,7 @@ export const reservationsColor = StyleSheet.create({
 
 export const reservations_style = StyleSheet.create({
     main_view: {
+        flex: 1,
         backgroundColor: Colors.white,
         padding: 15,
     },

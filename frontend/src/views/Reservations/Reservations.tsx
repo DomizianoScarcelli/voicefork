@@ -30,8 +30,6 @@ const Reservations = ({navigation}: any) => {
         ReservationWithRestaurant[]
     >([])
 
-    var reservationsIsEmpty: number = -1 // default state
-
     useEffect(() => {
         retrieveUserSession()
     }, [])
@@ -141,8 +139,8 @@ const Reservations = ({navigation}: any) => {
                 }}>
                 <Navbar />
             </SafeAreaView>
-            <ScrollView style={reservations_style.main_view}>
-                {reservationsIsEmpty == -1 && userReservations.length == 0 ? (
+            <View style={reservations_style.main_view}>
+                {isLoading ? (
                     // Loading tile
                     <LoadingReservationTile />
                 ) : userReservations.length != 0 ? (
@@ -198,6 +196,7 @@ const Reservations = ({navigation}: any) => {
                         </TouchableOpacity>
                     </View>
                 )}
+                </View>
                 <TouchableOpacity
                     onPress={() => logout()}
                     style={{
@@ -224,7 +223,7 @@ const Reservations = ({navigation}: any) => {
                         Logout
                     </Text>
                 </TouchableOpacity>
-            </ScrollView>
+            
         </>
     )
 }

@@ -25,6 +25,7 @@ const VerticalScrollingSection = ({
         <View style={{display: 'flex'}}>
             {isLoading ? (
                 <FlatList
+                    horizontal={true}
                     data={[...Array(5)]}
                     renderItem={item => <LoadingReservationTile />}
                     keyExtractor={(item, index) => index.toString()}
@@ -48,7 +49,7 @@ const ReservationTile = ({
     return reservation == undefined ? (
         <>{reservation}</>
     ) : (
-        <View >
+        <View>
             <View style={styles.mainContainer}>
                 <Image
                     source={{uri: 'https://picsum.photos/100'}}
@@ -78,11 +79,17 @@ const ReservationTile = ({
 
 const LoadingReservationTile = () => {
     return (
-        <View style={styles.reservationTileContainer}>
-            <View style={styles.loadingImage} />
-            <View style={styles.loadingText} />
-            <View style={styles.loadingText} />
-            <View style={styles.loadingText} />
+        <View>
+            <View style={styles.mainContainer}>            
+                <View style={styles.loadingImage} />
+                <View style={styles.reservationTextContainer}>
+                    <View style={styles.loadingText} />
+                    <View style={styles.loadingText} />
+                    <View style={styles.loadingText} />
+                    <View style={styles.loadingText} />
+                    <View style={styles.loadingText} />
+                </View>
+            </View>
         </View>
     )
 }

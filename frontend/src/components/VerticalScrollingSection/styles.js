@@ -54,8 +54,10 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     loadingImage: {
-        width: '100%',
-        height: '100%',
+        borderRadius: 10,
+        width: 120, 
+        height: 120, 
+        marginRight: 10, 
         backgroundColor: '#cccccc',
         opacity: 0.5,
         borderRadius: 10,
