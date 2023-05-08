@@ -23,14 +23,14 @@ import {
 import axios from 'axios'
 import {TileType} from '../../shared/enums'
 
-var reservationsIsEmpty: number = -1 // default state
-
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
     const [userId, setUserId] = useState<number>()
     const [userReservations, setReservations] = useState<
         ReservationWithRestaurant[]
     >([])
+
+    var reservationsIsEmpty: number = -1 // default state
 
     useEffect(() => {
         retrieveUserSession()
@@ -90,12 +90,6 @@ const Reservations = ({navigation}: any) => {
         console.log('axios call made')
         const reservations: Reservation[] = (await axios.get(URL)).data
 
-        if (reservations.length == 0) {
-            reservationsIsEmpty = 1
-        } else {
-            reservationsIsEmpty = 0
-        }
-
         const reservationsWithRestaurant: ReservationWithRestaurant[] = []
 
         for (const key in reservations) {
@@ -148,10 +142,10 @@ const Reservations = ({navigation}: any) => {
                 <Navbar />
             </SafeAreaView>
             <ScrollView style={reservations_style.main_view}>
-                {reservationsIsEmpty == -1 ? (
+                {reservationsIsEmpty == -1 && userReservations.length == 0 ? (
                     // Loading tile
                     <LoadingReservationTile />
-                ) : reservationsIsEmpty == 0 ? (
+                ) : userReservations.length != 0 ? (
                     // Reservations tile
                     <VerticalScrollingSection
                         title={'My reservations'}
