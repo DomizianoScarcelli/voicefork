@@ -38,6 +38,7 @@ const HorizontalScrollingSection = ({
             </View>
             {isLoading ? (
                 <FlatList
+                    horizontal={true}
                     data={[...Array(5)]}
                     renderItem={item => renderLoadingTile()}
                     keyExtractor={(item, index) => index.toString()}
