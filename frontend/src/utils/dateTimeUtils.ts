@@ -10,6 +10,10 @@ export const getCurrentTime = () => {
     return date.toISOString().split('T')[1]
 }
 
+export const constructDateTimeFromString = (date: string, time: string) => {
+    return new Date(date + " " + time)
+}
+
 export const getNextReservableTime = () => {
     const currentTime = getCurrentTime()
     const currentHour = Number(currentTime.split(':')[0])

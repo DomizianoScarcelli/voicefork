@@ -7,7 +7,7 @@ import { styles } from './styles'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import { Colors } from '../../constants'
 import { Picker } from '@react-native-picker/picker';
-import { getCurrentDate, getCurrentTime, getNextReservableTime, getReservableTimes } from '../../utils/dateTimeUtils'
+import { constructDateTimeFromString, getCurrentDate, getCurrentTime, getNextReservableTime, getReservableTimes } from '../../utils/dateTimeUtils'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 function ReservationCreation({route, navigation}: {route: any, navigation: any}) {
@@ -38,6 +38,22 @@ function ReservationCreation({route, navigation}: {route: any, navigation: any})
         }
 
         return reservableSeats
+    }
+
+    const validateDate = () => {
+        let isValid = true
+
+        if (!dateTime.date || !dateTime.time) {
+            isValid = false
+        } else {
+            console.log(constructDateTimeFromString(dateTime.date, dateTime.time))
+        }
+
+        return isValid
+    }
+
+    const validateData = () => {
+        const isValidDate = validateDate()
     }
 
     return (
@@ -91,8 +107,8 @@ function ReservationCreation({route, navigation}: {route: any, navigation: any})
                                 dropdownIconColor={Colors.darkGreen}
                                 style={{backgroundColor: Colors.white}}>
                                 {reservableTimes !== null ? 
-                                    reservableTimes.map((item) => (
-                                        <Picker.Item label={item} value={item} />
+                                    reservableTimes.map((item, index) => (
+                                        <Picker.Item label={item} value={item} key={index} />
                                 )) : ""}
                             </Picker>
                             <Text>Select the number of people:</Text>
@@ -103,19 +119,18 @@ function ReservationCreation({route, navigation}: {route: any, navigation: any})
                                 }}
                                 dropdownIconColor={Colors.darkGreen}
                                 style={{backgroundColor: Colors.white}}>
-                                {getReservableSeats().map((item) => (
-                                        <Picker.Item label={item.toString()} value={item} />
+                                {getReservableSeats().map((item, index) => (
+                                        <Picker.Item label={item.toString()} value={item} key={index} />
                                 ))}
                             </Picker>
                             <View style={{justifyContent: "center", alignItems: "center"}}>
-                                <TouchableOpacity style={styles.book_button} onPress={() => navigation.navigate("ReservationCreation", {restaurant: route.params.restaurant} )}>
+                                <TouchableOpacity style={styles.book_button} onPress={() => validateData()}>
                                     <Text style={styles.button_text}>CONFIRM BOOKING</Text>
                                 </TouchableOpacity>
                             </View>
                         </>
                     ): ""}
                 </View>
-    
             </ScrollView>
         </>
     )
