@@ -1,14 +1,14 @@
 from minio import Minio
-import io
 import os
 from tqdm import tqdm
 
-IMAGES_PATH = "./restaurants-images"
+IMAGES_PATH = "../compressed-images"
 BUCKET_NAME = "images"
+
 
 # Create client with access key and secret key with specific region.
 client = Minio(
-    "127.0.0.1:9002",
+    "localhost:9002",
     access_key="Pj23d8Ii97VFOBiO",
     secret_key="AlmpakG9yI3xqFZpuIDyUnFlXCNaeRWK",
     secure=False  # Otherwise bug

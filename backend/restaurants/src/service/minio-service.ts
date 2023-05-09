@@ -1,9 +1,5 @@
-import Minio, {
-    Client,
-    LockConfig,
-    ResultCallback,
-    UploadedObjectInfo,
-} from 'minio'
+const Minio = require('minio')
+import {Client, LockConfig, ResultCallback, UploadedObjectInfo} from 'minio'
 import {Readable} from 'stream'
 
 class MinioService {
@@ -20,10 +16,11 @@ class MinioService {
                 throw new Error('Local MINIO credentials not found')
 
             this.client = new Minio.Client({
-                endPoint: 'localhost',
+                endPoint: 'minio-restaurants',
                 port: 9002,
                 accessKey: process.env.MINIO_ACCESS_KEY,
                 secretKey: process.env.MINIO_SECRET_KEY,
+                useSSL: false,
             })
             this.bucketName = 'images'
         } else {

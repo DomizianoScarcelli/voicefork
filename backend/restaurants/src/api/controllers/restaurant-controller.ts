@@ -205,6 +205,27 @@ const RestaurantController = {
             next(err)
         }
     },
+
+    getRestaurantImage: async (
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                imageName: string
+            }
+        >,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const {imageName} = req.query
+            const image = await service.GetRestaurantImage(imageName)
+            res.json({image: image})
+        } catch (err) {
+            next(err)
+        }
+    },
 }
 
 export default RestaurantController

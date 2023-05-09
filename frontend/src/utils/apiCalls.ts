@@ -21,7 +21,7 @@ export const getNearbyRestaurants = async (coordinates: LatLng | undefined) => {
     if (coordinates == undefined) return []
     const {latitude, longitude} = coordinates
     console.log('Getting nearby restaurants')
-    const MAX_DISTANCE = 3000
+    const MAX_DISTANCE = 30000000
     const LIMIT = 10
     const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
     const result: DistanceResult[] = (await axios.get(URL)).data
@@ -40,4 +40,10 @@ export const getTopRatedRestaurants = async (
     const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
     const result: DistanceResult[] = (await axios.get(URL)).data
     return result
+}
+
+export const getRestaurantImage = async (imageName: string) => {
+    const URL = `http://localhost:3000/restaurants/restaurant-image?imageName=${imageName}`
+    const response = (await axios.get(URL)).data
+    return response.image
 }

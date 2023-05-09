@@ -2,6 +2,8 @@ import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
 import {Restaurant} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
+import {useEffect, useState} from 'react'
+import {getRestaurantImage} from '../../utils/apiCalls'
 
 type HorizontalScrollingSectionProps = {
     title: String
@@ -49,11 +51,26 @@ const RestaurantTile = ({
     distance?: number
     showRating?: boolean
 }) => {
+    const [restaurantImage, setRestaurantImage] = useState<string>()
+
+    useEffect(() => {
+        const handleRestaurantImage = async () => {
+            const image = await getRestaurantImage(restaurant.imageName)
+            setRestaurantImage(image)
+        }
+        handleRestaurantImage()
+    }, [])
+
     return (
         <View style={styles.restaurantTileContainer}>
             <Image
-                source={{uri: 'https://picsum.photos/100'}}
-                style={styles.restaurantTileImage}></Image>
+                source={
+                    restaurantImage == undefined
+                        ? {uri: 'https://picsum.photos/100'}
+                        : {uri: `data:image/jpeg;base64,${restaurantImage}`}
+                }
+                style={styles.restaurantTileImage}
+            />
             <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
             {restaurant.cuisines ? (
                 <Text style={styles.smallRegularText}>
