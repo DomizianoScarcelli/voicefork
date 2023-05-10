@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {
-    View,
-    Text,
-    SafeAreaView,
-    Alert,
-    TouchableOpacity,
-    ScrollView,
-} from 'react-native'
+import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native'
 import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import VerticalScrollingSection, {
@@ -22,41 +15,19 @@ import {
 } from '../../shared/types'
 import axios from 'axios'
 import {SearchStrategy} from '../../shared/enums'
+import {useSession} from '../../hooks/useSession'
 
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
-    const [userId, setUserId] = useState<number>()
+    const userId = useSession(navigation)
     const [userReservations, setReservations] = useState<
         ReservationWithRestaurant[]
     >([])
 
     useEffect(() => {
-        retrieveUserSession()
-    }, [])
-
-    useEffect(() => {
-        console.log('userReservations', userReservations)
-    }, [userReservations])
-
-    useEffect(() => {
         console.log('userId', userId)
         if (userId != undefined) getUserReservations(userId)
     }, [userId])
-
-    const retrieveUserSession = async () => {
-        try {
-            const session = await EncryptedStorage.getItem('user_session')
-            if (session === null) {
-                navigation.navigate('Welcome')
-            } else {
-                const user_id = JSON.parse(session)['id']
-                setUserId(user_id)
-                console.log('user id get')
-            }
-        } catch (error) {
-            navigation.navigate('Welcome')
-        }
-    }
 
     const logout = async () => {
         try {

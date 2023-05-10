@@ -22,8 +22,10 @@ import {
     getTopRatedRestaurants,
 } from '../../utils/apiCalls'
 import {SearchStrategy} from '../../shared/enums'
+import {useSession} from '../../hooks/useSession'
 
 const Homepage = ({navigation}: any) => {
+    const userId = useSession(navigation)
     const [nearbyRestaurants, setNearbyRestaurants] = useState<
         DistanceResult[]
     >([])
@@ -31,10 +33,6 @@ const Homepage = ({navigation}: any) => {
         DistanceResult[]
     >([])
     const coordinates = useGeolocation()
-
-    useEffect(() => {
-        retrieveUserSession()
-    }, [])
 
     useEffect(() => {
         console.log(coordinates)
@@ -50,17 +48,6 @@ const Homepage = ({navigation}: any) => {
         }
         populateData()
     }, [coordinates])
-
-    const retrieveUserSession = async () => {
-        try {
-            const session = await EncryptedStorage.getItem('user_session')
-            if (session === null) {
-                navigation.navigate('Welcome')
-            }
-        } catch (error) {
-            navigation.navigate('Welcome')
-        }
-    }
 
     const logout = async () => {
         try {
