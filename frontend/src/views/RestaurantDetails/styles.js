@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Colors, FontSize, Fonts, Spacing } from '../../constants'
+import {StyleSheet} from 'react-native'
+import {Colors, FontSize, Fonts, Spacing} from '../../constants'
 
 export const styles = StyleSheet.create({
     restaurantContainer: {
@@ -10,28 +10,28 @@ export const styles = StyleSheet.create({
     restaurantName: {
         color: Colors.black,
         fontSize: FontSize.xLarge,
-        fontWeight: 500
+        fontWeight: '500',
     },
 
     restaurantRow: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        flexWrap: "wrap"
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
     },
 
     restaurantColumn: {
-        display: "flex",
-        flexDirection: "column",
-        gap: 10
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
     },
 
     restaurantAddress: {
         flex: 1,
         width: 0,
-        flexWrap: "wrap",
+        flexWrap: 'wrap',
         flexGrow: 1,
-        flexShrink: 1
+        flexShrink: 1,
     },
 
     restaurantCuisineItem: {
@@ -44,13 +44,14 @@ export const styles = StyleSheet.create({
         paddingVertical: Spacing,
         paddingHorizontal: Spacing,
         borderRadius: Spacing,
+        overflow: 'hidden',
     },
 
     horizontalLine: {
         flex: 1,
         height: 1,
         backgroundColor: Colors.darkGray,
-        marginVertical: 10
+        marginVertical: 10,
     },
 
     rating: {
@@ -65,14 +66,14 @@ export const styles = StyleSheet.create({
 
     ratingText: {
         fontSize: FontSize.large,
-        marginHorizontal: 5
+        marginHorizontal: 5,
     },
 
     book_button: {
         backgroundColor: Colors.green,
         paddingVertical: Spacing,
         paddingHorizontal: Spacing,
-        width: "48%",
+        width: '48%',
         borderRadius: Spacing,
         shadowColor: Colors.black,
         shadowOffset: {
@@ -81,14 +82,14 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.3,
         shadowRadius: Spacing,
-        position: "absolute",
+        position: 'absolute',
         bottom: 10,
-        alignItems: "center"
+        alignItems: 'center',
     },
 
     button_text: {
         color: Colors.white,
         fontSize: FontSize.medium,
-        textAlign: "center",
-    }
+        textAlign: 'center',
+    },
 })

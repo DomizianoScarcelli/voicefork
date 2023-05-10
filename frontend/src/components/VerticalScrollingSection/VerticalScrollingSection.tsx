@@ -1,6 +1,7 @@
 import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
 import {ReservationWithRestaurant} from '../../shared/types'
 import {styles} from './styles'
+import RestaurantImage from '../RestaurantImage/RestaurantImage'
 
 type VerticalScrollingSectionProps = {
     title: String
@@ -48,9 +49,10 @@ const ReservationTile = ({
     ) : (
         <View>
             <View style={styles.mainContainer}>
-                <Image
-                    source={{uri: 'https://picsum.photos/100'}}
-                    style={styles.restaurantTileImage}></Image>
+                <RestaurantImage
+                    imageName={reservation.restaurant.imageName}
+                    style={styles.restaurantTileImage}
+                />
                 <View style={styles.reservationTextContainer}>
                     <Text style={styles.mediumBoldText}>
                         {reservation.restaurant.name}
@@ -77,7 +79,7 @@ const ReservationTile = ({
 const LoadingReservationTile = () => {
     return (
         <View>
-            <View style={styles.mainContainer}>            
+            <View style={styles.mainContainer}>
                 <View style={styles.loadingImage} />
                 <View style={styles.reservationTextContainer}>
                     <View style={styles.loadingText} />

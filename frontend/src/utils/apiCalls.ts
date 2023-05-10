@@ -1,7 +1,6 @@
 import {LatLng, DistanceResult} from '../shared/types'
 import {BASE_URL} from '../constants'
 import axios from 'axios'
-import {Component} from 'react'
 
 export const performSearch = async (
     query: string,
@@ -9,7 +8,7 @@ export const performSearch = async (
 ) => {
     if (coordinates == undefined) return []
     console.log('Searching for restaurants')
-    const MAX_DISTANCE = 10000000
+    const MAX_DISTANCE = 100000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
     const URL = `${BASE_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
@@ -40,4 +39,10 @@ export const getTopRatedRestaurants = async (
     const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
     const result: DistanceResult[] = (await axios.get(URL)).data
     return result
+}
+
+export const getRestaurantImage = async (imageName: string) => {
+    const URL = `${BASE_URL}/restaurant-image?imageName=${imageName}`
+    const response = (await axios.get(URL)).data
+    return response.image
 }
