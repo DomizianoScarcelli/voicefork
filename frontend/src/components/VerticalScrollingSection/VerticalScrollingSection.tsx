@@ -1,7 +1,6 @@
 import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
 import {ReservationWithRestaurant} from '../../shared/types'
 import {styles} from './styles'
-import {TileType} from '../../shared/enums'
 
 type VerticalScrollingSectionProps = {
     title: String
@@ -9,7 +8,6 @@ type VerticalScrollingSectionProps = {
     renderItem: ListRenderItem<any>
     showMore?: boolean
     isLoading: boolean
-    tileType: TileType
 }
 
 const VerticalScrollingSection = ({
@@ -18,7 +16,6 @@ const VerticalScrollingSection = ({
     renderItem,
     showMore,
     isLoading,
-    tileType,
     ...props
 }: VerticalScrollingSectionProps) => {
     return (

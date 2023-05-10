@@ -21,7 +21,7 @@ import {
     Restaurant,
 } from '../../shared/types'
 import axios from 'axios'
-import {TileType} from '../../shared/enums'
+import {SearchStrategy} from '../../shared/enums'
 
 const Reservations = ({navigation}: any) => {
     const [isLoading, setLoading] = useState<boolean>(true)
@@ -137,7 +137,14 @@ const Reservations = ({navigation}: any) => {
                     backgroundColor: Colors.green,
                     // flex: 1,
                 }}>
-                <Navbar />
+                <Navbar
+                    onSearch={query =>
+                        navigation.navigate('Search', {
+                            query: query,
+                            searchStrategy: SearchStrategy.KEYWORD,
+                        })
+                    }
+                />
             </SafeAreaView>
             <View style={reservations_style.main_view}>
                 {isLoading ? (
@@ -149,7 +156,6 @@ const Reservations = ({navigation}: any) => {
                         title={'My reservations'}
                         data={userReservations}
                         isLoading={isLoading}
-                        tileType={TileType.RESERVATION}
                         renderItem={({
                             item,
                         }: {
