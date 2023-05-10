@@ -16,6 +16,8 @@ MINIO_ACCESS_KEY= your minio access key
 MINIO_SECRET_KEY= your minio secret key
 ```
 
+Download the restaurant stock images from the drive folder, unzip it and execute the python script `minio-dump.py` inside the `script/` folder, replacing the correct path.
+
 Then you can run the database along with the app by doing
 
 ```

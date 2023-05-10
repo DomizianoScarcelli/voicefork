@@ -87,6 +87,7 @@ class RestaurantService {
 
     async SearchRestaurants(
         query: string,
+        pageNumber: number,
         limit?: number,
         locationInfo?: {coordinates: LatLng; maxDistance: number},
     ): Promise<RestaurantSearchResult[]> {
@@ -94,6 +95,7 @@ class RestaurantService {
         if (locationInfo != undefined) {
             const {coordinates, maxDistance} = locationInfo
             const {latitude, longitude} = coordinates
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
             filteredRestaurants =
                 await this.repository.GetRestaurantsNearCoordinates(
                     latitude,
@@ -101,8 +103,12 @@ class RestaurantService {
                     maxDistance,
                 )
         } else {
-            const allRestaurants = await this.repository.GetAllRestaurants()
-            filteredRestaurants = allRestaurants.map(element => ({
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            const restaurants = await this.repository.GetAllRestaurants(
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+            filteredRestaurants = restaurants.map(element => ({
                 restaurant: element,
                 distance: undefined,
             }))

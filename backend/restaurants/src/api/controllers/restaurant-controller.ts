@@ -119,6 +119,7 @@ const RestaurantController = {
             {},
             {
                 query: string
+                page: number
                 limit?: number
                 latitude?: number
                 longitude?: number
@@ -130,7 +131,7 @@ const RestaurantController = {
     ) => {
         let data: RestaurantSearchResult[]
         try {
-            const {query, limit, latitude, longitude} = req.query
+            const {query, limit, latitude, longitude, page} = req.query
             let {maxDistance} = req.query
             if (latitude != undefined && longitude != undefined) {
                 if (maxDistance == undefined) maxDistance = Infinity
@@ -138,12 +139,12 @@ const RestaurantController = {
                     latitude: latitude,
                     longitude: longitude,
                 }
-                data = await service.SearchRestaurants(query, limit, {
+                data = await service.SearchRestaurants(query, page, limit, {
                     coordinates: coordinates,
                     maxDistance: maxDistance,
                 })
             } else {
-                data = await service.SearchRestaurants(query, limit)
+                data = await service.SearchRestaurants(query, page, limit)
             }
             res.json(data)
         } catch (err) {

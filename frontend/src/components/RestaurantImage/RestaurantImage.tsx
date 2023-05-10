@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import FastImage from 'react-native-fast-image'
 import {getRestaurantImage} from '../../utils/apiCalls'
+import {View} from 'react-native'
 interface props {
     imageName: string
     style: any
@@ -16,14 +17,9 @@ export default function RestaurantImage({imageName, style}: props) {
         handleRestaurantImage()
     }, [])
 
-    return (
-        <FastImage
-            source={
-                restaurantImage == undefined
-                    ? {uri: 'https://picsum.photos/100'}
-                    : {uri: restaurantImage}
-            }
-            style={style}
-        />
+    return restaurantImage == undefined ? (
+        <View style={style} />
+    ) : (
+        <FastImage source={{uri: restaurantImage}} style={style} />
     )
 }
