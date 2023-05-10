@@ -17,7 +17,7 @@ const Navbar = ({onSearch}: NavbarProps) => {
 
     return (
         <View style={navbarStyle.mainContainer}>
-            <Ionicons name={'person-outline'} size={30} color={Colors.white} />
+            <Ionicons name={'menu'} size={30} color={Colors.white} />
             <View style={navbarStyle.searchBar}>
                 <TextInput
                     style={navbarStyle.text}
