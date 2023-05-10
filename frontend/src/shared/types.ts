@@ -36,3 +36,20 @@ export type LatLng = {
     latitude: number
     longitude: number
 }
+
+export type Reservation = {
+    id: number
+    id_user: number
+    id_restaurant: number
+    dateTime: string
+    n_people: number
+}
+
+export type ReservationWithRestaurant = {
+    id: number
+    id_user: number
+    restaurant: Restaurant
+    date: string
+    time: string
+    n_people: number
+}
