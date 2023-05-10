@@ -1,17 +1,19 @@
 export const getCurrentDate = () => {
     const date = new Date()
-    date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 )
+    date.setTime(date.getTime() - date.getTimezoneOffset()*60*1000)
     return date.toISOString().split('T')[0]
 }
 
 export const getCurrentTime = () => {
     const date = new Date()
-    date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 )
+    date.setTime(date.getTime() - date.getTimezoneOffset()*60*1000)
     return date.toISOString().split('T')[1]
 }
 
 export const constructDateTimeFromString = (date: string, time: string) => {
-    return new Date(date + " " + time)
+    const dateTime = new Date(date + " " + time)
+    dateTime.setTime(dateTime.getTime() - dateTime.getTimezoneOffset()*60*1000)
+    return dateTime
 }
 
 export const getNextReservableTime = () => {

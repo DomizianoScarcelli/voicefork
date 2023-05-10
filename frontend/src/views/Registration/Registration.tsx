@@ -6,7 +6,6 @@ import InputField from '../../components/InputField/InputField'
 import { ScrollView } from 'react-native-gesture-handler'
 import axios from 'axios'
 import { registration_style } from "./styles.js"
-import Config from "react-native-config"
 
 function Registration({navigation}:any) {
     const [formValues, setFormValues] = useState({ email: '', password: '', name: '', surname: '' })
@@ -104,7 +103,7 @@ function Registration({navigation}:any) {
             if (response.status === 200) {
                 Alert.alert(  
                     'User created successfully',  
-                    "You can login now",  
+                    'You can login now',  
                     [  
                         {text: 'OK',
                         onPress: () => navigation.navigate("Welcome")}

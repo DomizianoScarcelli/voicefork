@@ -1,7 +1,8 @@
-import {LatLng, DistanceResult} from '../shared/types'
-import {BASE_URL} from '../constants'
-import axios from 'axios'
+import {LatLng, DistanceResult, Reservation} from '../shared/types'
+import { Urls } from '../constants'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import {Component} from 'react'
+import { Alert } from 'react-native'
 
 export const performSearch = async (
     query: string,
@@ -12,7 +13,7 @@ export const performSearch = async (
     const MAX_DISTANCE = 10000000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
-    const URL = `${BASE_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
+    const URL = `${Urls.restaurant}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
     const data = (await axios.get(URL)).data
     return data
 }
@@ -23,7 +24,7 @@ export const getNearbyRestaurants = async (coordinates: LatLng | undefined) => {
     console.log('Getting nearby restaurants')
     const MAX_DISTANCE = 3000
     const LIMIT = 10
-    const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
+    const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
     const result: DistanceResult[] = (await axios.get(URL)).data
     return result
 }
@@ -37,7 +38,30 @@ export const getTopRatedRestaurants = async (
     const MAX_DISTANCE = 3000
     const LIMIT = 10
     const MIN_RATING = 4.0
-    const URL = `${BASE_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
+    const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
     const result: DistanceResult[] = (await axios.get(URL)).data
     return result
+}
+
+export const createReservation = async (
+    reservationDetails: Reservation
+): Promise<number> => {
+        let result: number = 500
+        const URL = `${Urls.reservations}/create-reservation`
+        await axios.post(URL, reservationDetails)
+        .then(function(response) {
+            result = response.status
+        })
+        .catch(function(error) {
+            Alert.alert(  
+                'Something is wrong',  
+                'Please try again',
+                [  
+                    {text: 'OK'},  
+                ]  
+            )
+            console.log(error.response.data)
+            result = error.response.status
+        })
+        return result
 }
