@@ -5,6 +5,7 @@ import {Restaurant} from '../../shared/types'
 import {Colors} from '../../constants'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import RestaurantImage from '../../components/RestaurantImage/RestaurantImage'
+import {SafeAreaView} from 'react-native-safe-area-context'
 
 function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
     const [restaurantDetails, setRestaurantDetails] = useState<Restaurant>(
@@ -24,7 +25,7 @@ function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
     }
 
     return (
-        <>
+        <SafeAreaView style={{height: '100%'}}>
             <ScrollView>
                 <RestaurantImage
                     imageName={restaurantDetails.imageName}
@@ -114,7 +115,7 @@ function RestaurantDetails({route, navigation}: {route: any; navigation: any}) {
                     <Text style={styles.button_text}>BOOK A TABLE</Text>
                 </TouchableOpacity>
             </View>
-        </>
+        </SafeAreaView>
     )
 }
 
