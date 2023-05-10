@@ -169,7 +169,7 @@ const Homepage = ({navigation}: any) => {
                 />
 
                 <TouchableOpacity
-                    onPress={() => logout()}
+                    onPress={() => navigation.navigate('Reservations')}
                     style={{
                         backgroundColor: Colors.green,
                         paddingVertical: Spacing,
@@ -191,7 +191,7 @@ const Homepage = ({navigation}: any) => {
                             fontSize: FontSize.large,
                             textAlign: 'center',
                         }}>
-                        Logout
+                        Reservations
                     </Text>
                 </TouchableOpacity>
             </ScrollView>

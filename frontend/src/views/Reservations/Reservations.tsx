@@ -73,7 +73,7 @@ const Reservations = ({navigation}: any) => {
 
     const homepage = async () => {
         try {
-            navigation.navigate("Homepage")
+            navigation.navigate('Homepage')
         } catch (error) {
             Alert.alert(
                 'Something is wrong',
@@ -102,16 +102,18 @@ const Reservations = ({navigation}: any) => {
                 // separate dateTime and format them correctly
                 const dateTime = value.dateTime
 
-                const date = dateTime.toString().split('T')[0];
-                const formattedDate = new Date(date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                  }).replace(/\//g, '/');
+                const date = dateTime.toString().split('T')[0]
+                const formattedDate = new Date(date)
+                    .toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                    })
+                    .replace(/\//g, '/')
 
-                const time = dateTime.toString().split('T')[1].split('.')[0];
-                const [hours, minutes] = time.split(':');
-                const formattedTime = `${hours}:${minutes}`;
+                const time = dateTime.toString().split('T')[1].split('.')[0]
+                const [hours, minutes] = time.split(':')
+                const formattedTime = `${hours}:${minutes}`
 
                 const new_reservation: ReservationWithRestaurant = {
                     id: value.id,
@@ -172,7 +174,9 @@ const Reservations = ({navigation}: any) => {
                                 fontSize: FontSize.medium,
                                 textAlign: 'center',
                             }}>
-                            {"You haven't made any reservations yet.. \n\n Go to the homepage to make one!"}
+                            {
+                                "You haven't made any reservations yet.. \n\n Go to the homepage to make one!"
+                            }
                         </Text>
                         <TouchableOpacity
                             onPress={() => homepage()}
@@ -202,34 +206,33 @@ const Reservations = ({navigation}: any) => {
                         </TouchableOpacity>
                     </View>
                 )}
-                </View>
-                <TouchableOpacity
-                    onPress={() => logout()}
+            </View>
+            <TouchableOpacity
+                onPress={() => logout()}
+                style={{
+                    backgroundColor: Colors.green,
+                    paddingVertical: Spacing,
+                    paddingHorizontal: Spacing,
+                    width: '48%',
+                    borderRadius: Spacing,
+                    shadowColor: Colors.black,
+                    shadowOffset: {
+                        width: 0,
+                        height: Spacing,
+                    },
+                    shadowOpacity: 0.3,
+                    shadowRadius: Spacing,
+                }}>
+                <Text
                     style={{
-                        backgroundColor: Colors.green,
-                        paddingVertical: Spacing,
-                        paddingHorizontal: Spacing,
-                        width: '48%',
-                        borderRadius: Spacing,
-                        shadowColor: Colors.black,
-                        shadowOffset: {
-                            width: 0,
-                            height: Spacing,
-                        },
-                        shadowOpacity: 0.3,
-                        shadowRadius: Spacing,
+                        fontFamily: Fonts['poppins-bold'],
+                        color: Colors.white,
+                        fontSize: FontSize.large,
+                        textAlign: 'center',
                     }}>
-                    <Text
-                        style={{
-                            fontFamily: Fonts['poppins-bold'],
-                            color: Colors.white,
-                            fontSize: FontSize.large,
-                            textAlign: 'center',
-                        }}>
-                        Logout
-                    </Text>
-                </TouchableOpacity>
-            
+                    Logout
+                </Text>
+            </TouchableOpacity>
         </>
     )
 }

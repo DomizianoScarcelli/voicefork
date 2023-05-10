@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
         paddingVertical: Spacing,
         paddingHorizontal: Spacing,
         borderRadius: Spacing,
+        overflow: 'hidden',
     },
 
     horizontalLine: {
