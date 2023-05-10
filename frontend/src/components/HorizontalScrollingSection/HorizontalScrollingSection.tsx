@@ -5,6 +5,7 @@ import {metersToKm} from '../../utils/geolocationUtils'
 import {useEffect, useState} from 'react'
 import {getRestaurantImage} from '../../utils/apiCalls'
 import FastImage from 'react-native-fast-image'
+import RestaurantImage from '../RestaurantImage/RestaurantImage'
 
 type HorizontalScrollingSectionProps = {
     title: String
@@ -52,24 +53,10 @@ const RestaurantTile = ({
     distance?: number
     showRating?: boolean
 }) => {
-    const [restaurantImage, setRestaurantImage] = useState<string>()
-
-    useEffect(() => {
-        const handleRestaurantImage = async () => {
-            const image = await getRestaurantImage(restaurant.imageName)
-            setRestaurantImage(image)
-        }
-        handleRestaurantImage()
-    }, [])
-
     return (
         <View style={styles.restaurantTileContainer}>
-            <FastImage
-                source={
-                    restaurantImage == undefined
-                        ? {uri: 'https://picsum.photos/100'}
-                        : {uri: restaurantImage}
-                }
+            <RestaurantImage
+                imageName={restaurant.imageName}
                 style={styles.restaurantTileImage}
             />
             <Text style={styles.mediumBoldText}>{restaurant.name}</Text>

@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet} from 'react-native'
 import {SearchResult} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
+import RestaurantImage from '../RestaurantImage/RestaurantImage'
 interface Props {
     searchResult: SearchResult
 }
@@ -10,8 +11,8 @@ interface Props {
 const SearchResultItem: React.FC<Props> = ({searchResult}) => {
     return (
         <View key={searchResult.restaurant.id} style={styles.container}>
-            <Image
-                source={{uri: 'https://picsum.photos/100'}}
+            <RestaurantImage
+                imageName={searchResult.restaurant.imageName}
                 style={styles.image}
             />
             <View style={styles.details}>
