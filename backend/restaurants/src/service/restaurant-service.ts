@@ -175,7 +175,7 @@ class RestaurantService {
         const image = (await this.minioService.getObject(imageName)).toString(
             'base64',
         )
-        return image
+        return `data:image/jpeg;base64,${image}`
     }
 }
 

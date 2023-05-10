@@ -1,5 +1,5 @@
-const Minio = require('minio')
-import {Client, LockConfig, ResultCallback, UploadedObjectInfo} from 'minio'
+const Minio = require('minio') //Require because with import there is a strange bug
+import {Client, UploadedObjectInfo} from 'minio'
 import {Readable} from 'stream'
 
 class MinioService {

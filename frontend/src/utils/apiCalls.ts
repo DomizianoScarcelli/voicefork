@@ -1,7 +1,6 @@
 import {LatLng, DistanceResult} from '../shared/types'
 import {BASE_URL} from '../constants'
 import axios from 'axios'
-import {Component} from 'react'
 
 export const performSearch = async (
     query: string,
@@ -43,7 +42,7 @@ export const getTopRatedRestaurants = async (
 }
 
 export const getRestaurantImage = async (imageName: string) => {
-    const URL = `http://localhost:3000/restaurants/restaurant-image?imageName=${imageName}`
+    const URL = `${BASE_URL}/restaurants/restaurant-image?imageName=${imageName}`
     const response = (await axios.get(URL)).data
     return response.image
 }

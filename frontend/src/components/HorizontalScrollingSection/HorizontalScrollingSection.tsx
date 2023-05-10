@@ -4,6 +4,7 @@ import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
 import {useEffect, useState} from 'react'
 import {getRestaurantImage} from '../../utils/apiCalls'
+import FastImage from 'react-native-fast-image'
 
 type HorizontalScrollingSectionProps = {
     title: String
@@ -63,11 +64,11 @@ const RestaurantTile = ({
 
     return (
         <View style={styles.restaurantTileContainer}>
-            <Image
+            <FastImage
                 source={
                     restaurantImage == undefined
                         ? {uri: 'https://picsum.photos/100'}
-                        : {uri: `data:image/jpeg;base64,${restaurantImage}`}
+                        : {uri: restaurantImage}
                 }
                 style={styles.restaurantTileImage}
             />
