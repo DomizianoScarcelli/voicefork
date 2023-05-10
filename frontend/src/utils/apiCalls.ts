@@ -8,7 +8,7 @@ export const performSearch = async (
 ) => {
     if (coordinates == undefined) return []
     console.log('Searching for restaurants')
-    const MAX_DISTANCE = 10000
+    const MAX_DISTANCE = 10000000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
     const URL = `${BASE_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`

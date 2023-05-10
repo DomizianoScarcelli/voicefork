@@ -1,4 +1,11 @@
-import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
+import {
+    ListRenderItem,
+    Text,
+    FlatList,
+    View,
+    Image,
+    TouchableOpacity,
+} from 'react-native'
 import {Restaurant} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
@@ -48,41 +55,51 @@ const RestaurantTile = ({
     restaurant,
     distance,
     showRating,
+    navigation,
 }: {
     restaurant: Restaurant
     distance?: number
     showRating?: boolean
+    navigation: any
 }) => {
     return (
-        <View style={styles.restaurantTileContainer}>
-            <RestaurantImage
-                imageName={restaurant.imageName}
-                style={styles.restaurantTileImage}
-            />
-            <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
-            {restaurant.cuisines ? (
-                <Text style={styles.smallRegularText}>
-                    {restaurant.cuisines.split(',').slice(0, 3).join(' •')}
-                </Text>
-            ) : (
-                <></>
-            )}
-            {restaurant.priceLevel ? (
-                <Text style={styles.smallRegularText}>
-                    {`${restaurant.priceLevel}`}
-                </Text>
-            ) : (
-                <></>
-            )}
-            {showRating ? (
-                <Text style={styles.smallRegularSubText}>
-                    {`Rated ${restaurant.avgRating} stars`}
-                </Text>
-            ) : (
-                <Text style={styles.smallRegularSubText}>
-                    {`${metersToKm(distance!)} from you`}
-                </Text>
-            )}
+        <View>
+            <TouchableOpacity
+                style={styles.restaurantTileContainer}
+                onPress={() =>
+                    navigation.navigate('RestaurantDetails', {
+                        restaurant: restaurant,
+                    })
+                }>
+                <RestaurantImage
+                    imageName={restaurant.imageName}
+                    style={styles.restaurantTileImage}
+                />
+                <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
+                {restaurant.cuisines ? (
+                    <Text style={styles.smallRegularText}>
+                        {restaurant.cuisines.split(',').slice(0, 3).join(' •')}
+                    </Text>
+                ) : (
+                    <></>
+                )}
+                {restaurant.priceLevel ? (
+                    <Text style={styles.smallRegularText}>
+                        {`${restaurant.priceLevel}`}
+                    </Text>
+                ) : (
+                    <></>
+                )}
+                {showRating ? (
+                    <Text style={styles.smallRegularSubText}>
+                        {`Rated ${restaurant.avgRating} stars`}
+                    </Text>
+                ) : (
+                    <Text style={styles.smallRegularSubText}>
+                        {`${metersToKm(distance!)} from you`}
+                    </Text>
+                )}
+            </TouchableOpacity>
         </View>
     )
 }

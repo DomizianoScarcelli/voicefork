@@ -141,6 +141,7 @@ const Homepage = ({navigation}: any) => {
                             <RestaurantTile
                                 restaurant={item.restaurant}
                                 distance={item.distance}
+                                navigation={navigation}
                             />
                         )
                     }
@@ -161,6 +162,7 @@ const Homepage = ({navigation}: any) => {
                                 restaurant={item.restaurant}
                                 distance={item.distance}
                                 showRating={true}
+                                navigation={navigation}
                             />
                         )
                     }
