@@ -1,7 +1,12 @@
-import {LatLng, DistanceResult, Reservation, ReservationCreationDetails} from '../shared/types'
-import { Urls } from '../constants'
-import axios, { AxiosError, AxiosResponse } from 'axios'
-import { Alert } from 'react-native'
+import {
+    LatLng,
+    DistanceResult,
+    Reservation,
+    ReservationCreationDetails,
+} from '../shared/types'
+import {Urls} from '../constants'
+import axios, {AxiosError, AxiosResponse} from 'axios'
+import {Alert} from 'react-native'
 
 export const performSearch = async (
     query: string,
@@ -9,7 +14,7 @@ export const performSearch = async (
 ) => {
     if (coordinates == undefined) return []
     console.log('Searching for restaurants')
-    const MAX_DISTANCE = 100000
+    const MAX_DISTANCE = 10000000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
     const URL = `${Urls.restaurant}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
@@ -21,7 +26,7 @@ export const getNearbyRestaurants = async (coordinates: LatLng | undefined) => {
     if (coordinates == undefined) return []
     const {latitude, longitude} = coordinates
     console.log('Getting nearby restaurants')
-    const MAX_DISTANCE = 3000
+    const MAX_DISTANCE = 10000000
     const LIMIT = 10
     const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
     const result: DistanceResult[] = (await axios.get(URL)).data
@@ -34,7 +39,7 @@ export const getTopRatedRestaurants = async (
     console.log('Getting top picks restaurants')
     if (coordinates == undefined) return []
     const {latitude, longitude} = coordinates
-    const MAX_DISTANCE = 3000
+    const MAX_DISTANCE = 100000
     const LIMIT = 10
     const MIN_RATING = 4.0
     const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
@@ -49,26 +54,23 @@ export const getRestaurantImage = async (imageName: string) => {
 }
 
 export const createReservation = async (
-    reservationDetails: ReservationCreationDetails
-    ): Promise<number> => {
-        let result: number = 500
-        const URL = `${Urls.reservations}/create-reservation`
-        await axios.post(URL, reservationDetails)
-        .then(function(response) {
+    reservationDetails: ReservationCreationDetails,
+): Promise<number> => {
+    let result: number = 500
+    const URL = `${Urls.reservations}/create-reservation`
+    await axios
+        .post(URL, reservationDetails)
+        .then(function (response) {
             result = response.status
         })
-        .catch(function(error) {
-            Alert.alert(  
-                'Something is wrong',  
-                'Please try again',
-                [  
-                    {text: 'OK'},  
-                ]  
-            )
+        .catch(function (error) {
+            Alert.alert('Something is wrong', 'Please try again', [
+                {text: 'OK'},
+            ])
             console.log(error.response.data)
             result = error.response.status
         })
-        return result
+    return result
 }
 
 export const deleteReservation = async (
