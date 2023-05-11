@@ -65,7 +65,7 @@ export const createReservation = async (
         return result
 }
 export const getRestaurantImage = async (imageName: string) => {
-    const URL = `${BASE_URL}/restaurant-image?imageName=${imageName}`
+    const URL = `${Urls.restaurant}/restaurant-image?imageName=${imageName}`
     const response = (await axios.get(URL)).data
     return response.image
 }
