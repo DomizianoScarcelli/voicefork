@@ -26,8 +26,8 @@ const Reservations = ({navigation}: any) => {
 
     useEffect(() => {
         console.log('userId', userId)
-        if (userId != undefined) getUserReservations(userId)
-    }, [userId])
+        if (userId !== undefined) getUserReservations(userId)
+    }, [userId, userReservations])
 
     const logout = async () => {
         try {
@@ -133,7 +133,7 @@ const Reservations = ({navigation}: any) => {
                             item,
                         }: {
                             item: ReservationWithRestaurant
-                        }) => <ReservationTile reservation={item} />}
+                        }) => <ReservationTile reservation={item} navigation={navigation}/>}
                     />
                 ) : (
                     // Empty tile

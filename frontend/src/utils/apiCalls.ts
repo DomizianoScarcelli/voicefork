@@ -70,3 +70,27 @@ export const createReservation = async (
         })
         return result
 }
+
+export const deleteReservation = async (
+    reservationId: number
+    ): Promise<number> => {
+        let result: number = 500
+        const URL = `${Urls.reservations}/delete-reservation/${reservationId}`
+        await axios.delete(URL)
+        .then(function(response) {
+            result = response.status
+        })
+        .catch(function(error) {
+            console.log(reservationId)
+            console.log(error)
+            Alert.alert(  
+                'Something is wrong',  
+                'Please try again',
+                [  
+                    {text: 'OK'},  
+                ]  
+            )
+            result = error.response.status
+        })
+        return result
+}
