@@ -1,7 +1,6 @@
 import {LatLng, DistanceResult, Reservation} from '../shared/types'
 import { Urls } from '../constants'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import {Component} from 'react'
 import { Alert } from 'react-native'
 
 export const performSearch = async (
@@ -10,7 +9,7 @@ export const performSearch = async (
 ) => {
     if (coordinates == undefined) return []
     console.log('Searching for restaurants')
-    const MAX_DISTANCE = 10000000
+    const MAX_DISTANCE = 100000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
     const URL = `${Urls.restaurant}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
@@ -64,4 +63,9 @@ export const createReservation = async (
             result = error.response.status
         })
         return result
+}
+export const getRestaurantImage = async (imageName: string) => {
+    const URL = `${BASE_URL}/restaurant-image?imageName=${imageName}`
+    const response = (await axios.get(URL)).data
+    return response.image
 }
