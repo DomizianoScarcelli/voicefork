@@ -33,9 +33,10 @@ export const getReservableTimes = (date: Date) => {
         const currentHour = Number(currentTime.split(':')[0])
         minHour = currentHour + 1
     }
-
+    
     for (let i = minHour; i < 24; i++) {
         resevableHours.push(i.toString().concat(":00"))
+        resevableHours.push(i.toString().concat(":30"))
     }
 
     return resevableHours

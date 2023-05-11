@@ -1,4 +1,4 @@
-import {LatLng, DistanceResult, Reservation} from '../shared/types'
+import {LatLng, DistanceResult, Reservation, ReservationCreationDetails} from '../shared/types'
 import { Urls } from '../constants'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { Alert } from 'react-native'
@@ -42,9 +42,15 @@ export const getTopRatedRestaurants = async (
     return result
 }
 
+export const getRestaurantImage = async (imageName: string) => {
+    const URL = `${Urls.restaurant}/restaurant-image?imageName=${imageName}`
+    const response = (await axios.get(URL)).data
+    return response.image
+}
+
 export const createReservation = async (
-    reservationDetails: Reservation
-): Promise<number> => {
+    reservationDetails: ReservationCreationDetails
+    ): Promise<number> => {
         let result: number = 500
         const URL = `${Urls.reservations}/create-reservation`
         await axios.post(URL, reservationDetails)
@@ -63,9 +69,4 @@ export const createReservation = async (
             result = error.response.status
         })
         return result
-}
-export const getRestaurantImage = async (imageName: string) => {
-    const URL = `${Urls.restaurant}/restaurant-image?imageName=${imageName}`
-    const response = (await axios.get(URL)).data
-    return response.image
 }
