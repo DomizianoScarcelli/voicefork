@@ -23,8 +23,6 @@ function RootNavigation() {
                 <Stack.Screen name="Reservations" component={Reservations} />
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
-                
-                <Stack.Screen name="MyDrawer" component={MyDrawer} />
             </Stack.Navigator>
         </NavigationContainer>
 
