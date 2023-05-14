@@ -1,14 +1,17 @@
 import UsersRepository from "../repository/users-repository"
 import { UserInfo } from "../shared/types"
+import MinioService from "./minio-service"
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
 class UsersService {
 	repository: UsersRepository
+	minioService: MinioService
 
 	constructor() {
 		this.repository = new UsersRepository()
+		this.minioService = new MinioService()
 	}
 
     async CreateUser(name: string, surname: string, email: string, password: string, role: string) {
@@ -62,6 +65,13 @@ class UsersService {
 
 		return false
 	}
+
+	async GetUserAvatar(imageName: string): Promise<string | undefined> {
+        const image = (await this.minioService.getObject(imageName)).toString(
+            'base64',
+        )
+        return `data:image/jpeg;base64,${image}`
+    }
 }
 
 export default UsersService
