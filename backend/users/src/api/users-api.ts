@@ -43,7 +43,7 @@ const usersAPI = (app: Express) => {
 	/**
      * Given a restaurant, it returns its image as a base64 string.
      */
-    app.get('/get-user-avatar', UsersController.getUserAvatar)
+    app.get('/get-user-avatar/:imageName', UsersController.getUserAvatar)
 
 
 }
