@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {
-    Text,
     SafeAreaView,
     Alert,
-    TouchableOpacity,
     ScrollView,
 } from 'react-native'
-import {Colors, FontSize, Fonts, Spacing} from '../../constants'
+import {Colors} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
@@ -59,19 +57,6 @@ const Homepage = ({navigation}: any) => {
             }
         } catch (error) {
             navigation.navigate('Welcome')
-        }
-    }
-
-    const logout = async () => {
-        try {
-            await EncryptedStorage.removeItem('user_session')
-            navigation.navigate('Welcome')
-        } catch (error) {
-            Alert.alert(
-                'Something is wrong',
-                "We can't complete this task. Please, try again",
-                [{text: 'OK'}],
-            )
         }
     }
 
@@ -167,33 +152,6 @@ const Homepage = ({navigation}: any) => {
                         )
                     }
                 />
-
-                <TouchableOpacity
-                    onPress={() => logout()}
-                    style={{
-                        backgroundColor: Colors.green,
-                        paddingVertical: Spacing,
-                        paddingHorizontal: Spacing,
-                        width: '48%',
-                        borderRadius: Spacing,
-                        shadowColor: Colors.black,
-                        shadowOffset: {
-                            width: 0,
-                            height: Spacing,
-                        },
-                        shadowOpacity: 0.3,
-                        shadowRadius: Spacing,
-                    }}>
-                    <Text
-                        style={{
-                            fontFamily: Fonts['poppins-bold'],
-                            color: Colors.white,
-                            fontSize: FontSize.large,
-                            textAlign: 'center',
-                        }}>
-                        Logout
-                    </Text>
-                </TouchableOpacity>
             </ScrollView>
         </>
     )

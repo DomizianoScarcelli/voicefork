@@ -4,7 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack'
 
 import {BottomNavigation} from './src/components'
 import {Welcome, Reservations, Registration, Homepage, Search, RestaurantDetails} from './src/views'
-import MyDrawer from './src/views/MyDrawer'
+import Drawer from './src/components/Drawer/Drawer'
+
 
 function RootNavigation() {
     const Stack = createStackNavigator()
@@ -23,8 +24,7 @@ function RootNavigation() {
                 <Stack.Screen name="Reservations" component={Reservations} />
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
-
-                <Stack.Screen name="MyDrawer" component={MyDrawer} />
+                <Stack.Screen name="Drawer" component={Drawer} />
             </Stack.Navigator>
         </NavigationContainer>
 

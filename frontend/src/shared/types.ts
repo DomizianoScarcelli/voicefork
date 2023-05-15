@@ -57,3 +57,11 @@ export type ReservationWithRestaurant = {
     time: string
     n_people: number
 }
+
+export type User = {
+    id: number
+    name: string
+    surname: string
+    email: string
+    role: string
+}
