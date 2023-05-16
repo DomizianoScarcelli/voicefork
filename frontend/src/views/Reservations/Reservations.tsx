@@ -130,7 +130,9 @@ const Reservations = ({navigation}: any) => {
                             searchStrategy: SearchStrategy.KEYWORD,
                         })
                     }
-                />
+                    navigation={navigation}
+                    currentView={'Reservations'}
+                    />
             </SafeAreaView>
             <View style={reservations_style.main_view}>
                 {isLoading ? (

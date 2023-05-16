@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { drawerStyle } from './styles';
 import {Colors, Fonts, FontSize, Spacing} from '../../constants'
-import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import axios from 'axios'
 import {
   User,
 } from '../../shared/types'
+import { useNavigation } from '@react-navigation/native';
 
-const ProfilePage = () => {
-    const navigation = useNavigation()
+const Drawer = ({route, navigation}: any) => {
+    const {currentView} = route.params
+    
     const [isLoading, setLoading] = useState<boolean>(true)
     const [userId, setUserId] = useState<number>()
     const [userData, setUserData] = useState<
@@ -51,7 +52,6 @@ const ProfilePage = () => {
         console.log('axios call made')
         const user: User = (await axios.get(URL)).data
 
-        
         setLoading(false)
         setUserData(user)
     }
@@ -67,22 +67,44 @@ const ProfilePage = () => {
             [{text: 'OK'}],
         )
     }
-  } 
-
-  const goBack = () => {
-    // TODO: add animation
-    navigation.goBack()
   }
 
   return (
     <View style={drawerStyle.container}>
-      <Ionicons style={drawerStyle.iconContainer} name={'close-outline'} size={30} color={Colors.black} onPress={() => goBack()}/>
+      <Ionicons style={drawerStyle.iconContainer} name={'close-outline'} size={30} color={Colors.black} onPress={() => navigation.navigate(currentView)}/>
       <View style={drawerStyle.profileContainer}>
         <Image source={{uri: 'https://picsum.photos/100'}} style={drawerStyle.profileImage} />
         <Text style={drawerStyle.name}> {userData?.name} {userData?.surname}</Text>
         <Text style={drawerStyle.name}> {userData?.email}</Text>
 
       </View>
+      <TouchableOpacity
+          onPress={() => navigation.navigate('Homepage')}
+          style={{
+              backgroundColor: Colors.green,
+              paddingVertical: Spacing,
+              paddingHorizontal: Spacing,
+              marginBottom: 20,
+              width: '48%',
+              borderRadius: Spacing,
+              shadowColor: Colors.black,
+              shadowOffset: {
+                  width: 0,
+                  height: Spacing,
+              },
+              shadowOpacity: 0.3,
+              shadowRadius: Spacing,
+          }}>
+          <Text
+              style={{
+                  fontFamily: Fonts['poppins-bold'],
+                  color: Colors.white,
+                  fontSize: FontSize.large,
+                  textAlign: 'center',
+              }}>
+              Homepage
+          </Text>
+      </TouchableOpacity>
       <TouchableOpacity
           onPress={() => navigation.navigate('Reservations')}
           style={{
@@ -141,4 +163,4 @@ const ProfilePage = () => {
 };
 
 
-export default ProfilePage;
+export default Drawer;

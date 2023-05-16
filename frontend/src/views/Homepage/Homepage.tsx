@@ -101,7 +101,9 @@ const Homepage = ({navigation}: any) => {
                             searchStrategy: SearchStrategy.KEYWORD,
                         })
                     }
-                />
+                    navigation={navigation}
+                    currentView={'Homepage'}
+                    />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
