@@ -1,0 +1,15 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "./custom-rules"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        // Custom rule for TimeFormat
+        "@typescript-eslint/no-use-before-define": "off", // Disable no-use-before-define rule if it conflicts with the custom rule
+        "custom-rules/time-format": "error" // Specify the custom rule file and error level
+    }
+}
