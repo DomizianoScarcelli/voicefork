@@ -55,7 +55,7 @@ export const computeAverageVector = (
         reservationHour,
         reservationMinute,
      */
-    const WEIGHTS = [0, 1, 5, 5, 1, 1, 1, 2, 1, 2, 1] //TODO: to be better defined
+    const WEIGHTS = [0, 1, 50, 50, 1, 1, 1, 2, 1, 2, 1] //TODO: to be better defined
 
     const vectors = []
 
@@ -102,4 +102,26 @@ export const calculateL2Distance = (
 
     const l2Distance = Math.sqrt(squaredDiffSum)
     return l2Distance
+}
+
+export const cosineSimilarity = (
+    vectorA: ContextVector,
+    vectorB: ContextVector,
+): number => {
+    if (vectorA.length !== vectorB.length) {
+        throw new Error('Vectors must have the same length')
+    }
+
+    const dotProduct = vectorA.reduce(
+        (acc, val, i) => acc + val * vectorB[i],
+        0,
+    )
+    const magnitudeA = Math.sqrt(
+        vectorA.reduce((acc, val) => acc + val ** 2, 0),
+    )
+    const magnitudeB = Math.sqrt(
+        vectorB.reduce((acc, val) => acc + val ** 2, 0),
+    )
+
+    return dotProduct / (magnitudeA * magnitudeB)
 }

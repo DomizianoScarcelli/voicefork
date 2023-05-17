@@ -8,6 +8,7 @@ import {
     contextToVector,
     computeAverageVector,
     calculateL2Distance,
+    cosineSimilarity,
 } from '../utils/contextUtils'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -85,9 +86,17 @@ class ReservationsService {
     async GetDistanceBetweenContext(
         inputContext: Context,
     ): Promise<number | null> {
+        //TODO: The coordinates can be computed not by absolute distance, but by:
+        // - Computing the centroid of the stored contexts: this will be a point in coordinates that determines the average point where the user usually make the reservation
+        // - For each context in the stored contexts, compute the distance between the point and the centroid
+        // - Average all the distances when computing the averageVector
+        // - Compute the distance between the inputContext coordinates and the centroid
+        // By doing that you can have a "average distance" inside the avgVector and teh "current distance from the average point where the user usually make the reservation" in the inputVector
+        // Then just compute the distance/similarity between the vectors.
+
         const inputVector = contextToVector(inputContext)
         const avgVector = computeAverageVector(inputContext.id_restaurant)
-        if (avgVector) return calculateL2Distance(inputVector, avgVector)
+        if (avgVector) return cosineSimilarity(inputVector, avgVector)
         return null
     }
 }
