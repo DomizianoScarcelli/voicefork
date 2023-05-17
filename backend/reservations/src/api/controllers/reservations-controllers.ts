@@ -183,7 +183,7 @@ const ReservationsController = {
             const inputContext: Context = {
                 id_restaurant,
                 n_people,
-                restaurantLocation: {latitude, longitude},
+                reservationLocation: {latitude, longitude},
                 currentDay,
                 reservationDay,
                 currentTime,

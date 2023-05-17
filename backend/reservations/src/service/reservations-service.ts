@@ -84,8 +84,8 @@ class ReservationsService {
         const inputContextWithCentroidDistance: Context = {
             ...inputContext,
             centroidDistance: distanceBetweenCoordinates(
-                inputContext.restaurantLocation,
-                avgContext.restaurantLocation,
+                inputContext.reservationLocation,
+                avgContext.reservationLocation,
             ),
         }
         const avgVector = contextToVector(avgContext)

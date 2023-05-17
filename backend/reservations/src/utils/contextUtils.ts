@@ -70,7 +70,7 @@ export const computeAverageContext = (restaurantId: number): Context => {
                     accumulator2 / NUM_RESERVATIONS
                 }`
 
-            case 'restaurantLocation':
+            case 'reservationLocation':
                 pastContexts.forEach(context => {
                     if (context.id_restaurant == restaurantId) {
                         const value = context[field] as LatLng
@@ -93,14 +93,14 @@ export const computeAverageContext = (restaurantId: number): Context => {
         }
     }
 
-    const centroid = avg('restaurantLocation') as LatLng
+    const centroid = avg('reservationLocation') as LatLng
 
     //TODO: this is not efficient because we have a number of for loops equal to the number of fields in the object
     // but since the reservations will not be so many, I think it's ok
     const avgContext: Context = {
         id_restaurant: restaurantId,
         n_people: avg('n_people') as number,
-        restaurantLocation: centroid,
+        reservationLocation: centroid,
         centroidDistance: averageFromCentroid(centroid),
         currentDay: avg('currentDay') as number,
         reservationDay: avg('reservationDay') as DAYS_WEEK,
@@ -115,7 +115,7 @@ const averageFromCentroid = (centroid: LatLng) => {
     pastContexts.forEach(context => {
         accumulator += distanceBetweenCoordinates(
             centroid,
-            context.restaurantLocation,
+            context.reservationLocation,
         )
     })
     return accumulator / pastContexts.length

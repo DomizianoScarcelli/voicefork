@@ -7,7 +7,7 @@ export const pastContexts: Context[] = [
     {
         id_restaurant: 1,
         n_people: 4,
-        restaurantLocation: {
+        reservationLocation: {
             latitude: 41.909756,
             longitude: 12.350008,
         },
@@ -19,7 +19,7 @@ export const pastContexts: Context[] = [
     {
         id_restaurant: 1,
         n_people: 4,
-        restaurantLocation: {
+        reservationLocation: {
             latitude: 41.908253,
             longitude: 12.354374,
         },
@@ -31,7 +31,7 @@ export const pastContexts: Context[] = [
     {
         id_restaurant: 1,
         n_people: 2,
-        restaurantLocation: {
+        reservationLocation: {
             latitude: 41.912547,
             longitude: 12.353728,
         },
@@ -43,7 +43,7 @@ export const pastContexts: Context[] = [
     {
         id_restaurant: 1,
         n_people: 3,
-        restaurantLocation: {
+        reservationLocation: {
             latitude: 41.911112,
             longitude: 12.350839,
         },

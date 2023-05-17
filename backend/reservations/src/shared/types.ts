@@ -20,7 +20,7 @@ export type ContextVector = any[] //TODO: to be better typed
 export type Context = {
     id_restaurant: number
     n_people: number
-    restaurantLocation: LatLng
+    reservationLocation: LatLng
     centroidDistance?: number
     currentDay: DAYS_WEEK
     reservationDay: DAYS_WEEK
