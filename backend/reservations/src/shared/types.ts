@@ -14,15 +14,11 @@ export type ReservationInfo = {
 }
 
 export type TimeFormat = `${number}:${number}`
-// type Hour = `${0 | 1 | 2}${0 | 1 | 2 | 3}`
-// type Minute = `${0 | 1 | 2 | 3 | 4 | 5}${0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`
 
-export type ContextVector = any[]
+export type ContextVector = any[] //TODO: to be better typed
 
 export type Context = {
-    id_user: number
     id_restaurant: number
-    // dateTime: Date
     n_people: number
     restaurantLocation: LatLng
     currentDay: DAYS_WEEK

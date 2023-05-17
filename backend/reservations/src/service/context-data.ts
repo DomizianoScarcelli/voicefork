@@ -5,7 +5,6 @@ import {DAYS_WEEK} from '../shared/enums'
 
 export const pastContexts: Context[] = [
     {
-        id_user: 123,
         id_restaurant: 1,
         n_people: 4,
         restaurantLocation: {
@@ -18,7 +17,6 @@ export const pastContexts: Context[] = [
         reservationTime: '14:12',
     },
     {
-        id_user: 123,
         id_restaurant: 1,
         n_people: 4,
         restaurantLocation: {
@@ -31,7 +29,6 @@ export const pastContexts: Context[] = [
         reservationTime: '19:15',
     },
     {
-        id_user: 123,
         id_restaurant: 1,
         n_people: 2,
         restaurantLocation: {
@@ -44,7 +41,6 @@ export const pastContexts: Context[] = [
         reservationTime: '19:45',
     },
     {
-        id_user: 123,
         id_restaurant: 1,
         n_people: 3,
         restaurantLocation: {

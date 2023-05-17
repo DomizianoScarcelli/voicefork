@@ -1,9 +1,11 @@
 import {pastContexts} from '../service/context-data'
 import {ContextVector, Context} from '../shared/types'
 
+/**
+ * Given a certain context, returns the vector that represent that context
+ */
 export const contextToVector = (context: Context): ContextVector => {
     const {
-        id_user,
         id_restaurant,
         n_people,
         restaurantLocation,
@@ -13,35 +15,47 @@ export const contextToVector = (context: Context): ContextVector => {
         reservationTime,
     } = context
 
-    const vector: ContextVector = [
-        id_user,
-        id_restaurant,
-        n_people,
-        restaurantLocation.latitude,
-        restaurantLocation.longitude,
-        currentDay,
-        reservationDay,
-    ]
-
     // Split the currentTime and reservationTime strings into hours and minutes
     const [currentHour, currentMinute] = currentTime.split(':').map(Number)
     const [reservationHour, reservationMinute] = reservationTime
         .split(':')
         .map(Number)
 
-    // Add the hour and minute components to the vector
-    vector.push(currentHour, currentMinute, reservationHour, reservationMinute)
+    const vector: ContextVector = [
+        id_restaurant,
+        n_people,
+        restaurantLocation.latitude,
+        restaurantLocation.longitude,
+        currentDay,
+        reservationDay,
+        currentHour,
+        currentMinute,
+        reservationHour,
+        reservationMinute,
+    ]
 
     return vector
 }
-
+/**
+ * Return the average ContextVector that represents the history of contexts for the resturant with restaurantId
+ */
 export const computeAverageVector = (
     restaurantId: number,
 ): ContextVector | null => {
     /**
      * Defines the weight to give to each element of the vector
+     *  id_restaurant,
+        n_people,
+        latitude,
+        longitude,
+        currentDay,
+        reservationDay,
+        currentHour,
+        currentMinute,
+        reservationHour,
+        reservationMinute,
      */
-    const WEIGHTS = [5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1] //TODO: to be better defined
+    const WEIGHTS = [0, 1, 5, 5, 1, 1, 1, 2, 1, 2, 1] //TODO: to be better defined
 
     const vectors = []
 
@@ -56,7 +70,7 @@ export const computeAverageVector = (
 
     if (numVectors == 0) return null
 
-    const VECTOR_LENGTH = 11
+    const VECTOR_LENGTH = 10
 
     const sumVector: ContextVector = vectors.reduce((accumulator, vector) => {
         return vector.map((component, index) => accumulator[index] + component)
@@ -70,6 +84,9 @@ export const computeAverageVector = (
     return avgVector
 }
 
+/**
+ * Computes the L2 distance between two ContextVectors
+ */
 export const calculateL2Distance = (
     vector1: ContextVector,
     vector2: ContextVector,
