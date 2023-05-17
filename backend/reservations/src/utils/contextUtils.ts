@@ -50,7 +50,7 @@ export const contextToVector = (context: Context): ContextVector => {
     return vector
 }
 
-export const comptueAverageContext = (restaurantId: number): Context => {
+export const computeAverageContext = (restaurantId: number): Context => {
     const avg = (field: keyof Context): number | LatLng | TimeFormat => {
         let accumulator1 = 0
         let accumulator2 = 0

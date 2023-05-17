@@ -3,7 +3,7 @@ import {Reservation} from '@prisma/client'
 import {Context} from '../shared/types'
 
 //TODO: Debug
-import {comptueAverageContext, contextToVector} from '../utils/contextUtils'
+import {computeAverageContext, contextToVector} from '../utils/contextUtils'
 import {distanceBetweenCoordinates} from '../utils/locationUtils'
 import {l2Distance, cosineSimilarity} from '../utils/distances'
 /**
@@ -80,7 +80,7 @@ class ReservationsService {
     }
 
     async GetDistanceBetweenContext(inputContext: Context): Promise<any> {
-        const avgContext = comptueAverageContext(inputContext.id_restaurant)
+        const avgContext = computeAverageContext(inputContext.id_restaurant)
         const inputContextWithCentroidDistance: Context = {
             ...inputContext,
             centroidDistance: distanceBetweenCoordinates(
