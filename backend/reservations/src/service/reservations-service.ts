@@ -3,13 +3,9 @@ import {Reservation} from '@prisma/client'
 import {Context} from '../shared/types'
 
 //TODO: Debug
-import {pastContexts} from './context-data'
-import {
-    contextToVector,
-    computeAverageVector,
-    calculateL2Distance,
-    cosineSimilarity,
-} from '../utils/contextUtils'
+import {comptueAverageContext, contextToVector} from '../utils/contextUtils'
+import {distanceBetweenCoordinates} from '../utils/locationUtils'
+import {l2Distance, cosineSimilarity} from '../utils/distances'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -83,21 +79,23 @@ class ReservationsService {
         return result
     }
 
-    async GetDistanceBetweenContext(
-        inputContext: Context,
-    ): Promise<number | null> {
-        //TODO: The coordinates can be computed not by absolute distance, but by:
-        // - Computing the centroid of the stored contexts: this will be a point in coordinates that determines the average point where the user usually make the reservation
-        // - For each context in the stored contexts, compute the distance between the point and the centroid
-        // - Average all the distances when computing the averageVector
-        // - Compute the distance between the inputContext coordinates and the centroid
-        // By doing that you can have a "average distance" inside the avgVector and teh "current distance from the average point where the user usually make the reservation" in the inputVector
-        // Then just compute the distance/similarity between the vectors.
-
-        const inputVector = contextToVector(inputContext)
-        const avgVector = computeAverageVector(inputContext.id_restaurant)
-        if (avgVector) return cosineSimilarity(inputVector, avgVector)
-        return null
+    async GetDistanceBetweenContext(inputContext: Context): Promise<any> {
+        const avgContext = comptueAverageContext(inputContext.id_restaurant)
+        const inputContextWithCentroidDistance: Context = {
+            ...inputContext,
+            centroidDistance: distanceBetweenCoordinates(
+                inputContext.restaurantLocation,
+                avgContext.restaurantLocation,
+            ),
+        }
+        const avgVector = contextToVector(avgContext)
+        const inputVector = contextToVector(inputContextWithCentroidDistance)
+        const similarity = l2Distance(avgVector, inputVector)
+        return {
+            inputContext: inputContextWithCentroidDistance,
+            averageContext: avgContext,
+            distance: similarity,
+        }
     }
 }
 

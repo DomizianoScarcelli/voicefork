@@ -1,14 +1,28 @@
 import {pastContexts} from '../service/context-data'
-import {ContextVector, Context} from '../shared/types'
-
+import {DAYS_WEEK} from '../shared/enums'
+import {ContextVector, Context, LatLng, TimeFormat} from '../shared/types'
+import {distanceBetweenCoordinates} from './locationUtils'
 /**
  * Given a certain context, returns the vector that represent that context
  */
 export const contextToVector = (context: Context): ContextVector => {
+    //TODO: give better weights
+    const WEIGHTS = {
+        id_restaurant: 1,
+        n_people: 50,
+        centroidDistance: 0.1,
+        currentDay: 100,
+        reservationDay: 100,
+        currentHour: 30,
+        currentMinute: 10,
+        reservationHour: 50,
+        reservationMinute: 20,
+    }
+
     const {
         id_restaurant,
         n_people,
-        restaurantLocation,
+        centroidDistance,
         currentDay,
         reservationDay,
         currentTime,
@@ -22,106 +36,87 @@ export const contextToVector = (context: Context): ContextVector => {
         .map(Number)
 
     const vector: ContextVector = [
-        id_restaurant,
-        n_people,
-        restaurantLocation.latitude,
-        restaurantLocation.longitude,
-        currentDay,
-        reservationDay,
-        currentHour,
-        currentMinute,
-        reservationHour,
-        reservationMinute,
+        id_restaurant * WEIGHTS.id_restaurant,
+        n_people * WEIGHTS.n_people,
+        centroidDistance! * WEIGHTS.centroidDistance,
+        currentDay * WEIGHTS.currentDay,
+        reservationDay * WEIGHTS.reservationDay,
+        currentHour * WEIGHTS.currentHour,
+        currentMinute * WEIGHTS.currentMinute,
+        reservationHour * WEIGHTS.reservationHour,
+        reservationMinute * WEIGHTS.reservationMinute,
     ]
 
     return vector
 }
-/**
- * Return the average ContextVector that represents the history of contexts for the resturant with restaurantId
- */
-export const computeAverageVector = (
-    restaurantId: number,
-): ContextVector | null => {
-    /**
-     * Defines the weight to give to each element of the vector
-     *  id_restaurant,
-        n_people,
-        latitude,
-        longitude,
-        currentDay,
-        reservationDay,
-        currentHour,
-        currentMinute,
-        reservationHour,
-        reservationMinute,
-     */
-    const WEIGHTS = [0, 1, 50, 50, 1, 1, 1, 2, 1, 2, 1] //TODO: to be better defined
 
-    const vectors = []
+export const comptueAverageContext = (restaurantId: number): Context => {
+    const avg = (field: keyof Context): number | LatLng | TimeFormat => {
+        let accumulator1 = 0
+        let accumulator2 = 0
 
-    for (let context of pastContexts) {
-        if (context.id_restaurant == restaurantId) {
-            const vectorContext = contextToVector(context)
-            vectors.push(vectorContext)
+        const NUM_RESERVATIONS = pastContexts.length
+        switch (field) {
+            case 'reservationTime':
+            case 'currentTime':
+                pastContexts.forEach(context => {
+                    if (context.id_restaurant == restaurantId) {
+                        const value = context[field] as TimeFormat
+                        accumulator1 += parseInt(value.split(':')[0])
+                        accumulator2 += parseInt(value.split(':')[1])
+                    }
+                })
+                return `${accumulator1 / NUM_RESERVATIONS}:${
+                    accumulator2 / NUM_RESERVATIONS
+                }`
+
+            case 'restaurantLocation':
+                pastContexts.forEach(context => {
+                    if (context.id_restaurant == restaurantId) {
+                        const value = context[field] as LatLng
+                        accumulator1 += value.latitude
+                        accumulator2 += value.longitude
+                    }
+                })
+                return {
+                    latitude: accumulator1 / NUM_RESERVATIONS,
+                    longitude: accumulator2 / NUM_RESERVATIONS,
+                }
+            default:
+                pastContexts.forEach(context => {
+                    if (context.id_restaurant == restaurantId) {
+                        const value = context[field] as number
+                        accumulator1 += value
+                    }
+                })
+                return accumulator1 / NUM_RESERVATIONS
         }
     }
 
-    const numVectors = vectors.length
+    const centroid = avg('restaurantLocation') as LatLng
 
-    if (numVectors == 0) return null
-
-    const VECTOR_LENGTH = 10
-
-    const sumVector: ContextVector = vectors.reduce((accumulator, vector) => {
-        return vector.map((component, index) => accumulator[index] + component)
-    }, new Array(VECTOR_LENGTH).fill(0))
-
-    const avgVector: ContextVector = sumVector.map(
-        (component, index) => (component * WEIGHTS[index]) / numVectors,
-    )
-
-    console.log(`Average vector for id ${restaurantId} is ${avgVector}`)
-    return avgVector
+    //TODO: this is not efficient because we have a number of for loops equal to the number of fields in the object
+    // but since the reservations will not be so many, I think it's ok
+    const avgContext: Context = {
+        id_restaurant: restaurantId,
+        n_people: avg('n_people') as number,
+        restaurantLocation: centroid,
+        centroidDistance: averageFromCentroid(centroid),
+        currentDay: avg('currentDay') as number,
+        reservationDay: avg('reservationDay') as DAYS_WEEK,
+        currentTime: avg('currentTime') as TimeFormat,
+        reservationTime: avg('reservationTime') as TimeFormat,
+    }
+    return avgContext
 }
 
-/**
- * Computes the L2 distance between two ContextVectors
- */
-export const calculateL2Distance = (
-    vector1: ContextVector,
-    vector2: ContextVector,
-): number => {
-    if (vector1.length !== vector2.length) {
-        throw new Error('Vectors must have the same length')
-    }
-
-    const squaredDiffSum = vector1.reduce((accumulator, component, index) => {
-        const diff = component - vector2[index]
-        return accumulator + diff ** 2
-    }, 0)
-
-    const l2Distance = Math.sqrt(squaredDiffSum)
-    return l2Distance
-}
-
-export const cosineSimilarity = (
-    vectorA: ContextVector,
-    vectorB: ContextVector,
-): number => {
-    if (vectorA.length !== vectorB.length) {
-        throw new Error('Vectors must have the same length')
-    }
-
-    const dotProduct = vectorA.reduce(
-        (acc, val, i) => acc + val * vectorB[i],
-        0,
-    )
-    const magnitudeA = Math.sqrt(
-        vectorA.reduce((acc, val) => acc + val ** 2, 0),
-    )
-    const magnitudeB = Math.sqrt(
-        vectorB.reduce((acc, val) => acc + val ** 2, 0),
-    )
-
-    return dotProduct / (magnitudeA * magnitudeB)
+const averageFromCentroid = (centroid: LatLng) => {
+    let accumulator = 0
+    pastContexts.forEach(context => {
+        accumulator += distanceBetweenCoordinates(
+            centroid,
+            context.restaurantLocation,
+        )
+    })
+    return accumulator / pastContexts.length
 }

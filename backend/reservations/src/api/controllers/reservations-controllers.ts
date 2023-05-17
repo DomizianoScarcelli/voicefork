@@ -189,12 +189,8 @@ const ReservationsController = {
                 currentTime,
                 reservationTime,
             }
-            const distance = await service.GetDistanceBetweenContext(
-                inputContext,
-            )
-            res.json({
-                distance: distance,
-            })
+            const result = await service.GetDistanceBetweenContext(inputContext)
+            res.json(result)
         } catch (err) {
             next(err)
         }

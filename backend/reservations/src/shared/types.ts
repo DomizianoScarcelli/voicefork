@@ -21,6 +21,7 @@ export type Context = {
     id_restaurant: number
     n_people: number
     restaurantLocation: LatLng
+    centroidDistance?: number
     currentDay: DAYS_WEEK
     reservationDay: DAYS_WEEK
     currentTime: TimeFormat

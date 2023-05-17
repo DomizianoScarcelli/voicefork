@@ -8,8 +8,8 @@ export const pastContexts: Context[] = [
         id_restaurant: 1,
         n_people: 4,
         restaurantLocation: {
-            latitude: 41.8781,
-            longitude: 12.6298,
+            latitude: 41.909756,
+            longitude: 12.350008,
         },
         currentDay: DAYS_WEEK.MON,
         reservationDay: DAYS_WEEK.TUE,
@@ -20,8 +20,8 @@ export const pastContexts: Context[] = [
         id_restaurant: 1,
         n_people: 4,
         restaurantLocation: {
-            latitude: 41.8781,
-            longitude: 12.8735,
+            latitude: 41.908253,
+            longitude: 12.354374,
         },
         currentDay: DAYS_WEEK.TUE,
         reservationDay: DAYS_WEEK.TUE,
@@ -32,8 +32,8 @@ export const pastContexts: Context[] = [
         id_restaurant: 1,
         n_people: 2,
         restaurantLocation: {
-            latitude: 40.7128,
-            longitude: 12.7398,
+            latitude: 41.912547,
+            longitude: 12.353728,
         },
         currentDay: DAYS_WEEK.SUN,
         reservationDay: DAYS_WEEK.MON,
@@ -44,8 +44,8 @@ export const pastContexts: Context[] = [
         id_restaurant: 1,
         n_people: 3,
         restaurantLocation: {
-            latitude: 34.0522,
-            longitude: -118.2437,
+            latitude: 41.911112,
+            longitude: 12.350839,
         },
         currentDay: DAYS_WEEK.TUE,
         reservationDay: DAYS_WEEK.FRI,
