@@ -1,6 +1,8 @@
 import {Context} from '../shared/types'
 import {DAYS_WEEK} from '../shared/enums'
 
+//TODO: This data has to be taken from the backend, this is for debugging reasons
+
 export const pastContexts: Context[] = [
     {
         id_user: 123,
@@ -8,7 +10,7 @@ export const pastContexts: Context[] = [
         n_people: 4,
         restaurantLocation: {
             latitude: 41.8781,
-            longitude: -87.6298,
+            longitude: 12.6298,
         },
         currentDay: DAYS_WEEK.MON,
         reservationDay: DAYS_WEEK.TUE,
@@ -21,7 +23,7 @@ export const pastContexts: Context[] = [
         n_people: 4,
         restaurantLocation: {
             latitude: 41.8781,
-            longitude: -87.6298,
+            longitude: 12.8735,
         },
         currentDay: DAYS_WEEK.TUE,
         reservationDay: DAYS_WEEK.TUE,
@@ -34,7 +36,7 @@ export const pastContexts: Context[] = [
         n_people: 2,
         restaurantLocation: {
             latitude: 40.7128,
-            longitude: -74.006,
+            longitude: 12.7398,
         },
         currentDay: DAYS_WEEK.SUN,
         reservationDay: DAYS_WEEK.MON,

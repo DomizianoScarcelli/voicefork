@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "233a529c-b6cc-4a10-9066-6ea67c5527b6",
+		"_postman_id": "3abdb6bc-5808-46f1-b06e-b1e78d55ecb3",
 		"name": "VoiceFork-Reservations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18224278"
+		"_exporter_id": "19145227"
 	},
 	"item": [
 		{
@@ -203,6 +203,35 @@
 					],
 					"path": [
 						"update-numpeople"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get distance between context",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id_user\": 123,\n    \"id_restaurant\": 1,\n    \"n_people\": 4,\n    \"restaurantLocation\": {\n        \"latitude\": 41.8781,\n        \"longitude\": -87.6298\n    },\n    \"currentDay\": 1,\n    \"reservationDay\": 2,\n    \"currentTime\": \"12:12\",\n    \"reservationTime\": \"14:12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/get-distance-context",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"get-distance-context"
 					]
 				}
 			},
