@@ -175,6 +175,30 @@
 			"response": []
 		},
 		{
+			"name": "Get User Avatar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{USERS_BASE}}/get-user-avatar/:imageName",
+					"host": [
+						"{{USERS_BASE}}"
+					],
+					"path": [
+						"get-user-avatar",
+						":imageName"
+					],
+					"variable": [
+						{
+							"key": "imageName",
+							"value": "avatar_1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete User",
 			"request": {
 				"method": "DELETE",

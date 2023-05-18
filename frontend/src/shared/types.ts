@@ -1,10 +1,6 @@
-import {
-    CuisineTile,
-    RestaurantTile,
-} from '../components/HorizontalScrollingSection/HorizontalScrollingSection'
-
 export type Restaurant = {
     id: number
+    imageName: string
     name: string
     address: string
     latitude: number
@@ -64,4 +60,11 @@ export type User = {
     surname: string
     email: string
     role: string
+}
+
+export type ReservationCreationDetails = {
+    id_user: number
+    id_restaurant: number
+    dateTime: Date
+    n_people: number
 }

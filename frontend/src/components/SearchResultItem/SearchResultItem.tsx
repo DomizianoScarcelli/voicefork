@@ -3,7 +3,9 @@ import {View, Text, Image, StyleSheet} from 'react-native'
 import {SearchResult} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import RestaurantImage from '../RestaurantImage/RestaurantImage'
+import {TouchableOpacity} from 'react-native-gesture-handler'
+
 interface Props {
     searchResult: SearchResult
     navigation: any
@@ -12,9 +14,14 @@ interface Props {
 const SearchResultItem: React.FC<Props> = ({searchResult, navigation}) => {
     return (
         <View key={searchResult.restaurant.id} style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails", {restaurant: searchResult.restaurant})}>
-                <Image
-                    source={{uri: 'https://picsum.photos/100'}}
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('RestaurantDetails', {
+                        restaurant: searchResult.restaurant,
+                    })
+                }>
+                <RestaurantImage
+                    imageName={searchResult.restaurant.imageName}
                     style={styles.image}
                 />
                 <View style={styles.details}>

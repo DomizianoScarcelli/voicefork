@@ -1,7 +1,18 @@
-import {ListRenderItem, Text, FlatList, View, Image, TouchableOpacity} from 'react-native'
+import {
+    ListRenderItem,
+    Text,
+    FlatList,
+    View,
+    Image,
+    TouchableOpacity,
+} from 'react-native'
 import {Restaurant} from '../../shared/types'
 import {styles} from './styles'
 import {metersToKm} from '../../utils/geolocationUtils'
+import {useEffect, useState} from 'react'
+import {getRestaurantImage} from '../../utils/apiCalls'
+import FastImage from 'react-native-fast-image'
+import RestaurantImage from '../RestaurantImage/RestaurantImage'
 
 type HorizontalScrollingSectionProps = {
     title: String
@@ -53,10 +64,17 @@ const RestaurantTile = ({
 }) => {
     return (
         <View>
-            <TouchableOpacity style={styles.restaurantTileContainer} onPress={() => navigation.navigate("RestaurantDetails", {restaurant: restaurant})}>
-                <Image
-                    source={{uri: 'https://picsum.photos/100'}}
-                    style={styles.restaurantTileImage}></Image>
+            <TouchableOpacity
+                style={styles.restaurantTileContainer}
+                onPress={() =>
+                    navigation.navigate('RestaurantDetails', {
+                        restaurant: restaurant,
+                    })
+                }>
+                <RestaurantImage
+                    imageName={restaurant.imageName}
+                    style={styles.restaurantTileImage}
+                />
                 <Text style={styles.mediumBoldText}>{restaurant.name}</Text>
                 {restaurant.cuisines ? (
                     <Text style={styles.smallRegularText}>

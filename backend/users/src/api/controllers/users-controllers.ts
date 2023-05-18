@@ -116,6 +116,16 @@ const UsersController = {
 			next(err)
 		}
 	},
+
+	getUserAvatar: async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { imageName } = req.params
+            const image = await service.GetUserAvatar(imageName)
+            res.json({image: image})
+        } catch (err) {
+            next(err)
+        }
+    },
 }
 
 export default UsersController
