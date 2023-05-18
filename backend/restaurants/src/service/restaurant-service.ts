@@ -7,6 +7,7 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
+import {WordEmbeddings} from '../utils/wordEmbeddings'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -15,11 +16,13 @@ class RestaurantService {
     repository: RestaurantRepository
     readonly RESULTS_PER_PAGE: number
     minioService: MinioService
+    wordEmbeddingModel: WordEmbeddings
 
     constructor() {
         this.repository = new RestaurantRepository()
         this.RESULTS_PER_PAGE = 20
         this.minioService = new MinioService()
+        this.wordEmbeddingModel = WordEmbeddings.getInstance()
     }
 
     async CreateRestaurant(restaurant: Restaurant) {
@@ -113,19 +116,30 @@ class RestaurantService {
                 distance: undefined,
             }))
         }
+
+        if (!this.wordEmbeddingModel.model)
+            await this.wordEmbeddingModel.loadModel()
+
         const searchResults: RestaurantSearchResult[] = []
-        filteredRestaurants?.forEach(({restaurant, distance}) => {
-            const {similarity} = levenshtein(
-                query.toLowerCase(),
-                restaurant.name.toLowerCase(),
+        const queryEmbedding = await this.wordEmbeddingModel.embedText(query)
+
+        for (let {restaurant, distance} of filteredRestaurants) {
+            const restaurantEmbedding = await this.minioService.getEmbedding(
+                restaurant.embeddingName,
             )
+
+            const similarity = this.wordEmbeddingModel.distance(
+                queryEmbedding,
+                restaurantEmbedding,
+            )
+
             const element: RestaurantSearchResult = {
                 restaurant: restaurant,
                 nameDistance: 1 - similarity,
                 locationDistance: distance,
             }
             searchResults.push(element)
-        })
+        }
         searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
         if (limit != undefined) {
             return searchResults.slice(0, limit)
@@ -178,10 +192,15 @@ class RestaurantService {
     }
 
     async GetRestaurantImage(imageName: string): Promise<string | undefined> {
-        const image = (await this.minioService.getObject(imageName)).toString(
-            'base64',
+        const image = await this.minioService.getImage(imageName)
+        return image
+    }
+
+    async GetRestaurantEmbedding(id: number): Promise<number[]> {
+        const embedding = await this.minioService.getEmbedding(
+            `embedding_${id}`,
         )
-        return `data:image/jpeg;base64,${image}`
+        return embedding
     }
 }
 

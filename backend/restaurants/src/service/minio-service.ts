@@ -1,10 +1,12 @@
-const Minio = require('minio') //Require because with import there is a strange bug
+import {Restaurant} from '.prisma/client'
+import * as Minio from 'minio'
 import {Client, UploadedObjectInfo} from 'minio'
 import {Readable} from 'stream'
 
 class MinioService {
     client: Client
     bucketName: string
+    embedBucketName: string
 
     constructor() {
         // Local configuration
@@ -23,6 +25,7 @@ class MinioService {
                 useSSL: false,
             })
             this.bucketName = 'images'
+            this.embedBucketName = 'embeddings'
         } else {
             // AWS S3 configuration
             if (
@@ -39,6 +42,7 @@ class MinioService {
                 sessionToken: process.env.AWS_SESSION_TOKEN,
             })
             this.bucketName = 'voicefork-restaurants-images'
+            this.embedBucketName = 'voicefork-restaurant-embeddings' //TODO change
         }
     }
 
@@ -57,13 +61,10 @@ class MinioService {
         )
     }
 
-    async getObject(objectName: string): Promise<Buffer> {
+    async getObject(objectName: string, bucketName: string): Promise<Buffer> {
         const chunks: Buffer[] = []
 
-        const dataStream = await this.client.getObject(
-            this.bucketName,
-            objectName,
-        )
+        const dataStream = await this.client.getObject(bucketName, objectName)
 
         dataStream.on('data', (chunk: Buffer) => {
             chunks.push(chunk)
@@ -81,6 +82,20 @@ class MinioService {
                 reject(error)
             })
         })
+    }
+
+    async getImage(imageName: string): Promise<string> {
+        const image = (
+            await this.getObject(imageName, this.bucketName)
+        ).toString('base64')
+        return `data:image/jpeg;base64,${image}`
+    }
+
+    async getEmbedding(embeddingName: string): Promise<number[]> {
+        const embedding = (
+            await this.getObject(embeddingName, this.embedBucketName)
+        ).toString('utf-8')
+        return JSON.parse(embedding)
     }
 }
 

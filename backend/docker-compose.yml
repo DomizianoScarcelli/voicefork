@@ -140,7 +140,6 @@ services:
             - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
         volumes:
             - .:/app
-            - /app/users/node_modules
         depends_on:
             - mysql_users
             - minio-users
@@ -161,7 +160,6 @@ services:
             - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
         volumes:
             - .:/app
-            - /app/restaurants/node_modules
         depends_on:
             - postgres_restaurants
             - minio-restaurants
@@ -183,7 +181,6 @@ services:
             - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
         volumes:
             - .:/app
-            - /app/reservations/node_modules
         depends_on:
             - mysql_reservations
         restart: always
