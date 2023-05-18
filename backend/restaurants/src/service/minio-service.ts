@@ -1,4 +1,3 @@
-import {Restaurant} from '.prisma/client'
 import * as Minio from 'minio'
 import {Client, UploadedObjectInfo} from 'minio'
 import {Readable} from 'stream'

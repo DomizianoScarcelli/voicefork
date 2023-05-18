@@ -5,6 +5,9 @@ import numpy as np
 
 class ModelService:
     def __init__(self):
+        self.model = None
+
+    def load_model(self):
         self.model = hub.load(
             "https://tfhub.dev/google/universal-sentence-encoder-large/5")
 

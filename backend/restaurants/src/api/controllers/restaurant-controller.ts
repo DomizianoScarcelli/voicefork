@@ -8,10 +8,8 @@ import {
 import {Restaurant} from '@prisma/client'
 import {SortingStrategy} from '../../shared/enums'
 import MinioService from '../../service/minio-service'
-import {WordEmbeddings} from '../../utils/wordEmbeddings'
 
 const service = new RestaurantService()
-const minioService = new MinioService()
 const RestaurantController = {
     createRestaurant: async (
         req: Request<{}, {}, Restaurant, {}>,
@@ -226,58 +224,6 @@ const RestaurantController = {
             const {imageName} = req.query
             const image = await service.GetRestaurantImage(imageName)
             res.json({image})
-        } catch (err) {
-            next(err)
-        }
-    },
-    getRestaurantEmbedding: async (
-        req: Request<
-            {},
-            {},
-            {},
-            {
-                id: number
-            }
-        >,
-        res: Response,
-        next: NextFunction,
-    ) => {
-        try {
-            const {id} = req.query
-            const embedding = await service.GetRestaurantEmbedding(id)
-            res.json({embedding})
-        } catch (err) {
-            next(err)
-        }
-    },
-    getEmbeddingDistance: async (
-        req: Request<
-            {},
-            {},
-            {},
-            {
-                id: number
-                name: string
-            }
-        >,
-        res: Response,
-        next: NextFunction,
-    ) => {
-        try {
-            const {id, name} = req.query
-            const embedding1 = await minioService.getEmbedding(
-                `embedding_${id}`,
-            )
-            await WordEmbeddings.getInstance().loadModel()
-            const embedding2 = await WordEmbeddings.getInstance().embedText(
-                name,
-            )
-            console.log(embedding1[0], embedding2[0])
-            const distance = WordEmbeddings.getInstance().distance(
-                embedding1,
-                embedding2,
-            )
-            res.json({distance: distance})
         } catch (err) {
             next(err)
         }

@@ -1,5 +1,4 @@
 import RestaurantRepository from '../repository/restaurant-repository'
-import levenshtein from 'damerau-levenshtein'
 import {Restaurant} from '@prisma/client'
 import {
     LatLng,
@@ -7,7 +6,7 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
-import {WordEmbeddings} from '../utils/wordEmbeddings'
+import {getDistanceBetweenRestaurantNames} from '../utils/apiCalls'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -16,13 +15,11 @@ class RestaurantService {
     repository: RestaurantRepository
     readonly RESULTS_PER_PAGE: number
     minioService: MinioService
-    wordEmbeddingModel: WordEmbeddings
 
     constructor() {
         this.repository = new RestaurantRepository()
         this.RESULTS_PER_PAGE = 20
         this.minioService = new MinioService()
-        this.wordEmbeddingModel = WordEmbeddings.getInstance()
     }
 
     async CreateRestaurant(restaurant: Restaurant) {
@@ -117,25 +114,18 @@ class RestaurantService {
             }))
         }
 
-        if (!this.wordEmbeddingModel.model)
-            await this.wordEmbeddingModel.loadModel()
-
         const searchResults: RestaurantSearchResult[] = []
-        const queryEmbedding = await this.wordEmbeddingModel.embedText(query)
 
         for (let {restaurant, distance} of filteredRestaurants) {
-            const restaurantEmbedding = await this.minioService.getEmbedding(
+            const nameDistance = await getDistanceBetweenRestaurantNames(
+                query,
+                restaurant.name,
                 restaurant.embeddingName,
-            )
-
-            const similarity = this.wordEmbeddingModel.distance(
-                queryEmbedding,
-                restaurantEmbedding,
             )
 
             const element: RestaurantSearchResult = {
                 restaurant: restaurant,
-                nameDistance: 1 - similarity,
+                nameDistance: nameDistance,
                 locationDistance: distance,
             }
             searchResults.push(element)
