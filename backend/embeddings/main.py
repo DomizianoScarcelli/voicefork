@@ -1,4 +1,3 @@
-from typing import Union
 from fastapi import FastAPI
 from MinioService import MinioService
 from ModelService import ModelService
@@ -7,6 +6,11 @@ import json
 app = FastAPI()
 model = ModelService()
 minio = MinioService()
+
+
+@app.get("/")
+def distance_embeddings():
+    return {"message": "Welcome to the Embedding service!"}
 
 
 @app.get("/get-distance")

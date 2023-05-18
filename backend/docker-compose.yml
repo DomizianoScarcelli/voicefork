@@ -188,6 +188,17 @@ services:
         networks:
             - gateway
             - reservations-network
+    # embeddings:
+    #     build:
+    #         dockerfile: Dockerfile
+    #         context: ./embeddings
+    #     container_name: embeddings
+    #     ports:
+    #         - "3004:3004"
+    #     entrypoint: ["sh", "-c", "uvicorn main:app --port 3004 --reload"]
+    #     networks:
+    #         - gateway
+    #         - embeddings-network
 
     nginx-proxy:
         build:
@@ -198,6 +209,7 @@ services:
             - users
             - restaurants
             - reservations
+            # - embeddings
         ports:
             - "3000:3000"
         networks:
@@ -216,3 +228,4 @@ networks:
     users-network:
     restaurants-network:
     reservations-network:
+    embeddings-network:
