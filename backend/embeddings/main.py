@@ -11,6 +11,7 @@ app = FastAPI()
 model = ModelService()
 minio = MinioService()
 
+# TODO: remove old results from the cache otherwise it will saturate the memory
 query_cache = {}
 
 
