@@ -32,7 +32,11 @@ const Navbar = ({
 
     return (
         <View style={navbarStyle.mainContainer}>
-            <Ionicons name={'menu'} size={30} color={Colors.white} onPress={() => openDrawer()}/>
+            {currentView != 'Search' ? (
+                <Ionicons name={'menu'} size={30} color={Colors.white} onPress={() => openDrawer()}/>
+            ) : (
+                <Ionicons name={'arrow-back-outline'} size={30} color={Colors.white} onPress={() => navigation.goBack()} />
+            )}
             <View style={navbarStyle.searchBar}>
                 <TextInput
                     style={navbarStyle.text}

@@ -8,12 +8,10 @@ import axios from 'axios'
 import {
   User,
 } from '../../shared/types'
-import { useNavigation } from '@react-navigation/native';
 
 const Drawer = ({route, navigation}: any) => {
     const {currentView} = route.params
     
-    const [isLoading, setLoading] = useState<boolean>(true)
     const [userId, setUserId] = useState<number>()
     const [userData, setUserData] = useState<
         User
@@ -52,7 +50,6 @@ const Drawer = ({route, navigation}: any) => {
         console.log('axios call made')
         const user: User = (await axios.get(URL)).data
 
-        setLoading(false)
         setUserData(user)
     }
 

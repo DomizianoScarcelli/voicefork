@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native'
-import {Colors, Fonts, FontSize} from '../../constants'
 
 export const drawerStyle = StyleSheet.create({
     container: {
