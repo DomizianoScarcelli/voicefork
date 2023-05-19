@@ -3,7 +3,6 @@ node_modules
 dist
 tmp
 .DS_Store
-prisma/migrations
 db/archive
 db/saved_images
 db/stock_images

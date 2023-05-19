@@ -2,21 +2,21 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "darwin-arm64", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model Reservation {
-  id              Int     @id @default(autoincrement())
-  id_user         Int
-  id_restaurant   Int  
-  dateTime        DateTime
-  n_people        Int 
+    id            Int      @id @default(autoincrement())
+    id_user       Int
+    id_restaurant Int
+    dateTime      DateTime
+    n_people      Int
 
-  @@unique([id])
+    @@unique([id])
 }

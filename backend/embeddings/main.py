@@ -6,6 +6,7 @@ import logging
 from Levenshtein import ratio
 
 logging.basicConfig(level=logging.DEBUG)  # Set log level to DEBUG
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 model = ModelService()
@@ -17,9 +18,9 @@ query_cache = {}
 
 @app.on_event("startup")
 async def startup_event():
-    print("Loading model")
+    logger.info("Loading model")
     model.load_model()
-    print("Model loaded")
+    logger.info("Loading model")
 
 
 @app.get("/")

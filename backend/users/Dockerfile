@@ -12,9 +12,7 @@ COPY nodemon.json ./
 RUN npm install 
 COPY . .
 RUN npx prisma generate
-COPY . .
-RUN npm build
-COPY . .
+RUN npm run build
 # Expose the port that the app will run on
 EXPOSE 3001
 # Start the app
