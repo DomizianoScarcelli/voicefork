@@ -203,6 +203,7 @@ services:
             - "3005:3005"
         networks:
             - gateway
+
             - restaurants-network
 
     nginx-proxy:
