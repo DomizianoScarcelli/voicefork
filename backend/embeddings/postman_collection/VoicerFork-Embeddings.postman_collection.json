@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "d5ec527c-c732-422c-8c17-1a42fbdb0424",
+		"name": "VoicerFork-Embeddings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19145227"
+	},
+	"item": [
+		{
+			"name": "GetDistance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{EMBEDDINGS_BASE}}/distance-query?query_name=ortal&embedding_name=embedding_0&other_name=L'Ortal",
+					"host": [
+						"{{EMBEDDINGS_BASE}}"
+					],
+					"path": [
+						"distance-query"
+					],
+					"query": [
+						{
+							"key": "query_name",
+							"value": "ortal"
+						},
+						{
+							"key": "embedding_name",
+							"value": "embedding_0"
+						},
+						{
+							"key": "other_name",
+							"value": "L'Ortal"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

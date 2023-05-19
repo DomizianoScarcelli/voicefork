@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from MinioService import MinioService
-from ModelService import ModelService
+from .MinioService import MinioService
+from .ModelService import ModelService
 import json
 import logging
 from Levenshtein import ratio
@@ -15,12 +15,14 @@ minio = MinioService()
 # TODO: remove old results from the cache otherwise it will saturate the memory
 query_cache = {}
 
+test = 10
+
 
 @app.on_event("startup")
 async def startup_event():
     logger.info("Loading model")
     model.load_model()
-    logger.info("Loading model")
+    logger.info("Finished loading model!")
 
 
 @app.get("/")
