@@ -1,3 +1,4 @@
+# If I put "FROM --platform=linux/amd64" here and I try to build it on an arm64 device the service doesn't work.
 FROM python:3.9
 WORKDIR /app
 COPY requirements.txt .
