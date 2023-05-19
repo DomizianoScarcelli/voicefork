@@ -40,7 +40,10 @@ const usersAPI = (app: Express) => {
 	 */
 	app.post("/update-password", UsersController.updatePassword)
 
-	//TO DO: UPDATE USER INFO
+	/**
+     * Given a restaurant, it returns its image as a base64 string.
+     */
+    app.get('/get-user-avatar/:imageName', UsersController.getUserAvatar)
 
 
 }

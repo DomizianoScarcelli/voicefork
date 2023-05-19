@@ -1,15 +1,12 @@
 import RestaurantRepository from '../repository/restaurant-repository'
-import levenshtein from 'damerau-levenshtein'
-import {
-    addressToLatLng,
-    distanceBetweenCoordinates,
-} from '../utils/localizationUtils'
 import {Restaurant} from '@prisma/client'
 import {
     LatLng,
     RestaurantDistanceResult,
     RestaurantSearchResult,
 } from '../shared/types'
+import MinioService from './minio-service'
+import {getDistanceBetweenRestaurantNames} from '../utils/apiCalls'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -17,35 +14,12 @@ import {
 class RestaurantService {
     repository: RestaurantRepository
     readonly RESULTS_PER_PAGE: number
+    minioService: MinioService
 
     constructor() {
         this.repository = new RestaurantRepository()
         this.RESULTS_PER_PAGE = 20
-    }
-
-    private filterRestaurantsByDistance(
-        restaurants: Restaurant[],
-        coordinates: LatLng,
-        maxDistance: number,
-    ): RestaurantDistanceResult[] {
-        let nearbyRestaurants: RestaurantDistanceResult[] = []
-        restaurants.forEach(restaurant => {
-            const destination: LatLng = {
-                latitude: restaurant.latitude,
-                longitude: restaurant.longitude,
-            }
-            const distance = distanceBetweenCoordinates(
-                destination,
-                coordinates,
-            )
-            if (distance <= maxDistance) {
-                nearbyRestaurants.push({
-                    restaurant: restaurant,
-                    distance: distance,
-                })
-            }
-        })
-        return nearbyRestaurants
+        this.minioService = new MinioService()
     }
 
     async CreateRestaurant(restaurant: Restaurant) {
@@ -113,6 +87,7 @@ class RestaurantService {
 
     async SearchRestaurants(
         query: string,
+        pageNumber: number,
         limit?: number,
         locationInfo?: {coordinates: LatLng; maxDistance: number},
     ): Promise<RestaurantSearchResult[]> {
@@ -120,6 +95,7 @@ class RestaurantService {
         if (locationInfo != undefined) {
             const {coordinates, maxDistance} = locationInfo
             const {latitude, longitude} = coordinates
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
             filteredRestaurants =
                 await this.repository.GetRestaurantsNearCoordinates(
                     latitude,
@@ -127,25 +103,33 @@ class RestaurantService {
                     maxDistance,
                 )
         } else {
-            const allRestaurants = await this.repository.GetAllRestaurants()
-            filteredRestaurants = allRestaurants.map(element => ({
+            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
+            const restaurants = await this.repository.GetAllRestaurants(
+                entriesToSkip,
+                this.RESULTS_PER_PAGE,
+            )
+            filteredRestaurants = restaurants.map(element => ({
                 restaurant: element,
                 distance: undefined,
             }))
         }
+
         const searchResults: RestaurantSearchResult[] = []
-        filteredRestaurants?.forEach(({restaurant, distance}) => {
-            const {similarity} = levenshtein(
-                query.toLowerCase(),
-                restaurant.name.toLowerCase(),
+
+        for (let {restaurant, distance} of filteredRestaurants) {
+            const nameDistance = await getDistanceBetweenRestaurantNames(
+                query,
+                restaurant.name,
+                restaurant.embeddingName,
             )
+
             const element: RestaurantSearchResult = {
                 restaurant: restaurant,
-                nameDistance: 1 - similarity,
+                nameDistance: nameDistance,
                 locationDistance: distance,
             }
             searchResults.push(element)
-        })
+        }
         searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
         if (limit != undefined) {
             return searchResults.slice(0, limit)
@@ -195,6 +179,18 @@ class RestaurantService {
 
         const result = await this.repository.DeleteRestaurant(id)
         return result
+    }
+
+    async GetRestaurantImage(imageName: string): Promise<string | undefined> {
+        const image = await this.minioService.getImage(imageName)
+        return image
+    }
+
+    async GetRestaurantEmbedding(id: number): Promise<number[]> {
+        const embedding = await this.minioService.getEmbedding(
+            `embedding_${id}`,
+        )
+        return embedding
     }
 }
 

@@ -1,5 +1,9 @@
-export { default as Homepage } from "./Homepage/Homepage";
-export { default as Reservations } from "./Reservations/Reservations";
-export { default as Settings } from "./Settings/Settings";
-export { default as Welcome } from "./Welcome/Welcome";
-export { default as Registration } from "./Registration/Registration";
+export { default as Homepage } from "./Homepage/Homepage"
+export { default as Reservations } from "./Reservations/Reservations"
+export { default as Settings } from "./Settings/Settings"
+export { default as Welcome } from "./Welcome/Welcome"
+export { default as Registration } from "./Registration/Registration"
+export { default as Search } from "./Search/Search"
+export { default as RestaurantDetails } from "./RestaurantDetails/RestaurantDetails"
+export { default as ReservationCreation } from "./ReservationCreation/ReservationCreation"
+export { default as ReservationDetails } from "./ReservationDetails/ReservationDetails"

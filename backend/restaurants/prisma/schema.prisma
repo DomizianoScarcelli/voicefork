@@ -10,6 +10,8 @@ datasource db {
 
 model Restaurant {
     id                 Int     @id @default(autoincrement())
+    embeddingName      String
+    imageName          String
     name               String
     address            String
     latitude           Float
@@ -29,41 +31,3 @@ model Restaurant {
     glutenFree         Boolean
     reviewsNumber      Int
 }
-
-// model Zone {
-//     country     String
-//     region      String
-//     province    String
-//     city        String
-//     town        String
-//     restaurants Restaurant[]
-
-//     @@id([province, city, town])
-// }
-
-// model Tag {
-//     name        String       @id
-//     restaurants Restaurant[] @relation("TagToRestaurant")
-// }
-
-// model Cuisine {
-//     name        String       @id
-//     restaurants Restaurant[] @relation("CuisineToRestaurant")
-// }
-
-// model Diet {
-//     name        String       @id
-//     restaurants Restaurant[] @relation("DietToRestaurant")
-// }
-
-// enum Meal {
-//     BREAKFAST
-//     LUNCH
-//     DINNER
-// }
-
-// enum PriceLevel {
-//     LOW
-//     MEDIUM
-//     HIGH
-// }
