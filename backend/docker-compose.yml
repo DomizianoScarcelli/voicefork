@@ -136,6 +136,12 @@ services:
         ports:
             - "3004:3004"
 
+    redis:
+        image: redis
+        container_name: redis
+        ports:
+            - 6379:6379
+
     #################
     ##### MINIO #####
     #################

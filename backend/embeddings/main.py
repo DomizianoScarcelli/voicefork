@@ -1,9 +1,12 @@
 from fastapi import FastAPI
-from .MinioService import MinioService
-from .ModelService import ModelService
-import json
+from .services.MinioService import MinioService
+from .services.ModelService import ModelService
 import logging
 from Levenshtein import ratio
+import redis
+from .utils.distance_utils import compute_distance
+from .items.restaurants import RestaurantWithDistance
+from typing import List
 
 logging.basicConfig(level=logging.DEBUG)  # Set log level to DEBUG
 logger = logging.getLogger(__name__)
@@ -15,7 +18,8 @@ minio = MinioService()
 # TODO: remove old results from the cache otherwise it will saturate the memory
 query_cache = {}
 
-test = 10
+# TODO: change localhost for aws
+redis_client = redis.Redis(host='redis', port=6379, decode_responses=True)
 
 
 @app.on_event("startup")
@@ -32,17 +36,28 @@ def welcome():
 
 @app.get("/distance-query")
 def distance_query(query_name: str, other_name: str, embedding_name: str):
-    if query_name not in query_cache:
-        query_embedding = model.embed_name(query_name)
-        query_cache[query_name] = query_embedding
-    else:
-        query_embedding = query_cache[query_name]
-    other_array = json.loads(minio.get_embedding(embedding_name))
-    other_embedding = model.array_to_tensor(other_array)
-    use_distance = model.distance(query_embedding, other_embedding)
-    levenshtein_distance = 1 - ratio(query_name, other_name)
+    distance = compute_distance(query_name=query_name,
+                                other_name=other_name,
+                                embedding_name=embedding_name,
+                                query_cache=query_cache,
+                                model=model,
+                                redis_client=redis_client,
+                                minio=minio)
+    return {"distance": distance}
 
-    WEIGHT = 0.5
-    avg_distance = use_distance * WEIGHT + \
-        levenshtein_distance * (1-WEIGHT)
-    return {"distance": avg_distance}
+
+@app.get("/batch-distance-query")
+def batch_distance_query(query_name: str, restaurant_list: List[RestaurantWithDistance]):
+    result = []
+    for item in restaurant_list:
+        restaurant = item.restaurant
+        distance = compute_distance(query_name=query_name,
+                                    other_name=restaurant.name,
+                                    embedding_name=restaurant.embeddingName,
+                                    query_cache=query_cache,
+                                    model=model,
+                                    redis_client=redis_client,
+                                    minio=minio)
+        result.append({"restaurant": restaurant,
+                      "locationDistance": item.distance, "nameDistance": distance})
+    return result

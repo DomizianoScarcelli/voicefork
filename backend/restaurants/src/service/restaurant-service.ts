@@ -6,7 +6,10 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
-import {getDistanceBetweenRestaurantNames} from '../utils/apiCalls'
+import {
+    getDistanceBetweenRestaurantNames,
+    batchGetDistanceBewteenRestaurantNames,
+} from '../utils/apiCalls'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -114,22 +117,20 @@ class RestaurantService {
             }))
         }
 
-        const searchResults: RestaurantSearchResult[] = []
-
-        for (let {restaurant, distance} of filteredRestaurants) {
-            const nameDistance = await getDistanceBetweenRestaurantNames(
-                query,
-                restaurant.name,
-                restaurant.embeddingName,
-            )
-
-            const element: RestaurantSearchResult = {
-                restaurant: restaurant,
-                nameDistance: nameDistance,
-                locationDistance: distance,
-            }
-            searchResults.push(element)
+        const batches: RestaurantDistanceResult[][] = [[]]
+        const BATCH_SIZE = 1500
+        for (let i = 0; i < filteredRestaurants.length; i += BATCH_SIZE) {
+            const batch = filteredRestaurants.slice(i, i + BATCH_SIZE)
+            batches.push(batch)
         }
+
+        let searchResults: RestaurantSearchResult[] = []
+        for (let batch of batches) {
+            const partialSearchResults: RestaurantSearchResult[] =
+                await batchGetDistanceBewteenRestaurantNames(query, batch)
+            searchResults = searchResults.concat(partialSearchResults)
+        }
+
         searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
         if (limit != undefined) {
             return searchResults.slice(0, limit)

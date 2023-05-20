@@ -52,3 +52,5 @@ websockets==11.0.3
 Werkzeug==2.3.4
 wrapt==1.14.1
 levenshtein==0.21.0
+hiredis==2.2.3
+redis==4.5.5
