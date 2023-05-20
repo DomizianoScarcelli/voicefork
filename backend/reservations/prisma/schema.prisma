@@ -17,8 +17,8 @@ model Reservation {
   id_restaurant         Int  
   dateTime              DateTime
   n_people              Int 
-  createdAtLatitude     Float
-  createdAtLongitude    Float
+  createdAtLatitude     Float?
+  createdAtLongitude    Float?
   createdAtDate         DateTime  @default(now())
 
   @@unique([id])
