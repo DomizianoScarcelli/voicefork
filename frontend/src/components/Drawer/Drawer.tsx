@@ -4,6 +4,7 @@ import { drawerStyle } from './styles';
 import {Colors, Fonts, FontSize, Spacing} from '../../constants'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import EncryptedStorage from 'react-native-encrypted-storage'
+import { UserAvatar } from '../../components'
 import axios from 'axios'
 import {
   User,
@@ -22,11 +23,11 @@ const Drawer = ({route, navigation}: any) => {
     }, [])
 
     useEffect(() => {
-        console.log('userData', userData)
+        //console.log('userData', userData)
     }, [userData])
 
     useEffect(() => {
-        console.log('userId', userId)
+        //console.log('userId', userId)
         if (userId != undefined) getUserData(userId)
     }, [userId])
 
@@ -38,7 +39,7 @@ const Drawer = ({route, navigation}: any) => {
             } else {
                 const user_id = JSON.parse(session)['id']
                 setUserId(user_id)
-                console.log('user id get')
+                //console.log('user id get')
             }
         } catch (error) {
             navigation.navigate('Welcome')
@@ -47,7 +48,7 @@ const Drawer = ({route, navigation}: any) => {
 
     const getUserData = async (user_id: number) => {
         const URL = `http://localhost:3000/users/get-user/${user_id}`
-        console.log('axios call made')
+        //console.log('axios call made')
         const user: User = (await axios.get(URL)).data
 
         setUserData(user)
@@ -70,10 +71,18 @@ const Drawer = ({route, navigation}: any) => {
     <View style={drawerStyle.container}>
       <Ionicons style={drawerStyle.iconContainer} name={'close-outline'} size={30} color={Colors.black} onPress={() => navigation.navigate(currentView)}/>
       <View style={drawerStyle.profileContainer}>
-        <Image source={{uri: 'https://picsum.photos/100'}} style={drawerStyle.profileImage} />
+        {
+            userId !== undefined ? (
+                <UserAvatar
+                    imageName={`avatar_${userId % 10}`}
+                    style={drawerStyle.profileImage}
+                />
+            ) : (
+                <Image source={{uri: 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png'}} style={drawerStyle.profileImage} />
+            )
+        }
         <Text style={drawerStyle.name}> {userData?.name} {userData?.surname}</Text>
         <Text style={drawerStyle.name}> {userData?.email}</Text>
-
       </View>
       <TouchableOpacity
           onPress={() => navigation.navigate('Homepage')}
