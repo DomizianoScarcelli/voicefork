@@ -67,4 +67,7 @@ export type ReservationCreationDetails = {
     id_restaurant: number
     dateTime: Date
     n_people: number
+    createdAtDate: Date
+    createdAtLatitude?: number,
+    createdAtLongitude?: number
 }
