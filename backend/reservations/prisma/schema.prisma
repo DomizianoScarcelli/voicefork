@@ -12,11 +12,14 @@ datasource db {
 }
 
 model Reservation {
-  id              Int     @id @default(autoincrement())
-  id_user         Int
-  id_restaurant   Int  
-  dateTime        DateTime
-  n_people        Int 
+  id                    Int       @id @default(autoincrement())
+  id_user               Int
+  id_restaurant         Int  
+  dateTime              DateTime
+  n_people              Int 
+  createdAtLatitude     Float
+  createdAtLongitude    Float
+  createdAtDate         DateTime  @default(now())
 
   @@unique([id])
 }

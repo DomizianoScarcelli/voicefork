@@ -1,6 +1,5 @@
 import ReservationsRepository from "../repository/reservations-repository"
 import { Reservation } from "@prisma/client"
-import { ReservationInfo } from "../shared/types"
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -12,8 +11,8 @@ class ReservationsService {
 		this.repository = new ReservationsRepository()
 	}
 
-    async CreateReservation(id_user: number, id_restaurant: number, dateTime: Date, n_people: number) {
-		const newReservation = await this.repository.CreateReservation(id_user, id_restaurant, dateTime, n_people)
+    async CreateReservation(id_user: number, id_restaurant: number, dateTime: Date, n_people: number, createdAtLatitude: number, createdAtLongitude: number, createdAtDate: Date) {
+		const newReservation = await this.repository.CreateReservation(id_user, id_restaurant, dateTime, n_people, createdAtLatitude, createdAtLongitude, createdAtDate)
 		return newReservation
 	}
 
