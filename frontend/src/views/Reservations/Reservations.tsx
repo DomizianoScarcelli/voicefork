@@ -27,7 +27,7 @@ const Reservations = ({navigation}: any) => {
     useEffect(() => {
         console.log('userId', userId)
         if (userId !== undefined) getUserReservations(userId)
-    }, [userId, userReservations])
+    }, [userId])
 
     const homepage = async () => {
         try {
