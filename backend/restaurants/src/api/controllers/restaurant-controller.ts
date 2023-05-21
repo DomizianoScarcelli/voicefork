@@ -227,6 +227,26 @@ const RestaurantController = {
             next(err)
         }
     },
+    getRestaurantsByCity: async (
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                city: string
+            }
+        >,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const {city} = req.query
+            const image = await service.GetRestaurantsByCity(city)
+            res.json({image: image})
+        } catch (err) {
+            next(err)
+        }
+    },
 }
 
 export default RestaurantController

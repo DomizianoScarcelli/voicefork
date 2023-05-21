@@ -183,6 +183,13 @@ class RestaurantService {
         )
         return `data:image/jpeg;base64,${image}`
     }
+
+    async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
+        const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1)
+        const parsedCity = `, ${capitalizedCity}`
+        const results = await this.repository.GetRestaurantsByCity(parsedCity)
+        return results
+    }
 }
 
 export default RestaurantService

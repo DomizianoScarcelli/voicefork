@@ -172,7 +172,9 @@ class RestaurantRepository {
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
         const restaurants = await prisma.restaurant.findMany({
             where: {
-                city: city,
+                address: {
+                    contains: city,
+                },
             },
         })
         return restaurants
