@@ -68,6 +68,6 @@ export type ReservationCreationDetails = {
     dateTime: Date
     n_people: number
     createdAtDate: Date
-    createdAtLatitude?: number,
+    createdAtLatitude?: number
     createdAtLongitude?: number
 }
