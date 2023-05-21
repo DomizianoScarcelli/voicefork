@@ -27,20 +27,7 @@ const Reservations = ({navigation}: any) => {
     useEffect(() => {
         console.log('userId', userId)
         if (userId !== undefined) getUserReservations(userId)
-    }, [userId, userReservations])
-
-    const logout = async () => {
-        try {
-            await EncryptedStorage.removeItem('user_session')
-            navigation.navigate('Welcome')
-        } catch (error) {
-            Alert.alert(
-                'Something is wrong',
-                "We can't complete this task. Please, try again",
-                [{text: 'OK'}],
-            )
-        }
-    }
+    }, [userId])
 
     const homepage = async () => {
         try {
@@ -98,7 +85,6 @@ const Reservations = ({navigation}: any) => {
                 reservationsWithRestaurant.push(new_reservation)
             }
         }
-        console.log('reservationsWithRestaurant', reservationsWithRestaurant)
         setLoading(false)
         setReservations(reservationsWithRestaurant)
     }
@@ -117,7 +103,9 @@ const Reservations = ({navigation}: any) => {
                             searchStrategy: SearchStrategy.KEYWORD,
                         })
                     }
-                />
+                    navigation={navigation}
+                    currentView={'Reservations'}
+                    />
             </SafeAreaView>
             <View style={reservations_style.main_view}>
                 {isLoading ? (
@@ -177,33 +165,7 @@ const Reservations = ({navigation}: any) => {
                         </TouchableOpacity>
                     </View>
                 )}
-            </View>
-            <TouchableOpacity
-                onPress={() => logout()}
-                style={{
-                    backgroundColor: Colors.green,
-                    paddingVertical: Spacing,
-                    paddingHorizontal: Spacing,
-                    width: '48%',
-                    borderRadius: Spacing,
-                    shadowColor: Colors.black,
-                    shadowOffset: {
-                        width: 0,
-                        height: Spacing,
-                    },
-                    shadowOpacity: 0.3,
-                    shadowRadius: Spacing,
-                }}>
-                <Text
-                    style={{
-                        fontFamily: Fonts['poppins-bold'],
-                        color: Colors.white,
-                        fontSize: FontSize.large,
-                        textAlign: 'center',
-                    }}>
-                    Logout
-                </Text>
-            </TouchableOpacity>
+            </View>        
         </>
     )
 }

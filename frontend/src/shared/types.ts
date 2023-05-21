@@ -54,9 +54,20 @@ export type ReservationWithRestaurant = {
     n_people: number
 }
 
+export type User = {
+    id: number
+    name: string
+    surname: string
+    email: string
+    role: string
+}
+
 export type ReservationCreationDetails = {
     id_user: number
     id_restaurant: number
     dateTime: Date
     n_people: number
+    createdAtDate: Date
+    createdAtLatitude?: number,
+    createdAtLongitude?: number
 }

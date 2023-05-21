@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {
-    Text,
     SafeAreaView,
     Alert,
-    TouchableOpacity,
     ScrollView,
 } from 'react-native'
-import {Colors, FontSize, Fonts, Spacing} from '../../constants'
+import {Colors} from '../../constants'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import HorizontalScrollingSection, {
     CuisineTile,
@@ -49,16 +47,14 @@ const Homepage = ({navigation}: any) => {
         populateData()
     }, [coordinates])
 
-    const logout = async () => {
+    const retrieveUserSession = async () => {
         try {
-            await EncryptedStorage.removeItem('user_session')
-            navigation.navigate('Welcome')
+            const session = await EncryptedStorage.getItem('user_session')
+            if (session === null) {
+                navigation.navigate('Welcome')
+            }
         } catch (error) {
-            Alert.alert(
-                'Something is wrong',
-                "We can't complete this task. Please, try again",
-                [{text: 'OK'}],
-            )
+            navigation.navigate('Welcome')
         }
     }
 
@@ -103,7 +99,9 @@ const Homepage = ({navigation}: any) => {
                             searchStrategy: SearchStrategy.KEYWORD,
                         })
                     }
-                />
+                    navigation={navigation}
+                    currentView={'Homepage'}
+                    />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection
@@ -154,33 +152,6 @@ const Homepage = ({navigation}: any) => {
                         )
                     }
                 />
-
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Reservations')}
-                    style={{
-                        backgroundColor: Colors.green,
-                        paddingVertical: Spacing,
-                        paddingHorizontal: Spacing,
-                        width: '48%',
-                        borderRadius: Spacing,
-                        shadowColor: Colors.black,
-                        shadowOffset: {
-                            width: 0,
-                            height: Spacing,
-                        },
-                        shadowOpacity: 0.3,
-                        shadowRadius: Spacing,
-                    }}>
-                    <Text
-                        style={{
-                            fontFamily: Fonts['poppins-bold'],
-                            color: Colors.white,
-                            fontSize: FontSize.large,
-                            textAlign: 'center',
-                        }}>
-                        Reservations
-                    </Text>
-                </TouchableOpacity>
             </ScrollView>
         </>
     )

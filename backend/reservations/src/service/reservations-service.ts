@@ -22,12 +22,18 @@ class ReservationsService {
         id_restaurant: number,
         dateTime: Date,
         n_people: number,
+        createdAtLatitude: number,
+        createdAtLongitude: number,
+        createdAtDate: Date,
     ) {
         const newReservation = await this.repository.CreateReservation(
             id_user,
             id_restaurant,
             dateTime,
             n_people,
+            createdAtLatitude,
+            createdAtLongitude,
+            createdAtDate,
         )
         return newReservation
     }

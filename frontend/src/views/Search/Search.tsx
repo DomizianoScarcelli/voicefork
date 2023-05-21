@@ -96,7 +96,7 @@ const Search = ({route, navigation}: {route: any; navigation: any}) => {
                 style={{
                     backgroundColor: Colors.green,
                 }}>
-                <Navbar onSearch={query => newSearch(query)} />
+                <Navbar onSearch={query => newSearch(query)} navigation={navigation} currentView={'Search'}/>
             </SafeAreaView>
             <ScrollView>
                 <View style={styles.horizontalContainer}>

@@ -12,6 +12,9 @@ class ReservationsRepository {
         id_restaurant: number,
         dateTime: Date,
         n_people: number,
+        createdAtLatitude: number,
+        createdAtLongitude: number,
+        createdAtDate: Date,
     ): Promise<Reservation> {
         const reservation = await prisma.reservation.create({
             data: {
@@ -19,6 +22,9 @@ class ReservationsRepository {
                 id_restaurant: id_restaurant,
                 dateTime: dateTime,
                 n_people: n_people,
+                createdAtLatitude: createdAtLatitude,
+                createdAtLongitude: createdAtLongitude,
+                createdAtDate: createdAtDate,
             },
         })
 
