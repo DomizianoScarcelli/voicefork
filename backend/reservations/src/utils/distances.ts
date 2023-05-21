@@ -1,6 +1,9 @@
 import {ContextVector} from '../shared/types'
 /**
  * Computes the L2 distance between two ContextVectors
+ * @param vectorA The first vector
+ * @param vectorB The second vector
+ * @returns L2 Distance between the two vectors
  */
 export const l2Distance = (
     vector1: ContextVector,
@@ -18,7 +21,12 @@ export const l2Distance = (
     const l2Distance = Math.sqrt(squaredDiffSum)
     return l2Distance
 }
-
+/**
+ * Compute the cosine similarity between two vectors
+ * @param vectorA The first vector
+ * @param vectorB The second vector
+ * @returns Cosine similarity between the two vectors
+ */
 export const cosineSimilarity = (
     vectorA: ContextVector,
     vectorB: ContextVector,

@@ -2,8 +2,6 @@ import ReservationsRepository from '../repository/reservations-repository'
 import {Reservation} from '@prisma/client'
 import {ReservationContext, TimeFormat} from '../shared/types'
 import {DateTime} from 'luxon'
-
-//TODO: Debug
 import {
     computeAverageContext,
     contextToVector,
@@ -11,7 +9,7 @@ import {
     weightVector,
 } from '../utils/contextUtils'
 import {distanceBetweenCoordinates} from '../utils/locationUtils'
-import {l2Distance, cosineSimilarity} from '../utils/distances'
+import {l2Distance} from '../utils/distances'
 import {DAYS_WEEK} from '../shared/enums'
 import {timeToSecondsFromMidnight} from '../utils/timeUtils'
 /**
@@ -93,6 +91,11 @@ class ReservationsService {
         return result
     }
 
+    /**
+     * Private util function that gets the ReservationContext array from the reservation that the user has made for the given restaurant ID
+     * @param restaurantId The restaurant ID to consider
+     * @returns The resulting ReservationContext array
+     */
     private async getUserContext(restaurantId: number) {
         let userContext: ReservationContext[] = []
         const reservations =
@@ -109,9 +112,10 @@ class ReservationsService {
             const reservationContext: ReservationContext = {
                 id_restaurant: id_restaurant,
                 n_people: n_people,
+                //TODO: Handle the case in which the LatLng is not available
                 reservationLocation: {
-                    latitude: createdAtLatitude ?? 10,
-                    longitude: createdAtLongitude ?? 10,
+                    latitude: createdAtLatitude!,
+                    longitude: createdAtLongitude!,
                 },
                 currentDay: DateTime.fromJSDate(createdAtDate)
                     .weekday as DAYS_WEEK,
