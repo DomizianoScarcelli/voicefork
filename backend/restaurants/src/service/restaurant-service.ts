@@ -185,9 +185,10 @@ class RestaurantService {
     }
 
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
-        const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1)
-        const parsedCity = `, ${capitalizedCity}`
-        const results = await this.repository.GetRestaurantsByCity(parsedCity)
+        if (city.toLowerCase() == 'rome') city = 'ome' //TODO: little workaround for now
+        const results = await this.repository.GetRestaurantsByCity(
+            city.toLowerCase(),
+        )
         return results
     }
 }

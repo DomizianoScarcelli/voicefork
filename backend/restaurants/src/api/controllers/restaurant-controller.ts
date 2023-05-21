@@ -241,8 +241,8 @@ const RestaurantController = {
     ) => {
         try {
             const {city} = req.query
-            const image = await service.GetRestaurantsByCity(city)
-            res.json({image: image})
+            const result = await service.GetRestaurantsByCity(city)
+            res.json(result)
         } catch (err) {
             next(err)
         }
