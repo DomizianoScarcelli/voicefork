@@ -13,6 +13,7 @@ import {
 import {distanceBetweenCoordinates} from '../utils/locationUtils'
 import {l2Distance, cosineSimilarity} from '../utils/distances'
 import {DAYS_WEEK} from '../shared/enums'
+import {timeToSecondsFromMidnight} from '../utils/timeUtils'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -143,6 +144,12 @@ class ReservationsService {
             centroidDistance: distanceBetweenCoordinates(
                 inputContext.reservationLocation,
                 avgContext.reservationLocation,
+            ),
+            timeDistanceFromCurrent: timeToSecondsFromMidnight(
+                inputContext.currentTime!,
+            ),
+            timeDistanceFromReservation: timeToSecondsFromMidnight(
+                inputContext.reservationTime!,
             ),
         }
         const avgVector = contextToVector(avgContext)

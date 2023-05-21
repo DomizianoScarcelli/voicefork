@@ -7,6 +7,7 @@ import {
     TimeFormat,
 } from '../shared/types'
 import {distanceBetweenCoordinates} from './locationUtils'
+import {timeToSecondsFromMidnight} from './timeUtils'
 /**
  * Given a certain context, returns the vector that represent that context
  */
@@ -17,15 +18,9 @@ export const contextToVector = (context: ReservationContext): ContextVector => {
         centroidDistance,
         currentDay,
         reservationDay,
-        currentTime,
-        reservationTime,
+        timeDistanceFromCurrent,
+        timeDistanceFromReservation,
     } = context
-
-    // Split the currentTime and reservationTime strings into hours and minutes
-    const [currentHour, currentMinute] = currentTime.split(':').map(Number)
-    const [reservationHour, reservationMinute] = reservationTime
-        .split(':')
-        .map(Number)
 
     // * 1 in order to cast strings to intergers
     const vector: ContextVector = [
@@ -34,10 +29,8 @@ export const contextToVector = (context: ReservationContext): ContextVector => {
         centroidDistance! * 1,
         currentDay * 1,
         reservationDay * 1,
-        currentHour * 1,
-        currentMinute * 1,
-        reservationHour * 1,
-        reservationMinute * 1,
+        timeDistanceFromCurrent! * 1,
+        timeDistanceFromReservation! * 1,
     ]
 
     return vector
@@ -55,20 +48,18 @@ export const computeAverageContext = (
 
         const NUM_RESERVATIONS = context.length
         switch (field) {
-            //TODO: change it in order to have distance (in time) from the avg time of the reservation and the current reservation time
             case 'reservationTime':
             case 'currentTime':
                 context.forEach(item => {
                     //TODO: use reduce instead of foreach
                     if (item.id_restaurant == restaurantId) {
                         const value = item[field] as TimeFormat
-                        accumulator1 += parseInt(value.split(':')[0])
-                        accumulator2 += parseInt(value.split(':')[1])
+                        const secondFromMidnight =
+                            timeToSecondsFromMidnight(value)
+                        accumulator1 += secondFromMidnight
                     }
                 })
-                return `${accumulator1 / NUM_RESERVATIONS}:${
-                    accumulator2 / NUM_RESERVATIONS
-                }`
+                return accumulator1 / NUM_RESERVATIONS
 
             case 'reservationLocation':
                 context.forEach(item => {
@@ -104,8 +95,8 @@ export const computeAverageContext = (
         centroidDistance: averageFromCentroid(centroid, context),
         currentDay: avg('currentDay') as number,
         reservationDay: avg('reservationDay') as DAYS_WEEK,
-        currentTime: avg('currentTime') as TimeFormat,
-        reservationTime: avg('reservationTime') as TimeFormat,
+        timeDistanceFromCurrent: avg('currentTime') as number,
+        timeDistanceFromReservation: avg('reservationTime') as number,
     }
     return avgContext
 }
@@ -167,8 +158,8 @@ export const normalizeAverageAndInput = (
 
 export const weightVector = (vector: ContextVector): ContextVector => {
     const WEIGHTS = {
-        id_restaurant: 1,
-        n_people: 3,
+        id_restaurant: 0,
+        n_people: 8000,
         centroidDistance: (distance: number) => {
             if (distance < 0.001) {
                 // Assign a high weight when distance is very close to 0
@@ -181,12 +172,10 @@ export const weightVector = (vector: ContextVector): ContextVector => {
                 return 3 - (distance / 10000) * 2
             }
         },
-        currentDay: 30,
-        reservationDay: 30,
-        currentHour: 10,
-        currentMinute: 2,
-        reservationHour: 10,
-        reservationMinute: 3,
+        currentDay: 10000,
+        reservationDay: 10000,
+        timeDistanceFromCurrent: 1,
+        timeDistanceFromReservation: 1,
     }
 
     const weightedVector: ContextVector = [
@@ -195,10 +184,8 @@ export const weightVector = (vector: ContextVector): ContextVector => {
         vector[2] * WEIGHTS.centroidDistance(vector[2]),
         vector[3] * WEIGHTS.currentDay,
         vector[4] * WEIGHTS.reservationDay,
-        vector[5] * WEIGHTS.currentHour,
-        vector[6] * WEIGHTS.currentMinute,
-        vector[7] * WEIGHTS.reservationHour,
-        vector[8] * WEIGHTS.reservationMinute,
+        vector[5] * WEIGHTS.timeDistanceFromCurrent,
+        vector[6] * WEIGHTS.timeDistanceFromReservation,
     ]
     return weightedVector
 }

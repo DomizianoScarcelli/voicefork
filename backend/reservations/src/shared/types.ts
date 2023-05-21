@@ -22,8 +22,10 @@ export type ReservationContext = {
     n_people: number
     reservationLocation: LatLng
     centroidDistance?: number
+    timeDistanceFromCurrent?: number
+    timeDistanceFromReservation?: number
     currentDay: DAYS_WEEK
     reservationDay: DAYS_WEEK
-    currentTime: TimeFormat
-    reservationTime: TimeFormat
+    currentTime?: TimeFormat
+    reservationTime?: TimeFormat
 }
