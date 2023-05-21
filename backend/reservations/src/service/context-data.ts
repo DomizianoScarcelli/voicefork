@@ -1,9 +1,9 @@
-import {Context} from '../shared/types'
+import {ReservationContext} from '../shared/types'
 import {DAYS_WEEK} from '../shared/enums'
 
 //TODO: This data has to be taken from the backend, this is for debugging reasons
 
-export const pastContexts: Context[] = [
+export const pastContexts: ReservationContext[] = [
     {
         id_restaurant: 1,
         n_people: 4,

@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from 'express'
 import ReservationsService from '../../service/reservations-service'
-import {Context, TimeFormat, LatLng} from '../../shared/types'
+import {ReservationContext, TimeFormat, LatLng} from '../../shared/types'
 import {DAYS_WEEK} from '../../shared/enums'
 
 const service = new ReservationsService()
@@ -191,7 +191,7 @@ const ReservationsController = {
                 reservationTime,
             } = req.query
 
-            const inputContext: Context = {
+            const inputContext: ReservationContext = {
                 id_restaurant,
                 n_people,
                 reservationLocation: {latitude, longitude},

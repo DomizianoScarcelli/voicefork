@@ -17,7 +17,7 @@ export type TimeFormat = `${number}:${number}`
 
 export type ContextVector = any[] //TODO: to be better typed
 
-export type Context = {
+export type ReservationContext = {
     id_restaurant: number
     n_people: number
     reservationLocation: LatLng

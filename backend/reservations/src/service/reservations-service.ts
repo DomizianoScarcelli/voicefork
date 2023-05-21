@@ -1,11 +1,18 @@
 import ReservationsRepository from '../repository/reservations-repository'
 import {Reservation} from '@prisma/client'
-import {Context} from '../shared/types'
+import {ReservationContext, TimeFormat} from '../shared/types'
+import {DateTime} from 'luxon'
 
 //TODO: Debug
-import {computeAverageContext, contextToVector} from '../utils/contextUtils'
+import {
+    computeAverageContext,
+    contextToVector,
+    normalizeAverageAndInput,
+    weightVector,
+} from '../utils/contextUtils'
 import {distanceBetweenCoordinates} from '../utils/locationUtils'
 import {l2Distance, cosineSimilarity} from '../utils/distances'
+import {DAYS_WEEK} from '../shared/enums'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -85,9 +92,53 @@ class ReservationsService {
         return result
     }
 
-    async GetDistanceBetweenContext(inputContext: Context): Promise<any> {
-        const avgContext = computeAverageContext(inputContext.id_restaurant)
-        const inputContextWithCentroidDistance: Context = {
+    private async getUserContext(restaurantId: number) {
+        let userContext: ReservationContext[] = []
+        const reservations =
+            await this.repository.GetReservationsByRestaurantId(restaurantId)
+
+        for (let {
+            id_restaurant,
+            dateTime,
+            n_people,
+            createdAtLatitude,
+            createdAtLongitude,
+            createdAtDate,
+        } of reservations) {
+            const reservationContext: ReservationContext = {
+                id_restaurant: id_restaurant,
+                n_people: n_people,
+                reservationLocation: {
+                    latitude: createdAtLatitude ?? 10,
+                    longitude: createdAtLongitude ?? 10,
+                },
+                currentDay: DateTime.fromJSDate(createdAtDate)
+                    .weekday as DAYS_WEEK,
+                reservationDay: DateTime.fromJSDate(dateTime)
+                    .weekday as DAYS_WEEK,
+                currentTime: DateTime.fromJSDate(createdAtDate).toFormat(
+                    'HH:mm',
+                ) as TimeFormat,
+                reservationTime: DateTime.fromJSDate(dateTime).toFormat(
+                    'HH:mm',
+                ) as TimeFormat,
+            }
+            userContext.push(reservationContext)
+        }
+        return userContext
+    }
+
+    async GetDistanceBetweenContext(
+        inputContext: ReservationContext,
+    ): Promise<any> {
+        const userContext = await this.getUserContext(
+            parseInt(inputContext.id_restaurant.toString()), //Number to string to number trick otherwise prisma error
+        )
+        const avgContext = computeAverageContext(
+            inputContext.id_restaurant,
+            userContext,
+        )
+        const inputContextWithCentroidDistance: ReservationContext = {
             ...inputContext,
             centroidDistance: distanceBetweenCoordinates(
                 inputContext.reservationLocation,
@@ -96,11 +147,21 @@ class ReservationsService {
         }
         const avgVector = contextToVector(avgContext)
         const inputVector = contextToVector(inputContextWithCentroidDistance)
-        const similarity = l2Distance(avgVector, inputVector)
+        const {normalizedAvgVector, normalizedInputVector} =
+            normalizeAverageAndInput(avgVector, inputVector)
+
+        const normWeightAvgVector = weightVector(normalizedAvgVector)
+        const normWeightInputVector = weightVector(normalizedInputVector)
+
+        const distance = l2Distance(normWeightAvgVector, normWeightInputVector)
         return {
             inputContext: inputContextWithCentroidDistance,
+            weidhtedInput: normWeightInputVector,
+            inputVector: normalizedInputVector,
             averageContext: avgContext,
-            distance: similarity,
+            weightedVector: normWeightAvgVector,
+            avgVector: normalizedAvgVector,
+            distance,
         }
     }
 }
