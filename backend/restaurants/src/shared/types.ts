@@ -1,19 +1,29 @@
 import {Restaurant} from '@prisma/client'
 
-type LatLng = {
+export type LatLng = {
     latitude: number
     longitude: number
 }
 
-type RestaurantDistanceResult = {
+export type RestaurantDistanceResult = {
     restaurant: Restaurant
     distance?: number
 }
 
-type RestaurantSearchResult = {
+export type RestaurantSearchQuery = {
+    restaurantName: string
+    restaurantId: number
+    embeddingName: string
+    distance?: number
+}
+export type RestaurantSearchResult = {
     restaurant: Restaurant
     nameDistance: number
     locationDistance?: number
 }
 
-export {LatLng, RestaurantDistanceResult, RestaurantSearchResult}
+export type RestaurantIdSearch = {
+    restaurantId: number
+    nameDistance: number
+    locationDistance?: number
+}

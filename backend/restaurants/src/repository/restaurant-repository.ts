@@ -58,6 +58,7 @@ class RestaurantRepository {
                     in: ids,
                 },
             },
+            orderBy: {id: 'desc'},
         })
         return restaurants
     }

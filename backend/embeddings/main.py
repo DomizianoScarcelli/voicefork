@@ -5,7 +5,7 @@ import logging
 from Levenshtein import ratio
 import redis
 from .utils.distance_utils import compute_distance
-from .items.restaurants import RestaurantWithDistance
+from .items.restaurants import RestaurantSearchQuery
 from typing import List
 
 logging.basicConfig(level=logging.DEBUG)  # Set log level to DEBUG
@@ -47,17 +47,19 @@ def distance_query(query_name: str, other_name: str, embedding_name: str):
 
 
 @app.get("/batch-distance-query")
-def batch_distance_query(query_name: str, restaurant_list: List[RestaurantWithDistance]):
+def batch_distance_query(query_name: str, restaurant_list: List[RestaurantSearchQuery], fast_search: bool):
     result = []
     for item in restaurant_list:
-        restaurant = item.restaurant
-        distance = compute_distance(query_name=query_name,
-                                    other_name=restaurant.name,
-                                    embedding_name=restaurant.embeddingName,
-                                    query_cache=query_cache,
-                                    model=model,
-                                    redis_client=redis_client,
-                                    minio=minio)
-        result.append({"restaurant": restaurant,
+        if fast_search:
+            distance = 1 - ratio(query_name, item.restaurantName)
+        else:
+            distance = compute_distance(query_name=query_name,
+                                        other_name=item.restaurantName,
+                                        embedding_name=item.embeddingName,
+                                        query_cache=query_cache,
+                                        model=model,
+                                        redis_client=redis_client,
+                                        minio=minio)
+        result.append({"restaurantId": item.restaurantId,
                       "locationDistance": item.distance, "nameDistance": distance})
     return result

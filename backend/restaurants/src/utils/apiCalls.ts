@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {EMBEDDING_URL} from '../shared/urls'
-import {RestaurantDistanceResult, RestaurantSearchResult} from '../shared/types'
+import {RestaurantIdSearch, RestaurantSearchQuery} from '../shared/types'
 
 export const getDistanceBetweenRestaurantNames = async (
     query: string,
@@ -17,11 +17,14 @@ export const getDistanceBetweenRestaurantNames = async (
 
 export const batchGetDistanceBewteenRestaurantNames = async (
     query: string,
-    body: RestaurantDistanceResult[],
-): Promise<RestaurantSearchResult[]> => {
+    body: RestaurantSearchQuery[],
+    fastSearch?: boolean,
+): Promise<RestaurantIdSearch[]> => {
     const result = (
         await axios.get(
-            `${EMBEDDING_URL}/batch-distance-query?query_name=${query}`,
+            `${EMBEDDING_URL}/batch-distance-query?query_name=${query}&fast_search=${
+                fastSearch ?? false
+            }`,
             {
                 data: body,
             },

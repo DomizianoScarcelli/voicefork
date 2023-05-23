@@ -11,3 +11,4 @@ restaurants-images
 compressed-images
 models
 embeddings.tar
+migrations

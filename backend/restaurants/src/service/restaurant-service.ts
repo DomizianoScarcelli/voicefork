@@ -3,6 +3,8 @@ import {Restaurant} from '@prisma/client'
 import {
     LatLng,
     RestaurantDistanceResult,
+    RestaurantIdSearch,
+    RestaurantSearchQuery,
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
@@ -93,12 +95,13 @@ class RestaurantService {
         pageNumber: number,
         limit?: number,
         locationInfo?: {coordinates: LatLng; maxDistance: number},
+        fastSearch?: boolean,
     ): Promise<RestaurantSearchResult[]> {
         let filteredRestaurants: RestaurantDistanceResult[] | Restaurant[]
         if (locationInfo != undefined) {
+            //If the location is defined, then take only the restaurants inside of the radius
             const {coordinates, maxDistance} = locationInfo
             const {latitude, longitude} = coordinates
-            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
             filteredRestaurants =
                 await this.repository.GetRestaurantsNearCoordinates(
                     latitude,
@@ -106,6 +109,8 @@ class RestaurantService {
                     maxDistance,
                 )
         } else {
+            //Otherwise take the first page of resturants (This doesn't make much sense and has to be avoided)
+            //TODO: Replace with the possibility to specify the city otherwise
             const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
             const restaurants = await this.repository.GetAllRestaurants(
                 entriesToSkip,
@@ -117,25 +122,62 @@ class RestaurantService {
             }))
         }
 
-        const batches: RestaurantDistanceResult[][] = [[]]
-        const BATCH_SIZE = 1500
-        for (let i = 0; i < filteredRestaurants.length; i += BATCH_SIZE) {
-            const batch = filteredRestaurants.slice(i, i + BATCH_SIZE)
+        //Create the RestaurantSerchQuery object
+        const restaurantQuery: RestaurantSearchQuery[] =
+            filteredRestaurants.map(element => ({
+                restaurantName: element.restaurant.name,
+                restaurantId: element.restaurant.id,
+                embeddingName: element.restaurant.embeddingName,
+                distance: element.distance,
+            }))
+
+        //Splits the list of objects in batches, in order to perform the api request to the embedding service faster
+        const batches: RestaurantSearchQuery[][] = [[]]
+        const BATCH_SIZE = 8000
+        for (let i = 0; i < restaurantQuery.length; i += BATCH_SIZE) {
+            const batch = restaurantQuery.slice(i, i + BATCH_SIZE)
             batches.push(batch)
         }
 
-        let searchResults: RestaurantSearchResult[] = []
+        //Perform the api request to the embedding services
+        let searchResults: RestaurantIdSearch[] = []
         for (let batch of batches) {
-            const partialSearchResults: RestaurantSearchResult[] =
-                await batchGetDistanceBewteenRestaurantNames(query, batch)
+            const partialSearchResults: RestaurantIdSearch[] =
+                await batchGetDistanceBewteenRestaurantNames(
+                    query,
+                    batch,
+                    fastSearch,
+                )
             searchResults = searchResults.concat(partialSearchResults)
         }
 
-        searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
-        if (limit != undefined) {
-            return searchResults.slice(0, limit)
+        //Get the details of the restaurant from their ids
+        const restaurantDetails = await this.repository.GetRestaurantsByIds(
+            searchResults.map(item => item.restaurantId),
+        )
+        //Sorting by restaurant id (descending order, just like it happend in respository.GetRestaurantsByIds) in order to match the indexing for the elements both in restaurantDetails and in searchResult
+        searchResults.sort((a, b) => (a.restaurantId < b.restaurantId ? 1 : -1))
+
+        const searchResultsWithDetils: RestaurantSearchResult[] = []
+
+        //This is possible only because both restaurantDetails and searchResult are ordered by descending ids.
+        for (let i = 0; i < restaurantDetails.length; i++) {
+            const {nameDistance, locationDistance, restaurantId} =
+                searchResults[i]
+            const restaurantWithDetails: RestaurantSearchResult = {
+                restaurant: restaurantDetails[i],
+                nameDistance,
+                locationDistance,
+            }
+            searchResultsWithDetils.push(restaurantWithDetails)
         }
-        return searchResults
+        searchResultsWithDetils.sort((a, b) =>
+            a.nameDistance > b.nameDistance ? 1 : -1,
+        )
+        if (limit != undefined) {
+            return searchResultsWithDetils.slice(0, limit)
+        }
+        return searchResultsWithDetils
     }
 
     async GetTopRatedRestaurants(
