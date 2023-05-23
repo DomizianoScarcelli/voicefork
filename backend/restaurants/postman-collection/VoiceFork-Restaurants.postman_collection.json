@@ -73,7 +73,7 @@
 					"variable": [
 						{
 							"key": "ids",
-							"value": "[2,3]"
+							"value": "[287672, 287676, 287671]"
 						}
 					]
 				}
@@ -86,7 +86,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/all-restaurants?page=1",
+					"raw": "{{RESTAURANTS_BASE}}/all-restaurants?page=200",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
@@ -96,7 +96,7 @@
 					"query": [
 						{
 							"key": "page",
-							"value": "1"
+							"value": "200"
 						}
 					]
 				}
@@ -107,7 +107,22 @@
 			"name": "Get Restaurants By City",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/restaurants-by-city?city=capranica",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"restaurants-by-city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "capranica"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -120,7 +135,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/search-restaurants?query=Blu bar&latitude=41.909734&longitude=12.349999&maxDistance=500000&limit=20",
+					"raw": "{{RESTAURANTS_BASE}}/search-restaurants?query=Pizzikotto&latitude=41.929734&longitude=12.369999&maxDistance=50000&fastSearch=false",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
@@ -130,27 +145,32 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "Blu bar"
+							"value": "Pizzikotto"
 						},
 						{
 							"key": "latitude",
-							"value": "41.909734"
+							"value": "41.929734"
 						},
 						{
 							"key": "longitude",
-							"value": "12.349999"
+							"value": "12.369999"
 						},
 						{
 							"key": "maxDistance",
-							"value": "500000"
+							"value": "50000"
 						},
 						{
 							"key": "limit",
-							"value": "20"
+							"value": "10",
+							"disabled": true
 						},
 						{
-							"key": "page",
-							"value": "1",
+							"key": "fastSearch",
+							"value": "false"
+						},
+						{
+							"key": "city",
+							"value": "rome",
 							"disabled": true
 						},
 						{
@@ -224,7 +244,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/find-restaurants-nearby?latitude=41.909734&longitude=12.349999&limit=5&maxDistance=10000&minRating=4&cuisine=Mediterranean",
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurants-nearby?latitude=41.909734&longitude=12.349999&limit=10&maxDistance=10000&minRating=4&cuisine=Mediterranean",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
@@ -242,7 +262,7 @@
 						},
 						{
 							"key": "limit",
-							"value": "5"
+							"value": "10"
 						},
 						{
 							"key": "maxDistance",
