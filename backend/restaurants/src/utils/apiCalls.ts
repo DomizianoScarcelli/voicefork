@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {EMBEDDING_URL} from '../shared/urls'
 import {RestaurantDistanceResult, RestaurantSearchResult} from '../shared/types'
-import {data} from '@tensorflow/tfjs'
 
 export const getDistanceBetweenRestaurantNames = async (
     query: string,
