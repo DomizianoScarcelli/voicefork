@@ -14,7 +14,7 @@ export const performSearch = async (
 ) => {
     if (coordinates == undefined) return []
     console.log('Searching for restaurants')
-    const MAX_DISTANCE = 10000000
+    const MAX_DISTANCE = 5000
     const LIMIT = 50
     const {latitude, longitude} = coordinates
     const URL = `${Urls.restaurant}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
@@ -26,7 +26,7 @@ export const getNearbyRestaurants = async (coordinates: LatLng | undefined) => {
     if (coordinates == undefined) return []
     const {latitude, longitude} = coordinates
     console.log('Getting nearby restaurants')
-    const MAX_DISTANCE = 10000000
+    const MAX_DISTANCE = 5000
     const LIMIT = 10
     const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}`
     const result: DistanceResult[] = (await axios.get(URL)).data
@@ -39,7 +39,7 @@ export const getTopRatedRestaurants = async (
     console.log('Getting top picks restaurants')
     if (coordinates == undefined) return []
     const {latitude, longitude} = coordinates
-    const MAX_DISTANCE = 100000
+    const MAX_DISTANCE = 5000
     const LIMIT = 10
     const MIN_RATING = 4.0
     const URL = `${Urls.restaurant}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&maxDistance=${MAX_DISTANCE}&limit=${LIMIT}&minRating=${MIN_RATING}`
@@ -95,4 +95,10 @@ export const deleteReservation = async (
             result = error.response.status
         })
         return result
+}
+
+export const getUserAvatar = async (imageName: string) => {
+    const URL = `${Urls.users}/get-user-avatar/${imageName}`
+    const response = (await axios.get(URL)).data
+    return response.image
 }

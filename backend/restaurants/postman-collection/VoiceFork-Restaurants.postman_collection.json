@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "bcced532-aef4-4ca4-91c8-74bbb66e50f0",
+		"_postman_id": "b0b19276-e026-451b-8ea3-64969033033b",
 		"name": "VoiceFork-Restaurants",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19145227"
 	},
 	"item": [
 		{
@@ -12,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Trattoria da Mario\",\n    \"address\": \"Via Roma\",\n    \"latitude\": 45.4642,\n    \"longitude\": 9.1900,\n    \"country\": \"Italy\",\n    \"region\": \"Lombardy\",\n    \"province\": \"Milan\",\n    \"city\": \"Milan\",\n    \"tags\": \"Italian, Family-friendly\",\n    \"cuisines\": \"Italian\",\n    \"specialDiets\": \"Gluten-free\",\n    \"priceLevel\": \"Moderate\",\n    \"meals\": \"Lunch, Dinner\",\n    \"avgRating\": 4.5,\n    \"vegetarianFriendly\": true,\n    \"veganFriendly\": false,\n    \"glutenFree\": true,\n    \"reviewsNumber\": 123\n}\n",
+					"raw": "{\n    \"name\": \"Trattoria da Mario\",\n    \"nameEmbedding\": [1,2,3],\n    \"imageName\": \"restaurant_image_1\",\n    \"address\": \"Via Roma, 10\",\n    \"latitude\": 45.4642,\n    \"longitude\": 9.1900,\n    \"country\": \"Italy\",\n    \"region\": \"Lombardy\",\n    \"province\": \"Milan\",\n    \"city\": \"Milan\",\n    \"tags\": \"Italian, Family-friendly\",\n    \"cuisines\": \"Italian\",\n    \"specialDiets\": \"Gluten-free\",\n    \"priceLevel\": \"Moderate\",\n    \"meals\": \"Lunch, Dinner\",\n    \"avgRating\": 4.5,\n    \"vegetarianFriendly\": true,\n    \"veganFriendly\": false,\n    \"glutenFree\": true,\n    \"reviewsNumber\": 123\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,24 +86,41 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/all-restaurants",
+					"raw": "{{RESTAURANTS_BASE}}/all-restaurants?page=1",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
 					"path": [
 						"all-restaurants"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
+			"name": "Get Restaurants By City",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "Search Restaurant",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/search-restaurants?query=Mario&latitude=41.909734&longitude=12.349999&maxDistance=2000&limit=10",
+					"raw": "{{RESTAURANTS_BASE}}/search-restaurants?query=Blu bar&latitude=41.909734&longitude=12.349999&maxDistance=500000&limit=20",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
@@ -112,7 +130,7 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "Mario"
+							"value": "Blu bar"
 						},
 						{
 							"key": "latitude",
@@ -124,11 +142,21 @@
 						},
 						{
 							"key": "maxDistance",
-							"value": "2000"
+							"value": "500000"
 						},
 						{
 							"key": "limit",
-							"value": "10"
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "cuisine",
+							"value": "Pizza",
+							"disabled": true
 						}
 					]
 				}
@@ -183,7 +211,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "4"
+							"value": "1"
 						}
 					]
 				}
@@ -196,7 +224,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{RESTAURANTS_BASE}}/find-restaurants-nearby?latitude=41.909734&longitude=12.349999&maxDistance=2000",
+					"raw": "{{RESTAURANTS_BASE}}/find-restaurants-nearby?latitude=41.909734&longitude=12.349999&limit=5&maxDistance=10000&minRating=4&cuisine=Mediterranean",
 					"host": [
 						"{{RESTAURANTS_BASE}}"
 					],
@@ -213,13 +241,48 @@
 							"value": "12.349999"
 						},
 						{
-							"key": "maxDistance",
-							"value": "2000"
+							"key": "limit",
+							"value": "5"
 						},
 						{
-							"key": "limit",
-							"value": "",
+							"key": "maxDistance",
+							"value": "10000"
+						},
+						{
+							"key": "minRating",
+							"value": "4"
+						},
+						{
+							"key": "pageNumber",
+							"value": "1",
 							"disabled": true
+						},
+						{
+							"key": "cuisine",
+							"value": "Mediterranean"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Restaurant Image",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESTAURANTS_BASE}}/restaurant-image?imageName=restaurant_image_0",
+					"host": [
+						"{{RESTAURANTS_BASE}}"
+					],
+					"path": [
+						"restaurant-image"
+					],
+					"query": [
+						{
+							"key": "imageName",
+							"value": "restaurant_image_0"
 						}
 					]
 				}

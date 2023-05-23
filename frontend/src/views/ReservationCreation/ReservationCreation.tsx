@@ -8,7 +8,8 @@ import {Colors} from '../../constants'
 import {Picker} from '@react-native-picker/picker'
 import {
     constructDateTimeFromString,
-    getCurrentDate,
+    createNewDate,
+    getCurrentDateToString,
     getNextReservableTime,
     getReservableTimes,
 } from '../../utils/dateTimeUtils'
@@ -16,6 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {createReservation} from '../../utils/apiCalls'
 import {useSession} from '../../hooks/useSession'
 import RestaurantImage from '../../components/RestaurantImage/RestaurantImage'
+import { useGeolocation } from '../../hooks/useLocation'
 
 function ReservationCreation({
     route,
@@ -32,8 +34,11 @@ function ReservationCreation({
         useState<ReservationCreationDetails>({
             id_user: 0,
             id_restaurant: route.params.restaurant.id,
-            dateTime: new Date(),
+            dateTime: createNewDate(),
             n_people: 1,
+            createdAtDate: createNewDate(),
+            createdAtLatitude: undefined,
+            createdAtLongitude: undefined
         })
     const [dateTime, setDateTime] = useState({
         date: '',
@@ -41,6 +46,7 @@ function ReservationCreation({
     })
     const [reservableTimes, setReservableTimes] = useState<string[]>([])
     const [loading, setLoading] = useState(false)
+    const coordinates = useGeolocation()
 
     const getReservableSeats = () => {
         let reservableSeats = []
@@ -118,6 +124,9 @@ function ReservationCreation({
             id_restaurant: reservationDetails.id_restaurant,
             dateTime: reservationDetails.dateTime,
             n_people: reservationDetails.n_people,
+            createdAtDate: reservationDetails.createdAtDate,
+            createdAtLatitude: reservationDetails.createdAtLatitude,
+            createdAtLongitude: reservationDetails.createdAtLongitude
         }
 
         const resultStatus = await createReservation(formData)
@@ -136,6 +145,12 @@ function ReservationCreation({
             setReservationDetails({...reservationDetails, id_user: userId})
         }
     }, [userId])
+
+    useEffect(() => {
+        if (coordinates !== undefined) {
+            setReservationDetails({...reservationDetails, createdAtLatitude: coordinates.latitude, createdAtLongitude: coordinates.longitude})
+        }
+    }, [coordinates])
 
     return (
         <SafeAreaView>
@@ -196,7 +211,7 @@ function ReservationCreation({
                         markedDates={{
                             [dateTime.date]: {selected: true},
                         }}
-                        minDate={getCurrentDate()}
+                        minDate={getCurrentDateToString()}
                         current={dateTime.date}></Calendar>
                     {dateTime.date !== '' ? (
                         <>

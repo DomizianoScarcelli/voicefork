@@ -50,6 +50,11 @@ const restaurantAPI = (app: Express) => {
      * Given a restaurant, it returns its image as a base64 string.
      */
     app.get('/restaurant-image', RestaurantController.getRestaurantImage)
+
+    /***
+     * Given a restaurant, it returns its image as a base64 string.
+     */
+    app.get('/restaurants-by-city', RestaurantController.getRestaurantsByCity)
 }
 
 export default restaurantAPI

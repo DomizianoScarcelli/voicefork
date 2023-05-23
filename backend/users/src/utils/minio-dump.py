@@ -9,8 +9,8 @@ BUCKET_NAME = "avatars"
 # Create client with access key and secret key with specific region.
 client = Minio(
     "localhost:9001",
-    access_key="rECSg0kT1xFuRxr2",
-    secret_key="ipkp3GN4aCtn8dyvQM1ouOZTNGpWtoDS",
+    access_key="PsqYvxQYDmmKYO3PISeR",
+    secret_key="B1EwyDs4jksgPK8gEM4QFEB8NcMpjpePm9TXN7NU",
     secure=False  # Otherwise bug
 )
 

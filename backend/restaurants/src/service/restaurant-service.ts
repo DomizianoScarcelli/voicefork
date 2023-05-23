@@ -193,6 +193,14 @@ class RestaurantService {
         )
         return embedding
     }
+
+    async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
+        if (city.toLowerCase() == 'rome') city = 'ome' //TODO: little workaround for now
+        const results = await this.repository.GetRestaurantsByCity(
+            city.toLowerCase(),
+        )
+        return results
+    }
 }
 
 export default RestaurantService

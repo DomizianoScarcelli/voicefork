@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "233a529c-b6cc-4a10-9066-6ea67c5527b6",
+		"_postman_id": "3abdb6bc-5808-46f1-b06e-b1e78d55ecb3",
 		"name": "VoiceFork-Reservations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18224278"
+		"_exporter_id": "19145227"
 	},
 	"item": [
 		{
@@ -127,6 +127,69 @@
 					],
 					"path": [
 						"all-reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get distance between context",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/get-distance-context?id_restaurant=1&n_people=2&latitude=41.958253&longitude=12.354374&currentDay=3&reservationDay=2.5&currentTime=20:15&reservationTime=14:12",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"get-distance-context"
+					],
+					"query": [
+						{
+							"key": "id_restaurant",
+							"value": "1"
+						},
+						{
+							"key": "n_people",
+							"value": "2"
+						},
+						{
+							"key": "latitude",
+							"value": "41.958253"
+						},
+						{
+							"key": "longitude",
+							"value": "12.354374"
+						},
+						{
+							"key": "currentDay",
+							"value": "3"
+						},
+						{
+							"key": "reservationDay",
+							"value": "2.5"
+						},
+						{
+							"key": "currentTime",
+							"value": "20:15"
+						},
+						{
+							"key": "reservationTime",
+							"value": "14:12"
+						}
 					]
 				}
 			},
