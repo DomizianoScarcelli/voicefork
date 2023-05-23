@@ -2,28 +2,28 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "darwin-arm64", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  name      String  
-  surname   String
-  email     String
-  password  String  
-  role      Role    @default(customer)
-  avatar    String
+    id       Int    @id @default(autoincrement())
+    name     String
+    surname  String
+    email    String
+    password String
+    role     Role   @default(customer)
+    avatar   String
 
-  @@unique([email])
+    @@unique([email])
 }
 
 enum Role {
-  customer
-  owner
+    customer
+    owner
 }

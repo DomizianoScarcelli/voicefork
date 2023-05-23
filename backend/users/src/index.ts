@@ -6,7 +6,7 @@ import usersAPI from './api/users-api'
 dotenv.config()
 
 const app: Express = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3001
 
 app.use(express.json())
 // app.use(cors) #This causes some problems

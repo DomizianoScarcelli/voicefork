@@ -1,5 +1,4 @@
 import RestaurantRepository from '../repository/restaurant-repository'
-import levenshtein from 'damerau-levenshtein'
 import {Restaurant} from '@prisma/client'
 import {
     LatLng,
@@ -7,6 +6,10 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
+import {
+    getDistanceBetweenRestaurantNames,
+    batchGetDistanceBewteenRestaurantNames,
+} from '../utils/apiCalls'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -113,19 +116,21 @@ class RestaurantService {
                 distance: undefined,
             }))
         }
-        const searchResults: RestaurantSearchResult[] = []
-        filteredRestaurants?.forEach(({restaurant, distance}) => {
-            const {similarity} = levenshtein(
-                query.toLowerCase(),
-                restaurant.name.toLowerCase(),
-            )
-            const element: RestaurantSearchResult = {
-                restaurant: restaurant,
-                nameDistance: 1 - similarity,
-                locationDistance: distance,
-            }
-            searchResults.push(element)
-        })
+
+        const batches: RestaurantDistanceResult[][] = [[]]
+        const BATCH_SIZE = 1500
+        for (let i = 0; i < filteredRestaurants.length; i += BATCH_SIZE) {
+            const batch = filteredRestaurants.slice(i, i + BATCH_SIZE)
+            batches.push(batch)
+        }
+
+        let searchResults: RestaurantSearchResult[] = []
+        for (let batch of batches) {
+            const partialSearchResults: RestaurantSearchResult[] =
+                await batchGetDistanceBewteenRestaurantNames(query, batch)
+            searchResults = searchResults.concat(partialSearchResults)
+        }
+
         searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
         if (limit != undefined) {
             return searchResults.slice(0, limit)
@@ -178,10 +183,15 @@ class RestaurantService {
     }
 
     async GetRestaurantImage(imageName: string): Promise<string | undefined> {
-        const image = (await this.minioService.getObject(imageName)).toString(
-            'base64',
+        const image = await this.minioService.getImage(imageName)
+        return image
+    }
+
+    async GetRestaurantEmbedding(id: number): Promise<number[]> {
+        const embedding = await this.minioService.getEmbedding(
+            `embedding_${id}`,
         )
-        return `data:image/jpeg;base64,${image}`
+        return embedding
     }
 
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {

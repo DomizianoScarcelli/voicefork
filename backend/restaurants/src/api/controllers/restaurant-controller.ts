@@ -7,6 +7,7 @@ import {
 } from '../../shared/types'
 import {Restaurant} from '@prisma/client'
 import {SortingStrategy} from '../../shared/enums'
+import MinioService from '../../service/minio-service'
 
 const service = new RestaurantService()
 const RestaurantController = {
@@ -222,7 +223,7 @@ const RestaurantController = {
         try {
             const {imageName} = req.query
             const image = await service.GetRestaurantImage(imageName)
-            res.json({image: image})
+            res.json({image})
         } catch (err) {
             next(err)
         }

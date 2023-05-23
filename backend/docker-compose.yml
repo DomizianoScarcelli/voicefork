@@ -1,5 +1,9 @@
 version: "3.9"
 services:
+    #################
+    ### DATABASES ###
+    #################
+
     mysql_users:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
@@ -9,16 +13,12 @@ services:
             MYSQL_DATABASE: usersDB
             MYSQL_USER: admin
             MYSQL_PASSWORD: admin
-            MYSQL_TCP_PORT: 3306
+            MYSQL_TCP_PORT: 3307
         container_name: mysql_users
         ports:
-            - 3307:3306
-        expose:
-            - 3307
+            - 3307:3307
         volumes:
             - db-users:/var/lib/mysql
-        networks:
-            - users-network
 
     postgres_restaurants:
         image: postgres
@@ -27,12 +27,9 @@ services:
             POSTGRES_USER: admin
             POSTGRES_PASSWORD: admin
             POSTGRES_DB: restaurantsDB
-            # POSTGRES_PORT: 3306
         container_name: postgres_restaurants
         ports:
-            - 3308:5432
-        expose:
-            - 3308
+            - "5432:5432"
         volumes:
             - db-restaurants:/var/lib/postgres
         entrypoint: >
@@ -44,8 +41,6 @@ services:
               PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION IF NOT EXISTS postgis;' &&
               tail -f /dev/null
             "
-        networks:
-            - restaurants-network
 
     mysql_reservations:
         image: mysql
@@ -56,16 +51,100 @@ services:
             MYSQL_DATABASE: reservationsDB
             MYSQL_USER: admin
             MYSQL_PASSWORD: admin
-            MYSQL_TCP_PORT: 3306
+            MYSQL_TCP_PORT: 3308
         container_name: mysql_reservations
         ports:
-            - 3309:3306
-        expose:
-            - 3309
+            - 3308:3308
         volumes:
             - db-reservations:/var/lib/mysql
-        networks:
-            - reservations-network
+
+    #################
+    ### SERVICES ####
+    #################
+    users:
+        image: doviscarcelli/users
+        build:
+            dockerfile: Dockerfile
+            context: ./users
+        container_name: users
+        ports:
+            - "3001:3001"
+        environment:
+            - DATABASE_URL=mysql://root:root@mysql_users:3307/usersDB
+        volumes:
+            - .:/app
+        depends_on:
+            - mysql_users
+            - minio-users
+        restart: always
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+    restaurants:
+        image: doviscarcelli/restaurants
+        build:
+            dockerfile: Dockerfile
+            context: ./restaurants
+        container_name: restaurants
+        ports:
+            - "3002:3002"
+        environment:
+            - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
+        volumes:
+            - .:/app
+        depends_on:
+            - postgres_restaurants
+            - minio-restaurants
+        restart: always
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+
+    reservations:
+        image: doviscarcelli/reservations
+        build:
+            dockerfile: Dockerfile
+            context: ./reservations
+        container_name: reservations
+        ports:
+            - "3003:3003"
+        environment:
+            - DATABASE_URL=mysql://root:root@mysql_reservations:3308/reservationsDB
+        volumes:
+            - .:/app
+        depends_on:
+            - mysql_reservations
+        restart: always
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+
+    embeddings:
+        image: doviscarcelli/embeddings
+        restart: always
+        build:
+            dockerfile: Dockerfile
+            context: ./embeddings
+        container_name: embeddings
+        # env_file: ./embeddings/.env
+        volumes:
+            - .:/app/embeddings
+            - /tmp/tfhub_modules:/tmp/tfhub_modules
+        depends_on:
+            - users
+            - restaurants
+            - reservations
+        # deploy:
+        #     resources:
+        #         limits:
+        #             cpus: "2"
+        #             memory: 2g
+        ports:
+            - "3004:3004"
+
+    redis:
+        image: redis
+        container_name: redis
+        ports:
+            - 6379:6379
+
+    #################
+    ##### MINIO #####
+    #################
 
     minio-users:
         image: minio/minio
@@ -80,8 +159,6 @@ services:
         environment:
             - "MINIO_ROOT_USER=root"
             - "MINIO_ROOT_PASSWORD=root12345"
-        networks:
-            - users-network
 
     createbucket-users:
         image: minio/mc
@@ -95,8 +172,6 @@ services:
             /usr/bin/mc anonymous set download minio/avatars;
             exit 0;
             "
-        networks:
-            - users-network
 
     minio-restaurants:
         image: minio/minio
@@ -111,8 +186,6 @@ services:
         environment:
             - "MINIO_ROOT_USER=root"
             - "MINIO_ROOT_PASSWORD=root12345"
-        networks:
-            - restaurants-network
 
     createbucket-restaurants:
         image: minio/mc
@@ -123,76 +196,17 @@ services:
             /bin/sh -c "
             /usr/bin/mc config host add --api s3v4 minio http://minio-restaurants:9002 root root12345;
             /usr/bin/mc mb minio/images;
+            /usr/bin/mc mb minio/embeddings;
             /usr/bin/mc anonymous set download minio/images;
+            /usr/bin/mc anonymous set download minio/embeddings;
             exit 0;
             "
-        networks:
-            - restaurants-network
 
-    users:
-        build:
-            dockerfile: Dockerfile
-            context: ./users
-        container_name: users
-        ports:
-            - "3001:3001"
-        environment:
-            - DATABASE_URL=mysql://root:root@mysql_users:3306/usersDB
-        volumes:
-            - .:/app
-            - /app/users/node_modules
-        depends_on:
-            - mysql_users
-            - minio-users
-        restart: always
-        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
-        networks:
-            - gateway
-            - users-network
-
-    restaurants:
-        build:
-            dockerfile: Dockerfile
-            context: ./restaurants
-        container_name: restaurants
-        ports:
-            - "3002:3002"
-        environment:
-            - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
-        volumes:
-            - .:/app
-            - /app/restaurants/node_modules
-        depends_on:
-            - postgres_restaurants
-            - minio-restaurants
-        restart: always
-        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
-
-        networks:
-            - gateway
-            - restaurants-network
-
-    reservations:
-        build:
-            dockerfile: Dockerfile
-            context: ./reservations
-        container_name: reservations
-        ports:
-            - "3003:3003"
-        environment:
-            - DATABASE_URL=mysql://root:root@mysql_reservations:3306/reservationsDB
-        volumes:
-            - .:/app
-            - /app/reservations/node_modules
-        depends_on:
-            - mysql_reservations
-        restart: always
-        entrypoint: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
-        networks:
-            - gateway
-            - reservations-network
-
+    #################
+    #### GATEWAY ####
+    #################
     nginx-proxy:
+        image: doviscarcelli/nginx
         build:
             dockerfile: Dockerfile
             context: ./proxy
@@ -201,10 +215,15 @@ services:
             - users
             - restaurants
             - reservations
+            - embeddings
+        environment:
+            USERS_IP: users
+            RESTAURANTS_IP: restaurants
+            RESERVATIONS_IP: reservations
+            EMBEDDINGS_IP: embeddings
         ports:
             - "3000:3000"
-        networks:
-            - gateway
+        command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf; nginx -g 'daemon off;'"
 
 volumes:
     db-users:
@@ -212,10 +231,3 @@ volumes:
     db-reservations:
     minio-users-data:
     minio-restaurants-data:
-
-networks:
-    gateway:
-        driver: bridge
-    users-network:
-    restaurants-network:
-    reservations-network:

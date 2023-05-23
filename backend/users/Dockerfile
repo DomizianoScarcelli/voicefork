@@ -1,5 +1,5 @@
 # Use the official Node.js image
-FROM node:14-alpine
+FROM --platform=linux/amd64 node:14-alpine
 
 # Set the working directory
 WORKDIR /app/users
@@ -12,9 +12,7 @@ COPY nodemon.json ./
 RUN npm install 
 COPY . .
 RUN npx prisma generate
-COPY . .
-RUN npm build
-COPY . .
+RUN npm run build
 # Expose the port that the app will run on
 EXPOSE 3001
 # Start the app
