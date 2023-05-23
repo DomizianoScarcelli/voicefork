@@ -125,17 +125,20 @@ const RestaurantController = {
                 latitude?: number
                 longitude?: number
                 maxDistance?: number
-                fastSearch?: boolean
+                city?: string
+                fastSearch?: string
             }
         >,
         res: Response,
         next: NextFunction,
     ) => {
         let data: RestaurantSearchResult[]
+
         try {
-            const {query, limit, latitude, longitude, page, fastSearch} =
+            const {query, limit, latitude, longitude, page, city, fastSearch} =
                 req.query
             let {maxDistance} = req.query
+            const booleanFastSearch = fastSearch == 'true' ? true : false
             if (latitude != undefined && longitude != undefined) {
                 if (maxDistance == undefined) maxDistance = Infinity
                 const coordinates: LatLng = {
@@ -150,10 +153,18 @@ const RestaurantController = {
                         coordinates: coordinates,
                         maxDistance: maxDistance,
                     },
-                    fastSearch,
+                    city,
+                    booleanFastSearch,
                 )
             } else {
-                data = await service.SearchRestaurants(query, page, limit)
+                data = await service.SearchRestaurants(
+                    query,
+                    page,
+                    limit,
+                    undefined, //location info undefined
+                    city,
+                    booleanFastSearch,
+                )
             }
             res.json(data)
         } catch (err) {

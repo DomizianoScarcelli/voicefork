@@ -47,19 +47,16 @@ def distance_query(query_name: str, other_name: str, embedding_name: str):
 
 
 @app.get("/batch-distance-query")
-def batch_distance_query(query_name: str, restaurant_list: List[RestaurantSearchQuery], fast_search: bool):
+def batch_distance_query(query_name: str, restaurant_list: List[RestaurantSearchQuery]):
     result = []
     for item in restaurant_list:
-        if fast_search:
-            distance = 1 - ratio(query_name, item.restaurantName)
-        else:
-            distance = compute_distance(query_name=query_name,
-                                        other_name=item.restaurantName,
-                                        embedding_name=item.embeddingName,
-                                        query_cache=query_cache,
-                                        model=model,
-                                        redis_client=redis_client,
-                                        minio=minio)
+        distance = compute_distance(query_name=query_name,
+                                    other_name=item.restaurantName,
+                                    embedding_name=item.embeddingName,
+                                    query_cache=query_cache,
+                                    model=model,
+                                    redis_client=redis_client,
+                                    minio=minio)
         result.append({"restaurantId": item.restaurantId,
                       "locationDistance": item.distance, "nameDistance": distance})
     return result

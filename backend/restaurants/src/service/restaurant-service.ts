@@ -8,10 +8,8 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
-import {
-    getDistanceBetweenRestaurantNames,
-    batchGetDistanceBewteenRestaurantNames,
-} from '../utils/apiCalls'
+import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
+import levenshtein from 'damerau-levenshtein'
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
@@ -40,6 +38,85 @@ class RestaurantService {
     async GetRestaurantsByIds(ids: number[]): Promise<Restaurant[]> {
         const restaurants = await this.repository.GetRestaurantsByIds(ids)
         return restaurants
+    }
+
+    private orderRestaruantByLevenshteinDistance(
+        query: string,
+        restaurantList: RestaurantDistanceResult[],
+    ): RestaurantSearchResult[] {
+        let searchResults: RestaurantSearchResult[] = []
+
+        restaurantList.forEach(({restaurant, distance}) => {
+            const {similarity} = levenshtein(
+                query.toLowerCase(),
+                restaurant.name.toLowerCase(),
+            )
+            const element: RestaurantSearchResult = {
+                restaurant: restaurant,
+                nameDistance: 1 - similarity,
+                locationDistance: distance,
+            }
+            searchResults.push(element)
+        })
+        searchResults.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
+
+        return searchResults
+    }
+
+    private async orderRestaurantByEmbeddingDistance(
+        query: string,
+        restaurantList: RestaurantDistanceResult[],
+    ): Promise<RestaurantSearchResult[]> {
+        //Create the RestaurantSerchQuery object
+        const restaurantQuery: RestaurantSearchQuery[] = restaurantList.map(
+            element => ({
+                restaurantName: element.restaurant.name,
+                restaurantId: element.restaurant.id,
+                embeddingName: element.restaurant.embeddingName,
+                distance: element.distance,
+            }),
+        )
+
+        //Splits the list of objects in batches, in order to perform the api request to the embedding service faster
+        const batches: RestaurantSearchQuery[][] = [[]]
+        const BATCH_SIZE = 8000
+        for (let i = 0; i < restaurantQuery.length; i += BATCH_SIZE) {
+            const batch = restaurantQuery.slice(i, i + BATCH_SIZE)
+            batches.push(batch)
+        }
+
+        //Perform the api request to the embedding services
+        let searchResults: RestaurantIdSearch[] = []
+        for (let batch of batches) {
+            const partialSearchResults: RestaurantIdSearch[] =
+                await batchGetDistanceBewteenRestaurantNames(query, batch)
+            searchResults = searchResults.concat(partialSearchResults)
+        }
+
+        //Get the details of the restaurant from their ids
+        const restaurantDetails = await this.repository.GetRestaurantsByIds(
+            searchResults.map(item => item.restaurantId),
+        )
+        //Sorting by restaurant id (descending order, just like it happend in respository.GetRestaurantsByIds) in order to match the indexing for the elements both in restaurantDetails and in searchResult
+        searchResults.sort((a, b) => (a.restaurantId < b.restaurantId ? 1 : -1))
+
+        const searchResultsWithDetils: RestaurantSearchResult[] = []
+
+        //This is possible only because both restaurantDetails and searchResult are ordered by descending ids.
+        for (let i = 0; i < restaurantDetails.length; i++) {
+            const {nameDistance, locationDistance} = searchResults[i]
+            const restaurantWithDetails: RestaurantSearchResult = {
+                restaurant: restaurantDetails[i],
+                nameDistance,
+                locationDistance,
+            }
+            searchResultsWithDetils.push(restaurantWithDetails)
+        }
+        searchResultsWithDetils.sort((a, b) =>
+            a.nameDistance > b.nameDistance ? 1 : -1,
+        )
+
+        return searchResultsWithDetils
     }
 
     async GetRestaurantsNearCoordinates(
@@ -95,9 +172,11 @@ class RestaurantService {
         pageNumber: number,
         limit?: number,
         locationInfo?: {coordinates: LatLng; maxDistance: number},
+        city?: string,
         fastSearch?: boolean,
     ): Promise<RestaurantSearchResult[]> {
         let filteredRestaurants: RestaurantDistanceResult[] | Restaurant[]
+
         if (locationInfo != undefined) {
             //If the location is defined, then take only the restaurants inside of the radius
             const {coordinates, maxDistance} = locationInfo
@@ -108,76 +187,39 @@ class RestaurantService {
                     longitude,
                     maxDistance,
                 )
-        } else {
-            //Otherwise take the first page of resturants (This doesn't make much sense and has to be avoided)
-            //TODO: Replace with the possibility to specify the city otherwise
-            const entriesToSkip = (pageNumber - 1) * this.RESULTS_PER_PAGE
-            const restaurants = await this.repository.GetAllRestaurants(
-                entriesToSkip,
-                this.RESULTS_PER_PAGE,
-            )
+        } else if (city != undefined) {
+            //Otherwise search the restaurants by city
+            const restaurants = await this.GetRestaurantsByCity(city)
             filteredRestaurants = restaurants.map(element => ({
                 restaurant: element,
-                distance: undefined,
+                distance: -1,
             }))
+        } else {
+            // Throw an error in case location information is not specified
+            throw Error(
+                "You have to specify either the 'city' field or the 'latitude' and 'longitude' fields",
+            )
         }
 
-        //Create the RestaurantSerchQuery object
-        const restaurantQuery: RestaurantSearchQuery[] =
-            filteredRestaurants.map(element => ({
-                restaurantName: element.restaurant.name,
-                restaurantId: element.restaurant.id,
-                embeddingName: element.restaurant.embeddingName,
-                distance: element.distance,
-            }))
-
-        //Splits the list of objects in batches, in order to perform the api request to the embedding service faster
-        const batches: RestaurantSearchQuery[][] = [[]]
-        const BATCH_SIZE = 8000
-        for (let i = 0; i < restaurantQuery.length; i += BATCH_SIZE) {
-            const batch = restaurantQuery.slice(i, i + BATCH_SIZE)
-            batches.push(batch)
+        let searchResult: RestaurantSearchResult[] = []
+        if (fastSearch) {
+            //Don't contact embedding service for a faster but less accurate research
+            searchResult = this.orderRestaruantByLevenshteinDistance(
+                query,
+                filteredRestaurants,
+            )
+        } else {
+            //Call the embeddings service for a slower but accurate search
+            searchResult = await this.orderRestaurantByEmbeddingDistance(
+                query,
+                filteredRestaurants,
+            )
         }
 
-        //Perform the api request to the embedding services
-        let searchResults: RestaurantIdSearch[] = []
-        for (let batch of batches) {
-            const partialSearchResults: RestaurantIdSearch[] =
-                await batchGetDistanceBewteenRestaurantNames(
-                    query,
-                    batch,
-                    fastSearch,
-                )
-            searchResults = searchResults.concat(partialSearchResults)
-        }
-
-        //Get the details of the restaurant from their ids
-        const restaurantDetails = await this.repository.GetRestaurantsByIds(
-            searchResults.map(item => item.restaurantId),
-        )
-        //Sorting by restaurant id (descending order, just like it happend in respository.GetRestaurantsByIds) in order to match the indexing for the elements both in restaurantDetails and in searchResult
-        searchResults.sort((a, b) => (a.restaurantId < b.restaurantId ? 1 : -1))
-
-        const searchResultsWithDetils: RestaurantSearchResult[] = []
-
-        //This is possible only because both restaurantDetails and searchResult are ordered by descending ids.
-        for (let i = 0; i < restaurantDetails.length; i++) {
-            const {nameDistance, locationDistance, restaurantId} =
-                searchResults[i]
-            const restaurantWithDetails: RestaurantSearchResult = {
-                restaurant: restaurantDetails[i],
-                nameDistance,
-                locationDistance,
-            }
-            searchResultsWithDetils.push(restaurantWithDetails)
-        }
-        searchResultsWithDetils.sort((a, b) =>
-            a.nameDistance > b.nameDistance ? 1 : -1,
-        )
         if (limit != undefined) {
-            return searchResultsWithDetils.slice(0, limit)
+            return searchResult.slice(0, limit)
         }
-        return searchResultsWithDetils
+        return searchResult
     }
 
     async GetTopRatedRestaurants(
@@ -238,9 +280,7 @@ class RestaurantService {
 
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
         if (city.toLowerCase() == 'rome') city = 'ome' //TODO: little workaround for now
-        const results = await this.repository.GetRestaurantsByCity(
-            city.toLowerCase(),
-        )
+        const results = await this.repository.GetRestaurantsByCity(city)
         return results
     }
 }
