@@ -1,6 +1,6 @@
-import { LatLng } from "../shared/types"
-import { coordinates } from "../data/coordinates"
-import { restaurantNames } from "../data/restaurantsNames"
+import { LatLng } from "../shared/types.js"
+import { coordinates } from "../data/coordinates.js"
+import { restaurantNames } from "../data/restaurantsNames.js"
 
 export class Randomizer {
 	seed: number | undefined

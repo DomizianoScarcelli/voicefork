@@ -1,7 +1,7 @@
 import http from "k6/http"
 import { check, sleep } from "k6"
 import { RESTAURANT_URL } from "../shared/constants"
-import { Randomizer } from "../utils/randomizer"
+import { Randomizer } from "./Randomizer.js"
 
 const randomizer = new Randomizer()
 
@@ -11,7 +11,7 @@ export const loadRestaurantImages = (numImages: number) => {
 	for (let i = 0; i < numImages; i++) {
 		const imageName = randomizer.getRandomRestaurantImageName()
 		const URL = `${RESTAURANT_URL}/restaurant-image?imageName=${imageName}`
-		const res = http.get(URL)
+		http.get(URL)
 	}
 }
 
@@ -26,7 +26,7 @@ export const loadRestaurantsNearby = () => {
 	const URL = `${RESTAURANT_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&limit=${limit}&maxDistance=${maxDistance}`
 	const res = http.get(URL)
 
-	check(res, { "status was 200": (r: Response) => r.status == 200 })
+	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
 }
 
@@ -42,7 +42,7 @@ export const loadTopRatedRestaurants = () => {
 	const URL = `${RESTAURANT_URL}/find-restaurants-nearby?latitude=${latitude}&longitude=${longitude}&limit=${limit}&minRating=${minRating}&maxDistance=${maxDistance}`
 	const res = http.get(URL)
 
-	check(res, { "status was 200": (r: Response) => r.status == 200 })
+	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
 }
 
@@ -59,6 +59,6 @@ export const searchRestaurant = () => {
 	const URL = `${RESTAURANT_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${maxDistance}&fastSearch=${fastSearch}`
 	const res = http.get(URL)
 
-	check(res, { "status was 200": (r: Response) => r.status == 200 })
+	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
 }

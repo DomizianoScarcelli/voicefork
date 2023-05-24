@@ -1,0 +1,26 @@
+{
+	"name": "k6-typescript-framework",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "git@github.com:go-automate/k6-typescript-framework.git",
+	"author": "Simon Stratton <simon.stratton@safebear.co.uk>",
+	"license": "MIT",
+	"scripts": {
+		"monitors": "docker-compose up -d influxdb grafana",
+		"build": "rimraf dist; tsc --build",
+		"start": "npm run build; k6 run dist/index.js",
+		"docker:start": "npm run build; docker-compose run --rm k6 run /scripts/index.js"
+	},
+	"dependencies": {
+		"@types/k6": "^0.25.1",
+		"@types/node": "^13.7.1",
+		"rimraf": "^5.0.1"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"prettier": "^1.19.1",
+		"typescript": "^3.7.5"
+	}
+}
