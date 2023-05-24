@@ -4,8 +4,8 @@ import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopR
 
 export const options = {
 	stages: [
-		{ duration: "10s", target: 5 },
-		{ duration: "20s", target: 12 },
+		{ duration: "20s", target: 50 },
+		{ duration: "50s", target: 100 },
 		{ duration: "10", target: 0 },
 	],
 }
@@ -14,5 +14,5 @@ export default function() {
 	searchRestaurant()
 	loadRestaurantsNearby()
 	loadTopRatedRestaurants()
-	// loadRestaurantImages(40)
+	loadRestaurantImages(40)
 }
