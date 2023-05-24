@@ -49,7 +49,7 @@ export const loadTopRatedRestaurants = () => {
 export const searchRestaurant = () => {
 	//The user make a search request for a certain restaurant
 	const searchParams = {
-		query: randomizer.getRandomRestaurantName(),
+		query: encodeURIComponent(randomizer.getRandomRestaurantName()),
 		coordinates: randomizer.getRandomCoordinates(),
 		maxDistance: 50000,
 		fastSearch: false,

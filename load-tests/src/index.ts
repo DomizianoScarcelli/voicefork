@@ -14,5 +14,5 @@ export default function() {
 	searchRestaurant()
 	loadRestaurantsNearby()
 	loadTopRatedRestaurants()
-	loadRestaurantImages(40)
+	// loadRestaurantImages(40)
 }

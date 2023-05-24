@@ -32,7 +32,7 @@ export class Randomizer {
 
 	getRandomRestaurantImageName = (): string => {
 		const MAX_NUM = 6000 //Amount of images in the bucket
-		const index = this.seededRandom() * MAX_NUM
+		const index = Math.floor(this.seededRandom() * MAX_NUM)
 		return `restaurant_image_${index}`
 	}
 }
