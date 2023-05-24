@@ -1,7 +1,7 @@
 import http from "k6/http"
 import { check, sleep } from "k6"
 import { RESTAURANT_URL } from "../shared/constants"
-import { Randomizer } from "./Randomizer.js"
+import { Randomizer } from "./Randomizer"
 
 const randomizer = new Randomizer()
 

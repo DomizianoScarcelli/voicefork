@@ -1,6 +1,6 @@
-import { LatLng } from "../shared/types.js"
-import { coordinates } from "../data/coordinates.js"
-import { restaurantNames } from "../data/restaurantsNames.js"
+import { LatLng } from "../shared/types"
+import { coordinates } from "../data/coordinates"
+import { restaurantNames } from "../data/restaurantsNames"
 
 export class Randomizer {
 	seed: number | undefined
@@ -18,7 +18,7 @@ export class Randomizer {
 	}
 
 	private randomChoice<T>(collection: T[]): T {
-		const randomIndex = Math.random() * collection.length
+		const randomIndex = Math.floor(Math.random() * collection.length)
 		return collection[randomIndex]
 	}
 
