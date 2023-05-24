@@ -2,6 +2,8 @@ const Minio = require('minio') //Require because with import there is a strange 
 import {Client, UploadedObjectInfo} from 'minio'
 import {Readable} from 'stream'
 
+require('dotenv').config(); // fix missing .env variables 
+
 class MinioService {
     client: Client
     bucketName: string
