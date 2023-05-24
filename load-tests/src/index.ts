@@ -1,6 +1,6 @@
 import http from "k6/http"
 import { check, sleep } from "k6"
-import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopRatedRestaurants } from "./utils/pipeline.js"
+import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopRatedRestaurants } from "./utils/pipeline"
 
 export const options = {
 	stages: [
@@ -12,7 +12,7 @@ export const options = {
 
 export default function() {
 	searchRestaurant()
-	// loadRestaurantsNearby()
-	// loadTopRatedRestaurants()
-	// loadRestaurantImages(40)
+	loadRestaurantsNearby()
+	loadTopRatedRestaurants()
+	loadRestaurantImages(40)
 }
