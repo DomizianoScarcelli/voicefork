@@ -3,6 +3,7 @@ import tensorflow_hub as hub
 import numpy as np
 import os
 import logging
+import shutil
 
 logger = logging.getLogger(__name__)
 
@@ -27,8 +28,11 @@ class ModelService:
         if os.path.exists(self.CACHE_PATH):
             logger.info("Found cached files")
             for file in os.listdir(self.CACHE_PATH).copy():
-                if file.endswith("tmp") or file.endswith("lock"):
-                    os.remove(os.path.join(self.CACHE_PATH, file))
+                file_path = os.path.join(self.CACHE_PATH, file)
+                if file.endswith("tmp"):
+                    shutil.rmtree(file_path)
+                if file.endswith("lock"):
+                    os.remove(file_path)
         else:
             logger.info("There are no cache files")
 
