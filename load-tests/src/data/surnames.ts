@@ -1,0 +1,22 @@
+export const surnames: string[] = [
+	"Russo",
+	"Ferrari",
+	"Esposito",
+	"Bianchi",
+	"Romano",
+	"Colombo",
+	"Ricci",
+	"Marino",
+	"Greco",
+	"Bruno",
+	"Gallo",
+	"Conti",
+	"De Luca",
+	"Mancini",
+	"Costa",
+	"Giordano",
+	"Rizzo",
+	"Lombardi",
+	"Moretti",
+	"Barbieri"
+]
