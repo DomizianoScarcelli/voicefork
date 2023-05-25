@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import {
-    SafeAreaView,
-    Alert,
-    ScrollView,
-} from 'react-native'
+import {SafeAreaView, Alert, ScrollView} from 'react-native'
 import {Colors} from '../../constants'
-import EncryptedStorage from 'react-native-encrypted-storage'
+import {cuisineData} from './cuisineData'
 import HorizontalScrollingSection, {
     CuisineTile,
     RestaurantTile,
@@ -13,7 +9,7 @@ import HorizontalScrollingSection, {
 } from '../../components/HorizontalScrollingSection/HorizontalScrollingSection'
 import Navbar from '../../components/Navbar/Navbar'
 import {homepage_style} from './styles.js'
-import {DistanceResult} from '../../shared/types'
+import {DistanceResult, CuisineData} from '../../shared/types'
 import {useGeolocation} from '../../hooks/useLocation'
 import {
     getNearbyRestaurants,
@@ -21,6 +17,7 @@ import {
 } from '../../utils/apiCalls'
 import {SearchStrategy} from '../../shared/enums'
 import {useSession} from '../../hooks/useSession'
+import {Image} from 'react-native'
 
 const Homepage = ({navigation}: any) => {
     const userId = useSession(navigation)
@@ -47,45 +44,6 @@ const Homepage = ({navigation}: any) => {
         populateData()
     }, [coordinates])
 
-    const retrieveUserSession = async () => {
-        try {
-            const session = await EncryptedStorage.getItem('user_session')
-            if (session === null) {
-                navigation.navigate('Welcome')
-            }
-        } catch (error) {
-            navigation.navigate('Welcome')
-        }
-    }
-
-    type CuisineData = {
-        id: string
-        name: string
-        image: string
-    }
-    const cuisineData: CuisineData[] = [
-        {
-            id: '1',
-            name: 'European',
-            image: 'https://picsum.photos/100',
-        },
-        {
-            id: '2',
-            name: 'Italian',
-            image: 'https://picsum.photos/100',
-        },
-        {
-            id: '3',
-            name: 'Mediterranean',
-            image: 'https://picsum.photos/100',
-        },
-        {
-            id: '4',
-            name: 'Pizza',
-            image: 'https://picsum.photos/100',
-        },
-    ]
-
     return (
         <>
             <SafeAreaView
@@ -101,7 +59,7 @@ const Homepage = ({navigation}: any) => {
                     }
                     navigation={navigation}
                     currentView={'Homepage'}
-                    />
+                />
             </SafeAreaView>
             <ScrollView style={homepage_style.main_view}>
                 <HorizontalScrollingSection

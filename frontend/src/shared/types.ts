@@ -71,3 +71,8 @@ export type ReservationCreationDetails = {
     createdAtLatitude?: number
     createdAtLongitude?: number
 }
+
+export type CuisineData = {
+    name: string
+    image: string
+}
