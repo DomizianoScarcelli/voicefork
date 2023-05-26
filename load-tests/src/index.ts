@@ -1,6 +1,6 @@
 import http from "k6/http"
 import { check, sleep } from "k6"
-import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopRatedRestaurants, createUser, makeReservation, login } from "./utils/pipeline"
+import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopRatedRestaurants, createUser, makeReservation, login, getReservations, getUserAvatar } from "./utils/pipeline"
 
 export const options = {
 	stages: [
@@ -26,4 +26,5 @@ export default function() {
 	loadTopRatedRestaurants()
 	loadRestaurantImages(40)
 	makeReservation()
+	getReservations()
 }

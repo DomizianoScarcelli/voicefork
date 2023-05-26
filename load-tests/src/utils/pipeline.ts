@@ -2,16 +2,19 @@ import http from "k6/http"
 import { check, sleep } from "k6"
 import { RESERVATION_URL, RESTAURANT_URL, USER_URL } from "../shared/constants"
 import { Randomizer } from "./Randomizer"
+import MinioServiceRestaurants from "./minio/minio-service-restaurants"
+import MinioServiceUsers from "./minio/minio-service-users"
 
 const randomizer = new Randomizer()
+const minioUsers = new MinioServiceUsers()
+const minioRestaurants = new MinioServiceRestaurants()
 
 export const loadRestaurantImages = (numImages: number) => {
-	//TODO: make the call directly to te bucket and not to the API
 	let imagesList: string[] = []
 	for (let i = 0; i < numImages; i++) {
 		const imageName = randomizer.getRandomRestaurantImageName()
-		const URL = `${RESTAURANT_URL}/restaurant-image?imageName=${imageName}`
-		http.get(URL)
+		const image = minioRestaurants.getObject(imageName, 'images')
+		console.log(`data:image/jpeg;base64,${image}`)
 	}
 }
 
@@ -61,7 +64,7 @@ export const searchRestaurant = () => {
 
 	check(res, { "status was 200": (r) => r.status == 200 })
 
-	// Probability to make a reservation or not
+	//Probability to make a reservation or not
 	if (Math.random() > 0.5) {
 		makeReservation()
 	}
@@ -86,6 +89,7 @@ export const makeReservation = () => {
 }
 
 export const createUser = () => {
+	//A new user is created
 	const body = {
 		name: randomizer.getRandomName(),
         surname: randomizer.getRandomSurname(),
@@ -102,6 +106,7 @@ export const createUser = () => {
 }
 
 export const login = () => {
+	//A user tries to login
 	const body = {
         email: randomizer.getRandomEmail(),
         password: randomizer.getRandomPassword()
@@ -110,8 +115,25 @@ export const login = () => {
 	const res = http.post(URL, JSON.stringify(body), {
 		headers: { 'Content-Type': 'application/json' },
 	})
-	console.log(res)
 
 	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
+}
+
+export const getReservations = () => {
+	const searchParams = {
+		id: randomizer.getRandomInteger(10)
+	}
+	getUserAvatar(searchParams.id)
+	const URL = `${RESERVATION_URL}/find-user-reservations/${searchParams.id}`
+	const res = http.get(URL)
+
+	check(res, { "status was 200": (r) => r.status == 200 })
+	sleep(1)
+}
+
+export const getUserAvatar = (id: number) => {
+	const imageName = 'avatar_'+id.toString()
+	const image = minioUsers.getObject(imageName)
+	console.log(`data:image/jpeg;base64,${image}`)
 }

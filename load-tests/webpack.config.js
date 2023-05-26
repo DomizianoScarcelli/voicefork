@@ -1,8 +1,9 @@
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const path = require("path")
 
 module.exports = {
 	resolve: {
-		extensions: [".ts", ".js"],
+		extensions: [".ts", ".js", ".mjs"],
 	},
 	mode: "development",
 	entry: {
@@ -21,7 +22,7 @@ module.exports = {
 			{
 				test: /\.ts$/,
 
-				// exclude: /node_modules/,
+				//exclude: /node_modules/,
 
 				loader: "babel-loader",
 
@@ -31,6 +32,17 @@ module.exports = {
 					plugins: ["@babel/proposal-class-properties", "@babel/proposal-object-rest-spread"],
 				},
 			},
+			{
+				test: /\.mjs$/,
+				include: /node_modules/,
+				type: 'javascript/auto',
+				use: {
+					loader: 'babel-loader',
+					options: {
+					  presets: ['@babel/preset-env']
+					}
+				}
+			}
 		],
 	},
 
@@ -43,4 +55,12 @@ module.exports = {
 	externals: /k6(\/.*)?/,
 
 	devtool: "source-map",
+
+	node: {
+		fs: 'empty',
+	},
+
+	plugins: [
+		new DotenvWebpackPlugin()
+	  ]
 }
