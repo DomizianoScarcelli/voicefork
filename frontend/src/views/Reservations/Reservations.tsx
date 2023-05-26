@@ -46,6 +46,8 @@ const Reservations = ({navigation}: any) => {
         console.log('axios call made')
         const reservations: Reservation[] = (await axios.get(URL)).data
 
+        console.log(reservations)
+
         const reservationsWithRestaurant: ReservationWithRestaurant[] = []
 
         for (const key in reservations) {
@@ -54,7 +56,7 @@ const Reservations = ({navigation}: any) => {
 
                 // retrive restaurant data
                 const URL = `http://localhost:3000/restaurants/find-restaurant/${value.id_restaurant}`
-                console.log('axios call made')
+                console.log(`axios call made: ${URL}`)
                 const restaurant: Restaurant = (await axios.get(URL)).data
 
                 // separate dateTime and format them correctly
@@ -85,6 +87,7 @@ const Reservations = ({navigation}: any) => {
                 reservationsWithRestaurant.push(new_reservation)
             }
         }
+        console.log('setting')
         setLoading(false)
         setReservations(reservationsWithRestaurant)
     }
@@ -105,7 +108,7 @@ const Reservations = ({navigation}: any) => {
                     }
                     navigation={navigation}
                     currentView={'Reservations'}
-                    />
+                />
             </SafeAreaView>
             <View style={reservations_style.main_view}>
                 {isLoading ? (
@@ -121,7 +124,12 @@ const Reservations = ({navigation}: any) => {
                             item,
                         }: {
                             item: ReservationWithRestaurant
-                        }) => <ReservationTile reservation={item} navigation={navigation}/>}
+                        }) => (
+                            <ReservationTile
+                                reservation={item}
+                                navigation={navigation}
+                            />
+                        )}
                     />
                 ) : (
                     // Empty tile
@@ -165,7 +173,7 @@ const Reservations = ({navigation}: any) => {
                         </TouchableOpacity>
                     </View>
                 )}
-            </View>        
+            </View>
         </>
     )
 }

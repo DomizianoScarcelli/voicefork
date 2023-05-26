@@ -2,8 +2,7 @@ import {ListRenderItem, Text, FlatList, View, Image} from 'react-native'
 import {ReservationWithRestaurant} from '../../shared/types'
 import {styles} from './styles'
 import RestaurantImage from '../RestaurantImage/RestaurantImage'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import navigation from '../../../navigation'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 
 type VerticalScrollingSectionProps = {
     title: String
@@ -52,7 +51,12 @@ const ReservationTile = ({
         <>{reservation}</>
     ) : (
         <View>
-            <TouchableOpacity onPress={() => navigation.navigate("ReservationDetails", {reservationDetails: reservation})}>
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('ReservationDetails', {
+                        reservationDetails: reservation,
+                    })
+                }>
                 <View style={styles.mainContainer}>
                     <RestaurantImage
                         imageName={reservation.restaurant.imageName}
