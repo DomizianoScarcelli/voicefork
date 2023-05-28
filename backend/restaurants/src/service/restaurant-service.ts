@@ -10,7 +10,9 @@ import {
 import MinioService from './minio-service'
 import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
-
+import {EMBEDDING_URL} from '../shared/urls'
+import axios from 'axios'
+import {distanceBetweenCoordinates} from '../utils/localizationUtils'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -38,6 +40,15 @@ class RestaurantService {
     async GetRestaurantsByIds(ids: number[]): Promise<Restaurant[]> {
         const restaurants = await this.repository.GetRestaurantsByIds(ids)
         return restaurants
+    }
+
+    async GetRestaurantByEmbeddingName(
+        embeddingName: string,
+    ): Promise<Restaurant | null> {
+        const restaurant = await this.repository.GetRestaruantByEmbeddingName(
+            embeddingName,
+        )
+        return restaurant
     }
 
     private orderRestaruantByLevenshteinDistance(
@@ -220,6 +231,109 @@ class RestaurantService {
             return searchResult.slice(0, limit)
         }
         return searchResult
+    }
+
+    private avgLevenshtein(
+        faissDistance: number,
+        query: string,
+        restaurantName: string,
+    ) {
+        const {similarity} = levenshtein(
+            query.toLowerCase(),
+            restaurantName.toLowerCase(),
+        )
+        const distance = 1 - similarity
+        return faissDistance * 0.5 + distance * 0.5
+    }
+
+    async SearchRestaurantFaiss(
+        query: string,
+        limit?: number,
+        locationInfo?: {coordinates: LatLng; maxDistance: number},
+        city?: string,
+    ): Promise<RestaurantSearchResult[]> {
+        type FaissResponse = {
+            embeddingName: string
+            nameDistance: string
+        }
+        const data: FaissResponse[] = (
+            await axios.get(
+                `${EMBEDDING_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
+            )
+        ).data
+        let results: RestaurantSearchResult[] = []
+        if (locationInfo) {
+            const {coordinates, maxDistance} = locationInfo
+
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+                const restaurantCoordinates = {
+                    latitude: restaurant!.latitude,
+                    longitude: restaurant!.longitude,
+                }
+
+                const locationDistance = distanceBetweenCoordinates(
+                    coordinates,
+                    restaurantCoordinates,
+                )
+
+                if (locationDistance < maxDistance) {
+                    results.push({
+                        restaurant: restaurant!,
+                        locationDistance,
+                        nameDistance: this.avgLevenshtein(
+                            parseFloat(nameDistance),
+                            query,
+                            restaurant!.name,
+                        ),
+                    })
+                }
+            }
+        } else if (city) {
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+
+                if (city.toLowerCase() == 'rome') city = 'ome'
+
+                if (restaurant!.city == city) {
+                    results.push({
+                        restaurant: restaurant!,
+                        locationDistance: -1,
+                        nameDistance: this.avgLevenshtein(
+                            parseFloat(nameDistance),
+                            query,
+                            restaurant!.name,
+                        ),
+                    })
+                }
+            }
+        } else {
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+
+                results.push({
+                    restaurant: restaurant!,
+                    locationDistance: -1,
+                    nameDistance: this.avgLevenshtein(
+                        parseFloat(nameDistance),
+                        query,
+                        restaurant!.name,
+                    ),
+                })
+            }
+        }
+        results.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
+
+        return results
     }
 
     async GetTopRatedRestaurants(

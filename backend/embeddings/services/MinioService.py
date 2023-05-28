@@ -1,6 +1,9 @@
 from minio import Minio
 from dotenv import load_dotenv
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -24,6 +27,7 @@ class MinioService:
                 secure=False
             )
             self.BUCKET_NAME = "embeddings"
+            self.NUM_OBJECTS = 222603
         else:
             self.client = Minio(
                 "s3.amazonaws.com",
@@ -31,6 +35,7 @@ class MinioService:
                 secret_key=AWS_SECRET_KEY,
                 session_token=AWS_SESSION_TOKEN)
             self.BUCKET_NAME = "voicefork-embeddings-bucket"
+            self.NUM_OBJECTS = 0
 
     def get_embedding(self, embedding_name: str):
         response = self.client.get_object(self.BUCKET_NAME, embedding_name)
@@ -40,3 +45,11 @@ class MinioService:
         response.release_conn()
 
         return data
+
+    def count_objects(self) -> int:
+        logger.info("Counting objects")
+        objects = self.client.list_objects(self.BUCKET_NAME)
+        self.NUM_OBJECTS = sum(1 for _ in objects)
+        logger.info(
+            f"Finish counting, there are {self.NUM_OBJECTS} objects in the {self.BUCKET_NAME} bucket")
+        return self.NUM_OBJECTS

@@ -187,6 +187,17 @@ class RestaurantRepository {
         })
         return restaurant
     }
+
+    async GetRestaruantByEmbeddingName(
+        embeddingName: string,
+    ): Promise<Restaurant | null> {
+        const restaurant = await prisma.restaurant.findFirst({
+            where: {
+                embeddingName: embeddingName,
+            },
+        })
+        return restaurant
+    }
 }
 
 export default RestaurantRepository
