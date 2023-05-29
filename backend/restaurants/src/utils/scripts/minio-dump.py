@@ -9,8 +9,8 @@ BUCKET_NAME = "images"
 # Create client with access key and secret key with specific region.
 client = Minio(
     "localhost:9002",
-    access_key="dabJnZyAC0axbXSg",
-    secret_key="4c8EF9kkMUbdjCPvobvOm4Xoo0rc9FGf",
+    access_key="Fsvx8lSDWHkA82QuJDCu",
+    secret_key="4lgA2SByPd3HLskVTAsI8LRdez99gy1G9BFSqrtT",
     secure=False  # Otherwise bug
 )
 
