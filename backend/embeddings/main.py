@@ -4,7 +4,7 @@ from .services.ModelService import ModelService
 import logging
 from Levenshtein import ratio
 import redis
-from .utils.distance_utils import compute_distance, compute_distance_faiss
+from .utils.distance_utils import compute_distance, compute_distance_fais_with_removable_words
 from .items.restaurants import RestaurantSearchQuery
 from typing import List, Union
 from .services.FaissService import FaissService
@@ -56,18 +56,18 @@ def distance_query(query_name: str, other_name: str, embedding_name: str):
 
 @app.get("/faiss-distance-query")
 def faiss_distance_query(query_name: str, limit: Union[int, None] = None):
-    distances, indexes = compute_distance_faiss(query_name=query_name,
-                                                redis_client=redis_client,
-                                                model=model,
-                                                k=limit)
+    indexes = compute_distance_fais_with_removable_words(query_name=query_name,
+                                                         redis_client=redis_client,
+                                                         model=model,
+                                                         k=limit)
 
-    embedding_names = [faiss_service.index_lookup[f"{index}"]
-                       for index in indexes[0]]
+    embedding_names = {
+        index: faiss_service.index_lookup[f"{index}"] for index in indexes.keys()}
 
     results = []
-    for index in range(len(embedding_names)):
+    for index, distance in indexes.items():
         result = {"embeddingName": embedding_names[index],
-                  "nameDistance": distances[0][index].item()}
+                  "nameDistance": distance}
         results.append(result)
     return results
 
