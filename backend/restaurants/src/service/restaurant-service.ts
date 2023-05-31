@@ -16,6 +16,14 @@ import {distanceBetweenCoordinates} from '../utils/localizationUtils'
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
+const REMOVABLE_WORDS = [
+    'ristorante',
+    'pizzeria',
+    'bisteccheria',
+    // 'trattoria',
+    // 'gelateria',
+]
+
 class RestaurantService {
     repository: RestaurantRepository
     readonly RESULTS_PER_PAGE: number
@@ -233,15 +241,31 @@ class RestaurantService {
         return searchResult
     }
 
+    /**
+     * Makes the average betweenthe faissDistance and the levenshtein distance computed between the clean query and the clean restaurant name,
+     * where clean means the string without the REMOVABLE_WORDS (ristorante, pizzeria, trattoria, gelateria etc.)
+     */
     private avgLevenshtein(
         faissDistance: number,
         query: string,
         restaurantName: string,
     ) {
-        const {similarity} = levenshtein(
-            query.toLowerCase(),
-            restaurantName.toLowerCase(),
-        )
+        const cleanQuery: string = query
+            .toLowerCase()
+            .split(' ')
+            .filter(word => !REMOVABLE_WORDS.includes(word.toLowerCase()))
+            .join(' ')
+
+        const cleanRestaurantName: string = restaurantName
+            .toLowerCase()
+            .split(' ')
+            .filter(word => !REMOVABLE_WORDS.includes(word.toLowerCase()))
+            .join(' ')
+        let similarities: number[] = []
+
+        const {similarity} = levenshtein(cleanQuery, cleanRestaurantName)
+        similarities.push(similarity)
+
         const distance = 1 - similarity
         return faissDistance * 0.5 + distance * 0.5
     }
