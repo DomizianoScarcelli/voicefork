@@ -6,6 +6,16 @@ resource "aws_ecs_cluster" "voicefork_cluster" {
   name = "voicefork-cluster"
 }
 
+# resource "aws_cloudwatch_log_group" "embeddings_container" {
+#   name = "/fargate/service/embeddings"
+#   retention_in_days = 14
+# }
+
+# resource "aws_cloudwatch_log_stream" "embeddings_stream" {
+#   name           = "embeddings-stream"
+#   log_group_name = aws_cloudwatch_log_group.embeddings_container.name
+# }
+
 resource "aws_ecs_task_definition" "voicefork_task_definition" {
   family                   = "embeddings-task-definition"
   execution_role_arn       = "arn:aws:iam::535455227633:role/LabRole"
@@ -17,82 +27,98 @@ resource "aws_ecs_task_definition" "voicefork_task_definition" {
 
   container_definitions = jsonencode(
 [
-  {
-    "name": "embeddings",
-    "image": "doviscarcelli/embeddings-amd64:latest",
-    "cpu": 0,
-    "portMappings": [
-      {
-        "name": "embeddings-3004-tcp",
-        "containerPort": 3004,
-        "hostPort": 3004,
-        "protocol": "tcp",
-        "appProtocol": "http"
-      }
+ {
+    "family": "embeddings-task-definition",
+    "containerDefinitions": [
+        {
+            "name": "embeddings",
+            "image": "doviscarcelli/embeddings-amd64",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "embeddings-3004-tcp",
+                    "containerPort": 3004,
+                    "hostPort": 3004,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "AWS_SESSION_TOKEN",
+                    "value": ""
+                },
+                {
+                    "name": "USE_MINIO_LOCAL",
+                    "value": "false"
+                },
+                {
+                    "name": "AWS_SECRET_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "AWS_ACCESS_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "MINIO_SECRET_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "MINIO_ACCESS_KEY",
+                    "value": ""
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/embeddings-task-definition",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        },
+        {
+            "name": "redis",
+            "image": "redis",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "redis-6379-tcp",
+                    "containerPort": 6379,
+                    "hostPort": 6379,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": false,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": []
+        }
     ],
-    "essential": true,
-    "environment": [
-      {
-        "name": "AWS_SESSION_TOKEN",
-        "value": ""
-      },
-      {
-        "name": "USE_MINIO_LOCAL",
-        "value": "false"
-      },
-      {
-        "name": "AWS_SECRET_KEY",
-        "value": ""
-      },
-      {
-        "name": "AWS_ACCESS_KEY",
-        "value": ""
-      },
-      {
-        "name": "MINIO_SECRET_KEY",
-        "value": ""
-      },
-      {
-        "name": "MINIO_ACCESS_KEY",
-        "value": ""
-      }
+    "taskRoleArn": "arn:aws:iam::535455227633:role/LabRole",
+    "executionRoleArn": "arn:aws:iam::535455227633:role/LabRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
     ],
-    "environmentFiles": [],
-    "mountPoints": [],
-    "volumesFrom": [],
-    "ulimits": [],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-create-group": "true",
-        "awslogs-group": "/ecs/embeddings-task-definition",
-        "awslogs-region": "us-east-1",
-        "awslogs-stream-prefix": "ecs"
-      }
+    "cpu": "1024",
+    "memory": "5120",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
     }
-  },
-  {
-    "name": "redis", 
-    "image": "redis",
-    "cpu": 0,
-    "portMappings": [
-      {
-        "name": "redis-6379-tcp",
-        "containerPort": 6379,
-        "hostPort": 6379,
-        "protocol": "tcp",
-        "appProtocol": "http"
-      }
-    ],
-    "essential": true,
-    "environment": [],
-    "environmentFiles": [],
-    "mountPoints": [],
-    "volumesFrom": []
-  }
+}
 ]
   )
 }
+
+
 
 resource "aws_lb_target_group" "target_group" {
     name="embeddings-target-group"
@@ -114,12 +140,6 @@ resource "aws_lb" "load_balancer" {
                         "subnet-076d076632b06d637"]
   security_groups    = ["sg-02c4f407d06dc2383"]
 }
-
-# resource "aws_lb_target_group_attachment" "attachment" {
-#   target_group_arn = aws_lb_target_group.target_group.arn
-#   target_id        = aws_ecs_service.embeddings_service.id
-#   port             = 80
-# }
 
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.load_balancer.arn
@@ -159,7 +179,7 @@ resource "aws_ecs_service" "embeddings_service" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.target_group.arn
+    target_group_arn = aws_lb_target_group.target_group.arn 
     container_name   = "embeddings"
     container_port   = 3004
   }
