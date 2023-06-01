@@ -8,7 +8,7 @@ from .utils.distance_utils import compute_distance, compute_distance_fais_with_r
 from .items.restaurants import RestaurantSearchQuery
 from typing import List, Union
 from .services.FaissService import FaissService
-
+import os
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
@@ -20,14 +20,15 @@ minio = MinioService()
 # TODO: remove old results from the cache otherwise it will saturate the memory
 query_cache = {}
 
-# TODO: change localhost for aws
-redis_client = redis.Redis(host='redis', port=6379, decode_responses=True)
+host = "redis" if os.environ["USE_MINIO_LOCAL"] == "true" else "localhost"
+redis_client = redis.Redis(host=host, port=6379, decode_responses=True)
 
 faiss_service = FaissService()
 
 
 @app.on_event("startup")
 async def startup_event():
+    logger.info(f"The host is: {host}")
     logger.info("Loading model")
     model.load_model()
     logger.info("Finished loading model!")
