@@ -120,19 +120,8 @@ services:
             dockerfile: Dockerfile
             context: ./embeddings
         container_name: embeddings
-        # env_file: ./embeddings/.env
         volumes:
-            - .:/app/embeddings
             - /tmp/tfhub_modules:/tmp/tfhub_modules
-        depends_on:
-            - users
-            - restaurants
-            - reservations
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: "2"
-        #             memory: 2g
         ports:
             - "3004:3004"
 
