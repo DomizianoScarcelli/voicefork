@@ -4,18 +4,11 @@ provider "aws" {
 
 resource "aws_ecs_cluster" "voicefork_cluster" {
   name = "voicefork-cluster"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
-
-# resource "aws_cloudwatch_log_group" "embeddings_container" {
-#   name = "/fargate/service/embeddings"
-#   retention_in_days = 14
-# }
-
-# resource "aws_cloudwatch_log_stream" "embeddings_stream" {
-#   name           = "embeddings-stream"
-#   log_group_name = aws_cloudwatch_log_group.embeddings_container.name
-# }
-
 resource "aws_ecs_task_definition" "voicefork_task_definition" {
   family                   = "embeddings-task-definition"
   execution_role_arn       = "arn:aws:iam::535455227633:role/LabRole"
@@ -27,9 +20,6 @@ resource "aws_ecs_task_definition" "voicefork_task_definition" {
 
   container_definitions = jsonencode(
 [
- {
-    "family": "embeddings-task-definition",
-    "containerDefinitions": [
         {
             "name": "embeddings",
             "image": "doviscarcelli/embeddings-amd64",
@@ -46,28 +36,8 @@ resource "aws_ecs_task_definition" "voicefork_task_definition" {
             "essential": true,
             "environment": [
                 {
-                    "name": "AWS_SESSION_TOKEN",
-                    "value": ""
-                },
-                {
-                    "name": "USE_MINIO_LOCAL",
+                    "name": "LOCAL_MODE",
                     "value": "false"
-                },
-                {
-                    "name": "AWS_SECRET_KEY",
-                    "value": ""
-                },
-                {
-                    "name": "AWS_ACCESS_KEY",
-                    "value": ""
-                },
-                {
-                    "name": "MINIO_SECRET_KEY",
-                    "value": ""
-                },
-                {
-                    "name": "MINIO_ACCESS_KEY",
-                    "value": ""
                 }
             ],
             "mountPoints": [],
@@ -100,20 +70,6 @@ resource "aws_ecs_task_definition" "voicefork_task_definition" {
             "mountPoints": [],
             "volumesFrom": []
         }
-    ],
-    "taskRoleArn": "arn:aws:iam::535455227633:role/LabRole",
-    "executionRoleArn": "arn:aws:iam::535455227633:role/LabRole",
-    "networkMode": "awsvpc",
-    "requiresCompatibilities": [
-        "FARGATE"
-    ],
-    "cpu": "1024",
-    "memory": "5120",
-    "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
-    }
-}
 ]
   )
 }
@@ -176,6 +132,7 @@ resource "aws_ecs_service" "embeddings_service" {
                         "subnet-03887a0141f62d2f4", 
                         "subnet-03887a0141f62d2f4", 
                         "subnet-076d076632b06d637"]
+    assign_public_ip = true
   }
 
   load_balancer {
