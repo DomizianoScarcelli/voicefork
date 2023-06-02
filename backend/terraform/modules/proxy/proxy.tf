@@ -1,8 +1,10 @@
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_ecs_task_definition" "proxy_task_definition" {
   family                   = "proxy-task-definition"
-  execution_role_arn       = "arn:aws:iam::535455227633:role/LabRole"
-  task_role_arn            = "arn:aws:iam::535455227633:role/LabRole"
+  execution_role_arn       = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
+  task_role_arn            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "1024"
@@ -56,7 +58,7 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
             "awslogs-region" : "us-east-1",
             "awslogs-stream-prefix" : "ecs"
           }
-      },
+        },
       }
     ]
   )
