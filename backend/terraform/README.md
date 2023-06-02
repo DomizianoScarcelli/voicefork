@@ -3,7 +3,9 @@
 First, [install Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
 Then go to `~/.aws/credentials` (IDK where it is in Windows) and paste the AWS credentials you find in the lab session. I think you can also do `aws configure` instead.
 
-Then go into the `terraform/` folder and insert the VPC id and Security group id inside the `variables.tf`. Then do
+Insert your configuration inside the `terraform/variable.tf` file, that includes the vpc id, security group id and the subnets ids.
+
+Then do
 
 ```
 terraform init
