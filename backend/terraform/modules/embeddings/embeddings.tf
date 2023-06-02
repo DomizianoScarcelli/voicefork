@@ -69,14 +69,8 @@ resource "aws_ecs_task_definition" "embeddings_task_definition" {
 resource "aws_lb" "embeddings_load_balancer" {
   name               = "embeddings-load-balancer"
   load_balancer_type = "application"
-  subnets = ["subnet-0ebcbd5c5542a0ee3",
-    "subnet-0ed8750f0b61f788c",
-    "subnet-0b1597f211f5a2c35",
-    "subnet-0973965c726625638",
-    "subnet-03887a0141f62d2f4",
-    "subnet-03887a0141f62d2f4",
-  "subnet-076d076632b06d637"]
-  security_groups = ["sg-02c4f407d06dc2383"]
+  subnets            = var.networks["subnets"]
+  security_groups    = var.networks["security_groups"]
 }
 
 resource "aws_lb_target_group" "embeddings_target_group" {
@@ -114,14 +108,8 @@ resource "aws_ecs_service" "embeddings_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups = ["sg-02c4f407d06dc2383"]
-    subnets = ["subnet-0ebcbd5c5542a0ee3",
-      "subnet-0ed8750f0b61f788c",
-      "subnet-0b1597f211f5a2c35",
-      "subnet-0973965c726625638",
-      "subnet-03887a0141f62d2f4",
-      "subnet-03887a0141f62d2f4",
-    "subnet-076d076632b06d637"]
+    subnets          = var.networks["subnets"]
+    security_groups  = var.networks["security_groups"]
     assign_public_ip = true
   }
 

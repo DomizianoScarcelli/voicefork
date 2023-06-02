@@ -10,22 +10,27 @@ resource "aws_ecs_cluster" "voicefork_cluster" {
   }
 }
 
-#TODO: change resources names
-module "embeddings" {
-  source = "./modules"
-
+module "users" {
+  source            = "./modules/users"
   voicefork_cluster = aws_ecs_cluster.voicefork_cluster
 }
-
-module "restaurants" {
-  source = "./modules"
-
-  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
-}
-
-
 module "reservations" {
-  source = "./modules"
-
+  source            = "./modules/reservations"
   voicefork_cluster = aws_ecs_cluster.voicefork_cluster
+}
+module "restaurants" {
+  source            = "./modules/restaurants"
+  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
+}
+module "embeddings" {
+  source            = "./modules/embeddings"
+  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
+}
+module "proxy" {
+  source            = "./modules/proxy"
+  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
+  users_ip          = module.users.users_ip
+  reservations_ip   = module.reservations.reservations_ip
+  restaurants_ip    = module.restaurants.restaurants_ip
+  embeddings_ip     = module.embeddings.embeddings_ip
 }
