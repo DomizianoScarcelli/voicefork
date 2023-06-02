@@ -151,7 +151,7 @@ resource "aws_lb_target_group" "restaurants_target_group" {
   port        = 3002
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = "vpc-00c21a18456d3882e"
+  vpc_id      = var.vpc
 }
 resource "aws_lb_listener" "restaurants_listener" {
   load_balancer_arn = aws_lb.restaurants_load_balancer.arn

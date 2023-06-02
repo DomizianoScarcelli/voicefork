@@ -80,7 +80,7 @@ resource "aws_lb_target_group" "embeddings_target_group" {
   port        = 3004
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = "vpc-00c21a18456d3882e"
+  vpc_id      = var.vpc
 }
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.embeddings_load_balancer.arn

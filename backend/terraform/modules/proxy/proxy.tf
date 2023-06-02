@@ -77,7 +77,7 @@ resource "aws_lb_target_group" "proxy_target_group" {
   port        = 3000
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = "vpc-00c21a18456d3882e"
+  vpc_id      = var.vpc
 }
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.proxy_load_balancer.arn
