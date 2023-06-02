@@ -13,7 +13,7 @@ http {
 
         location /users {
             rewrite ^/users/(.*) /$${q}1 break; 
-            proxy_pass http://${USERS_IP}:3001; 
+            proxy_pass http://${USERS_IP}; 
             proxy_http_version 1.1;
             proxy_set_header Upgrade $${q}http_upgrade;
             proxy_set_header Connection 'upgrade';
@@ -23,7 +23,7 @@ http {
 
         location /restaurants {
             rewrite ^/restaurants/(.*) /$${q}1 break;
-            proxy_pass http://${RESTAURANTS_IP}:3002;
+            proxy_pass http://${RESTAURANTS_IP};
             proxy_http_version 1.1;
             proxy_set_header Upgrade $${q}http_upgrade;
             proxy_set_header Connection 'upgrade';
@@ -33,7 +33,7 @@ http {
 
         location /reservations {
             rewrite ^/reservations/(.*) /$${q}1 break;
-            proxy_pass http://${RESERVATIONS_IP}:3003;
+            proxy_pass http://${RESERVATIONS_IP};
             proxy_http_version 1.1;
             proxy_set_header Upgrade $${q}http_upgrade;
             proxy_set_header Connection 'upgrade';
@@ -43,7 +43,7 @@ http {
 
         location /embeddings {
             rewrite ^/embeddings/(.*) /$${q}1 break;
-            proxy_pass http://${EMBEDDINGS_IP}:3004;
+            proxy_pass http://${EMBEDDINGS_IP};
             proxy_http_version 1.1;
             proxy_set_header Upgrade $${q}http_upgrade;
             proxy_set_header Connection 'upgrade';

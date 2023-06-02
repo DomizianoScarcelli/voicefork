@@ -41,8 +41,23 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
             "name" : "RESERVATIONS_IP",
             "value" : var.reservations_ip
           },
-        ]
+          {
+            "name" : "EMBEDDINGS_IP",
+            "value" : var.embeddings_ip
+          },
+        ],
+        "mountPoints" : [],
+        "volumesFrom" : [],
+        "logConfiguration" : {
+          "logDriver" : "awslogs",
+          "options" : {
+            "awslogs-create-group" : "true",
+            "awslogs-group" : "/ecs/proxy-task-definition",
+            "awslogs-region" : "us-east-1",
+            "awslogs-stream-prefix" : "ecs"
+          }
       },
+      }
     ]
   )
 }

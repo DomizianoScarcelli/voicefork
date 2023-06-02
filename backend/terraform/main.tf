@@ -2,6 +2,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
+resource "aws_s3_bucket" "avatar_bucket" {
+  bucket = "voicefork-avatars"
+}
+resource "aws_s3_bucket" "restaurant_images_bucket" {
+  bucket = "voicefork-restaurants-images"
+}
+
 resource "aws_ecs_cluster" "voicefork_cluster" {
   name = "voicefork-cluster"
   setting {
@@ -33,4 +40,8 @@ module "proxy" {
   reservations_ip   = module.reservations.reservations_ip
   restaurants_ip    = module.restaurants.restaurants_ip
   embeddings_ip     = module.embeddings.embeddings_ip
+}
+
+output "proxy_ip" {
+  value = module.proxy.proxy_ip
 }
