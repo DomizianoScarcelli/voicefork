@@ -20,8 +20,8 @@ const REMOVABLE_WORDS = [
     'ristorante',
     'pizzeria',
     'bisteccheria',
-    // 'trattoria',
-    // 'gelateria',
+    'trattoria',
+    'gelateria',
 ]
 
 class RestaurantService {
@@ -38,6 +38,13 @@ class RestaurantService {
     async CreateRestaurant(restaurant: Restaurant) {
         const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
+    }
+
+    async CreateRestaurantBatch(restaurantBatch: Restaurant[]) {
+        const result = await this.repository.CreateRestaurantBatch(
+            restaurantBatch,
+        )
+        return result
     }
 
     async GetRestaurantById(id: number): Promise<Restaurant | null> {

@@ -11,6 +11,14 @@ const restaurantAPI = (app: Express) => {
     app.post('/create-restaurant', RestaurantController.createRestaurant)
 
     /**
+     * Creates a new restaurant with the provided name, address, street number and city.
+     */
+    app.post(
+        '/create-restaurant-batch',
+        RestaurantController.createRestaurantBatch,
+    )
+
+    /**
      * Deletes the restaurant with the specified ID.
      */
     app.delete('/delete-restaurant/:id', RestaurantController.deleteRestaurant)
