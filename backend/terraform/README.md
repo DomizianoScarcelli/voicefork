@@ -19,6 +19,14 @@ terraform apply
 
 and then insert `yes` when prompted.
 
+In order to install `postgis` in the RDS Restaurants Database, go into `terraform/modules/databases/restaurants-db` and run:
+
+```
+sh ./install-postgis.sh
+```
+
+This will install a python package to connect to the database, and install the extension there. If the extension has been installed propertly you should see `CREATE EXTENSION` when the command has finish executing. Once done this close the terminal (because idk how to exit postgres connection inside of the terminal).
+
 To destroy everything do
 
 ```
