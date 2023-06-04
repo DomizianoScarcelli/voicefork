@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
     [
       {
         "name" : "restaurants",
-        "image" : "doviscarcelli/restaurants",
+        "image" : "doviscarcelli/restaurants:latest",
         "cpu" : 0,
         "portMappings" : [
           {
@@ -198,4 +198,6 @@ resource "aws_ecs_service" "restaurants_service" {
   deployment_controller {
     type = "ECS"
   }
+
+  force_new_deployment = true
 }

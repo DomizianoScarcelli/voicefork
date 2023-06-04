@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "embeddings_task_definition" {
     [
       {
         "name" : "embeddings",
-        "image" : "doviscarcelli/embeddings-amd64",
+        "image" : "doviscarcelli/embeddings-amd64:latest",
         "cpu" : 0,
         "portMappings" : [
           {
@@ -124,4 +124,6 @@ resource "aws_ecs_service" "embeddings_service" {
   deployment_controller {
     type = "ECS"
   }
+
+  force_new_deployment = true
 }

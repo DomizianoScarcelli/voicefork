@@ -288,9 +288,10 @@ class RestaurantService {
             embeddingName: string
             nameDistance: string
         }
+
         const data: FaissResponse[] = (
             await axios.get(
-                `${process.env.EMBEDDINGS_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
+                `http://${process.env.EMBEDDINGS_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
             )
         ).data
         let results: RestaurantSearchResult[] = []

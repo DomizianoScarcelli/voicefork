@@ -196,4 +196,6 @@ resource "aws_ecs_service" "users_service" {
   deployment_controller {
     type = "ECS"
   }
+  
+  force_new_deployment = true
 }

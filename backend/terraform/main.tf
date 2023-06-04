@@ -2,12 +2,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "avatar_bucket" {
-  bucket = "voicefork-avatars"
-}
-resource "aws_s3_bucket" "restaurant_images_bucket" {
-  bucket = "voicefork-restaurants-images"
-}
+# resource "aws_s3_bucket" "avatar_bucket" {
+#   bucket = "voicefork-avatars"
+# }
+# resource "aws_s3_bucket" "restaurant_images_bucket" {
+#   bucket = "voicefork-restaurants-images"
+# }
 
 resource "aws_ecs_cluster" "voicefork_cluster" {
   name = "voicefork-cluster"
@@ -41,7 +41,7 @@ module "restaurants" {
   voicefork_cluster = aws_ecs_cluster.voicefork_cluster
   networks          = var.networks
   vpc               = var.vpc
-  embeddings_url = module.embeddings.embeddings_ip
+  embeddings_url    = module.embeddings.embeddings_ip
 }
 module "proxy" {
   source            = "./modules/proxy"

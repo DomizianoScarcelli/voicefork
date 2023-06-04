@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
     [
       {
         "name" : "nginx-proxy",
-        "image" : "doviscarcelli/nginx",
+        "image" : "doviscarcelli/nginx:latest",
         "cpu" : 0,
         "portMappings" : [
           {
@@ -121,4 +121,6 @@ resource "aws_ecs_service" "proxy_service" {
   deployment_controller {
     type = "ECS"
   }
+
+  force_new_deployment = true
 }
