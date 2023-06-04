@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "users_task_definition" {
         },
         {
           "name" : "MYSQL_TCP_PORT",
-          "value" : "3308"
+          "value" : "3307"
         }
       ],
       "mountPoints" : [
@@ -111,7 +111,7 @@ resource "aws_ecs_task_definition" "users_task_definition" {
         },
         {
           "name" : "DATABASE_URL",
-          "value" : "mysql://root:root@localhost:3008/usersDB"
+          "value" : "mysql://root:root@localhost:3007/usersDB"
         }
       ],
       "mountPoints" : [],
