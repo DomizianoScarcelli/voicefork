@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "users_task_definition" {
         },
         {
           "name" : "DATABASE_URL",
-          "value" : "mysql://root:mariomariomario@${var.database_url}/mysql"
+          "value" : "mysql://root:mariomariomario@${var.database_url}/usersDB"
         }
       ],
       "mountPoints" : [],

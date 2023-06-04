@@ -11,6 +11,7 @@ resource "aws_db_instance" "rds_mysql" {
   username               = "root"
   password               = "mariomariomario"
   vpc_security_group_ids = var.networks["security_groups"]
+  skip_final_snapshot    = true
   tags = {
     Name = "ReservationsDB"
   }
