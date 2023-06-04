@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
   container_definitions = jsonencode(
     [
       {
-        "name" : "proxy",
+        "name" : "nginx-proxy",
         "image" : "doviscarcelli/nginx",
         "cpu" : 0,
         "portMappings" : [
