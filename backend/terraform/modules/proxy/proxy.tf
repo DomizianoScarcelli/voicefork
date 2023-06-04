@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
         "cpu" : 0,
         "portMappings" : [
           {
-            "name" : "proxy-3000-tcp",
+            "name" : "nginx-proxy-3000-tcp",
             "containerPort" : 3000,
             "hostPort" : 3000,
             "protocol" : "tcp",
@@ -114,7 +114,7 @@ resource "aws_ecs_service" "proxy_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.proxy_target_group.arn
-    container_name   = "proxy"
+    container_name   = "nginx-proxy"
     container_port   = 3000
   }
 
