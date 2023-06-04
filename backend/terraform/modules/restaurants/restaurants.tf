@@ -39,6 +39,10 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
             "value" : "postgresql://admin:admin@localhost:5432/restaurantsDB?connection_limit=10000"
           },
           {
+            "name" : "EMBEDDINGS_URL",
+            "value" : var.embeddings_url
+          },
+          {
             "name" : "PORT",
             "value" : "3002"
           },

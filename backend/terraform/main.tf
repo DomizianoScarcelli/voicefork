@@ -30,17 +30,18 @@ module "reservations" {
   networks          = var.networks
   vpc               = var.vpc
 }
-module "restaurants" {
-  source            = "./modules/restaurants"
-  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
-  networks          = var.networks
-  vpc               = var.vpc
-}
 module "embeddings" {
   source            = "./modules/embeddings"
   voicefork_cluster = aws_ecs_cluster.voicefork_cluster
   networks          = var.networks
   vpc               = var.vpc
+}
+module "restaurants" {
+  source            = "./modules/restaurants"
+  voicefork_cluster = aws_ecs_cluster.voicefork_cluster
+  networks          = var.networks
+  vpc               = var.vpc
+  embeddings_url = module.embeddings.embeddings_ip
 }
 module "proxy" {
   source            = "./modules/proxy"
