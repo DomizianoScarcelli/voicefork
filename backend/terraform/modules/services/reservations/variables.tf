@@ -14,7 +14,9 @@ variable "voicefork_cluster" {
 
 variable "networks" {
   type = map(any)
-
-
 }
+variable "database_url" {
+  description = "Url of the RDS database"
+}
+
 

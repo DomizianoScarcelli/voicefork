@@ -1,7 +1,7 @@
-resource "aws_db_instance" "rds_postgresql" {
-  identifier             = "postgres-restaurants"
-  engine                 = "postgres"
-  engine_version         = "13.4"
+resource "aws_db_instance" "rds_mysql" {
+  identifier             = "mysql-users"
+  engine                 = "mysql"
+  engine_version         = "8.0"
   instance_class         = "db.t3.micro"
   allocated_storage      = 5
   storage_type           = "gp2"
@@ -12,10 +12,16 @@ resource "aws_db_instance" "rds_postgresql" {
   password               = "mariomariomario"
   vpc_security_group_ids = var.networks["security_groups"]
   tags = {
-    Name = "RestaurantsDB"
+    Name = "UsersDB"
   }
 }
 
 output "database_url" {
-  value = aws_db_instance.rds_postgresql.endpoint
+  value = aws_db_instance.rds_mysql.endpoint
 }
+
+
+
+
+
+

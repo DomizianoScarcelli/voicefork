@@ -10,81 +10,6 @@ resource "aws_ecs_task_definition" "users_task_definition" {
   memory                   = "5120"
 
   container_definitions = jsonencode([
-
-    {
-      "name" : "mysql_users",
-      "image" : "mysql:latest",
-      "cpu" : 0,
-      "portMappings" : [
-        {
-          "name" : "mysql_users-3307-tcp",
-          "containerPort" : 3307,
-          "hostPort" : 3307,
-          "protocol" : "tcp",
-          "appProtocol" : "http"
-        }
-      ],
-      "essential" : true,
-      "command" : [
-        "--default-authentication-plugin=mysql_native_password"
-      ],
-      "environment" : [
-        {
-          "name" : "MYSQL_DATABASE",
-          "value" : "usersDB"
-        },
-        {
-          "name" : "MYSQL_PASSWORD",
-          "value" : "admin"
-        },
-        {
-          "name" : "MYSQL_ROOT_PASSWORD",
-          "value" : "root"
-        },
-        {
-          "name" : "MYSQL_USER",
-          "value" : "admin"
-        },
-        {
-          "name" : "MYSQL_TCP_PORT",
-          "value" : "3307"
-        }
-      ],
-      "mountPoints" : [
-        {
-          "sourceVolume" : "mysql_users",
-          "containerPath" : "/var/lib/mysql",
-          "readOnly" : false
-        }
-      ],
-      "volumesFrom" : [],
-      "logConfiguration" : {
-        "logDriver" : "awslogs",
-        "options" : {
-          "awslogs-create-group" : "true",
-          "awslogs-group" : "/ecs/users-task-definition",
-          "awslogs-region" : "us-east-1",
-          "awslogs-stream-prefix" : "ecs"
-        }
-      },
-      "healthCheck" : {
-        "command" : [
-          "mysqladmin",
-          "ping",
-          "-h",
-          "127.0.0.1",
-          "-P",
-          "3307",
-          "-u",
-          "admin",
-          "-padmin"
-        ],
-        "interval" : 30,
-        "timeout" : 5,
-        "retries" : 3,
-        "startPeriod" : 60
-      }
-    },
     {
       "name" : "users",
       "image" : "doviscarcelli/users:latest",
@@ -111,17 +36,11 @@ resource "aws_ecs_task_definition" "users_task_definition" {
         },
         {
           "name" : "DATABASE_URL",
-          "value" : "mysql://root:root@localhost:3007/usersDB"
+          "value" : "mysql://root:mariomariomario@${var.database_url}/mysql"
         }
       ],
       "mountPoints" : [],
       "volumesFrom" : [],
-      "dependsOn" : [
-        {
-          "containerName" : "mysql_users",
-          "condition" : "HEALTHY"
-        }
-      ],
       "logConfiguration" : {
         "logDriver" : "awslogs",
         "options" : {
@@ -134,9 +53,6 @@ resource "aws_ecs_task_definition" "users_task_definition" {
     }
     ]
   )
-  volume {
-    name = "mysql_users"
-  }
 }
 
 
@@ -196,6 +112,6 @@ resource "aws_ecs_service" "users_service" {
   deployment_controller {
     type = "ECS"
   }
-  
+
   force_new_deployment = true
 }

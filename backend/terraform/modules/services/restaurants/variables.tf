@@ -19,3 +19,7 @@ variable "networks" {
 variable "embeddings_url" {
   description = "Url of the embeddings load balancer"
 }
+
+variable "database_url" {
+  description = "Url of the RDS database"
+}

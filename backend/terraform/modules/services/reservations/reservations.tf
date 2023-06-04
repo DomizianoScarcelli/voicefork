@@ -12,80 +12,6 @@ resource "aws_ecs_task_definition" "reservations_task_definition" {
   container_definitions = jsonencode(
     [
       {
-        "name" : "mysql_reservations",
-        "image" : "mysql:latest",
-        "cpu" : 0,
-        "portMappings" : [
-          {
-            "name" : "mysql_reservations-3008-tcp",
-            "containerPort" : 3008,
-            "hostPort" : 3008,
-            "protocol" : "tcp",
-            "appProtocol" : "http"
-          }
-        ],
-        "essential" : true,
-        "command" : [
-          "--default-authentication-plugin=mysql_native_password"
-        ],
-        "environment" : [
-          {
-            "name" : "MYSQL_DATABASE",
-            "value" : "reservationsDB"
-          },
-          {
-            "name" : "MYSQL_PASSWORD",
-            "value" : "admin"
-          },
-          {
-            "name" : "MYSQL_ROOT_PASSWORD",
-            "value" : "root"
-          },
-          {
-            "name" : "MYSQL_USER",
-            "value" : "admin"
-          },
-          {
-            "name" : "MYSQL_TCP_PORT",
-            "value" : "3308"
-          }
-        ],
-        "mountPoints" : [
-          {
-            "sourceVolume" : "mysql_reservations",
-            "containerPath" : "/var/lib/mysql",
-            "readOnly" : false
-          }
-        ],
-        "volumesFrom" : [],
-        "logConfiguration" : {
-          "logDriver" : "awslogs",
-          "options" : {
-            "awslogs-create-group" : "true",
-            "awslogs-group" : "/ecs/reservations-task-definition",
-            "awslogs-region" : "us-east-1",
-            "awslogs-stream-prefix" : "ecs"
-          }
-        },
-        "healthCheck" : {
-          "command" : [
-            "mysqladmin",
-            "ping",
-            "-h",
-            "127.0.0.1",
-            "-P",
-            "3308",
-            "-u",
-            "admin",
-            "-padmin"
-          ],
-          "interval" : 30,
-          "timeout" : 5,
-          "retries" : 3,
-          "startPeriod" : 60
-        }
-      },
-      {
         "name" : "reservations",
         "image" : "doviscarcelli/reservations:latest",
         "cpu" : 0,
@@ -111,17 +37,11 @@ resource "aws_ecs_task_definition" "reservations_task_definition" {
           },
           {
             "name" : "DATABASE_URL",
-            "value" : "mysql://root:root@localhost:3008/reservationsDB"
+            "value" : "mysql://root:marionemarione@${var.database_url}/mysql"
           }
         ],
         "mountPoints" : [],
         "volumesFrom" : [],
-        "dependsOn" : [
-          {
-            "containerName" : "mysql_reservations",
-            "condition" : "HEALTHY"
-          }
-        ],
         "logConfiguration" : {
           "logDriver" : "awslogs",
           "options" : {
@@ -134,9 +54,6 @@ resource "aws_ecs_task_definition" "reservations_task_definition" {
       }
     ]
   )
-  volume {
-    name = "mysql_reservations"
-  }
 }
 
 

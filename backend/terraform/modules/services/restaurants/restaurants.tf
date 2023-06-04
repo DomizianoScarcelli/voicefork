@@ -36,8 +36,9 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
           },
           {
             "name" : "DATABASE_URL",
-            "value" : "postgresql://admin:admin@localhost:5432/restaurantsDB?connection_limit=10000"
-          },
+            "value" : "postgresql://root:mariomariomario@${var.database_url}/postgres"
+          }
+          ,
           {
             "name" : "EMBEDDINGS_URL",
             "value" : var.embeddings_url
@@ -81,64 +82,9 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
             "awslogs-stream-prefix" : "ecs"
           }
         }
-      },
-      {
-        "name" : "postgres_restaurants",
-        "image" : "postgres",
-        "cpu" : 0,
-        "portMappings" : [
-          {
-            "name" : "postgres_restaurants-5432-tcp",
-            "containerPort" : 5432,
-            "hostPort" : 5432,
-            "protocol" : "tcp",
-            "appProtocol" : "http"
-          }
-        ],
-        "essential" : false,
-        "command" : [
-          "bash",
-          "-c",
-          "/usr/local/bin/docker-entrypoint.sh postgres & while ! pg_isready -h localhost -p 5432 > /dev/null 2>&1; do sleep 1; done && apt-get update && apt-get install -y postgis && PGPASSWORD=admin psql -h localhost -U admin restaurantsDB -c 'CREATE EXTENSION postgis;' && tail -f /dev/null"
-        ],
-        "environment" : [
-          {
-            "name" : "POSTGRES_USER",
-            "value" : "admin"
-          },
-          {
-            "name" : "POSTGRES_PASSWORD",
-            "value" : "admin"
-          },
-          {
-            "name" : "POSTGRES_DB",
-            "value" : "restaurantsDB"
-          }
-        ],
-        "environmentFiles" : [],
-        "mountPoints" : [
-          {
-            "sourceVolume" : "postgres_restaurants",
-            "containerPath" : "/var/lib/postgres",
-            "readOnly" : false
-          }
-        ],
-        "volumesFrom" : [],
-        "logConfiguration" : {
-          "logDriver" : "awslogs",
-          "options" : {
-            "awslogs-create-group" : "true",
-            "awslogs-group" : "/ecs/restaurants-task-definition",
-            "awslogs-region" : "us-east-1",
-            "awslogs-stream-prefix" : "ecs"
-          }
-        }
       }
     ]
   )
-  volume {
-    name = "postgres_restaurants"
-  }
 }
 
 
