@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "users_task_definition" {
         }
       ],
       "essential" : true,
-      "entryPoint" : [
+      "command" : [
         "sh",
         "-c",
         "npx prisma migrate deploy;npm run build;npm start"
