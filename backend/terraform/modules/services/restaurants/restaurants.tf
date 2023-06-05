@@ -48,14 +48,6 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
             "value" : "3002"
           },
           {
-            "name" : "MINIO_ACCESS_KEY",
-            "value" : ""
-          },
-          {
-            "name" : "USE_MINIO_LOCAL",
-            "value" : "false"
-          },
-          {
             "name" : "AWS_SECRET_KEY",
             "value" : ""
           },
@@ -63,10 +55,6 @@ resource "aws_ecs_task_definition" "restaurants_task_definition" {
             "name" : "AWS_ACCESS_KEY",
             "value" : ""
           },
-          {
-            "name" : "MINIO_SECRET_KEY",
-            "value" : ""
-          }
         ],
         "environmentFiles" : [],
         "mountPoints" : [
