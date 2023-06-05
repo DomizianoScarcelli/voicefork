@@ -2,12 +2,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# resource "aws_s3_bucket" "avatar_bucket" {
-#   bucket = "voicefork-avatars"
-# }
-# resource "aws_s3_bucket" "restaurant_images_bucket" {
-#   bucket = "voicefork-restaurants-images"
-# }
+resource "aws_s3_bucket" "avatar_bucket" {
+  bucket = "voicefork-avatars"
+}
+resource "aws_s3_bucket" "restaurant_images_bucket" {
+  bucket = "voicefork-restaurants-images"
+}
 
 resource "aws_ecs_cluster" "voicefork_cluster" {
   name = "voicefork-cluster"
