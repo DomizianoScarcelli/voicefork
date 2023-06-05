@@ -14,8 +14,8 @@ EMBEDDINGS_BUCKET_NAME = "embeddings"
 # Create client with access key and secret key with specific region.
 client = Minio(
     "localhost:9002",
-    access_key="Fsvx8lSDWHkA82QuJDCu",
-    secret_key="4lgA2SByPd3HLskVTAsI8LRdez99gy1G9BFSqrtT",
+    access_key="V8VTzABPu24et972K4vz",
+    secret_key="RlYBTAXQq88LpPmXxyk2oK07cycBsBLzv0M75YFw",
     secure=False  # Otherwise bug
 )
 

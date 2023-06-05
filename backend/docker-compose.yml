@@ -62,7 +62,6 @@ services:
     ### SERVICES ####
     #################
     users:
-        image: doviscarcelli/users
         build:
             dockerfile: Dockerfile
             context: ./users
@@ -77,9 +76,8 @@ services:
             - mysql_users
             - minio-users
         restart: always
-        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run build; npm start"]
     restaurants:
-        image: doviscarcelli/restaurants
         build:
             dockerfile: Dockerfile
             context: ./restaurants
@@ -94,10 +92,9 @@ services:
             - postgres_restaurants
             - minio-restaurants
         restart: always
-        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run build; npm start"]
 
     reservations:
-        image: doviscarcelli/reservations
         build:
             dockerfile: Dockerfile
             context: ./reservations
@@ -111,10 +108,9 @@ services:
         depends_on:
             - mysql_reservations
         restart: always
-        command: ["sh", "-c", "npx prisma migrate deploy; npm run dev"]
+        command: ["sh", "-c", "npx prisma migrate deploy; npm run build; npm start"]
 
     embeddings:
-        image: doviscarcelli/embeddings
         restart: always
         build:
             dockerfile: Dockerfile
@@ -206,7 +202,7 @@ services:
     #### GATEWAY ####
     #################
     nginx-proxy:
-        image: doviscarcelli/nginx
+        image: nginx
         build:
             dockerfile: Dockerfile
             context: ./proxy

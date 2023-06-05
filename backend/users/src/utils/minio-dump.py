@@ -3,15 +3,15 @@ import os
 from tqdm import tqdm
 
 IMAGES_PATH = "./avatars" # Change the path according to where you put the "avatars" folder
-BUCKET_NAME = "avatars"
+BUCKET_NAME = "voicefork-avatars"
 
 
 # Create client with access key and secret key with specific region.
 client = Minio(
-    "localhost:9001",
-    access_key="nESHAzUcqEoA4nLblvcI",
-    secret_key="1Iy9vNkF2Q91mYhboKJrqeqqAXeeHznZLZIzrC6t",
-    secure=False  # Otherwise bug
+    "s3.amazonaws.com",
+    access_key="ASIATG7YT5XSGJK7KDXS",
+    secret_key="nM1fNuE2bViM0LihGv0fcAi0ZiTCSxLcoSTyqRVO",
+    session_token="FwoGZXIvYXdzEN7//////////wEaDCtrsLS5M1Lj6CrUTSLWARSw8hWPU4ejvIccAck+kgGgQalmNgkyo15ZgEOW6YC/mDwz/dQSp5QkG7br+jM5JddM3nW5D+xC2HKFxLr/C/yCFJH0ATN7hgMPwmmIBd4/bDQTz0t8VqV0VTDIccf90jaYdYmpAjoDxNF7GSb6bgurrNLLi7ip2lFI1/5xrDdlfnu9kqZd0xfAsIFsVWIzxBFaBhZwFVEwN29ZPU5HgrdR4t041bPoXXsmiQvmh8EwXYqnzgrx4u4UkNY4D++iMe2K/rAfXBeBXIUZIy5Y3qtsESVy2lYo5pbyowYyLR8pzpK8boQx6y6f9ouku5kMdiGJyp7k5JeVPYDIstolzqdjYXHKmHhtm3hJFg==",
 )
 
 
