@@ -101,6 +101,23 @@ resource "aws_appautoscaling_target" "users_autoscaling_target" {
   service_namespace  = "ecs"
 }
 
+resource "aws_appautoscaling_policy" "users_autoscaling_policy" {
+  name               = "users-autoscaling-policy"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.users_autoscaling_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.users_autoscaling_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.users_autoscaling_target.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+    target_value       = 70
+    scale_in_cooldown  = 100
+    scale_out_cooldown = 100
+  }
+}
+
 
 resource "aws_ecs_service" "users_service" {
   name            = "users-service_namespace"
