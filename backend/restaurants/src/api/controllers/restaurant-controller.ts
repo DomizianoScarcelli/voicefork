@@ -29,6 +29,23 @@ const RestaurantController = {
         }
     },
 
+    createRestaurantBatch: async (
+        req: Request<{}, {}, Restaurant[], {}>,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const restaurants = req.body
+            const data = await service.CreateRestaurantBatch(restaurants)
+            res.json({
+                message: 'Restaurants were created successfully!',
+                ids: data,
+            })
+        } catch (err) {
+            next(err)
+        }
+    },
+
     deleteRestaurant: async (
         req: Request,
         res: Response,
@@ -145,25 +162,21 @@ const RestaurantController = {
                     latitude: latitude,
                     longitude: longitude,
                 }
-                data = await service.SearchRestaurants(
+                data = await service.SearchRestaurantFaiss(
                     query,
-                    page,
                     limit,
                     {
                         coordinates: coordinates,
                         maxDistance: maxDistance,
                     },
                     city,
-                    booleanFastSearch,
                 )
             } else {
-                data = await service.SearchRestaurants(
+                data = await service.SearchRestaurantFaiss(
                     query,
-                    page,
                     limit,
                     undefined, //location info undefined
                     city,
-                    booleanFastSearch,
                 )
             }
             res.json(data)
@@ -262,6 +275,28 @@ const RestaurantController = {
         try {
             const {city} = req.query
             const result = await service.GetRestaurantsByCity(city)
+            res.json(result)
+        } catch (err) {
+            next(err)
+        }
+    },
+    getRestaurantByEmbedding: async (
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                embeddingName: string
+            }
+        >,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const {embeddingName} = req.query
+            const result = await service.GetRestaurantByEmbeddingName(
+                embeddingName,
+            )
             res.json(result)
         } catch (err) {
             next(err)

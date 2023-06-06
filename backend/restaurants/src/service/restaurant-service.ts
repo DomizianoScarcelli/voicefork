@@ -10,10 +10,21 @@ import {
 import MinioService from './minio-service'
 import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
+import axios from 'axios'
+import {distanceBetweenCoordinates} from '../utils/localizationUtils'
+require('dotenv').config()
 
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
+const REMOVABLE_WORDS = [
+    'ristorante',
+    'pizzeria',
+    'bisteccheria',
+    'trattoria',
+    'gelateria',
+]
+
 class RestaurantService {
     repository: RestaurantRepository
     readonly RESULTS_PER_PAGE: number
@@ -30,6 +41,13 @@ class RestaurantService {
         return newRestaurant
     }
 
+    async CreateRestaurantBatch(restaurantBatch: Restaurant[]) {
+        const result = await this.repository.CreateRestaurantBatch(
+            restaurantBatch,
+        )
+        return result
+    }
+
     async GetRestaurantById(id: number): Promise<Restaurant | null> {
         const restaurant = await this.repository.GetRestaurantById(id)
         return restaurant
@@ -38,6 +56,15 @@ class RestaurantService {
     async GetRestaurantsByIds(ids: number[]): Promise<Restaurant[]> {
         const restaurants = await this.repository.GetRestaurantsByIds(ids)
         return restaurants
+    }
+
+    async GetRestaurantByEmbeddingName(
+        embeddingName: string,
+    ): Promise<Restaurant | null> {
+        const restaurant = await this.repository.GetRestaruantByEmbeddingName(
+            embeddingName,
+        )
+        return restaurant
     }
 
     private orderRestaruantByLevenshteinDistance(
@@ -220,6 +247,126 @@ class RestaurantService {
             return searchResult.slice(0, limit)
         }
         return searchResult
+    }
+
+    /**
+     * Makes the average betweenthe faissDistance and the levenshtein distance computed between the clean query and the clean restaurant name,
+     * where clean means the string without the REMOVABLE_WORDS (ristorante, pizzeria, trattoria, gelateria etc.)
+     */
+    private avgLevenshtein(
+        faissDistance: number,
+        query: string,
+        restaurantName: string,
+    ) {
+        const cleanQuery: string = query
+            .toLowerCase()
+            .split(' ')
+            .filter(word => !REMOVABLE_WORDS.includes(word.toLowerCase()))
+            .join(' ')
+
+        const cleanRestaurantName: string = restaurantName
+            .toLowerCase()
+            .split(' ')
+            .filter(word => !REMOVABLE_WORDS.includes(word.toLowerCase()))
+            .join(' ')
+        let similarities: number[] = []
+
+        const {similarity} = levenshtein(cleanQuery, cleanRestaurantName)
+        similarities.push(similarity)
+
+        const distance = 1 - similarity
+        return faissDistance * 0.5 + distance * 0.5
+    }
+
+    async SearchRestaurantFaiss(
+        query: string,
+        limit?: number,
+        locationInfo?: {coordinates: LatLng; maxDistance: number},
+        city?: string,
+    ): Promise<RestaurantSearchResult[]> {
+        type FaissResponse = {
+            embeddingName: string
+            nameDistance: string
+        }
+
+        const data: FaissResponse[] = (
+            await axios.get(
+                `http://${process.env.EMBEDDINGS_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
+            )
+        ).data
+        let results: RestaurantSearchResult[] = []
+        if (locationInfo) {
+            const {coordinates, maxDistance} = locationInfo
+
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+                const restaurantCoordinates = {
+                    latitude: restaurant!.latitude,
+                    longitude: restaurant!.longitude,
+                }
+
+                const locationDistance = distanceBetweenCoordinates(
+                    coordinates,
+                    restaurantCoordinates,
+                )
+
+                if (locationDistance < maxDistance) {
+                    results.push({
+                        restaurant: restaurant!,
+                        locationDistance,
+                        nameDistance: this.avgLevenshtein(
+                            parseFloat(nameDistance),
+                            query,
+                            restaurant!.name,
+                        ),
+                    })
+                }
+            }
+        } else if (city) {
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+
+                if (city.toLowerCase() == 'rome') city = 'ome'
+
+                if (restaurant!.city == city) {
+                    results.push({
+                        restaurant: restaurant!,
+                        locationDistance: -1,
+                        nameDistance: this.avgLevenshtein(
+                            parseFloat(nameDistance),
+                            query,
+                            restaurant!.name,
+                        ),
+                    })
+                }
+            }
+        } else {
+            for (let {embeddingName, nameDistance} of data) {
+                const restaurant =
+                    await this.repository.GetRestaruantByEmbeddingName(
+                        embeddingName,
+                    )
+
+                results.push({
+                    restaurant: restaurant!,
+                    locationDistance: -1,
+                    nameDistance: this.avgLevenshtein(
+                        parseFloat(nameDistance),
+                        query,
+                        restaurant!.name,
+                    ),
+                })
+            }
+        }
+        results.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
+
+        return results
     }
 
     async GetTopRatedRestaurants(

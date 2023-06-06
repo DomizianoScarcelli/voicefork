@@ -11,6 +11,14 @@ const restaurantAPI = (app: Express) => {
     app.post('/create-restaurant', RestaurantController.createRestaurant)
 
     /**
+     * Creates a new restaurant with the provided name, address, street number and city.
+     */
+    app.post(
+        '/create-restaurant-batch',
+        RestaurantController.createRestaurantBatch,
+    )
+
+    /**
      * Deletes the restaurant with the specified ID.
      */
     app.delete('/delete-restaurant/:id', RestaurantController.deleteRestaurant)
@@ -55,6 +63,14 @@ const restaurantAPI = (app: Express) => {
      * Given a restaurant, it returns its image as a base64 string.
      */
     app.get('/restaurants-by-city', RestaurantController.getRestaurantsByCity)
+
+    /***
+     * Given a restaurant, it returns its image as a base64 string.
+     */
+    app.get(
+        '/restaurants-by-embedding',
+        RestaurantController.getRestaurantByEmbedding,
+    )
 }
 
 export default restaurantAPI

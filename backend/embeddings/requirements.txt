@@ -54,3 +54,4 @@ wrapt==1.14.1
 levenshtein==0.21.0
 hiredis==2.2.3
 redis==4.5.5
+faiss-cpu==1.7.4 

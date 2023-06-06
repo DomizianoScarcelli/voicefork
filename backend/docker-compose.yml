@@ -88,6 +88,7 @@ services:
             - "3002:3002"
         environment:
             - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
+            - EMBEDDINGS_URL= http://embeddings:3004
         volumes:
             - .:/app
         depends_on:
@@ -120,19 +121,8 @@ services:
             dockerfile: Dockerfile
             context: ./embeddings
         container_name: embeddings
-        # env_file: ./embeddings/.env
         volumes:
-            - .:/app/embeddings
             - /tmp/tfhub_modules:/tmp/tfhub_modules
-        depends_on:
-            - users
-            - restaurants
-            - reservations
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: "2"
-        #             memory: 2g
         ports:
             - "3004:3004"
 
@@ -217,10 +207,10 @@ services:
             - reservations
             - embeddings
         environment:
-            USERS_IP: users
-            RESTAURANTS_IP: restaurants
-            RESERVATIONS_IP: reservations
-            EMBEDDINGS_IP: embeddings
+            USERS_IP: users:3001
+            RESTAURANTS_IP: restaurants:3002
+            RESERVATIONS_IP: reservations:3003
+            EMBEDDINGS_IP: embeddings:3004
         ports:
             - "3000:3000"
         command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf; nginx -g 'daemon off;'"

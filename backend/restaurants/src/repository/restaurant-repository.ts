@@ -42,6 +42,14 @@ class RestaurantRepository {
         return result
     }
 
+    async CreateRestaurantBatch(restaurants: Restaurant[]): Promise<any> {
+        const result = await prisma.restaurant.createMany({
+            data: restaurants,
+            skipDuplicates: true,
+        })
+        return result
+    }
+
     async GetRestaurantById(id: number): Promise<Restaurant | null> {
         const restaurant = await prisma.restaurant.findUnique({
             where: {
@@ -183,6 +191,17 @@ class RestaurantRepository {
         const restaurant = await prisma.restaurant.delete({
             where: {
                 id: id,
+            },
+        })
+        return restaurant
+    }
+
+    async GetRestaruantByEmbeddingName(
+        embeddingName: string,
+    ): Promise<Restaurant | null> {
+        const restaurant = await prisma.restaurant.findFirst({
+            where: {
+                embeddingName: embeddingName,
             },
         })
         return restaurant
