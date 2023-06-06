@@ -4,11 +4,18 @@ import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopR
 
 export const options = {
 	stages: [
-		{ duration: "10s", target: 50},
+		{ duration: "60s", target: 50},
 		{ duration: "60s", target: 250 },
-		{ duration: "30s", target: 250 },
-		{ duration: "30s", target: 50 },
-		{ duration: "10s", target: 50 },
+		{ duration: "480s", target: 250 },
+		{ duration: "60s", target: 80 },
+		{ duration: "60s", target: 80 },
+		{ duration: "600s", target: 270 },
+		{ duration: "30s", target: 20 },
+		{ duration: "90s", target: 20 },
+		{ duration: "60s", target: 270 },
+		{ duration: "180s", target: 270 },
+		{ duration: "30s", target: 10 },
+		{ duration: "30s", target: 10 },
 	],
 }
 
