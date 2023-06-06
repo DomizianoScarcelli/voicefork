@@ -10,9 +10,10 @@ import {
 import MinioService from './minio-service'
 import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
-import {EMBEDDING_URL} from '../shared/urls'
 import axios from 'axios'
 import {distanceBetweenCoordinates} from '../utils/localizationUtils'
+require('dotenv').config()
+
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -20,8 +21,8 @@ const REMOVABLE_WORDS = [
     'ristorante',
     'pizzeria',
     'bisteccheria',
-    // 'trattoria',
-    // 'gelateria',
+    'trattoria',
+    'gelateria',
 ]
 
 class RestaurantService {
@@ -38,6 +39,13 @@ class RestaurantService {
     async CreateRestaurant(restaurant: Restaurant) {
         const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
+    }
+
+    async CreateRestaurantBatch(restaurantBatch: Restaurant[]) {
+        const result = await this.repository.CreateRestaurantBatch(
+            restaurantBatch,
+        )
+        return result
     }
 
     async GetRestaurantById(id: number): Promise<Restaurant | null> {
@@ -280,9 +288,10 @@ class RestaurantService {
             embeddingName: string
             nameDistance: string
         }
+
         const data: FaissResponse[] = (
             await axios.get(
-                `${EMBEDDING_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
+                `http://${process.env.EMBEDDINGS_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
             )
         ).data
         let results: RestaurantSearchResult[] = []
