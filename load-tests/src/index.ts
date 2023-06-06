@@ -4,9 +4,11 @@ import { searchRestaurant, loadRestaurantImages, loadRestaurantsNearby, loadTopR
 
 export const options = {
 	stages: [
-		{ duration: "20s", target: 1 },
-		{ duration: "50s", target: 2 },
-		{ duration: "10", target: 0 },
+		{ duration: "10s", target: 50},
+		{ duration: "60s", target: 250 },
+		{ duration: "30s", target: 250 },
+		{ duration: "30s", target: 50 },
+		{ duration: "10s", target: 50 },
 	],
 }
 

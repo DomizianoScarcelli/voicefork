@@ -14,7 +14,7 @@ export const loadRestaurantImages = (numImages: number) => {
 	for (let i = 0; i < numImages; i++) {
 		const imageName = randomizer.getRandomRestaurantImageName()
 		const image = minioRestaurants.getObject(imageName, 'images')
-		console.log(`data:image/jpeg;base64,${image}`)
+		//console.log(`data:image/jpeg;base64,${image}`)
 	}
 }
 
@@ -135,5 +135,5 @@ export const getReservations = () => {
 export const getUserAvatar = (id: number) => {
 	const imageName = 'avatar_'+id.toString()
 	const image = minioUsers.getObject(imageName)
-	console.log(`data:image/jpeg;base64,${image}`)
+	//console.log(`data:image/jpeg;base64,${image}`)
 }
