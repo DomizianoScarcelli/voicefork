@@ -17,6 +17,7 @@ services:
 
     grafana:
         image: grafana/grafana:latest
+        command: bash -c "docker login -u user -p password && /run.sh"
         networks:
             - grafana
         ports:
@@ -28,6 +29,7 @@ services:
         volumes:
             - ./grafana-data:/var/lib/grafana
             - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+        user: "root:root"
 
     k6:
         image: loadimpact/k6:latest
