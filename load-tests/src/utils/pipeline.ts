@@ -56,10 +56,11 @@ export const searchRestaurant = () => {
 		coordinates: randomizer.getRandomCoordinates(),
 		maxDistance: 50000,
 		fastSearch: false,
+		limit: 50,
 	}
-	const { query, coordinates, maxDistance, fastSearch } = searchParams
+	const { query, coordinates, maxDistance, limit } = searchParams
 	const { latitude, longitude } = coordinates
-	const URL = `${RESTAURANT_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${maxDistance}&fastSearch=${fastSearch}`
+	const URL = `${RESTAURANT_URL}/search-restaurants?query=${query}&latitude=${latitude}&longitude=${longitude}&maxDistance=${maxDistance}&limit=${limit}`
 	const res = http.get(URL)
 
 	check(res, { "status was 200": (r) => r.status == 200 })
