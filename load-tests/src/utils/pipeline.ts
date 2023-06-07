@@ -9,14 +9,14 @@ const randomizer = new Randomizer()
 const minioUsers = new MinioServiceUsers()
 const minioRestaurants = new MinioServiceRestaurants()
 
-export const loadRestaurantImages = (numImages: number) => {
-	let imagesList: string[] = []
-	for (let i = 0; i < numImages; i++) {
-		const imageName = randomizer.getRandomRestaurantImageName()
-		const image = minioRestaurants.getObject(imageName, 'images')
-		//console.log(`data:image/jpeg;base64,${image}`)
-	}
-}
+// export const loadRestaurantImages = (numImages: number) => {
+// 	let imagesList: string[] = []
+// 	for (let i = 0; i < numImages; i++) {
+// 		const imageName = randomizer.getRandomRestaurantImageName()
+// 		const image = minioRestaurants.getObject(imageName, "images")
+// 		//console.log(`data:image/jpeg;base64,${image}`)
+// 	}
+// }
 
 export const loadRestaurantsNearby = () => {
 	const params = {
@@ -75,13 +75,13 @@ export const makeReservation = () => {
 	//The user makes a reservation to a certain restaurant
 	const body = {
 		id_user: randomizer.getRandomInteger(10), //Get a random id from 1 to 100
-        id_restaurant: randomizer.getRandomInteger(6000), //Get a random restaurant to make the reservation to
-        dateTime: randomizer.getRandomDate(), //Get a random date from now to 10 days from now
-        n_people: randomizer.getRandomInteger(30), //Get a random number of people
+		id_restaurant: randomizer.getRandomInteger(6000), //Get a random restaurant to make the reservation to
+		dateTime: randomizer.getRandomDate(), //Get a random date from now to 10 days from now
+		n_people: randomizer.getRandomInteger(30), //Get a random number of people
 	}
 	const URL = `${RESERVATION_URL}/create-reservation`
 	const res = http.post(URL, JSON.stringify(body), {
-		headers: { 'Content-Type': 'application/json' },
+		headers: { "Content-Type": "application/json" },
 	})
 
 	check(res, { "status was 200": (r) => r.status == 200 })
@@ -92,13 +92,13 @@ export const createUser = () => {
 	//A new user is created
 	const body = {
 		name: randomizer.getRandomName(),
-        surname: randomizer.getRandomSurname(),
-        email: randomizer.getRandomEmail(),
-        password: 'test'
+		surname: randomizer.getRandomSurname(),
+		email: randomizer.getRandomEmail(),
+		password: "test",
 	}
 	const URL = `${USER_URL}/create-user`
 	const res = http.post(URL, JSON.stringify(body), {
-		headers: { 'Content-Type': 'application/json' },
+		headers: { "Content-Type": "application/json" },
 	})
 
 	check(res, { "status was 200": (r) => r.status == 200 })
@@ -108,12 +108,12 @@ export const createUser = () => {
 export const login = () => {
 	//A user tries to login
 	const body = {
-        email: randomizer.getRandomEmail(),
-        password: randomizer.getRandomPassword()
+		email: randomizer.getRandomEmail(),
+		password: randomizer.getRandomPassword(),
 	}
 	const URL = `${USER_URL}/login`
 	const res = http.post(URL, JSON.stringify(body), {
-		headers: { 'Content-Type': 'application/json' },
+		headers: { "Content-Type": "application/json" },
 	})
 
 	check(res, { "status was 200": (r) => r.status == 200 })
@@ -122,9 +122,9 @@ export const login = () => {
 
 export const getReservations = () => {
 	const searchParams = {
-		id: randomizer.getRandomInteger(10)
+		id: randomizer.getRandomInteger(10),
 	}
-	getUserAvatar(searchParams.id)
+	// getUserAvatar(searchParams.id)
 	const URL = `${RESERVATION_URL}/find-user-reservations/${searchParams.id}`
 	const res = http.get(URL)
 
@@ -132,8 +132,8 @@ export const getReservations = () => {
 	sleep(1)
 }
 
-export const getUserAvatar = (id: number) => {
-	const imageName = 'avatar_'+id.toString()
-	const image = minioUsers.getObject(imageName)
-	//console.log(`data:image/jpeg;base64,${image}`)
-}
+// export const getUserAvatar = (id: number) => {
+// 	const imageName = 'avatar_'+id.toString()
+// 	const image = minioUsers.getObject(imageName)
+// 	//console.log(`data:image/jpeg;base64,${image}`)
+// }

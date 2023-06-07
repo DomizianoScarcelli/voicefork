@@ -7,8 +7,8 @@ resource "aws_ecs_task_definition" "proxy_task_definition" {
   task_role_arn            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "1024"
-  memory                   = "5120"
+  cpu                      = "256"
+  memory                   = "1024"
   container_definitions = jsonencode(
     [
       {
@@ -109,9 +109,9 @@ resource "aws_appautoscaling_policy" "proxy_autoscaling_policy" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value       = 70
-    scale_in_cooldown  = 100
-    scale_out_cooldown = 100
+    target_value       = 60
+    scale_in_cooldown  = 10
+    scale_out_cooldown = 10
   }
 }
 
