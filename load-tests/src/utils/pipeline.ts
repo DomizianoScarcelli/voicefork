@@ -80,9 +80,16 @@ export const makeReservation = () => {
 		n_people: randomizer.getRandomInteger(30), //Get a random number of people
 	}
 	const URL = `${RESERVATION_URL}/create-reservation`
-	const res = http.post(URL, JSON.stringify(body), {
-		headers: { "Content-Type": "application/json" },
-	})
+	const data = JSON.stringify(body)
+	const params = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}
+	const res = http.post(URL, data, params)
+
+	//console.log(`Response status: ${res.status}`);
+	//console.log(`Response body: ${res.body}`);
 
 	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
@@ -97,9 +104,16 @@ export const createUser = () => {
 		password: "test",
 	}
 	const URL = `${USER_URL}/create-user`
-	const res = http.post(URL, JSON.stringify(body), {
-		headers: { "Content-Type": "application/json" },
-	})
+	const data = JSON.stringify(body)
+	const params = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}
+	const res = http.post(URL, data, params)
+
+	//console.log(`Response status: ${res.status}`);
+	//console.log(`Response body: ${res.body}`);
 
 	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
@@ -112,9 +126,16 @@ export const login = () => {
 		password: randomizer.getRandomPassword(),
 	}
 	const URL = `${USER_URL}/login`
-	const res = http.post(URL, JSON.stringify(body), {
-		headers: { "Content-Type": "application/json" },
-	})
+	const data = JSON.stringify(body)
+	const params = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}
+	const res = http.post(URL, data, params)
+
+	//console.log(`Response status: ${res.status}`);
+	//console.log(`Response body: ${res.body}`);
 
 	check(res, { "status was 200": (r) => r.status == 200 })
 	sleep(1)
