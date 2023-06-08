@@ -120,9 +120,9 @@ resource "aws_appautoscaling_policy" "restaurants_autoscaling_policy" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value       = 60
+    target_value       = 50
     scale_in_cooldown  = 10
-    scale_out_cooldown = 10
+    scale_out_cooldown = 30
   }
 }
 

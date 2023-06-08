@@ -4,18 +4,17 @@ import { searchRestaurant, loadRestaurantsNearby, loadTopRatedRestaurants, creat
 
 export const options = {
 	stages: [
-		{ duration: "60s", target: 50 },
-		{ duration: "60s", target: 200 },
-		{ duration: "480s", target: 200 },
-		{ duration: "60s", target: 80 },
-		{ duration: "60s", target: 80 },
-		{ duration: "600s", target: 220 },
-		{ duration: "30s", target: 20 },
-		{ duration: "90s", target: 20 },
-		{ duration: "60s", target: 270 },
-		{ duration: "180s", target: 220 },
-		{ duration: "30s", target: 10 },
-		{ duration: "30s", target: 10 },
+		{ duration: "60s", target: 3 },
+		{ duration: "60s", target: 10 },
+		{ duration: "60s", target: 100 },
+		{ duration: "480s", target: 300 },
+		{ duration: "60s", target: 30 },
+		{ duration: "600s", target: 400 },
+		{ duration: "30s", target: 300 },
+		{ duration: "90s", target: 100 },
+		{ duration: "60s", target: 10 },
+		{ duration: "180s", target: 250 },
+		{ duration: "30s", target: 5 },
 	],
 }
 
