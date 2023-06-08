@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 DATA_PATH = os.path.abspath("./data")
 EMBEDDINGS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
-RESERAVATIONS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
-RESTAURANTS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
-USERS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
+RESERAVATIONS_PATH = os.path.abspath(os.path.join(DATA_PATH, "reservations"))
+RESTAURANTS_PATH = os.path.abspath(os.path.join(DATA_PATH, "restaurants"))
+USERS_PATH = os.path.abspath(os.path.join(DATA_PATH, "users"))
 
 SAVE_AVG_PATH = os.path.abspath(os.path.join(DATA_PATH, "averages"))
 SAVE_AVG_PLOTS = os.path.abspath("./plots")
