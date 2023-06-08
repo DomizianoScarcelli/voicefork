@@ -9,6 +9,7 @@ EMBEDDINGS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
 RESERAVATIONS_PATH = os.path.abspath(os.path.join(DATA_PATH, "reservations"))
 RESTAURANTS_PATH = os.path.abspath(os.path.join(DATA_PATH, "restaurants"))
 USERS_PATH = os.path.abspath(os.path.join(DATA_PATH, "users"))
+PROXY_PATH = os.path.abspath(os.path.join(DATA_PATH, "proxy"))
 
 SAVE_AVG_PATH = os.path.abspath(os.path.join(DATA_PATH, "averages"))
 SAVE_AVG_PLOTS = os.path.abspath("./plots")
@@ -93,6 +94,10 @@ def compute_all_avgs():
     generate_average(get_cpu_path(USERS_PATH), "avg_users_cpu.csv")
     generate_average(get_memory_path(USERS_PATH), "avg_users_memory.csv")
     generate_average(get_tasks_path(USERS_PATH), "avg_users_tasks.csv")
+
+    generate_average(get_cpu_path(PROXY_PATH), "avg_proxy_cpu.csv")
+    generate_average(get_memory_path(PROXY_PATH), "avg_proxy_memory.csv")
+    generate_average(get_tasks_path(PROXY_PATH), "avg_proxy_tasks.csv")
 
 
 def save_all_plots():

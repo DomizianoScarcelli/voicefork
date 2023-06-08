@@ -112,9 +112,9 @@ resource "aws_appautoscaling_policy" "embeddings_autoscaling_policy" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value       = 50
-    scale_in_cooldown  = 10
-    scale_out_cooldown = 30
+    target_value       = 60
+    scale_in_cooldown  = 30
+    scale_out_cooldown = 20
   }
 }
 

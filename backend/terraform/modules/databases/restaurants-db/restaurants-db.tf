@@ -2,7 +2,7 @@ resource "aws_db_instance" "rds_postgresql" {
   identifier             = "postgres-restaurants"
   engine                 = "postgres"
   engine_version         = "13.4"
-  instance_class         = "db.t3.micro"
+  instance_class         = "db.t3.small"
   allocated_storage      = 5
   storage_type           = "gp2"
   storage_encrypted      = false
