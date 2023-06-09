@@ -27,9 +27,19 @@ def get_tasks_path(path: str) -> str:
     return os.path.join(path, "tasks")
 
 
+def get_cpu_reservation_path(path: str) -> str:
+    return os.path.join(path, "cpu_reservation")
+
+
+def get_memory_reservation_path(path: str) -> str:
+    return os.path.join(path, "memory_reservation")
+
+
 def generate_average(folder_path: str, save_name: str):
     aggregated_keys = {}
     for file in os.listdir(folder_path):
+        if not file.endswith(".csv"):
+            continue
         abs_path = os.path.join(folder_path, file)
         with open(abs_path, "r") as f:
             reader = csv.reader(f)
@@ -77,6 +87,10 @@ def compute_all_avgs():
                      "avg_embeddings_memory.csv")
     generate_average(get_tasks_path(EMBEDDINGS_PATH),
                      "avg_embeddings_tasks.csv")
+    generate_average(get_memory_reservation_path(EMBEDDINGS_PATH),
+                     "avg_embeddings_memory_reservation.csv")
+    generate_average(get_cpu_reservation_path(EMBEDDINGS_PATH),
+                     "avg_embeddings_cpu_reservation.csv")
 
     generate_average(get_cpu_path(RESERAVATIONS_PATH),
                      "avg_reservations_cpu.csv")
@@ -84,20 +98,36 @@ def compute_all_avgs():
                      "avg_reservations_memory.csv")
     generate_average(get_tasks_path(RESERAVATIONS_PATH),
                      "avg_reservations_tasks.csv")
+    generate_average(get_memory_reservation_path(RESERAVATIONS_PATH),
+                     "avg_reservations_memory_reservation.csv")
+    generate_average(get_cpu_reservation_path(RESERAVATIONS_PATH),
+                     "avg_reservations_cpu_reservation.csv")
 
     generate_average(get_cpu_path(RESTAURANTS_PATH), "avg_restaurants_cpu.csv")
     generate_average(get_memory_path(RESTAURANTS_PATH),
                      "avg_restaurants_memory.csv")
     generate_average(get_tasks_path(RESTAURANTS_PATH),
                      "avg_restaurants_tasks.csv")
+    generate_average(get_memory_reservation_path(RESTAURANTS_PATH),
+                     "avg_embeddings_memory_reservation.csv")
+    generate_average(get_cpu_reservation_path(RESTAURANTS_PATH),
+                     "avg_embeddings_cpu_reservation.csv")
 
     generate_average(get_cpu_path(USERS_PATH), "avg_users_cpu.csv")
     generate_average(get_memory_path(USERS_PATH), "avg_users_memory.csv")
     generate_average(get_tasks_path(USERS_PATH), "avg_users_tasks.csv")
+    generate_average(get_memory_reservation_path(USERS_PATH),
+                     "avg_users_memory_reservation.csv")
+    generate_average(get_cpu_reservation_path(USERS_PATH),
+                     "avg_users_cpu_reservation.csv")
 
     generate_average(get_cpu_path(PROXY_PATH), "avg_proxy_cpu.csv")
     generate_average(get_memory_path(PROXY_PATH), "avg_proxy_memory.csv")
     generate_average(get_tasks_path(PROXY_PATH), "avg_proxy_tasks.csv")
+    generate_average(get_memory_reservation_path(PROXY_PATH),
+                     "avg_proxy_memory_reservation.csv")
+    generate_average(get_cpu_reservation_path(PROXY_PATH),
+                     "avg_proxy_cpu_reservation.csv")
 
 
 def save_all_plots():
