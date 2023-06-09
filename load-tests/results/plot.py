@@ -3,10 +3,11 @@ import pandas as pd
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 DATA_PATH = os.path.abspath("./data")
 EMBEDDINGS_PATH = os.path.abspath(os.path.join(DATA_PATH, "embeddings"))
-RESERAVATIONS_PATH = os.path.abspath(os.path.join(DATA_PATH, "reservations"))
+RESERVATIONS_PATH = os.path.abspath(os.path.join(DATA_PATH, "reservations"))
 RESTAURANTS_PATH = os.path.abspath(os.path.join(DATA_PATH, "restaurants"))
 USERS_PATH = os.path.abspath(os.path.join(DATA_PATH, "users"))
 PROXY_PATH = os.path.abspath(os.path.join(DATA_PATH, "proxy"))
@@ -68,11 +69,14 @@ def plot_csv(csv_path: str, x_axis: str, y_axis: str, title: str) -> None:
     y = data.iloc[0]
 
     # Plot the data
-    fig = plt.plot(x, y)
+    _, ax = plt.subplots(1, 1, figsize=(8,5))
+    ax.plot(x, y)
 
     # Add labels and title
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(base=5))
+    ax.xaxis.set_minor_locator(ticker.MultipleLocator(base=1))
     plt.title(title)
 
     # Save the plot as PNG
@@ -92,15 +96,15 @@ def compute_all_avgs():
     generate_average(get_cpu_reservation_path(EMBEDDINGS_PATH),
                      "avg_embeddings_cpureservation.csv")
 
-    generate_average(get_cpu_path(RESERAVATIONS_PATH),
+    generate_average(get_cpu_path(RESERVATIONS_PATH),
                      "avg_reservations_cpu.csv")
-    generate_average(get_memory_path(RESERAVATIONS_PATH),
+    generate_average(get_memory_path(RESERVATIONS_PATH),
                      "avg_reservations_memory.csv")
-    generate_average(get_tasks_path(RESERAVATIONS_PATH),
+    generate_average(get_tasks_path(RESERVATIONS_PATH),
                      "avg_reservations_tasks.csv")
-    generate_average(get_memory_reservation_path(RESERAVATIONS_PATH),
+    generate_average(get_memory_reservation_path(RESERVATIONS_PATH),
                      "avg_reservations_memoryreservation.csv")
-    generate_average(get_cpu_reservation_path(RESERAVATIONS_PATH),
+    generate_average(get_cpu_reservation_path(RESERVATIONS_PATH),
                      "avg_reservations_cpureservation.csv")
 
     generate_average(get_cpu_path(RESTAURANTS_PATH), "avg_restaurants_cpu.csv")
@@ -109,9 +113,9 @@ def compute_all_avgs():
     generate_average(get_tasks_path(RESTAURANTS_PATH),
                      "avg_restaurants_tasks.csv")
     generate_average(get_memory_reservation_path(RESTAURANTS_PATH),
-                     "avg_embeddings_memoryreservation.csv")
+                     "avg_restaurants_memoryreservation.csv")
     generate_average(get_cpu_reservation_path(RESTAURANTS_PATH),
-                     "avg_embeddings_cpureservation.csv")
+                     "avg_restaurants_cpureservation.csv")
 
     generate_average(get_cpu_path(USERS_PATH), "avg_users_cpu.csv")
     generate_average(get_memory_path(USERS_PATH), "avg_users_memory.csv")
