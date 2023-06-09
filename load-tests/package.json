@@ -11,7 +11,7 @@
 		"monitors:restart": "npm run monitors:stop; npm run monitors:start",
 		"build": "webpack",
 		"start": "npm run build; k6 run dist/index.js",
-		"docker:start": "npm run build; docker-compose run --rm k6 run /scripts/index.js",
+		"docker:start": "docker-compose run --rm k6 run /scripts/index.js",
 		"cloud:start": "npm run build; k6 cloud dist/index.js"
 	},
 	"dependencies": {

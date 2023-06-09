@@ -3,13 +3,13 @@
 variable "networks" {
   type = map(any)
   default = {
-    subnets         = ["subnet-0b43a0fd1886a403c", "subnet-0516f4cd0cf2f01b1", "subnet-06c7559148913e71e", "subnet-062045a3cff45e208", "subnet-0c7bb639cbfadb4ec", "subnet-0cf090ada20d8d548"]
-    security_groups = ["sg-07354e11fc65eda88"]
+    subnets         = ["subnet-089117dcf1b91e18a", "subnet-03c82b4e6252fae07", "subnet-0f6d7e81adec4cb9c", "subnet-013b81eb25214ecda", "subnet-08997fe51980b9d40", "subnet-0825627b1d57ec9de"]
+    security_groups = ["sg-0e801f1c563af544c"]
   }
 }
 
 //CHANGE THIS WITH YOUR OWN VPC ID
 variable "vpc" {
   type    = string
-  default = "vpc-00c21a18456d3882e"
+  default = "vpc-0df5d109231a1557f"
 }
