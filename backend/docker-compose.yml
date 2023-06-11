@@ -88,7 +88,7 @@ services:
             - "3002:3002"
         environment:
             - DATABASE_URL=postgresql://admin:admin@postgres_restaurants:5432/restaurantsDB
-            - EMBEDDINGS_URL= embeddings:3004
+            - EMBEDDINGS_URL=embeddings:3004
         volumes:
             - .:/app
         depends_on:
