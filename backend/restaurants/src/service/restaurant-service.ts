@@ -8,7 +8,10 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
-import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
+import {
+    batchGetDistanceBewteenRestaurantNames,
+    getGeoZoneFromLatLng,
+} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
 import axios from 'axios'
 import {distanceBetweenCoordinates} from '../utils/localizationUtils'
@@ -362,8 +365,21 @@ class RestaurantService {
             }
         }
         results.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
-
-        return results
+        let resultsWithZone = []
+        for (const item of results) {
+            resultsWithZone.push({
+                locationDistance: item.locationDistance,
+                nameDistance: item.nameDistance,
+                restaurant: {
+                    ...item.restaurant,
+                    zone: await getGeoZoneFromLatLng({
+                        latitude: item.restaurant.latitude,
+                        longitude: item.restaurant.longitude,
+                    }),
+                },
+            })
+        }
+        return resultsWithZone
     }
 
     async GetTopRatedRestaurants(
@@ -433,15 +449,6 @@ class RestaurantService {
     ): Promise<Restaurant[]> {
         const startTime = process.hrtime() // Start measuring time
 
-        // const restaurantPromises = embeddingNames.map(embeddingName =>
-        //     this.repository.GetRestaruantByEmbeddingName(embeddingName),
-        // )
-
-        // const restaurants = await Promise.all(restaurantPromises)
-
-        // const filteredRestaurants = restaurants.filter(
-        //     restaurant => restaurant !== null,
-        // ) as Restaurant[]
         const restaurants = await this.repository.GetRestaruantsByEmbeddingName(
             embeddingNames,
         )
