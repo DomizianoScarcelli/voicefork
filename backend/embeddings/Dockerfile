@@ -4,11 +4,11 @@
 # docker image push doviscarcelli/embeddings-amd64
 
 FROM python:3.9
-WORKDIR /app/embeddings
+WORKDIR /
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY . .
+COPY app .
 EXPOSE 3004
 
 # Run the FastAPI application when the container starts
-CMD ["uvicorn", "embeddings.main:app", "--host", "0.0.0.0", "--port", "3004", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3004"]

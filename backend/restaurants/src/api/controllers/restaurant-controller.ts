@@ -29,6 +29,23 @@ const RestaurantController = {
         }
     },
 
+    createRestaurantBatch: async (
+        req: Request<{}, {}, Restaurant[], {}>,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const restaurants = req.body
+            const data = await service.CreateRestaurantBatch(restaurants)
+            res.json({
+                message: 'Restaurants were created successfully!',
+                ids: data,
+            })
+        } catch (err) {
+            next(err)
+        }
+    },
+
     deleteRestaurant: async (
         req: Request,
         res: Response,

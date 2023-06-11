@@ -1,0 +1,8 @@
+node_modules
+dist
+grafana-data
+.env
+averages
+plots
+/.DS_Store
+.DS_Store

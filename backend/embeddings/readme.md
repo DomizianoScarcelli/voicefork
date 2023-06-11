@@ -2,7 +2,7 @@
 
 How to make this service work:
 
-Just download the `large.index` file from the Google Drive folder, and put it inside of `embeddings/data`. Remember that it will take a little bit of time for the service to start.
+Just download the `large.index` file from the Google Drive folder, and put it inside of `embeddings/app/data`. Remember that it will take a little bit of time for the service to start.
 
 Then make sure that you import the new database (guide in the `restaurants/readme.md`)
 

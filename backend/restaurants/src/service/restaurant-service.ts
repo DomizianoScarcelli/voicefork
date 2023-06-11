@@ -10,9 +10,10 @@ import {
 import MinioService from './minio-service'
 import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
-import {EMBEDDING_URL} from '../shared/urls'
 import axios from 'axios'
 import {distanceBetweenCoordinates} from '../utils/localizationUtils'
+require('dotenv').config()
+
 /**
  * The service exposes methods that contains business logic and make use of the Repository to access the database indirectly
  */
@@ -20,8 +21,8 @@ const REMOVABLE_WORDS = [
     'ristorante',
     'pizzeria',
     'bisteccheria',
-    // 'trattoria',
-    // 'gelateria',
+    'trattoria',
+    'gelateria',
 ]
 
 class RestaurantService {
@@ -38,6 +39,13 @@ class RestaurantService {
     async CreateRestaurant(restaurant: Restaurant) {
         const newRestaurant = await this.repository.CreateRestaurant(restaurant)
         return newRestaurant
+    }
+
+    async CreateRestaurantBatch(restaurantBatch: Restaurant[]) {
+        const result = await this.repository.CreateRestaurantBatch(
+            restaurantBatch,
+        )
+        return result
     }
 
     async GetRestaurantById(id: number): Promise<Restaurant | null> {
@@ -280,20 +288,22 @@ class RestaurantService {
             embeddingName: string
             nameDistance: string
         }
+
         const data: FaissResponse[] = (
             await axios.get(
-                `${EMBEDDING_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
+                `http://${process.env.EMBEDDINGS_URL}/faiss-distance-query?query_name=${query}&limit=${limit}`,
             )
         ).data
         let results: RestaurantSearchResult[] = []
+        let restaurants = await this.GetRestaurantsByEmbeddingName(
+            data.map(data => data.embeddingName),
+        )
         if (locationInfo) {
             const {coordinates, maxDistance} = locationInfo
 
-            for (let {embeddingName, nameDistance} of data) {
-                const restaurant =
-                    await this.repository.GetRestaruantByEmbeddingName(
-                        embeddingName,
-                    )
+            for (let i = 0; i < data.length; i++) {
+                const {nameDistance} = data[i]
+                const restaurant = restaurants[i]
                 const restaurantCoordinates = {
                     latitude: restaurant!.latitude,
                     longitude: restaurant!.longitude,
@@ -317,11 +327,9 @@ class RestaurantService {
                 }
             }
         } else if (city) {
-            for (let {embeddingName, nameDistance} of data) {
-                const restaurant =
-                    await this.repository.GetRestaruantByEmbeddingName(
-                        embeddingName,
-                    )
+            for (let i = 0; i < data.length; i++) {
+                const {nameDistance} = data[i]
+                const restaurant = restaurants[i]
 
                 if (city.toLowerCase() == 'rome') city = 'ome'
 
@@ -338,11 +346,9 @@ class RestaurantService {
                 }
             }
         } else {
-            for (let {embeddingName, nameDistance} of data) {
-                const restaurant =
-                    await this.repository.GetRestaruantByEmbeddingName(
-                        embeddingName,
-                    )
+            for (let i = 0; i < data.length; i++) {
+                const {nameDistance} = data[i]
+                const restaurant = restaurants[i]
 
                 results.push({
                     restaurant: restaurant!,
@@ -420,6 +426,47 @@ class RestaurantService {
         if (city.toLowerCase() == 'rome') city = 'ome' //TODO: little workaround for now
         const results = await this.repository.GetRestaurantsByCity(city)
         return results
+    }
+
+    async GetRestaurantsByEmbeddingName(
+        embeddingNames: string[],
+    ): Promise<Restaurant[]> {
+        const startTime = process.hrtime() // Start measuring time
+
+        // const restaurantPromises = embeddingNames.map(embeddingName =>
+        //     this.repository.GetRestaruantByEmbeddingName(embeddingName),
+        // )
+
+        // const restaurants = await Promise.all(restaurantPromises)
+
+        // const filteredRestaurants = restaurants.filter(
+        //     restaurant => restaurant !== null,
+        // ) as Restaurant[]
+        const restaurants = await this.repository.GetRestaruantsByEmbeddingName(
+            embeddingNames,
+        )
+
+        const restaurantMap = new Map<string, Restaurant>()
+        for (const restaurant of restaurants) {
+            restaurantMap.set(restaurant.embeddingName, restaurant)
+        }
+
+        const orderedRestaurants: Restaurant[] = []
+        for (const embeddingName of embeddingNames) {
+            const restaurant = restaurantMap.get(embeddingName)
+            if (restaurant) {
+                orderedRestaurants.push(restaurant)
+            }
+        }
+
+        const endTime = process.hrtime(startTime) // Stop measuring time
+        const executionTime = endTime[0] * 1000 + endTime[1] / 1e6 // Convert to milliseconds
+
+        console.log(
+            `Execution time: ${executionTime} milliseconds for ${embeddingNames.length} restaurants`,
+        )
+
+        return orderedRestaurants
     }
 }
 
