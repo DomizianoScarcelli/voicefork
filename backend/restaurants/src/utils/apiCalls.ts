@@ -60,7 +60,7 @@ export const getGeoZoneFromLatLng = async (
                 return address.highway
             case Boolean(address.village):
                 if (address.village.includes('Municipio'))
-                    console.log('village: ', address.quvillagearter)
+                    console.log('village: ', address.village)
                 return address.village
             case Boolean(address.neighbourhood):
                 if (address.neighbourhood.includes('Municipio'))

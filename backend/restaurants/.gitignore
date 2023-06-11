@@ -12,3 +12,5 @@ compressed-images
 models
 embeddings.tar
 migrations
+restaurants_macro_cuisines.csv
+checkpoints/
