@@ -206,6 +206,18 @@ class RestaurantRepository {
         })
         return restaurant
     }
+    async GetRestaruantsByEmbeddingName(
+        embeddingNames: string[],
+    ): Promise<Restaurant[]> {
+        const restaurants = await prisma.restaurant.findMany({
+            where: {
+                embeddingName: {
+                    in: embeddingNames,
+                },
+            },
+        })
+        return restaurants
+    }
 }
 
 export default RestaurantRepository

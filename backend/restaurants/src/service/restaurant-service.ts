@@ -433,15 +433,31 @@ class RestaurantService {
     ): Promise<Restaurant[]> {
         const startTime = process.hrtime() // Start measuring time
 
-        const restaurantPromises = embeddingNames.map(embeddingName =>
-            this.repository.GetRestaruantByEmbeddingName(embeddingName),
+        // const restaurantPromises = embeddingNames.map(embeddingName =>
+        //     this.repository.GetRestaruantByEmbeddingName(embeddingName),
+        // )
+
+        // const restaurants = await Promise.all(restaurantPromises)
+
+        // const filteredRestaurants = restaurants.filter(
+        //     restaurant => restaurant !== null,
+        // ) as Restaurant[]
+        const restaurants = await this.repository.GetRestaruantsByEmbeddingName(
+            embeddingNames,
         )
 
-        const restaurants = await Promise.all(restaurantPromises)
+        const restaurantMap = new Map<string, Restaurant>()
+        for (const restaurant of restaurants) {
+            restaurantMap.set(restaurant.embeddingName, restaurant)
+        }
 
-        const filteredRestaurants = restaurants.filter(
-            restaurant => restaurant !== null,
-        ) as Restaurant[]
+        const orderedRestaurants: Restaurant[] = []
+        for (const embeddingName of embeddingNames) {
+            const restaurant = restaurantMap.get(embeddingName)
+            if (restaurant) {
+                orderedRestaurants.push(restaurant)
+            }
+        }
 
         const endTime = process.hrtime(startTime) // Stop measuring time
         const executionTime = endTime[0] * 1000 + endTime[1] / 1e6 // Convert to milliseconds
@@ -450,7 +466,7 @@ class RestaurantService {
             `Execution time: ${executionTime} milliseconds for ${embeddingNames.length} restaurants`,
         )
 
-        return filteredRestaurants
+        return orderedRestaurants
     }
 }
 
