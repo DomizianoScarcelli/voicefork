@@ -64,6 +64,9 @@ def plot_csv(csv_path: str, x_axis: str, y_axis: str, title: str) -> None:
     # Create DataFrame from CSV data
     data = pd.read_csv(csv_path)
 
+    # Limit to 35 minutes
+    data = data.iloc[: , :35]
+
     # Extract data for plotting
     x = data.columns
     y = data.iloc[0]
@@ -143,9 +146,18 @@ def save_all_plots():
         resource = resource.split(".")[0]
 
         abspath = os.path.join(SAVE_AVG_PATH, file)
-        plot_csv(abspath, "Minutes", "Value",
+        plot_csv(abspath, "Minutes", getYLabel(resource),
                  f"{service.capitalize()} - {resource.capitalize()}")
 
+def getYLabel(resource):
+    if resource == "cpu":
+        return "Percentage Usage (%)"
+    elif resource == "memory" or resource == "memoryreservation":
+        return "Megabytes"
+    elif resource == "tasks":
+        return "Count"
+    else:
+        return "Value"
 
 compute_all_avgs()
 save_all_plots()
