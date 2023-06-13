@@ -5,6 +5,8 @@ from typing import Dict
 from tqdm import tqdm
 import time
 from retrying import retry
+import os
+import math
 
 
 def http_error_retry(wait_seconds):
@@ -36,7 +38,11 @@ def getGeoZoneFromLatLng(latitude, longitude):
 
     response = requests.get(URL)
     data = response.json()
-    address = data['address']
+    try:
+        address = data['address']
+    except:
+        #LatLng are not defined for the restaurant        
+        return ""
 
     if check_field("quarter", address):
         return address['quarter']
@@ -60,24 +66,20 @@ def getGeoZoneFromLatLng(latitude, longitude):
         return ''
 
 
-def debug_getGeoZoneFromLatLng(latitude, longitude):
-    URL = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
-    response = requests.get(URL)
-    data = response.json()
-    return json.dumps(data, indent=2)
-
-
 def checkpoint(df: pd.DataFrame, index: int) -> None:
     CHECKPOINT_PATH = f"../checkpoints/zone_checkpoint-{index}"
     df.to_csv(CHECKPOINT_PATH)
 
+def last_checkpoint() -> int:
+    max_index = int(max([file.split("-")[-1] for file in os.listdir("../checkpoints/")]))
+    return max_index
 
 def main():
     CHECKPOINT_DELTA = 1_000
     df = pd.read_csv(CSV_PATH)
     df['zone'] = ''
     for index, row in tqdm(df.iterrows(), desc="Extracting city zone...", total=len(df)):
-
+        if index <= last_checkpoint(): continue
         # Checkpointing
         if index != 0 and index % CHECKPOINT_DELTA == 0:
             checkpoint(df, index)
