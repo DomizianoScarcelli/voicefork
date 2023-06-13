@@ -15,6 +15,7 @@ PROXY_PATH = os.path.abspath(os.path.join(DATA_PATH, "proxy"))
 SAVE_AVG_PATH = os.path.abspath(os.path.join(DATA_PATH, "averages"))
 SAVE_AVG_PLOTS = os.path.abspath("./plots")
 
+MIN_VALUES = {'embeddings_memoryreservation': 4096, 'embeddings_cpureservation': 512, 'reservations_memoryreservation': 1024, 'reservations_cpureservation': 256, 'restaurants_memoryreservation': 1024, 'restaurants_cpureservation': 512, 'users_memoryreservation': 1024, 'users_cpureservation': 256, 'proxy_memoryreservation': 1024, 'proxy_cpureservation': 256}
 
 def get_cpu_path(path: str) -> str:
     return os.path.join(path, "cpu")
@@ -53,6 +54,15 @@ def generate_average(folder_path: str, save_name: str):
                        for key, value in aggregated_keys.items()}
 
     print(aggregated_keys)
+    
+    '''
+    avg_info = save_name.split("_")
+    service = avg_info[1]
+    resource = avg_info[2][:-4]
+    if resource == "cpureservation" or resource == "memoryreservation":
+        min_value = min(aggregated_keys.values())
+        MIN_VALUES[service+'_'+resource] = min_value
+    '''
 
     with open(os.path.join(SAVE_AVG_PATH, save_name), 'w') as csvfile:
         writer = csv.writer(csvfile)
@@ -60,12 +70,22 @@ def generate_average(folder_path: str, save_name: str):
         writer.writerow(aggregated_keys.values())
 
 
-def plot_csv(csv_path: str, x_axis: str, y_axis: str, title: str) -> None:
+def plot_csv(csv_path: str, x_axis: str, service: str, resource: str) -> None:
     # Create DataFrame from CSV data
     data = pd.read_csv(csv_path)
 
     # Limit to 35 minutes
     data = data.iloc[: , :35]
+    if resource != "tasks":
+        if data.min().min() == data.max().max():
+            data = data.replace(data.values, 1) * 100
+        else:
+            min_value = MIN_VALUES[service+'_'+resource+'reservation'] if (resource == "cpu" or resource == "memory") else MIN_VALUES[service+'_'+resource]
+            data = data.apply(lambda x: x/min_value, axis=1) * 100
+
+    labels = getLabels(resource)
+    y_axis = labels[0]
+    resource_label = labels[1]
 
     # Extract data for plotting
     x = data.columns
@@ -74,6 +94,8 @@ def plot_csv(csv_path: str, x_axis: str, y_axis: str, title: str) -> None:
     # Plot the data
     _, ax = plt.subplots(1, 1, figsize=(8,5))
     ax.plot(x, y)
+
+    title = f"{service.capitalize()} - {resource_label.capitalize()}"
 
     # Add labels and title
     plt.xlabel(x_axis)
@@ -146,18 +168,23 @@ def save_all_plots():
         resource = resource.split(".")[0]
 
         abspath = os.path.join(SAVE_AVG_PATH, file)
-        plot_csv(abspath, "Minutes", getYLabel(resource),
-                 f"{service.capitalize()} - {resource.capitalize()}")
+        plot_csv(abspath, "Minutes", service, resource)
 
-def getYLabel(resource):
+def getLabels(resource):
     if resource == "cpu":
-        return "Percentage Usage (%)"
-    elif resource == "memory" or resource == "memoryreservation":
-        return "Megabytes"
+        return "Percentage Usage (%)", "Cpu Utilization"
+    elif resource == "memory":
+        return "Percentage Usage (%)", "Memory Utilization"
+    elif resource == "cpureservation":
+        return "Percentage Reserved (%)", "Cpu Reservation"
+    elif resource == "memoryreservation":
+        return "Percentage Reserved (%)", "Memory Reservation"
     elif resource == "tasks":
-        return "Count"
+        return "Count", "Service Running Task Count"
     else:
-        return "Value"
+        return "Value", resource
+
+
 
 compute_all_avgs()
 save_all_plots()
