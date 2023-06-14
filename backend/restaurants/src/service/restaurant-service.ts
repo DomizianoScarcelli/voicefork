@@ -362,7 +362,6 @@ class RestaurantService {
             }
         }
         results.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
-
         return results
     }
 
@@ -433,15 +432,6 @@ class RestaurantService {
     ): Promise<Restaurant[]> {
         const startTime = process.hrtime() // Start measuring time
 
-        // const restaurantPromises = embeddingNames.map(embeddingName =>
-        //     this.repository.GetRestaruantByEmbeddingName(embeddingName),
-        // )
-
-        // const restaurants = await Promise.all(restaurantPromises)
-
-        // const filteredRestaurants = restaurants.filter(
-        //     restaurant => restaurant !== null,
-        // ) as Restaurant[]
         const restaurants = await this.repository.GetRestaruantsByEmbeddingName(
             embeddingNames,
         )

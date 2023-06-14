@@ -30,4 +30,6 @@ model Restaurant {
     veganFriendly      Boolean
     glutenFree         Boolean
     reviewsNumber      Int
+    macroCuisines      String
+    zone               String
 }

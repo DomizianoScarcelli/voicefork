@@ -1,5 +1,9 @@
 import axios from 'axios'
-import {RestaurantIdSearch, RestaurantSearchQuery} from '../shared/types'
+import {
+    LatLng,
+    RestaurantIdSearch,
+    RestaurantSearchQuery,
+} from '../shared/types'
 require('dotenv').config()
 
 export const getDistanceBetweenRestaurantNames = async (
