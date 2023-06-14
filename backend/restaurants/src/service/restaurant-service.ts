@@ -8,10 +8,7 @@ import {
     RestaurantSearchResult,
 } from '../shared/types'
 import MinioService from './minio-service'
-import {
-    batchGetDistanceBewteenRestaurantNames,
-    getGeoZoneFromLatLng,
-} from '../utils/apiCalls'
+import {batchGetDistanceBewteenRestaurantNames} from '../utils/apiCalls'
 import levenshtein from 'damerau-levenshtein'
 import axios from 'axios'
 import {distanceBetweenCoordinates} from '../utils/localizationUtils'
@@ -365,21 +362,7 @@ class RestaurantService {
             }
         }
         results.sort((a, b) => (a.nameDistance > b.nameDistance ? 1 : -1))
-        let resultsWithZone = []
-        for (const item of results) {
-            resultsWithZone.push({
-                locationDistance: item.locationDistance,
-                nameDistance: item.nameDistance,
-                restaurant: {
-                    ...item.restaurant,
-                    zone: await getGeoZoneFromLatLng({
-                        latitude: item.restaurant.latitude,
-                        longitude: item.restaurant.longitude,
-                    }),
-                },
-            })
-        }
-        return resultsWithZone
+        return results
     }
 
     async GetTopRatedRestaurants(
