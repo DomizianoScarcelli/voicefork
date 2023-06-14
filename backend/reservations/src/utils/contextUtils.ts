@@ -44,6 +44,7 @@ export const computeAverageContext = (
     restaurantId: number,
     context: ReservationContext[],
 ): ReservationContext => {
+    const NUM_RESERVATIONS = context.length
     /**
      * (Inner function in order to get the same restaurantId and context without passing them)
      *
@@ -54,8 +55,6 @@ export const computeAverageContext = (
         field: keyof ReservationContext,
     ): number | LatLng | TimeFormat => {
         let sum = 0
-
-        const NUM_RESERVATIONS = context.length
 
         switch (field) {
             case 'reservationTime':
@@ -115,6 +114,7 @@ export const computeAverageContext = (
         reservationDay: avg('reservationDay') as DAYS_WEEK,
         timeDistanceFromCurrent: avg('currentTime') as number,
         timeDistanceFromReservation: avg('reservationTime') as number,
+        numberOfReservations: NUM_RESERVATIONS,
     }
     return avgContext
 }

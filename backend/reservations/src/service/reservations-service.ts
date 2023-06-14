@@ -164,7 +164,16 @@ class ReservationsService {
         const normWeightAvgVector = weightVector(normalizedAvgVector)
         const normWeightInputVector = weightVector(normalizedInputVector)
 
-        const distance = l2Distance(normWeightAvgVector, normWeightInputVector)
+        let distance = l2Distance(normWeightAvgVector, normWeightInputVector)
+
+        const MULTIPLE_CONTEXT_BOOST = 0.1
+
+        if (distance && avgContext.numberOfReservations) {
+            distance -=
+                MULTIPLE_CONTEXT_BOOST *
+                distance *
+                (avgContext.numberOfReservations - 1)
+        }
         return {
             inputContext: inputContextWithCentroidDistance,
             weidhtedInput: normWeightInputVector,

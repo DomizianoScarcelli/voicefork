@@ -28,4 +28,5 @@ export type ReservationContext = {
     reservationDay: DAYS_WEEK
     currentTime?: TimeFormat
     reservationTime?: TimeFormat
+    numberOfReservations?: number
 }
