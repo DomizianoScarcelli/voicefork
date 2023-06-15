@@ -1,3 +1,4 @@
+import {DateTime} from 'luxon'
 import {DAYS_WEEK} from '../shared/enums'
 import {
     ContextVector,
@@ -7,7 +8,28 @@ import {
 } from '../shared/types'
 import {distanceBetweenCoordinates} from './locationUtils'
 import {timeToSecondsFromMidnight} from './timeUtils'
+import {l2Distance} from './distances'
 
+const WEIGHTS = {
+    id_restaurant: 0,
+    n_people: 8000,
+    centroidDistance: (distance: number) => {
+        if (distance < 0.001) {
+            // Assign a high weight when distance is very close to 0
+            return 10
+        } else if (distance > 10000) {
+            // Reduce weight when distance is very high
+            return 1
+        } else {
+            // Linearly interpolate weight between 5 and 1 based on distance
+            return 3 - (distance / 10000) * 2
+        }
+    },
+    currentDay: 10000,
+    reservationDay: 10000,
+    timeDistanceFromCurrent: 1,
+    timeDistanceFromReservation: 1,
+}
 /**
  * Given a certain context, returns the vector that represent that context
  */
@@ -32,7 +54,6 @@ export const contextToVector = (context: ReservationContext): ContextVector => {
         timeDistanceFromCurrent! * 1,
         timeDistanceFromReservation! * 1,
     ]
-
     return vector
 }
 /***
@@ -44,18 +65,18 @@ export const computeAverageContext = (
     restaurantId: number,
     context: ReservationContext[],
 ): ReservationContext => {
+    const NUM_RESERVATIONS = context.length
     /**
      * (Inner function in order to get the same restaurantId and context without passing them)
      *
      * It returns the average over the indicated feild, for all the reservations with the indicated restaurantId
      * @param field The field over which to take the average
      */
+
     const avg = (
         field: keyof ReservationContext,
     ): number | LatLng | TimeFormat => {
         let sum = 0
-
-        const NUM_RESERVATIONS = context.length
 
         switch (field) {
             case 'reservationTime':
@@ -69,6 +90,7 @@ export const computeAverageContext = (
                     }
                     return acc
                 }, 0)
+                console.log('DEBUGGGG: ', sum, NUM_RESERVATIONS)
                 return sum / NUM_RESERVATIONS
 
             case 'reservationLocation':
@@ -115,7 +137,11 @@ export const computeAverageContext = (
         reservationDay: avg('reservationDay') as DAYS_WEEK,
         timeDistanceFromCurrent: avg('currentTime') as number,
         timeDistanceFromReservation: avg('reservationTime') as number,
+        numberOfReservations: NUM_RESERVATIONS,
     }
+
+    console.log(avgContext)
+
     return avgContext
 }
 
@@ -202,27 +228,6 @@ export const normalizeAverageAndInput = (
  * @returns The weighted vector
  */
 export const weightVector = (vector: ContextVector): ContextVector => {
-    const WEIGHTS = {
-        id_restaurant: 0,
-        n_people: 8000,
-        centroidDistance: (distance: number) => {
-            if (distance < 0.001) {
-                // Assign a high weight when distance is very close to 0
-                return 10
-            } else if (distance > 10000) {
-                // Reduce weight when distance is very high
-                return 1
-            } else {
-                // Linearly interpolate weight between 5 and 1 based on distance
-                return 3 - (distance / 10000) * 2
-            }
-        },
-        currentDay: 10000,
-        reservationDay: 10000,
-        timeDistanceFromCurrent: 1,
-        timeDistanceFromReservation: 1,
-    }
-
     const weightedVector: ContextVector = [
         vector[0] * WEIGHTS.id_restaurant,
         vector[1] * WEIGHTS.n_people,
@@ -233,4 +238,96 @@ export const weightVector = (vector: ContextVector): ContextVector => {
         vector[6] * WEIGHTS.timeDistanceFromReservation,
     ]
     return weightedVector
+}
+
+/**
+ * Given a context, it computes an aging factor based on how many days is old.
+ * @param context
+ * @returns
+ */
+export const computeAging = (context: ReservationContext): number => {
+    const currentTimestamp = DateTime.local()
+    const {timestamp} = context
+    if (!timestamp) return 1
+
+    const datetime = DateTime.fromJSDate(timestamp)
+
+    const daysPassed = Math.floor(currentTimestamp.diff(datetime).as('days'))
+    // const DIVISION_FACTOR = 30 // The lower, the strongher the aging
+    const DIVISION_FACTOR = 100
+    const agingFactor = Math.exp(-daysPassed / DIVISION_FACTOR)
+    // const agingFactor = Math.log(Math.E + daysPassed / DIVISION_FACTOR)
+    return agingFactor
+}
+
+export const getMeanStdAvgInput = (
+    vector: ContextVector,
+): {mean: number; std: number} => {
+    const mean = vector.reduce((sum, value) => sum + value, 0) / vector.length
+    const std = Math.sqrt(
+        vector.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) /
+            vector.length,
+    )
+    return {mean, std}
+}
+
+export const normalizeContext = (
+    context: ReservationContext,
+    mean: number,
+    std: number,
+): ReservationContext => {
+    const normalizedContext: ReservationContext = Object.fromEntries(
+        Object.entries(context).map(([field, value]) => {
+            if (typeof value === 'number') {
+                // Calculate the z-score for the current field
+                const zScore = (value - mean) / std
+                // Return the normalized field as a key-value pair
+                return [field, zScore]
+            }
+            // Return the original field as a key-value pair
+            return [field, value]
+        }),
+    )
+
+    return normalizedContext
+}
+
+export const getNormalizedDistanceFromContext = (
+    context: ReservationContext,
+    other: ReservationContext,
+    avgContextVector: ContextVector,
+    avgContext: ReservationContext,
+): {distance: number; ageFactor: number} => {
+    const {mean, std} = getMeanStdAvgInput(avgContextVector)
+
+    const otherWithCentroid: ReservationContext = {
+        ...other,
+        centroidDistance: distanceBetweenCoordinates(
+            other.reservationLocation,
+            avgContext.reservationLocation,
+        ),
+        timeDistanceFromCurrent: timeToSecondsFromMidnight(other.currentTime!),
+        timeDistanceFromReservation: timeToSecondsFromMidnight(
+            other.reservationTime!,
+        ),
+    }
+    const contextVector = contextToVector(context)
+    const otherVector = contextToVector(otherWithCentroid)
+
+    const {normalizedVector: normalizedContextVector} = normalizeVector(
+        contextVector,
+        mean,
+        std,
+    )
+    const {normalizedVector: normalizedOtherVector} = normalizeVector(
+        otherVector,
+        mean,
+        std,
+    )
+
+    const weightedContext = weightVector(normalizedContextVector)
+    const weightedOther = weightVector(normalizedOtherVector)
+
+    const distance = l2Distance(weightedContext, weightedOther)
+    return {distance, ageFactor: other.ageFactor ?? 1}
 }
