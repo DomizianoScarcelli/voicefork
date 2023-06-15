@@ -3,9 +3,11 @@ import {Reservation} from '@prisma/client'
 import {ReservationContext, TimeFormat} from '../shared/types'
 import {DateTime} from 'luxon'
 import {
+    computeAging,
     computeAverageContext,
     contextToVector,
     normalizeAverageAndInput,
+    getNormalizedDistanceFromContext,
     weightVector,
 } from '../utils/contextUtils'
 import {distanceBetweenCoordinates} from '../utils/locationUtils'
@@ -127,22 +129,30 @@ class ReservationsService {
                 reservationTime: DateTime.fromJSDate(dateTime).toFormat(
                     'HH:mm',
                 ) as TimeFormat,
+                timestamp: createdAtDate,
             }
             userContext.push(reservationContext)
         }
-        return userContext
+        return userContext.map(item => {
+            return {...item, ageFactor: computeAging(item)}
+        })
     }
 
     async GetDistanceBetweenContext(
         inputContext: ReservationContext,
     ): Promise<any> {
+        //Timestamps the input context with the current date and time
+        inputContext.timestamp = new Date()
+
         const userContext = await this.getUserContext(
             parseInt(inputContext.id_restaurant.toString()), //Number to string to number trick otherwise prisma error
         )
+
         const avgContext = computeAverageContext(
             inputContext.id_restaurant,
             userContext,
         )
+
         const inputContextWithCentroidDistance: ReservationContext = {
             ...inputContext,
             centroidDistance: distanceBetweenCoordinates(
@@ -157,31 +167,42 @@ class ReservationsService {
             ),
         }
         const avgVector = contextToVector(avgContext)
-        const inputVector = contextToVector(inputContextWithCentroidDistance)
-        const {normalizedAvgVector, normalizedInputVector} =
-            normalizeAverageAndInput(avgVector, inputVector)
 
-        const normWeightAvgVector = weightVector(normalizedAvgVector)
-        const normWeightInputVector = weightVector(normalizedInputVector)
+        const distancesWithAging = userContext.map(item =>
+            getNormalizedDistanceFromContext(
+                inputContextWithCentroidDistance,
+                item,
+                avgVector,
+                avgContext,
+            ),
+        )
 
-        let distance = l2Distance(normWeightAvgVector, normWeightInputVector)
+        let finalDistance = 0
+        let totalAgeFactors = 0
+        for (const {distance, ageFactor} of distancesWithAging) {
+            finalDistance += distance * ageFactor
+            totalAgeFactors += ageFactor
+        }
+        finalDistance /= totalAgeFactors
+
+        console.log(
+            'DEBUG NORMALIZED DISTANCES: ',
+            distancesWithAging,
+            finalDistance,
+        )
 
         const MULTIPLE_CONTEXT_BOOST = 0.1
 
-        if (distance && avgContext.numberOfReservations) {
-            distance -=
+        if (finalDistance && avgContext.numberOfReservations) {
+            finalDistance -=
                 MULTIPLE_CONTEXT_BOOST *
-                distance *
-                (avgContext.numberOfReservations - 1)
+                finalDistance *
+                Math.log(Math.E + avgContext.numberOfReservations - 1)
         }
         return {
             inputContext: inputContextWithCentroidDistance,
-            weidhtedInput: normWeightInputVector,
-            inputVector: normalizedInputVector,
             averageContext: avgContext,
-            weightedVector: normWeightAvgVector,
-            avgVector: normalizedAvgVector,
-            distance,
+            distance: finalDistance,
         }
     }
 }
