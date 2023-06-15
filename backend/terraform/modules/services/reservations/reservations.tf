@@ -102,8 +102,8 @@ resource "aws_appautoscaling_policy" "reservations_autoscaling_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
     target_value       = 60
-    scale_in_cooldown  = 30
-    scale_out_cooldown = 20
+    scale_in_cooldown  = 180
+    scale_out_cooldown = 120
   }
 }
 
