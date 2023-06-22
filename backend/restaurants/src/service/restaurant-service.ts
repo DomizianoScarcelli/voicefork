@@ -331,8 +331,6 @@ class RestaurantService {
                 const {nameDistance} = data[i]
                 const restaurant = restaurants[i]
 
-                if (city.toLowerCase() == 'rome') city = 'ome'
-
                 if (restaurant!.city == city) {
                     results.push({
                         restaurant: restaurant!,
@@ -422,7 +420,6 @@ class RestaurantService {
     }
 
     async GetRestaurantsByCity(city: string): Promise<Restaurant[]> {
-        if (city.toLowerCase() == 'rome') city = 'ome' //TODO: little workaround for now
         const results = await this.repository.GetRestaurantsByCity(city)
         return results
     }
