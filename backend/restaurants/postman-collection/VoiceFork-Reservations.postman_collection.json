@@ -1,0 +1,315 @@
+{
+	"info": {
+		"_postman_id": "3abdb6bc-5808-46f1-b06e-b1e78d55ecb3",
+		"name": "VoiceFork-Reservations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19145227"
+	},
+	"item": [
+		{
+			"name": "Create Reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id_user\": 1,\n    \"id_restaurant\": 59686,\n    \"dateTime\": \"2023-06-12T21:30:00.000Z\",\n    \"n_people\": 2,\n    \"createdAtLatitude\" : 41.919734,\n    \"createdAtLongitude\": 12.449999,\n    \"createdAtDate\": \"2023-02-11T10:32:00.000Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/create-reservation",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"create-reservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservation by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-reservation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservations by User ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-user-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-user-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Reservations by Restaurant ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/find-restaurant-reservations/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"find-restaurant-reservations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/all-reservations?=&=",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"all-reservations"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get distance between context",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/get-distance-context?id_user=1&id_restaurant=68064&n_people=2&latitude=41.909734&longitude=12.349999&currentDay=6&reservationDay=1&currentTime=11:00&reservationTime=21:30",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"get-distance-context"
+					],
+					"query": [
+						{
+							"key": "id_user",
+							"value": "1"
+						},
+						{
+							"key": "id_restaurant",
+							"value": "68064"
+						},
+						{
+							"key": "n_people",
+							"value": "2"
+						},
+						{
+							"key": "latitude",
+							"value": "41.909734"
+						},
+						{
+							"key": "longitude",
+							"value": "12.349999"
+						},
+						{
+							"key": "currentDay",
+							"value": "6"
+						},
+						{
+							"key": "reservationDay",
+							"value": "1"
+						},
+						{
+							"key": "currentTime",
+							"value": "11:00"
+						},
+						{
+							"key": "reservationTime",
+							"value": "21:30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/delete-reservation/:id",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"delete-reservation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Date/Time",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newDateTime\": \"2025-04-25T18:20:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-datetime",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-datetime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Num People",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newNumPeople\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RESERVATIONS_BASE}}/update-numpeople",
+					"host": [
+						"{{RESERVATIONS_BASE}}"
+					],
+					"path": [
+						"update-numpeople"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RESERVATIONS_BASE",
+			"value": "localhost:3003"
+		}
+	]
+}
