@@ -166,6 +166,7 @@ const ReservationsController = {
             {},
             {},
             {
+                id_user: number
                 id_restaurant: number
                 n_people: number
                 latitude: number
@@ -181,6 +182,7 @@ const ReservationsController = {
     ) => {
         try {
             const {
+                id_user,
                 id_restaurant,
                 n_people,
                 latitude,
@@ -200,7 +202,10 @@ const ReservationsController = {
                 currentTime,
                 reservationTime,
             }
-            const result = await service.GetDistanceBetweenContext(inputContext)
+            const result = await service.GetDistanceBetweenContext(
+                id_user,
+                inputContext,
+            )
             res.json(result)
         } catch (err) {
             next(err)

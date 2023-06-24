@@ -49,10 +49,27 @@ class ReservationsRepository {
         return reservations
     }
 
-    async GetReservationsByRestaurantId(id: number): Promise<Reservation[]> {
+    async GetReservationsByRestaurantId(
+        restaurantId: number,
+    ): Promise<Reservation[]> {
         const reservations = await prisma.reservation.findMany({
             where: {
-                id_restaurant: id,
+                id_restaurant: restaurantId,
+            },
+        })
+        return reservations
+    }
+
+    async GetUserReservationsByRestaurantId(
+        userid: number,
+        restaurantId: number,
+    ): Promise<Reservation[]> {
+        const reservations = await prisma.reservation.findMany({
+            where: {
+                AND: {
+                    id_restaurant: restaurantId,
+                    id_user: userid,
+                },
             },
         })
         return reservations

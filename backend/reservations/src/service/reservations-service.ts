@@ -98,10 +98,13 @@ class ReservationsService {
      * @param restaurantId The restaurant ID to consider
      * @returns The resulting ReservationContext array
      */
-    private async getUserContext(restaurantId: number) {
+    private async getUserContext(userId: number, restaurantId: number) {
         let userContext: ReservationContext[] = []
         const reservations =
-            await this.repository.GetReservationsByRestaurantId(restaurantId)
+            await this.repository.GetUserReservationsByRestaurantId(
+                userId,
+                restaurantId,
+            )
 
         for (let {
             id_restaurant,
@@ -139,12 +142,14 @@ class ReservationsService {
     }
 
     async GetDistanceBetweenContext(
+        userId: number,
         inputContext: ReservationContext,
     ): Promise<any> {
         //Timestamps the input context with the current date and time
         inputContext.timestamp = new Date()
 
         const userContext = await this.getUserContext(
+            parseInt(userId.toString()),
             parseInt(inputContext.id_restaurant.toString()), //Number to string to number trick otherwise prisma error
         )
 
